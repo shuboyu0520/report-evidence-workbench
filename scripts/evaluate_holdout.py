@@ -58,8 +58,9 @@ def main():
     parser.add_argument("--pdf",type=Path,required=True)
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--url",default="http://127.0.0.1:11434")
+    parser.add_argument("--fixture",type=Path,default=ROOT/"evaluation/amazon_holdout.json")
     args = parser.parse_args()
-    fixture = ROOT/"evaluation/amazon_holdout.json"
+    fixture = args.fixture
     gold = json.loads(fixture.read_text("utf-8"))
     pdf = args.pdf.read_bytes()
     if sha(pdf) != gold["sha256"]:
@@ -85,7 +86,7 @@ def main():
             "started_utc":datetime.now(timezone.utc).isoformat(),"cases":[]}
     write(args.out/"manifest.json",{k:v for k,v in meta.items() if k!="cases"})
     with TestClient(create_app(args.out/"eval.db",settings)) as api:
-        upload=api.post("/reports",data={"company":"Amazon.com"},files={"file":("amazon-2024.pdf",pdf,"application/pdf")})
+        upload=api.post("/reports",data={"company":gold["issuer"]},files={"file":(args.pdf.name,pdf,"application/pdf")})
         upload.raise_for_status()
         rid=upload.json()["id"]
         for case in gold["cases"]:

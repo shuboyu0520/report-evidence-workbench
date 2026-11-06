@@ -8,6 +8,7 @@ from dataclasses import dataclass
 
 import httpx
 
+
 VERSION = "page-800-overlap-120-v1"
 MODEL = "qwen3-embedding:0.6b"
 
