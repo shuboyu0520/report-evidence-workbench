@@ -1,0 +1,29 @@
+{
+ "issuer":"Costco Wholesale Corporation","report":"FY2024 Form 10-K, accession 0000909832-24-000049",
+ "source":"https://d18rn0p25nwr6d.cloudfront.net/CIK-0000909832/4ee6f0c6-d1ec-4ecd-bb4d-e301118d4574.pdf",
+ "issuer_source":"https://www.sec.gov/Archives/edgar/data/909832/000090983224000049/0000909832-24-000049-index.htm",
+ "sha256":"f037720e8d613686ac7d98ab7a4b14d5c7e04f3bf5c99b0e1ebea01e5c0e364f",
+ "baseline":"dc6e065512e340a079868f0de219a910f8783972",
+ "protocol":"Final untouched issuer. Pre-registered before asking any Costco model question. Five income, four balance sheet, two cash flow and three geographic segment disclosures; four out-of-period refusals. Standalone filing with intact text rows and 80 physical pages. Issuer's illustrated annual report was excluded at file preflight because its native extracted text fragments words across lines; no model questions were run on that alternative. USD millions.",
+ "instruction":"请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+ "cases":[
+ ["CO01",2024,"合并利润表中的营业收入总额是多少？",37,"Total revenue","254,453"],
+ ["CO02",2023,"合并利润表中确认的会员费收入是多少？",37,"Membership fees","4,580"],
+ ["CO03",2024,"合并利润表中销售、一般及行政费用合计是多少？",37,"Selling, general and administrative","22,810"],
+ ["CO04",2023,"合并利润表中的营业利润是多少？",37,"Operating income","8,114"],
+ ["CO05",2024,"利润表的税前利润是多少？",37,"INCOME BEFORE INCOME TAXES","9,740"],
+ ["CO06",2024,"资产负债表上的现金及现金等价物是多少？",39,"Cash and cash equivalents $","9,906"],
+ ["CO07",2023,"合并资产负债表中扣除一年内到期部分后的长期债务是多少？",39,"Long-term debt, excluding current portion","5,377"],
+ ["CO08",2024,"合并资产负债表中的商品存货账面值是多少？",39,"Merchandise inventories","18,647"],
+ ["CO09",2023,"合并资产负债表中流动负债总额是多少？",39,"Total current liabilities","33,583"],
+ ["CO10",2024,"经营活动产生了多少净现金？请引用现金流量表。",41,"Net cash provided by operating activities","11,339"],
+ ["CO11",2023,"现金流量表中股权薪酬费用是多少？",41,"Stock-based compensation","774"],
+ ["CO12",2024,"分部附注中美国地区分部的总收入是多少？",63,"Total revenue $","184,143"],
+ ["CO13",2023,"分部附注中加拿大地区分部的总收入是多少？",63,"Total revenue $","33,056"],
+ ["CO14",2024,"分部附注中其他国际分部的营业利润是多少？",63,"Operating income","1,420"],
+ ["CO15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+ ["CO16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+ ["CO17",2027,"这份财报披露的美国地区实际收入是多少？",null,null,null],
+ ["CO18",2028,"这份财报披露的经营活动现金净额实际值是多少？",null,null,null]
+ ]
+}
