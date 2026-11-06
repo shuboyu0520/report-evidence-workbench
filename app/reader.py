@@ -201,6 +201,7 @@ async def from_document(db, report, pages, question, config, tools, calls, event
             {
                 "id": i,
                 "row": c["label"],
+                "metric_caption": c["measure_caption"],
                 "scope": c["scope"] or "company financial results",
                 "basis": c["basis"],
                 "year": c["year"],
@@ -230,6 +231,8 @@ async def from_document(db, report, pages, question, config, tools, calls, event
         period = f"第{request.quarter}季度" if request.quarter else "全年"
         basis = cell["basis"] or ("非 GAAP" if request.adjusted else "")
         scope = " ".join(request.groups) or ("所问业务" if request.products else "公司整体")
+        if cell["measure_caption"] and not request.groups:
+            scope = cell["measure_caption"].strip(":")
         amount = " 至 ".join(cell["amounts"])
         classification = "指引" if request.guidance else "实际"
         answer = f"{request.year} 财年{period}，{scope} {basis} {cell['label']}（{classification}）为 {amount} {cell['unit']}。原表第 {cell['page']} 页。"

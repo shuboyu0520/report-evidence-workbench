@@ -28,10 +28,22 @@ PERIOD_LINE = re.compile(
 )
 SLOTS = re.compile(r"\b(?:19|20)\d{2}\b|\b(?:change|variance)\b", re.I)
 SEGMENT = re.compile(
-    r"\b(?:segment (?:results|revenues?|information|data)|(?:sales|revenues?) (?:by|streams)|business unit|by segment)\b",
+    r"\b(?:segment (?:results|revenues?|information|data)|(?:sales|revenues?) (?:by|streams)|business unit|by (?:offering|segment))\b",
     re.I,
 )
 GUIDANCE = re.compile(r"\b(?:guidance|outlook|estimates?|forecast)\b", re.I)
+FORECAST_VERB = re.compile(
+    r"\b(?:we|the company) (?:anticipate[s]?|expect[s]?|forecast[s]?)\b", re.I
+)
+# In a prose outlook, the following percentage is frequently YoY growth, a separate measure.
+BOUND = r"\$?\s*-?\d[\d,]*(?:\.\d+)?(?:\s*(?:billion|million|thousand)\b|[BMK]\b)?"
+PROSE_RANGE = re.compile(
+    rf"^[•◦▪●*\-]?\s*(?P<label>[A-Za-z][A-Za-z0-9 &()/.'’\-]{{0,85}}?)\s+"
+    rf"(?:of|from|between|in (?:the |a )?range of|is expected to (?:be(?: between)?|range from))\s+"
+    rf"(?P<lo>{BOUND})\s*(?:\bto\b|\band\b|[–—-])\s*(?P<hi>{BOUND})"
+    r"(?=[,.;:]|\s*(?:$|per (?:diluted )?share\b))",
+    re.I,
+)
 SCALE_FACTORS = {
     "thousands": Decimal(1000),
     "millions": Decimal(1000000),
@@ -45,6 +57,7 @@ OUTPUT_UNITS = {
 }
 # These aliases translate questions to common financial row titles, independent of the issuer.
 METRICS = [
+    ("bookings", r"总预[订定]额|总预订金额|gross bookings?", r"\bgross bookings?\b"),
     (
         "eps",
         r"每股(?:摊薄|稀释)?(?:收益|盈利|利润)|(?:摊薄|稀释)每股|每股盈余|\bEPS\b|earnings per share",
@@ -74,7 +87,20 @@ PRODUCTS = [
     (r"数据中心|data cent(?:er|re)", r"\bdata cent(?:er|re)s?\b"),
     (r"云服务|云计算|cloud", r"\bcloud\b"),
     (r"游戏|gaming", r"\bgaming\b"),
+    (r"出行|客运|\bmobility\b", r"\b(?:mobility|passenger transportation)\b"),
+    (r"配送|外卖|\bdelivery\b", r"\b(?:delivery|food delivery)\b"),
+    (r"货运|\bfreight\b", r"\b(?:freight|cargo)\b"),
 ]
+SCOPE_WORD = r"(?:业务(?:线)?|事业部|部门|分部|板块|板塊)"
+NAMED_SCOPE = re.compile(
+    r"(?<![A-Za-z])([A-Za-z][A-Za-z0-9&/-]*(?:[ \t]+[A-Za-z][A-Za-z0-9&/-]*){0,3})[ \t]*(?:[\u3400-\u9fff]{0,6})"
+    + SCOPE_WORD
+)
+CAPTION = re.compile(
+    r"(?:gross bookings?|(?:net |total |segment )?(?:revenues?|sales)|gross profit|"
+    r"(?:segment |non[- ]GAAP )?operating (?:income|loss|profit)(?: \(loss\))?)",
+    re.I,
+)
 ACRONYM = re.compile(r"\b[A-Z][A-Z0-9&-]{1,12}\b")
 RESERVED = {
     "GAAP",
@@ -157,7 +183,17 @@ def lookup_request(question):
         for t in ACRONYM.findall(question)
         if t not in RESERVED and not re.fullmatch(r"Q[1-4]|FY\d+", t)
     )
-    products = tuple(pattern for asked, pattern in PRODUCTS if re.search(asked, question, re.I))
+    products = [pattern for asked, pattern in PRODUCTS if re.search(asked, question, re.I)]
+    # A bilingual question can supply an arbitrary printed offering name. It still
+    # has to match a business row AND the metric caption in the uploaded report.
+    for m in NAMED_SCOPE.finditer(question):
+        name = compact(m[1])
+        if (
+            name.upper() not in RESERVED
+            and name not in groups
+            and not re.fullmatch(r"Q[1-4]", name, re.I)
+        ):
+            products.append(r"\b" + re.escape(name) + r"\b")
     # A city, customer or other unresolved slice must never be silently dropped.
     qualified = bool(
         re.search(
@@ -179,7 +215,7 @@ def lookup_request(question):
         bool(re.search(r"非\s*GAAP|non[- ]GAAP|adjusted|调整后", question, re.I)),
         unit or "百万美元",
         groups,
-        products,
+        tuple(products),
         qualified,
     )
 
@@ -230,10 +266,93 @@ class TableRow:
     dollars: bool = False
 
 
+def outlook_period(header):
+    for line in reversed(header.splitlines()):
+        line = re.sub(r"\b(guidance|outlook|estimates?|forecast)\d{1,2}\b", r"\1", line, flags=re.I)
+        if len(line) > 170 or not (GUIDANCE.search(line) or FORECAST_VERB.search(line)):
+            continue
+        fy = re.search(r"\bFY\s*['’]?(\d{2,4})\b", line, re.I)
+        years = {int(y) for y in YEAR.findall(line)}
+        if fy:
+            y = int(fy[1])
+            years.add(2000 + y if y < 100 else y)
+        qs = {qnum(m.group()) for m in QUARTER.finditer(line)}
+        if (
+            len(years) == 1
+            and len(qs) <= 1
+            and (qs or re.search(r"full[- ]year|fiscal year|annual|\bFY", line, re.I))
+        ):
+            return years.pop(), next(iter(qs), None)
+    return None
+
+
+def prose_outlook_rows(page):
+    """Read ranges under an explicit dated outlook. Finite sections prevent bleed into actuals."""
+    heading = ""
+    lines = [s.strip() for s in page["text"].splitlines() if s.strip()]
+    for i, line in enumerate(lines):
+        if (
+            len(line) < 170
+            and "$" not in line
+            and (GUIDANCE.search(line) or FORECAST_VERB.search(line))
+        ):
+            if "%" in line or re.search(r"\b(?:assumes?|headwind|growth)\b", line, re.I):
+                continue
+            heading = line if outlook_period(line) else ""
+            continue
+        if not heading:
+            continue
+        if re.search(
+            r"^(?:actual|financial (?:and operational )?(?:results|highlights)|results (?:by|for)|historical|appendix|reconciliation)\b",
+            line,
+            re.I,
+        ):
+            heading = ""
+            continue
+        # A wrapped range is still one contiguous quotation on this physical page.
+        quote = line
+        m = PROSE_RANGE.match(quote)
+        if not m and i + 1 < len(lines) and "$" in line and not re.match(r"[•◦▪●*]", lines[i + 1]):
+            quote = line + "\n" + lines[i + 1]
+            m = PROSE_RANGE.match(quote)
+        if (
+            m
+            and "$" in (m["lo"] + m["hi"])
+            and not re.search(
+                r"\b(?:actual|historical|previous|prior|was|were)\b", m["label"], re.I
+            )
+        ):
+            yield TableRow(
+                page["number"],
+                m["label"].strip(),
+                quote,
+                heading,
+                "",
+                (m["lo"].strip(), m["hi"].strip()),
+                True,
+                True,
+            )
+        elif not re.match(r"^[•◦▪●*]", line) and re.match(r"^[A-Z][A-Za-z &/-]{2,70}:?$", line):
+            heading = ""
+
+
+def measure_caption(row):
+    for line in reversed([row.section, *row.header.splitlines()]):
+        title = line.strip().rstrip(":")
+        if CAPTION.fullmatch(title):
+            return title
+        if re.fullmatch(
+            r"(?:[A-Z][\w&-]+ )?(?:revenue|sales) (?:streams|by segment)\d*", title, re.I
+        ):
+            return title
+    return ""
+
+
 def source_rows(pages):
     """Keep a table's local header until another printed header starts a new table."""
     result = []
     for page in pages:
+        result.extend(prose_outlook_rows(page))
         pending = []
         header = ""
         section = ""
@@ -301,13 +420,8 @@ def column_labels(row, release_q):
     header = row.header
     w = len(row.cells)
     if row.ranged:
-        fy = re.search(r"\bFY\s*['’]?(\d{2,4})|\bfiscal\s+(20\d{2})\b", header, re.I)
-        year = int(fy[1] or fy[2]) if fy else None
-        if year and year < 100:
-            year += 2000
-        if not (year and GUIDANCE.search(header)):
-            return []
-        return [(year, qnum(header), None, False)]
+        period = outlook_period(header)
+        return [(*period, None, False)] if period else []
     # Only the last full column cycle belongs to this table.
     slots = list(SLOTS.finditer(header))
     last_line = header.rsplit("\n", 1)[-1]
@@ -411,11 +525,16 @@ def resolve_sources(pages, req, rows=None):
     release_q = qnum(compact(pages[0]["text"][:400])) if pages else None
     result = []
     for row in source_rows(pages) if rows is None else rows:
-        if req.guidance != row.ranged or (row.ranged and not GUIDANCE.search(row.header)):
+        if req.guidance != row.ranged:
             continue
-        concept = row.label if not req.products else row.label + " " + row.section
-        if not re.search(req.pattern, concept, re.I) and not (
-            req.metric == "revenue" and req.products
+        caption = (
+            measure_caption(row)
+            if req.products
+            or any(re.search(r"\b" + re.escape(g) + r"\b", row.label, re.I) for g in req.groups)
+            else ""
+        )
+        if not re.search(req.pattern, row.label, re.I) and not (
+            caption and re.search(req.pattern, caption, re.I)
         ):
             continue
         if req.products and not all(re.search(p, row.label, re.I) for p in req.products):
@@ -431,6 +550,12 @@ def resolve_sources(pages, req, rows=None):
         ):
             continue
         if req.metric != "eps" and "per share" in row.label.lower():
+            continue
+        if (
+            req.metric == "bookings"
+            and not (req.products or req.groups)
+            and not re.fullmatch(r"(?:total |consolidated )?gross bookings?", row.label, re.I)
+        ):
             continue
         cols = column_labels(row, release_q)
         for i, (year, q, group, change) in enumerate(cols):
@@ -476,12 +601,26 @@ def resolve_sources(pages, req, rows=None):
             ):
                 continue
             amounts = []
-            for value in raw:
+            bound_units = [
+                re.search(r"(billion|million|thousand|[BMK])$", v.strip(), re.I) for v in raw
+            ]
+            shared = (
+                bound_units[-1] if row.ranged and len(raw) == 2 and not bound_units[0] else None
+            )
+            for value, explicit in zip(raw, bound_units, strict=True):
+                if explicit:
+                    value = value[: explicit.start()]
                 token = value.strip().replace("$", "").replace(" ", "")
-                suffix = token[-1:].upper()
-                factor = {"B": Decimal(10**9), "M": Decimal(10**6), "K": Decimal(1000)}.get(suffix)
-                if factor:
-                    token = token[:-1]
+                magnitude = explicit or shared
+                if magnitude:
+                    if req.metric == "eps":
+                        break
+                    factor = {
+                        "b": Decimal(10**9),
+                        "m": Decimal(10**6),
+                        "t": Decimal(1000),
+                        "k": Decimal(1000),
+                    }[magnitude[1][0].lower()]
                 elif req.metric == "eps":
                     factor = Decimal(1)
                 elif scale:
@@ -495,6 +634,10 @@ def resolve_sources(pages, req, rows=None):
                 amounts.append(f"{amount:,f}")
             if len(amounts) != len(raw):
                 continue
+            if row.ranged and Decimal(amounts[0].replace(",", "")) > Decimal(
+                amounts[-1].replace(",", "")
+            ):
+                continue
             score = (4 if basis else 0) + (3 if req.groups or req.products else 0)
             if re.search(r"reconciliations?|supplemental information", row.header, re.I):
                 score -= 5
@@ -503,6 +646,7 @@ def resolve_sources(pages, req, rows=None):
                     "page": row.page,
                     "label": row.label,
                     "scope": seg_group or section,
+                    "measure_caption": caption,
                     "basis": basis,
                     "year": year,
                     "quarter": q,
