@@ -1,0 +1,30 @@
+{
+  "issuer": "Walmart Inc.",
+  "report": "FY2024 Form 10-K for the fiscal year ended January 31, 2024",
+  "source": "https://stock.walmart.com/sec-filings/all-sec-filings/content/0000104169-24-000056/0000104169-24-000056.pdf",
+  "issuer_source": "https://www.sec.gov/Archives/edgar/data/104169/000010416924000056/wmt-20240131.htm",
+  "sha256": "1da7d04d2a7367713990810aa4b33dd6bf5e6093e28b6e1f564d145985a43bcd",
+  "baseline": "d88549651ca814369ed898e717202ea3f3b37ab6",
+  "protocol": "Previously untested retailer. Gold derived from the official 180-page PDF before any model call on this issuer. Comparable 5 income, 4 balance, 2 cash flow, 3 segment questions in USD millions, plus 4 out-of-period refusals. No prompt, runtime or scoring changes after preregistration.",
+  "instruction": "请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+  "cases": [
+    ["WM01",2024,"合并利润表中的营业收入总额是多少？",54,"Total revenues","648,125"],
+    ["WM02",2023,"合并利润表中的会员及其他收入是多少？",54,"Membership and other income","5,408"],
+    ["WM03",2024,"合并利润表中的销售成本是多少？",54,"Cost of sales","490,142"],
+    ["WM04",2023,"合并利润表中的营业利润是多少？",54,"Operating income","20,428"],
+    ["WM05",2024,"合并利润表的税前利润是多少？",54,"Income before income taxes","21,848"],
+    ["WM06",2024,"资产负债表上的现金及现金等价物是多少？",56,"Cash and cash equivalents","9,867"],
+    ["WM07",2023,"合并资产负债表中的长期债务余额（不含一年内到期部分）是多少？",56,"Long-term debt ","34,649"],
+    ["WM08",2024,"合并资产负债表中存货的账面值是多少？",56,"Inventories","54,892"],
+    ["WM09",2023,"合并资产负债表中流动负债总额是多少？",56,"Total current liabilities","92,198"],
+    ["WM10",2024,"经营活动产生了多少净现金？请引用现金流量表。",58,"Net cash provided by operating activities","35,726"],
+    ["WM11",2023,"合并现金流量表中的折旧与摊销金额是多少？",58,"Depreciation and amortization","10,945"],
+    ["WM12",2024,"分部附注中沃尔玛美国分部的净销售额是多少？",79,"Net sales $","441,817"],
+    ["WM13",2023,"分部附注中沃尔玛国际分部的净销售额是多少？",79,"Net sales $","100,983"],
+    ["WM14",2024,"分部附注中山姆会员店分部的营业利润是多少？",79,"Operating income (loss)","2,192"],
+    ["WM15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+    ["WM16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+    ["WM17",2027,"这份财报披露的沃尔玛美国分部实际净销售额是多少？",null,null,null],
+    ["WM18",2028,"这份财报披露的经营活动现金净额实际值是多少？",null,null,null]
+  ]
+}
