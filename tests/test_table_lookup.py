@@ -160,6 +160,39 @@ def test_geographic_revenue_scale_below_full_date_columns():
         ("Revenue by geography","millions",(2024,2023),("45","60"))]
 
 
+def test_wrapped_dates_keep_printed_order_and_evidence(monkeypatch):
+    pages = statement("52 weeks ended 53 weeks ended\nAugust 31,\n2024\nSeptember 2,\n2023", "95  82")
+    hits, trace = select(monkeypatch, pages, 2023)
+    assert trace["column"] == 2 and trace["value_millions"] == "0.082"
+    assert hits[0]["quote"] in pages[0]["text"] and hits[0]["page"] == 17
+
+
+@pytest.mark.parametrize("header", [
+    "13 weeks ended\nAugust 31,\n2024\nSeptember 2,\n2023",
+    "August 31,\n2024\nSeptember 2,\n2024",
+    "August 31,\n2024\nOther disclosure\nSeptember 2,\n2023",
+])
+def test_reject_partial_mixed_or_quarterly_wrapped_header(header):
+    assert not read_rows(statement(header, "95  82"))
+
+
+def test_segment_columns_keep_wrapped_scope_and_year_blocks():
+    from app.table_headers import segment_headers
+
+    layout = ("                             Other\n"
+              "          West     East      Markets\n"
+              "2024\nRevenue    $ 8      $ 9      $ 10\n"
+              "2023\nRevenue    $ 6      $ 5      $ 4\n"
+              "Unrelated table\n2022\nRevenue  1  2  3")
+    cols = segment_headers(layout)
+    assert cols == {str(y): ["West","East","Other Markets"] for y in (2024,2023)}
+    pages = [{"number": 5, "text": "Notes to consolidated financial statements\n(amounts in millions)"},
+             {"number": 8, "text": layout, "segment_columns": cols}]
+    rows = [r for r in read_rows(pages) if r.scope == "Other Markets"]
+    assert [(r.page,r.unit_page,r.years,r.source_column,r.values) for r in rows] == [
+        (8,5,(2024,),3,("10",)),(8,5,(2023,),3,("4",))]
+
+
 def test_geographic_rows_stop_at_next_disclosure():
     pages = [{"number": 36, "text": "Revenue, classified by geographic areas, was as follows:\n"
               "(In millions)\nYear ended April 30, 2024 2023\nOther countries  220  102\n"

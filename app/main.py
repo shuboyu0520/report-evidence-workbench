@@ -19,6 +19,7 @@ from .agent import analyze
 from .db import Database
 from .finance import FACTORS, extract_metrics, numeric
 from .observatory import install_observatory
+from .table_headers import YEAR_GROUP, segment_headers
 
 MAX_BYTES = 15 * 1024 * 1024
 
@@ -45,6 +46,7 @@ class ConfirmedMetric(BaseModel):
 
 
 def parse_upload(content, filename):
+    columns = {}
     suffix = Path(filename).suffix.lower()
     if suffix == ".txt":
         try:
@@ -61,6 +63,14 @@ def parse_upload(content, filename):
             if len(reader.pages) > 500:
                 raise ValueError("最多支持 500 页")
             texts = [page.extract_text() or "" for page in reader.pages]
+            for i, text in enumerate(texts):
+                if re.search(r"reportable segments?|segment reporting", text, re.I) and any(
+                    YEAR_GROUP.fullmatch(s.strip()) for s in text.splitlines()
+                ):
+                    layout = reader.pages[i].extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
+                    labels = segment_headers(layout)
+                    if labels:
+                        columns[i+1] = labels
         except ValueError:
             raise
         except Exception:
@@ -71,7 +81,11 @@ def parse_upload(content, filename):
         raise ValueError("报告页数或文本长度超出限制")
     if not any(t.strip() for t in texts):
         raise ValueError("未提取到文字；扫描件请先进行 OCR")
-    return [{"number": i, "text": text} for i, text in enumerate(texts, 1)]
+    pages = [{"number": i, "text": text} for i, text in enumerate(texts, 1)]
+    for page in pages:
+        if page["number"] in columns:
+            page["segment_columns"] = columns[page["number"]]
+    return pages
 
 
 def create_app(db_path=None, settings=None):
@@ -129,6 +143,7 @@ def create_app(db_path=None, settings=None):
                 "SELECT id FROM reports WHERE company=? AND digest=?", (company.strip(), digest)
             ).fetchone()
             if duplicate:
+                db.save_column_headers(conn, duplicate["id"], pages)
                 return {
                     "id": duplicate["id"],
                     "deduplicated": True,
@@ -142,6 +157,7 @@ def create_app(db_path=None, settings=None):
                 "INSERT INTO pages(report_id,number,text) VALUES(?,?,?)",
                 [(report_id, p["number"], p["text"]) for p in pages],
             )
+            db.save_column_headers(conn, report_id, pages)
             for fact in facts:
                 conn.execute(
                     """INSERT INTO metrics(report_id,name,year,value,currency,unit,

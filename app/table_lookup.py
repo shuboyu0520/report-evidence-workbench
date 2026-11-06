@@ -26,7 +26,8 @@ CELL = r"(?:\(\s*\d[\d,]*(?:\.\d+)?\s*\)|-?\d[\d,]*(?:\.\d+)?|[—–-])"
 CELL_SUFFIX = re.compile(rf"(?P<values>(?:\s+(?:\$\s*)?{CELL})+)\s*$")
 SCALE = re.compile(r"\b(?:in |amounts in |dollars in )(millions|thousands|billions)\b", re.I)
 USD = re.compile(
-    r"(?:reporting currency (?:is|was)|(?:translat\w*|present\w*|report\w*|express\w*|remeasur\w*)"
+    r"(?:translat\w* (?:the )?financial statements of [^.]{1,90}?from (?:their |the )?local currencies into|"
+    r"reporting currency (?:is|was)|(?:translat\w*|present\w*|report\w*|express\w*|remeasur\w*)"
     r"(?: (?:our|its|the|these|financial|consolidated|results|statements|amounts)){0,5} (?:in|into|to))"
     r"\s+(?:the )?(?:U\.?\s*S\.?|United States)\s*dollars?\b",
     re.I,
@@ -49,6 +50,63 @@ class Row:
     values: tuple
     scale: str
     unit_line: str
+    source_column: int | None = None
+    unit_page: int | None = None
+
+
+def joined_date_lines(lines):
+    """Join adjacent month/day plus year pairs only when they establish a full column header."""
+    date = re.compile(rf"{MONTH}\.?\s+(?:0?[1-9]|[12]\d|3[01]),?", re.I)
+    result = []
+    i = 0
+    while i < len(lines):
+        j, parts = i, []
+        while j + 1 < len(lines) and date.fullmatch(lines[j].strip()) and YEAR.fullmatch(lines[j+1].strip()):
+            parts.extend([lines[j].strip(), lines[j+1].strip()])
+            j += 2
+        if len(parts) >= 4:
+            result.append(" ".join(parts))
+            i = j
+        else:
+            result.append(lines[i])
+            i += 1
+    return result
+
+
+def segment_matrix_rows(page, lines, notes_unit):
+    columns_by_year = page.get("segment_columns", {})
+    columns = []
+    local_unit = None
+    for i, line in enumerate(lines):
+        text = line.strip()
+        key = " ".join(text.split()).casefold()
+        if key in columns_by_year:
+            columns = columns_by_year[key]
+            year = int(YEAR.findall(key)[-1])
+            header = text
+            if i == 0 or not CELL_SUFFIX.search(lines[i-1]):
+                local_unit = next(((page["number"], s.strip()) for s in reversed(lines[max(0,i-10):i]) if SCALE.search(s)), None)
+            continue
+        if not columns:
+            continue
+        match = CELL_SUFFIX.search(line)
+        if not match:
+            if text:
+                columns = []
+            continue
+        label = line[:match.start()].strip()
+        cells = re.findall(CELL, match["values"])
+        unit = local_unit or notes_unit
+        if len(cells) != len(columns):
+            columns = []
+            continue
+        if not unit or not re.fullmatch(r"[A-Za-z &,-]+", label) or not re.search(
+            r"\brevenues?|\bsales|\bincome|\bearnings|\bprofit|\bassets|\bdepreciation|\bproperty and equipment", label, re.I
+        ) or re.search(r"per share|margin|ratio|percent",label,re.I):
+            continue
+        for index, (scope, cell) in enumerate(zip(columns, cells), 1):
+            yield Row(page["number"], "segment", scope, label, header, (year,), text, (cell,),
+                      SCALE.search(unit[1])[1].lower(), unit[1], index, unit[0])
 
 
 def regional_caption(lines, year_index):
@@ -64,8 +122,14 @@ def regional_caption(lines, year_index):
 def read_rows(pages):
     rows = []
     previous_tail = ""
+    notes_unit = None
     for page in pages:
-        lines = page["text"].splitlines()
+        lines = joined_date_lines(page["text"].splitlines())
+        for i, title in enumerate(lines[:8]):
+            if re.fullmatch(r"notes to (?:the )?consolidated financial statements", title.strip(), re.I):
+                notes_unit = next(((page["number"], s.strip()) for s in lines[i+1:i+3] if SCALE.search(s)), notes_unit)
+        if page.get("segment_columns"):
+            rows.extend(segment_matrix_rows(page, lines, notes_unit))
         titles = [s.strip().lower().rstrip(":") for s in lines[:8]]
         base = next(
             (
@@ -86,7 +150,7 @@ def read_rows(pages):
             if FULL_DATE_COLUMNS.fullmatch(year_text):
                 year_text = " ".join(header_years)
                 period = next((part for part in reversed(lines[:i]) if part.strip()), "")
-                if re.search(r"quarters? ended|(?:three|six|nine) months ended", period, re.I):
+                if re.search(r"quarters? ended|(?:three|six|nine) months ended|(?:1[23]|2[67]|39|40) weeks ended", period, re.I):
                     years = ()
                     continue
             else:
@@ -206,8 +270,8 @@ def lookup_year(question):
 
 def target_kind(q):
     for kind, pattern in (
+        ("segment", r"分部|segment"),
         ("geography", r"(?=.*(?:地区|区域|按地域|geograph(?:ic|ical|y)|\bregions?\b))(?=.*(?:收入|销售额|revenue|sales))"),
-        ("segment", r"分部|分部附注|segment"),
         ("balance", r"资产负债表|balance sheet"),
         ("income", r"利润表|损益表|income statement"),
         ("cash", r"现金流量表|cash flow statement"),
@@ -224,6 +288,13 @@ async def lookup(pages, question, settings):
     kind = target_kind(question)
     table_rows = read_rows(pages)
     rows = [r for r in table_rows if (r.kind == kind if kind else r.kind not in {"segment", "geography"})]
+    if any(r.source_column for r in rows):
+        available = {}
+        for r in rows:
+            if r.source_column:
+                available.setdefault((r.page,r.scope,r.label), set()).update(r.years)
+        rows = [r for r in rows if not r.source_column or
+                r.years[0] == (year if year in available[r.page,r.scope,r.label] else max(available[r.page,r.scope,r.label]))]
     # An explicitly requested balance-sheet subtotal excludes its components.
     for subject, english in (("资产", "assets"), ("负债", "liabilities")):
         if re.search(rf"(?<!非)流动{subject}(?:的)?(?:合计|总计|总额)|total current {english}\b", question, re.I):
@@ -324,6 +395,8 @@ async def lookup(pages, question, settings):
         currency_page=usd_page,
         currency_basis=currency_basis if usd_page else "table_unit",
         physical_page=r.page,
+        unit_page=r.unit_page or r.page,
+        column_axis="segment" if r.source_column else "year",
         requested_year=year,
     )
     hit = {
@@ -347,7 +420,7 @@ async def lookup(pages, question, settings):
     metadata.update(
         status="found",
         raw_cell=cell,
-        column=r.years.index(year) + 1,
+        column=r.source_column or r.years.index(year) + 1,
         value_millions=f"{millions:,f}",
     )
     return [hit], metadata

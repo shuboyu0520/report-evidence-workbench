@@ -21,6 +21,11 @@ class Database:
                     number INTEGER NOT NULL, text TEXT NOT NULL,
                     PRIMARY KEY(report_id, number)
                 );
+                CREATE TABLE IF NOT EXISTS page_column_headers (
+                    report_id TEXT NOT NULL, number INTEGER NOT NULL, labels TEXT NOT NULL,
+                    PRIMARY KEY(report_id, number),
+                    FOREIGN KEY(report_id, number) REFERENCES pages(report_id, number) ON DELETE CASCADE
+                );
                 CREATE TABLE IF NOT EXISTS rag_indexes (
                     report_id TEXT REFERENCES reports(id) ON DELETE CASCADE,
                     cache_key TEXT NOT NULL, dim INTEGER NOT NULL, vectors BLOB NOT NULL,
@@ -76,6 +81,13 @@ class Database:
             raise LookupError("财报不存在")
         return dict(row)
 
+    @staticmethod
+    def save_column_headers(conn, report_id, pages):
+        conn.executemany(
+            "INSERT OR REPLACE INTO page_column_headers VALUES(?,?,?)",
+            [(report_id, p["number"], json.dumps(p["segment_columns"])) for p in pages if p.get("segment_columns")],
+        )
+
     def pages(self, report_id):
         self.report(report_id)
         with self.connect() as conn:
@@ -113,6 +125,10 @@ class Database:
             pages = [dict(r) for r in conn.execute(
                 "SELECT number,text FROM pages WHERE report_id=? ORDER BY number", (report_id,)
             )]
+            headers = dict(conn.execute("SELECT number,labels FROM page_column_headers WHERE report_id=?", (report_id,)))
+            for page in pages:
+                if page["number"] in headers:
+                    page["segment_columns"] = json.loads(headers[page["number"]])
             metrics = [dict(r) for r in conn.execute(
                 "SELECT * FROM metrics WHERE report_id=? ORDER BY name,year DESC", (report_id,)
             )]
