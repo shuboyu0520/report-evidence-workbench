@@ -1,0 +1,237 @@
+{
+  "historical": {
+    "runs": 120,
+    "passed": 64
+  },
+  "reason_frequency": [
+    {
+      "reason": "answer_missing_expected_physical_page",
+      "affected_runs": 49
+    },
+    {
+      "reason": "answer_missing_expected_percentage",
+      "affected_runs": 30
+    },
+    {
+      "reason": "model_did_not_call_correct_calculation",
+      "affected_runs": 23
+    },
+    {
+      "reason": "model_rejected_numeric_claim",
+      "affected_runs": 13
+    },
+    {
+      "reason": "missing_explicit_refusal",
+      "affected_runs": 5
+    },
+    {
+      "reason": "no_model_tool_evidence",
+      "affected_runs": 2
+    },
+    {
+      "reason": "percentage_given_for_missing_data",
+      "affected_runs": 2
+    },
+    {
+      "reason": "ReadTimeout:",
+      "affected_runs": 1
+    },
+    {
+      "reason": "model_rejected_citation",
+      "affected_runs": 1
+    },
+    {
+      "reason": "tool_budget_exhausted",
+      "affected_runs": 1
+    }
+  ],
+  "by_round_task": [
+    {
+      "round": 1,
+      "variant": "A",
+      "task": "missing",
+      "runs": 6,
+      "passed": 4,
+      "model_requests": 19,
+      "avg_ms_including_timeouts": 2977.9,
+      "input_tokens": 114769
+    },
+    {
+      "round": 1,
+      "variant": "A",
+      "task": "numeric",
+      "runs": 14,
+      "passed": 1,
+      "model_requests": 40,
+      "avg_ms_including_timeouts": 7841.4,
+      "input_tokens": 222699
+    },
+    {
+      "round": 1,
+      "variant": "B",
+      "task": "missing",
+      "runs": 6,
+      "passed": 4,
+      "model_requests": 13,
+      "avg_ms_including_timeouts": 1929.7,
+      "input_tokens": 57934
+    },
+    {
+      "round": 1,
+      "variant": "B",
+      "task": "numeric",
+      "runs": 14,
+      "passed": 5,
+      "model_requests": 25,
+      "avg_ms_including_timeouts": 2987.8,
+      "input_tokens": 103469
+    },
+    {
+      "round": 2,
+      "variant": "A",
+      "task": "missing",
+      "runs": 6,
+      "passed": 5,
+      "model_requests": 18,
+      "avg_ms_including_timeouts": 2787.6,
+      "input_tokens": 102030
+    },
+    {
+      "round": 2,
+      "variant": "A",
+      "task": "numeric",
+      "runs": 14,
+      "passed": 0,
+      "model_requests": 42,
+      "avg_ms_including_timeouts": 2987.8,
+      "input_tokens": 240298
+    },
+    {
+      "round": 2,
+      "variant": "B",
+      "task": "missing",
+      "runs": 6,
+      "passed": 6,
+      "model_requests": 12,
+      "avg_ms_including_timeouts": 1033.9,
+      "input_tokens": 13280
+    },
+    {
+      "round": 2,
+      "variant": "B",
+      "task": "numeric",
+      "runs": 14,
+      "passed": 14,
+      "model_requests": 28,
+      "avg_ms_including_timeouts": 1175.1,
+      "input_tokens": 41114
+    },
+    {
+      "round": 3,
+      "variant": "A",
+      "task": "missing",
+      "runs": 6,
+      "passed": 5,
+      "model_requests": 18,
+      "avg_ms_including_timeouts": 2958.5,
+      "input_tokens": 103609
+    },
+    {
+      "round": 3,
+      "variant": "A",
+      "task": "numeric",
+      "runs": 14,
+      "passed": 0,
+      "model_requests": 43,
+      "avg_ms_including_timeouts": 3403.3,
+      "input_tokens": 252079
+    },
+    {
+      "round": 3,
+      "variant": "B",
+      "task": "missing",
+      "runs": 6,
+      "passed": 6,
+      "model_requests": 12,
+      "avg_ms_including_timeouts": 1226.8,
+      "input_tokens": 13480
+    },
+    {
+      "round": 3,
+      "variant": "B",
+      "task": "numeric",
+      "runs": 14,
+      "passed": 14,
+      "model_requests": 28,
+      "avg_ms_including_timeouts": 1308.9,
+      "input_tokens": 41198
+    }
+  ],
+  "paired": [
+    {
+      "round": 1,
+      "task": "missing",
+      "pairs": 6,
+      "b_fixed": 2,
+      "b_regressed": 2,
+      "same_outcome": 2
+    },
+    {
+      "round": 1,
+      "task": "numeric",
+      "pairs": 14,
+      "b_fixed": 5,
+      "b_regressed": 1,
+      "same_outcome": 8
+    },
+    {
+      "round": 2,
+      "task": "missing",
+      "pairs": 6,
+      "b_fixed": 1,
+      "b_regressed": 0,
+      "same_outcome": 5
+    },
+    {
+      "round": 2,
+      "task": "numeric",
+      "pairs": 14,
+      "b_fixed": 14,
+      "b_regressed": 0,
+      "same_outcome": 0
+    },
+    {
+      "round": 3,
+      "task": "missing",
+      "pairs": 6,
+      "b_fixed": 1,
+      "b_regressed": 0,
+      "same_outcome": 5
+    },
+    {
+      "round": 3,
+      "task": "numeric",
+      "pairs": 14,
+      "b_fixed": 14,
+      "b_regressed": 0,
+      "same_outcome": 0
+    }
+  ],
+  "first_failed_stage": [
+    {
+      "stage": "initial_retrieval",
+      "runs": 10,
+      "case_ids": "AM03, AM05, AM07, AM08, AM09, AM10, AM11, AM12, AM13, AM14"
+    },
+    {
+      "stage": "passed",
+      "runs": 5,
+      "case_ids": "AM01, AM15, AM16, AM17, AM18"
+    },
+    {
+      "stage": "amount",
+      "runs": 3,
+      "case_ids": "AM02, AM04, AM06"
+    }
+  ]
+}

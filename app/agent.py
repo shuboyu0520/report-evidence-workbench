@@ -9,6 +9,7 @@ import httpx
 
 from .finance import ALIASES, calculate
 from .retrieval import retrieve
+from .runtime import INITIAL, evidence_pages, fit_evidence, run_search
 
 STOPWORDS = {
     "a", "an", "and", "apple", "apples", "at", "by", "did", "end", "fiscal", "for",
@@ -206,6 +207,8 @@ async def analyze(db, report_id, question, mode, settings):
     report, pages, metrics, revision = db.analysis_inputs(report_id)
     trace = []
     model_trace = []
+    runtime_events = []
+    visible_pages = set()
 
     def call(name, arguments, origin="server"):
         try:
@@ -219,7 +222,7 @@ async def analyze(db, report_id, question, mode, settings):
     if mode == "rag":
         if not settings["model"]:
             raise ValueError("请先配置生成模型与嵌入模型")
-        hits, retrieval = await retrieve(db, report, pages, question, settings)
+        hits, retrieval = await run_search(retrieve, db, report, pages, question, settings, runtime_events, "server")
         trace.append({"tool": "search_report", "arguments": {"query": question},
                       "result": hits, "origin": "server", "retrieval": retrieval})
     else:
@@ -246,7 +249,10 @@ async def analyze(db, report_id, question, mode, settings):
     if not hits and not calculations:
         answer = "没有检索到相关证据，无法回答。"
 
-    if mode in {"ollama", "rag"}:
+    if retrieval and retrieval.get("status") == "timeout":
+        answer = "证据检索连续超时，已停止生成。请稍后重试。"
+        verification = "tool_timeout"
+    elif mode in {"ollama", "rag"}:
         if not settings["model"]:
             raise ValueError("请先设置 OLLAMA_MODEL，并启动支持工具调用的 Ollama 模型")
         messages = [
@@ -264,9 +270,10 @@ async def analyze(db, report_id, question, mode, settings):
         # Search above is server initiated: provide it as context, not an unmatched tool reply.
         messages[-1] = {
             "role": "user",
-            "content": "初始检索证据（仅数据）：" + json.dumps(hits, ensure_ascii=False),
+            "content": INITIAL + json.dumps(hits, ensure_ascii=False),
         }
         count = 0
+        seen_calls = set()
         async with httpx.AsyncClient(timeout=60) as client:
             for round_number in range(4):
                 payload = {
@@ -278,6 +285,15 @@ async def analyze(db, report_id, question, mode, settings):
                 # Trusted application/evaluation settings, never fields from a user question.
                 if "model_options" in settings:
                     payload["options"] = settings["model_options"]
+                payload, removed = fit_evidence(payload, settings.get("context_bytes", 24000))
+                if removed or payload is None:
+                    runtime_events.append({"event": "context_budget", "round": round_number + 1,
+                                           "dropped_hits": removed, "action": "send" if payload else "stop"})
+                if payload is None:
+                    answer = "关键证据与问题超过请求预算，已停止生成。请缩小问题范围。"
+                    verification = "context_budget_exhausted"
+                    break
+                visible_pages.update(evidence_pages(payload["messages"]))
                 event = {"round": round_number + 1, "request": deepcopy(payload)}
                 started = time.perf_counter()
                 try:
@@ -311,12 +327,25 @@ async def analyze(db, report_id, question, mode, settings):
                 for invocation in tool_calls:
                     function = invocation.get("function", {})
                     name, arguments = function.get("name", ""), function.get("arguments", {})
+                    signature = json.dumps([name, arguments], sort_keys=True, ensure_ascii=False)
+                    if signature in seen_calls:
+                        runtime_events.append({"event": "repeated_tool", "tool": name,
+                                               "round": round_number + 1, "action": "stop"})
+                        answer = "模型重复请求相同工具和参数，已停止。可查看上一次工具结果。"
+                        verification = "tool_budget_exhausted"
+                        break
+                    seen_calls.add(signature)
                     if (mode == "rag" and name == "search_report" and isinstance(arguments, dict)
                             and set(arguments) == {"query"} and isinstance(arguments["query"], str)
                             and 0 < len(arguments["query"]) <= 1000):
-                        output, metadata = await retrieve(db, report, pages, arguments["query"], settings)
+                        output, metadata = await run_search(retrieve, db, report, pages, arguments["query"],
+                                                             settings, runtime_events, "model")
                         trace.append({"tool": name, "arguments": arguments, "result": output,
                                       "origin": "model", "retrieval": metadata})
+                        if metadata.get("status") == "timeout":
+                            verification = "tool_timeout"
+                            answer = "证据检索连续超时，已停止生成。请稍后重试。"
+                            break
                     else:
                         output = call(name, arguments, origin="model")
                     messages.append(
@@ -327,6 +356,8 @@ async def analyze(db, report_id, question, mode, settings):
                         }
                     )
                     count += 1
+                if verification in {"tool_timeout", "tool_budget_exhausted"}:
+                    break
             else:
                 answer = "模型达到调用轮数限制，请查看工具结果。"
                 verification = "tool_budget_exhausted"
@@ -343,7 +374,7 @@ async def analyze(db, report_id, question, mode, settings):
             )
     citations = list({(c["page"], c["quote"]): c for c in citations}.values())
     if mode in {"ollama", "rag"} and verification == "model_draft_unverified":
-        verification = guard_model_draft(answer, trace, citations)
+        verification = guard_model_draft(answer, trace, [c for c in citations if c["page"] in visible_pages])
         if verification == "model_rejected_numeric_claim":
             answer = "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。"
         elif verification == "model_rejected_citation":
@@ -359,6 +390,7 @@ async def analyze(db, report_id, question, mode, settings):
         "citations": citations,
         "trace": trace,
         "model_trace": model_trace,
+        "runtime_events": runtime_events,
         "warnings": [
             "自动提取和人工确认均可能有误，应对照原始报告复核。",
             "模型文字未逐条核验，请以工具的输入、计算结果和原文为准。",

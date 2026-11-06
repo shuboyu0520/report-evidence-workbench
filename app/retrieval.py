@@ -161,6 +161,10 @@ async def get_index(client, db, report, pages, url, model):
 
 
 async def retrieve(db, report, pages, query, settings):
+    # A trailing answer-format instruction can dominate short questions in dense retrieval.
+    # Preserve the full question for the generator and preserve multi-question searches.
+    parts = re.fullmatch(r"([^?？]+[?？])\s*(?:请只给|请用以下格式|请以表格形式|回答时)[^?？]+", query)
+    search_query = parts.group(1) if parts else query
     model = settings.get("embedding_model") or MODEL
     url = settings["ollama_url"].rstrip("/")
     async with httpx.AsyncClient(timeout=120) as client:
@@ -168,17 +172,18 @@ async def retrieve(db, report, pages, query, settings):
         instruction = (
             "Instruct: Retrieve the annual report passage that supports the question.\nQuery: "
         )
-        vector = (await embed(client, url, model, [instruction + query]))[0]
+        vector = (await embed(client, url, model, [instruction + search_query]))[0]
     # English disclosures and Chinese paraphrases share few lexical terms.
     sample = " ".join(p["text"][:400] for p in pages[:8])
-    cross_language = bool(re.search(r"[\u4e00-\u9fff]", query)) and (
+    cross_language = bool(re.search(r"[\u4e00-\u9fff]", search_query)) and (
         len(re.findall(r"[A-Za-z]", sample)) > 3 * len(re.findall(r"[\u4e00-\u9fff]", sample))
     )
     strategy = "dense" if cross_language else "hybrid"
-    hits = index.rank(query, vector)[strategy]
+    hits = index.rank(search_query, vector)[strategy]
     return hits, {
         "algorithm": "dense / cosine" if cross_language else "BM25 + dense / RRF",
         "strategy": strategy,
+        "search_query": search_query,
         "embedding_model": model,
         "digest": digest,
         "chunks": len(index.chunks),
