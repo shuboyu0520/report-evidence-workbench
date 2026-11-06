@@ -22,7 +22,7 @@
 <form id="liveAsk"><div class="liveform" id="selectors"></div><label>研究截止日 <input id="askDate" type="date" value="2026-11-06" required></label><label>想核对什么？<textarea id="query" rows="2" maxlength="800" required>本季度的实际营业收入是多少？请写出期间和币种。</textarea></label><button>查证并回答</button></form>
 <p id="status" role="status" class="state"></p><div id="liveResults"></div></section>
 <section id="publicNote"><p class="sub">此公开示例在浏览器内按日期选取已核对的资料并计算差额。上传自己的财报、自由提问和多资料模型联读可在本机工作台运行。<a href="https://github.com/shuboyu0520/report-evidence-workbench#run-reader">本机运行说明</a></p></section></main>
-<footer><a id="back" href="reader-evaluation.html">查看台积电复测与新公司盲测</a></footer>
+<footer><a id="back" href="earnings-evaluation.html">查看台积电复测与新公司盲测</a></footer>
 <script>
 const data=__SOURCE_DATA__, live=__IS_LIVE__, $=id=>document.getElementById(id), main=data.primary;
 let investor=false;
@@ -70,7 +70,7 @@ const states={reviewed_evidence:'已核对证据卡',source_earnings_cell:'已�
 function showResult(parent,row){parent.append(el('p',row.answer),el('small',states[row.verification]||row.verification));for(const c of row.citations||[]){const s=el('p');s.className='source';if(c.url)link(s,c.source||'原始资料',c.url);else s.textContent='第 '+c.page+' 页 · '+c.quote;parent.append(s)}}
 for(const row of data.examples){const d=el('details');d.append(el('summary',row.question));showResult(d,row);$('examples').append(d)}
 if(live){
- $('local').hidden=false;$('publicNote').hidden=true;$('homeLink').href='/';$('homeLink').textContent='原表复核';$('back').href='https://shuboyu0520.github.io/report-evidence-workbench/reader-evaluation.html';
+ $('local').hidden=false;$('publicNote').hidden=true;$('homeLink').href='/';$('homeLink').textContent='原表复核';$('back').href='https://shuboyu0520.github.io/report-evidence-workbench/earnings-evaluation.html';
  const roles={company:'主资料',peer:'同行（可选）',market:'市场（可选）',policy:'政策（可选）'};
  for(const [key,name] of Object.entries(roles)){const label=el('label',name),select=el('select');select.id=key+'-id';select.required=key==='company';label.append(select);$('selectors').append(label)}
  async function request(url,opts){const res=await fetch(url,opts);const value=await res.json();if(!res.ok)throw Error(typeof value.detail==='string'?value.detail:'请检查输入或模型配置。');return value}

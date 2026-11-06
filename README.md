@@ -2,15 +2,15 @@
 
 一款面向财报初读者和投资者的中文阅读工具。选一个研究日期，从财务原表、同行披露、行业统计和政策出处核对自己的判断。
 
-[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [台积电与高通逐题结果](https://shuboyu0520.github.io/report-evidence-workbench/reader-evaluation.html)
+[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [高通、台积电与 Uber 逐题对照](https://shuboyu0520.github.io/report-evidence-workbench/earnings-evaluation.html)
 
 ![台积电财报联读](docs/reader-preview.png)
 
 ## 案例与验收
 
-台积电原研报的四题初次用通用检索通过 2/4，已核准案例整合后复测 4/4。高通 2026 财年第四季度及全年公告首次使用原始 PDF、冻结引擎和预标注题集，查数与指引通过 4/14，报告期未到和资料缺证分别通过 2/2。四路联读还用四段来源公开、经核对的短摘录跑过一次真实模型调用。
+高通同一批查数与指引题从 4/14 到 14/14；台积电原四题回归保持 4/4。冻结代码后首次上传 Uber 最新季度业绩公告，查数/指引为 3/14，未到期与缺证两类分别为 2/2。新增空列、每股单位与指引单位校验后，Uber 同题复测 8/14，余下四道业务线题与两道指引题仍需查原表。两次运行使用同一 PDF 和标注。GitHub Pages 是可离线体验的示例，任意新上传文档使用本地 Qwen 模型。
 
-[可审阅记录](docs/reader-audit.json) · [SQL 归因](evaluation/reader_failures.sql) · [高通预设标注](evaluation/qcom-reader-blind.json) · [另一个项目 SplitAgent 的公开评测](docs/splitagent.html)
+[本轮逐题记录](docs/earnings-audit.json) · [SQL 归因](evaluation/earnings_outcomes.sql) · [Uber 首轮标注](evaluation/uber-reader-blind.json) · [历史盲测及四源联读](docs/reader-evaluation.html) · [SplitAgent 的公开案例](docs/splitagent.html)
 
 <a id="run-reader"></a>
 ## 在本机上传报告并提问

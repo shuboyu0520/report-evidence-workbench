@@ -1,0 +1,4156 @@
+{
+  "pdf_pages": {
+    "qualcomm": 10,
+    "uber": 13
+  },
+  "test_mode": "普通工作台上传与问答接口，真实本机模型。首轮只计一次。旧目标题与独立新公司分开。",
+  "model_digests": {
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+  },
+  "runs": {
+    "q_retest": {
+      "commit": "d16bc36364b1fd4b278d5842cebc6d4cfd31d457",
+      "start_utc": "2026-11-06T11:12:23.785408+00:00",
+      "file_sha256": "6aa674a7f42a75aae351ccce55ae33ac2da34774827fdec43297f9ae6e12c4c6",
+      "fixture_sha256": "6509f78b833eaf193bbe01f3909fe4df57aae016447be7b0df77074aca5e4a6b",
+      "source": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf",
+      "scores": {
+        "lookup": [
+          14,
+          14
+        ],
+        "future": [
+          2,
+          2
+        ],
+        "missing": [
+          2,
+          2
+        ]
+      },
+      "cases": [
+        {
+          "id": "Q01",
+          "question": "2026 财年第四季度的 GAAP 营收是多少？按百万美元给出金额并引用业绩表。",
+          "kind": "quarter",
+          "value": "10,322",
+          "page": 1,
+          "metric": "GAAP Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，公司整体 GAAP Revenues（实际）为 10,322 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Revenues $10,322 $11,270 (8%) $10,442 $11,270 (7%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "to grow by more than 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Revenues",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$10,322"
+              ],
+              "amounts": [
+                "10,322"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": " 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "Revenues $10,322 $11,270 (8%) $10,442 $11,270 (7%)"
+            }
+          ]
+        },
+        {
+          "id": "Q02",
+          "question": "2026 财年全年的 GAAP 营收是多少？按百万美元给出金额并引用业绩表。",
+          "kind": "year",
+          "value": "43,120",
+          "page": 1,
+          "metric": "GAAP Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，公司整体 GAAP Revenues（实际）为 43,120 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Revenues $43,120 $44,284 (3%) $43,240 $44,141 (2%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Revenues",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": null,
+              "column": 1,
+              "raw_cell": [
+                "$43,120"
+              ],
+              "amounts": [
+                "43,120"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "Revenues $43,120 $44,284 (3%) $43,240 $44,141 (2%)"
+            }
+          ]
+        },
+        {
+          "id": "Q03",
+          "question": "2026 财年第四季度的 GAAP 净利润是多少百万美元？",
+          "kind": "quarter",
+          "value": "1,251",
+          "page": 1,
+          "metric": "Net income",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，公司整体 GAAP Net income（实际）为 1,251 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Net income $1,251 ($3,117) +140% $2,332 $3,257 (28%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "to grow by more than 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Net income",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$1,251"
+              ],
+              "amounts": [
+                "1,251"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": " 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "Net income $1,251 ($3,117) +140% $2,332 $3,257 (28%)"
+            }
+          ]
+        },
+        {
+          "id": "Q04",
+          "question": "2026 财年全年的 GAAP 净利润是多少百万美元？",
+          "kind": "year",
+          "value": "13,628",
+          "page": 1,
+          "metric": "Net income",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，公司整体 GAAP Net income（实际）为 13,628 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Net income $13,628 $5,541 +146% $11,311 $13,298 (15%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Net income",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": null,
+              "column": 1,
+              "raw_cell": [
+                "$13,628"
+              ],
+              "amounts": [
+                "13,628"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "Net income $13,628 $5,541 +146% $11,311 $13,298 (15%)"
+            }
+          ]
+        },
+        {
+          "id": "Q05",
+          "question": "2026 财年第四季度 GAAP 摊薄每股收益是多少美元？",
+          "kind": "quarter",
+          "value": "1.17",
+          "page": 1,
+          "metric": "Diluted EPS",
+          "unit": "美元/股",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，公司整体 GAAP Diluted earnings (loss) per share (EPS)（实际）为 1.17 美元/股。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "(EPS) $1.17 ($2.89) +140% $2.17 $3.00 (28%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "to grow by more than 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Diluted earnings (loss) per share (EPS)",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$1.17"
+              ],
+              "amounts": [
+                "1.17"
+              ],
+              "unit": "美元/股",
+              "priority": 4,
+              "header_excerpt": " 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "(EPS) $1.17 ($2.89) +140% $2.17 $3.00 (28%)"
+            }
+          ]
+        },
+        {
+          "id": "Q06",
+          "question": "2026 财年全年非 GAAP 摊薄每股收益是多少美元？",
+          "kind": "year",
+          "value": "10.54",
+          "page": 1,
+          "metric": "Non-GAAP EPS",
+          "unit": "美元/股",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，公司整体 Non-GAAP EPS（实际）为 10.54 美元/股。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "EPS $12.70 $5.01 +153% $10.54 $12.03 (12%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "EPS",
+              "scope": "",
+              "basis": "Non-GAAP",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "$10.54"
+              ],
+              "amounts": [
+                "10.54"
+              ],
+              "unit": "美元/股",
+              "priority": 4,
+              "header_excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "EPS $12.70 $5.01 +153% $10.54 $12.03 (12%)"
+            }
+          ]
+        },
+        {
+          "id": "Q07",
+          "question": "2026 财年第四季度 QCT 芯片部门的营收是多少百万美元？请引用分部业绩表。",
+          "kind": "quarter",
+          "value": "9,015",
+          "page": 2,
+          "metric": "QCT Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，QCT  Revenues（实际）为 9,015 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenues $9,015 $9,821 (8%) $1,304 $1,409 (7%)"
+            },
+            {
+              "page": 2,
+              "excerpt": "Segment Results Fourth Quarter QCT QTL (in millions, except percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 2,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenues",
+              "scope": "QCT",
+              "basis": "",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$9,015"
+              ],
+              "amounts": [
+                "9,015"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "Segment Results Fourth Quarter QCT QTL (in millions, except percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "Revenues $9,015 $9,821 (8%) $1,304 $1,409 (7%)"
+            }
+          ]
+        },
+        {
+          "id": "Q08",
+          "question": "2026 财年全年 QTL 授权部门营收是多少百万美元？请引用分部业绩表。",
+          "kind": "year",
+          "value": "5,556",
+          "page": 2,
+          "metric": "QTL Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，QTL  Revenues（实际）为 5,556 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenues $37,208 $38,367 (3%) $5,556 $5,582 —"
+            },
+            {
+              "page": 2,
+              "excerpt": "EBT as % of revenues 24% 29% -5 points 70% 72% -2 points Fiscal 2026 QCT QTL (in millions, except percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QTL"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenues",
+              "scope": "QTL",
+              "basis": "",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "$5,556"
+              ],
+              "amounts": [
+                "5,556"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "EBT as % of revenues 24% 29% -5 points 70% 72% -2 points Fiscal 2026 QCT QTL (in millions, except percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "Revenues $37,208 $38,367 (3%) $5,556 $5,582 —"
+            }
+          ]
+        },
+        {
+          "id": "Q09",
+          "question": "2026 财年第四季度 QCT 汽车业务的营收是多少百万美元？",
+          "kind": "quarter",
+          "value": "1,990",
+          "page": 2,
+          "metric": "Automotive",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，QCT  Automotive（实际）为 1,990 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Automotive",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "1,990"
+              ],
+              "amounts": [
+                "1,990"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            }
+          ]
+        },
+        {
+          "id": "Q10",
+          "question": "2026 财年全年 QCT 汽车业务的营收是多少百万美元？",
+          "kind": "year",
+          "value": "6,004",
+          "page": 2,
+          "metric": "Automotive",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，QCT  Automotive（实际）为 6,004 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Automotive",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "6,004"
+              ],
+              "amounts": [
+                "6,004"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            }
+          ]
+        },
+        {
+          "id": "Q11",
+          "question": "2026 财年第四季度 QCT 手机业务的营收是多少百万美元？",
+          "kind": "quarter",
+          "value": "5,137",
+          "page": 2,
+          "metric": "Handsets",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，QCT  Handsets（实际）为 5,137 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Handsets $5,137 $6,961 (26%) $24,072 $27,793 (13%)"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Handsets",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$5,137"
+              ],
+              "amounts": [
+                "5,137"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "Handsets $5,137 $6,961 (26%) $24,072 $27,793 (13%)"
+            }
+          ]
+        },
+        {
+          "id": "Q12",
+          "question": "2026 财年全年 QCT 物联网业务的营收是多少百万美元？",
+          "kind": "year",
+          "value": "7,132",
+          "page": 2,
+          "metric": "IoT",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，QCT  IoT (internet of things)（实际）为 7,132 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "IoT (internet of things) 1,888 1,807 +4% 7,132 6,617 +8%"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "IoT (internet of things)",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "7,132"
+              ],
+              "amounts": [
+                "7,132"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "IoT (internet of things) 1,888 1,807 +4% 7,132 6,617 +8%"
+            }
+          ]
+        },
+        {
+          "id": "Q13",
+          "question": "2027 财年第一季度公司总营收指引区间是多少十亿美元？说明这是指引。",
+          "kind": "guidance",
+          "value": "10.4–11.2",
+          "page": 3,
+          "metric": "Revenues",
+          "unit": "十亿美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2027 财年第1季度，公司整体  Revenues（指引）为 10.4 至 11.2 十亿美元。原表第 3 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 3,
+              "excerpt": "Revenues $10.4B - $11.2B"
+            },
+            {
+              "page": 3,
+              "excerpt": " input costs in our product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2027,
+              "requested_quarter": 1,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 3,
+              "label": "Revenues",
+              "scope": "Business Outlook",
+              "basis": "",
+              "year": 2027,
+              "quarter": 1,
+              "column": 1,
+              "raw_cell": [
+                "$10.4B",
+                "$11.2B"
+              ],
+              "amounts": [
+                "10.4",
+                "11.2"
+              ],
+              "unit": "十亿美元",
+              "priority": 0,
+              "header_excerpt": "product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1",
+              "row": "Revenues $10.4B - $11.2B"
+            }
+          ]
+        },
+        {
+          "id": "Q14",
+          "question": "2027 财年第一季度 GAAP 摊薄每股收益指引区间是多少美元？说明这是指引。",
+          "kind": "guidance",
+          "value": "1.03–1.23",
+          "page": 3,
+          "metric": "GAAP diluted EPS",
+          "unit": "美元/股",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2027 财年第1季度，公司整体  GAAP diluted EPS（指引）为 1.03 至 1.23 美元/股。原表第 3 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 3,
+              "excerpt": "GAAP diluted EPS $1.03 - $1.23"
+            },
+            {
+              "page": 3,
+              "excerpt": " input costs in our product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2027,
+              "requested_quarter": 1,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 3,
+              "label": "GAAP diluted EPS",
+              "scope": "Supplemental Revenue Information",
+              "basis": "",
+              "year": 2027,
+              "quarter": 1,
+              "column": 1,
+              "raw_cell": [
+                "$1.03",
+                "$1.23"
+              ],
+              "amounts": [
+                "1.03",
+                "1.23"
+              ],
+              "unit": "美元/股",
+              "priority": 0,
+              "header_excerpt": "product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1",
+              "row": "GAAP diluted EPS $1.03 - $1.23"
+            }
+          ]
+        },
+        {
+          "id": "Q15",
+          "question": "截至研究日，期间结束日 2026-12-27 的完整季度实际营收是多少？",
+          "kind": "future",
+          "value": "",
+          "page": "",
+          "metric": "not_yet_disclosed",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-27）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-27",
+              "as_of": "2026-11-06",
+              "source": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "Q16",
+          "question": "期间结束日 2026-12-27 的完整季度已经实现的摊薄每股收益是多少？",
+          "kind": "future",
+          "value": "",
+          "page": "",
+          "metric": "not_yet_disclosed",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-27）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-27",
+              "as_of": "2026-11-06",
+              "source": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "Q17",
+          "question": "2026 财年第四季度单独来自悉尼市的汽车芯片营收是多少百万美元？只看本文件。",
+          "kind": "missing",
+          "value": "",
+          "page": "",
+          "metric": "insufficient_evidence",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "Q18",
+          "question": "2026 财年全年具体分配给大学读书会的员工培训费用是多少美元？只看这份业绩公告。",
+          "kind": "missing",
+          "value": "",
+          "page": "",
+          "metric": "insufficient_evidence",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"无法回答。文件中未提及‘大学读书会的员工培训费用’，也未涉及与大学读书会或员工培训相关的支出内容。\",\n  \"evidence\": []\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 财年全年具体分配给大学读书会的员工培训费用是多少美元？只看这份业绩公告。"
+              },
+              "pages": [
+                2,
+                10,
+                5,
+                10,
+                5
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "u_first": {
+      "commit": "c0c7a97e63afaebaca41ba09312324106ba43a39",
+      "start_utc": "2026-11-06T11:17:24.765176+00:00",
+      "file_sha256": "771658eae3b120b31a2eea00345c363bd54f88be8db6a2a8139b9a09fe7ac97f",
+      "fixture_sha256": "11386f7fc21d648332bf421c83c755355cbd0c962ba5a240d980c988af9d889b",
+      "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf",
+      "scores": {
+        "lookup": [
+          3,
+          14
+        ],
+        "future": [
+          2,
+          2
+        ],
+        "missing": [
+          2,
+          2
+        ]
+      },
+      "cases": [
+        {
+          "id": "U01",
+          "kind": "quarter",
+          "question": "2026 年第三季度集团总营收是多少百万美元？请引原表。",
+          "value": "14,766",
+          "metric": "Revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体  Revenue（实际）为 14,766 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenue $ 13,467 $ 14,766 10 % 10 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenue",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 14,766"
+              ],
+              "amounts": [
+                "14,766"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Revenue  $ 13,467   $ 14,766    10 %   10 %"
+            }
+          ]
+        },
+        {
+          "id": "U02",
+          "kind": "quarter",
+          "question": "2026 年第三季度 GAAP 营业利润是多少百万美元？",
+          "value": "1,447",
+          "metric": "Income from operations",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7,
+            12,
+            13
+          ],
+          "passed": false,
+          "stage": "wrong_year",
+          "answer": "2026 财年第3季度，公司整体  GAAP Income from operations（实际）为 1,113 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "GAAP Income from operations $ 1,113 $ 1,447 30 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 3,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "GAAP Income from operations",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 1,
+              "raw_cell": [
+                "$ 1,113"
+              ],
+              "amounts": [
+                "1,113"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "GAAP Income from operations  $ 1,113   $ 1,447    30 %"
+            }
+          ]
+        },
+        {
+          "id": "U03",
+          "kind": "quarter",
+          "question": "2026 年第三季度 GAAP 归属于 Uber 的净利润是多少百万美元？请保留归母口径。",
+          "value": "512",
+          "metric": "Net income attributable to Uber Technologies, Inc.",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7,
+            12
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 3,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "check_cell_consistency",
+              "result": "conflicting_amounts"
+            }
+          ]
+        },
+        {
+          "id": "U04",
+          "kind": "quarter",
+          "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元？",
+          "value": "0.25",
+          "metric": "GAAP Diluted EPS",
+          "unit": "美元/股",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7,
+            12
+          ],
+          "passed": false,
+          "stage": "wrong_scope",
+          "answer": "2026 财年第3季度，公司整体  Diluted weighted-average shares outstanding（实际）为 2,050,324 美元/股。原表第 12 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 12,
+              "excerpt": "Diluted weighted-average shares outstanding 2,124,391 2,050,324 2,124,293 2,057,222"
+            },
+            {
+              "page": 12,
+              "excerpt": "liations of GAAP and Non-GAAP Operating Income, GAAP and Non-GAAP Net Income and GAAP and Non-GAAP EPS: Three Months Ended September 30, Nine Months Ended September 30, (In millions, except share amounts which are reflected in thousands, and per share amounts) 2025 2026 2025 2026"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 12,
+              "label": "Diluted weighted-average shares outstanding",
+              "scope": "The following tables present reconciliations of GAAP and Non-GAAP Operating Income, GAAP and Non-GAAP Net Income and",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "2,050,324"
+              ],
+              "amounts": [
+                "2,050,324"
+              ],
+              "unit": "美元/股",
+              "priority": -5,
+              "header_excerpt": " Non-GAAP Operating Income, GAAP and Non-GAAP Net Income and GAAP and Non-GAAP EPS: Three Months Ended September 30, Nine Months Ended September 30, (In millions, except share amounts which are reflected in thousands, and per share amounts) 2025 2026 2025 2026",
+              "row": "Diluted weighted-average shares outstanding   2,124,391    2,050,324    2,124,293    2,057,222"
+            }
+          ]
+        },
+        {
+          "id": "U05",
+          "kind": "quarter",
+          "question": "2026 年第三季度非 GAAP 经营利润是多少百万美元？",
+          "value": "2,304",
+          "metric": "Non-GAAP Operating Income",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            3,
+            12
+          ],
+          "passed": false,
+          "stage": "wrong_year",
+          "answer": "2026 财年第3季度，公司整体 非 GAAP Non-GAAP Operating Income（实际）为 1,675 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Non-GAAP Operating Income (1) $ 1,675 $ 2,304 38 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 3,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Non-GAAP Operating Income",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 1,675"
+              ],
+              "amounts": [
+                "1,675"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Non-GAAP Operating Income (1)  $ 1,675   $ 2,304    38 %"
+            }
+          ]
+        },
+        {
+          "id": "U06",
+          "kind": "quarter",
+          "question": "2026 年第三季度非 GAAP 每股收益是多少美元？",
+          "value": "0.88",
+          "metric": "Non-GAAP EPS",
+          "unit": "美元/股",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            12
+          ],
+          "passed": false,
+          "stage": "wrong_year",
+          "answer": "2026 财年第3季度，公司整体 非 GAAP Non-GAAP EPS（实际）为 0.65 美元/股。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Non-GAAP EPS (1) $ 0.65 $ 0.88 35 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Non-GAAP EPS",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 0.65"
+              ],
+              "amounts": [
+                "0.65"
+              ],
+              "unit": "美元/股",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Non-GAAP EPS (1)  $ 0.65   $ 0.88    35 %"
+            }
+          ]
+        },
+        {
+          "id": "U07",
+          "kind": "quarter",
+          "question": "2025 年第三季度集团营收是多少百万美元？只给可比季度的数值。",
+          "value": "13,467",
+          "metric": "Revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2025 财年第3季度，公司整体  Revenue（实际）为 13,467 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenue $ 13,467 $ 14,766 10 % 10 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2025,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenue",
+              "scope": "",
+              "basis": "",
+              "year": 2025,
+              "quarter": 3,
+              "column": 1,
+              "raw_cell": [
+                "$ 13,467"
+              ],
+              "amounts": [
+                "13,467"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Revenue  $ 13,467   $ 14,766    10 %   10 %"
+            }
+          ]
+        },
+        {
+          "id": "U08",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Mobility 出行业务的营收是多少百万美元？",
+          "value": "7,520",
+          "metric": "Mobility revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U09",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Delivery 配送业务的营收是多少百万美元？",
+          "value": "5,488",
+          "metric": "Delivery revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U10",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Freight 货运业务的营收是多少百万美元？",
+          "value": "1,758",
+          "metric": "Freight revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U11",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Delivery 配送业务的总预订额（Gross Bookings）是多少百万美元？",
+          "value": "28,539",
+          "metric": "Delivery Gross Bookings",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"2026年第三季度Delivery配送业务的总预订额（Gross Bookings）是28,539百万美元。\",\n  \"evidence\": [\n    {\n      \"page\": 2,\n      \"quote\": \"Gross Bookings:          \\nDelivery   23,322    28,539    22 %   23 %\"\n    }\n  ]\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第三季度 Delivery 配送业务的总预订额（Gross Bookings）是多少百万美元？"
+              },
+              "pages": [
+                2,
+                2,
+                1,
+                1,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "id": "U12",
+          "kind": "quarter",
+          "question": "2026 年第三季度自由现金流是多少百万美元？请引原表。",
+          "value": "2,535",
+          "metric": "Free cash flow",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            13
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026年第三季度自由现金流是2,535百万美元。（原文第 13 页）",
+          "verification": "cited_draft",
+          "citations": [
+            {
+              "page": 13,
+              "excerpt": "Free cash flow reconciliation: Net cash provided by operating activities $ 2,328 $ 2,639 $ 7,216 $ 7,852 Purchases of property and equipment (98) (104) (261) (239) Free cash flow $ 2,230 $ 2,535 $ 6,955 $ 7,613"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"2026年第三季度自由现金流是2,535百万美元。\",\n  \"evidence\": [\n    {\n      \"page\": 13,\n      \"quote\": \"Free cash flow reconciliation:         \\nNet cash provided by operating activities  $ 2,328   $ 2,639   $ 7,216   $ 7,852  \\nPurchases of property and equipment   (98)   (104)   (261)   (239) \\nFree cash flow  $ 2,230   $ 2,535   $ 6,955   $ 7,613  \"\n    }\n  ]\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第三季度自由现金流是多少百万美元？请引原表。"
+              },
+              "pages": [
+                13,
+                1,
+                13,
+                2,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "id": "U13",
+          "kind": "guidance",
+          "question": "2026 年第四季度总预订额（Gross Bookings）的管理层指引区间是多少十亿美元？",
+          "value": "63.25–65.25",
+          "metric": "Gross Bookings outlook",
+          "unit": "十亿美元",
+          "page": 1,
+          "accepted_pages": [
+            1
+          ],
+          "passed": false,
+          "stage": "wrong_unit",
+          "answer": "2026年第四季度总预订额（Gross Bookings）的管理层指引区间是63.25亿至65.25十亿美元。（原文第 1 页）",
+          "verification": "cited_draft",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "For Q4 2026, we anticipate: • Gross Bookings of $63.25 billion to $65.25 billion, representing growth of 18% to 22% YoY on a constant-currency basis."
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"2026年第四季度总预订额（Gross Bookings）的管理层指引区间是63.25亿至65.25十亿美元。\",\n  \"evidence\": [\n    {\n      \"page\": 1,\n      \"quote\": \"For Q4 2026, we anticipate: • Gross Bookings of $63.25 billion to $65.25 billion, representing growth of 18% to 22% YoY on a constant-currency basis.\"\n    }\n  ]\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第四季度总预订额（Gross Bookings）的管理层指引区间是多少十亿美元？"
+              },
+              "pages": [
+                1,
+                1,
+                2,
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "id": "U14",
+          "kind": "guidance",
+          "question": "2026 年第四季度非 GAAP 每股收益指引区间是多少美元？",
+          "value": "0.95–0.99",
+          "metric": "Non-GAAP EPS outlook",
+          "unit": "美元/股",
+          "page": 1,
+          "accepted_pages": [
+            1
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            }
+          ]
+        },
+        {
+          "id": "U15",
+          "kind": "future",
+          "question": "截至研究日，期间结束日 2026-12-31 的完整季度实际营收是多少？",
+          "metric": "not_yet_disclosed",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-31",
+              "as_of": "2026-11-06",
+              "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "U16",
+          "kind": "future",
+          "question": "期间结束日 2026-12-31 的完整季度已经实现的 GAAP 摊薄每股收益是多少？",
+          "metric": "not_yet_disclosed",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-31",
+              "as_of": "2026-11-06",
+              "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "U17",
+          "kind": "missing",
+          "question": "2026 年第三季度单独来自悉尼市一所大学教职工的配送业务收入是多少百万美元？只看本文件。",
+          "metric": "insufficient_evidence",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U18",
+          "kind": "missing",
+          "question": "2026 年第三季度分配给单一城市读书会的培训费用是多少美元？只看这份公司公告。",
+          "metric": "insufficient_evidence",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"无法回答。公告中未提及‘单一城市读书会’或相关培训费用信息。\",\n  \"evidence\": []\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第三季度分配给单一城市读书会的培训费用是多少美元？只看这份公司公告。"
+              },
+              "pages": [
+                2,
+                2,
+                1,
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "q_ship": {
+      "commit": "b59328969d377a63558ef44470c14be8ed8713a6",
+      "start_utc": "2026-11-06T11:20:48.449520+00:00",
+      "file_sha256": "6aa674a7f42a75aae351ccce55ae33ac2da34774827fdec43297f9ae6e12c4c6",
+      "fixture_sha256": "6509f78b833eaf193bbe01f3909fe4df57aae016447be7b0df77074aca5e4a6b",
+      "source": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf",
+      "scores": {
+        "lookup": [
+          14,
+          14
+        ],
+        "future": [
+          2,
+          2
+        ],
+        "missing": [
+          2,
+          2
+        ]
+      },
+      "cases": [
+        {
+          "id": "Q01",
+          "question": "2026 财年第四季度的 GAAP 营收是多少？按百万美元给出金额并引用业绩表。",
+          "kind": "quarter",
+          "value": "10,322",
+          "page": 1,
+          "metric": "GAAP Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，公司整体 GAAP Revenues（实际）为 10,322 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Revenues $10,322 $11,270 (8%) $10,442 $11,270 (7%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "to grow by more than 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Revenues",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$10,322"
+              ],
+              "amounts": [
+                "10,322"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": " 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "Revenues $10,322 $11,270 (8%) $10,442 $11,270 (7%)"
+            }
+          ]
+        },
+        {
+          "id": "Q02",
+          "question": "2026 财年全年的 GAAP 营收是多少？按百万美元给出金额并引用业绩表。",
+          "kind": "year",
+          "value": "43,120",
+          "page": 1,
+          "metric": "GAAP Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，公司整体 GAAP Revenues（实际）为 43,120 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Revenues $43,120 $44,284 (3%) $43,240 $44,141 (2%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Revenues",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": null,
+              "column": 1,
+              "raw_cell": [
+                "$43,120"
+              ],
+              "amounts": [
+                "43,120"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "Revenues $43,120 $44,284 (3%) $43,240 $44,141 (2%)"
+            }
+          ]
+        },
+        {
+          "id": "Q03",
+          "question": "2026 财年第四季度的 GAAP 净利润是多少百万美元？",
+          "kind": "quarter",
+          "value": "1,251",
+          "page": 1,
+          "metric": "Net income",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，公司整体 GAAP Net income（实际）为 1,251 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Net income $1,251 ($3,117) +140% $2,332 $3,257 (28%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "to grow by more than 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Net income",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$1,251"
+              ],
+              "amounts": [
+                "1,251"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": " 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "Net income $1,251 ($3,117) +140% $2,332 $3,257 (28%)"
+            }
+          ]
+        },
+        {
+          "id": "Q04",
+          "question": "2026 财年全年的 GAAP 净利润是多少百万美元？",
+          "kind": "year",
+          "value": "13,628",
+          "page": 1,
+          "metric": "Net income",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，公司整体 GAAP Net income（实际）为 13,628 百万美元。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "Net income $13,628 $5,541 +146% $11,311 $13,298 (15%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Net income",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": null,
+              "column": 1,
+              "raw_cell": [
+                "$13,628"
+              ],
+              "amounts": [
+                "13,628"
+              ],
+              "unit": "百万美元",
+              "priority": 4,
+              "header_excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "Net income $13,628 $5,541 +146% $11,311 $13,298 (15%)"
+            }
+          ]
+        },
+        {
+          "id": "Q05",
+          "question": "2026 财年第四季度 GAAP 摊薄每股收益是多少美元？",
+          "kind": "quarter",
+          "value": "1.17",
+          "page": 1,
+          "metric": "Diluted EPS",
+          "unit": "美元/股",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，公司整体 GAAP Diluted earnings (loss) per share (EPS)（实际）为 1.17 美元/股。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "(EPS) $1.17 ($2.89) +140% $2.17 $3.00 (28%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "to grow by more than 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "Diluted earnings (loss) per share (EPS)",
+              "scope": "",
+              "basis": "GAAP",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$1.17"
+              ],
+              "amounts": [
+                "1.17"
+              ],
+              "unit": "美元/股",
+              "priority": 4,
+              "header_excerpt": " 60% year-over-year, and we are reiterating our fiscal 2027 Data Center revenue target of $5B.” Fourth Quarter Results1 GAAP Non-GAAP (in millions, except per share data and percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "(EPS) $1.17 ($2.89) +140% $2.17 $3.00 (28%)"
+            }
+          ]
+        },
+        {
+          "id": "Q06",
+          "question": "2026 财年全年非 GAAP 摊薄每股收益是多少美元？",
+          "kind": "year",
+          "value": "10.54",
+          "page": 1,
+          "metric": "Non-GAAP EPS",
+          "unit": "美元/股",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，公司整体 Non-GAAP EPS（实际）为 10.54 美元/股。原表第 1 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 1,
+              "excerpt": "EPS $12.70 $5.01 +153% $10.54 $12.03 (12%)"
+            },
+            {
+              "page": 1,
+              "excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 1,
+              "label": "EPS",
+              "scope": "",
+              "basis": "Non-GAAP",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "$10.54"
+              ],
+              "amounts": [
+                "10.54"
+              ],
+              "unit": "美元/股",
+              "priority": 4,
+              "header_excerpt": "Fiscal 2026 Results1,2 GAAP Non-GAAP (in millions, except per share data and percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "EPS $12.70 $5.01 +153% $10.54 $12.03 (12%)"
+            }
+          ]
+        },
+        {
+          "id": "Q07",
+          "question": "2026 财年第四季度 QCT 芯片部门的营收是多少百万美元？请引用分部业绩表。",
+          "kind": "quarter",
+          "value": "9,015",
+          "page": 2,
+          "metric": "QCT Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，QCT  Revenues（实际）为 9,015 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenues $9,015 $9,821 (8%) $1,304 $1,409 (7%)"
+            },
+            {
+              "page": 2,
+              "excerpt": "Segment Results Fourth Quarter QCT QTL (in millions, except percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 2,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenues",
+              "scope": "QCT",
+              "basis": "",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$9,015"
+              ],
+              "amounts": [
+                "9,015"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "Segment Results Fourth Quarter QCT QTL (in millions, except percentages) Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4 Fiscal 2026 Q4 Fiscal 2025 Change",
+              "row": "Revenues $9,015 $9,821 (8%) $1,304 $1,409 (7%)"
+            }
+          ]
+        },
+        {
+          "id": "Q08",
+          "question": "2026 财年全年 QTL 授权部门营收是多少百万美元？请引用分部业绩表。",
+          "kind": "year",
+          "value": "5,556",
+          "page": 2,
+          "metric": "QTL Revenues",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，QTL  Revenues（实际）为 5,556 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenues $37,208 $38,367 (3%) $5,556 $5,582 —"
+            },
+            {
+              "page": 2,
+              "excerpt": "EBT as % of revenues 24% 29% -5 points 70% 72% -2 points Fiscal 2026 QCT QTL (in millions, except percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QTL"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenues",
+              "scope": "QTL",
+              "basis": "",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "$5,556"
+              ],
+              "amounts": [
+                "5,556"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "EBT as % of revenues 24% 29% -5 points 70% 72% -2 points Fiscal 2026 QCT QTL (in millions, except percentages) Fiscal 2026 Fiscal 2025 Change Fiscal 2026 Fiscal 2025 Change",
+              "row": "Revenues $37,208 $38,367 (3%) $5,556 $5,582 —"
+            }
+          ]
+        },
+        {
+          "id": "Q09",
+          "question": "2026 财年第四季度 QCT 汽车业务的营收是多少百万美元？",
+          "kind": "quarter",
+          "value": "1,990",
+          "page": 2,
+          "metric": "Automotive",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，QCT  Automotive（实际）为 1,990 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Automotive",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "1,990"
+              ],
+              "amounts": [
+                "1,990"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            }
+          ]
+        },
+        {
+          "id": "Q10",
+          "question": "2026 财年全年 QCT 汽车业务的营收是多少百万美元？",
+          "kind": "year",
+          "value": "6,004",
+          "page": 2,
+          "metric": "Automotive",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，QCT  Automotive（实际）为 6,004 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Automotive",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "6,004"
+              ],
+              "amounts": [
+                "6,004"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "Automotive 1,990 1,053 +89% 6,004 3,957 +52%"
+            }
+          ]
+        },
+        {
+          "id": "Q11",
+          "question": "2026 财年第四季度 QCT 手机业务的营收是多少百万美元？",
+          "kind": "quarter",
+          "value": "5,137",
+          "page": 2,
+          "metric": "Handsets",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第4季度，QCT  Handsets（实际）为 5,137 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Handsets $5,137 $6,961 (26%) $24,072 $27,793 (13%)"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Handsets",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": 4,
+              "column": 1,
+              "raw_cell": [
+                "$5,137"
+              ],
+              "amounts": [
+                "5,137"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "Handsets $5,137 $6,961 (26%) $24,072 $27,793 (13%)"
+            }
+          ]
+        },
+        {
+          "id": "Q12",
+          "question": "2026 财年全年 QCT 物联网业务的营收是多少百万美元？",
+          "kind": "year",
+          "value": "7,132",
+          "page": 2,
+          "metric": "IoT",
+          "unit": "百万美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年全年，QCT  IoT (internet of things)（实际）为 7,132 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "IoT (internet of things) 1,888 1,807 +4% 7,132 6,617 +8%"
+            },
+            {
+              "page": 2,
+              "excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [
+                "QCT"
+              ],
+              "requested_year": 2026,
+              "requested_quarter": null,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "IoT (internet of things)",
+              "scope": "QCT Revenue Streams1",
+              "basis": "",
+              "year": 2026,
+              "quarter": null,
+              "column": 4,
+              "raw_cell": [
+                "7,132"
+              ],
+              "amounts": [
+                "7,132"
+              ],
+              "unit": "百万美元",
+              "priority": 3,
+              "header_excerpt": "QCT Revenue Streams1 Fourth Quarter Fiscal (in millions, except percentages) 2026 2025 Change 2026 2025 Change",
+              "row": "IoT (internet of things) 1,888 1,807 +4% 7,132 6,617 +8%"
+            }
+          ]
+        },
+        {
+          "id": "Q13",
+          "question": "2027 财年第一季度公司总营收指引区间是多少十亿美元？说明这是指引。",
+          "kind": "guidance",
+          "value": "10.4–11.2",
+          "page": 3,
+          "metric": "Revenues",
+          "unit": "十亿美元",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2027 财年第1季度，公司整体  Revenues（指引）为 10.4 至 11.2 十亿美元。原表第 3 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 3,
+              "excerpt": "Revenues $10.4B - $11.2B"
+            },
+            {
+              "page": 3,
+              "excerpt": " input costs in our product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2027,
+              "requested_quarter": 1,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 3,
+              "label": "Revenues",
+              "scope": "Business Outlook",
+              "basis": "",
+              "year": 2027,
+              "quarter": 1,
+              "column": 1,
+              "raw_cell": [
+                "$10.4B",
+                "$11.2B"
+              ],
+              "amounts": [
+                "10.4",
+                "11.2"
+              ],
+              "unit": "十亿美元",
+              "priority": 0,
+              "header_excerpt": "product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1",
+              "row": "Revenues $10.4B - $11.2B"
+            }
+          ]
+        },
+        {
+          "id": "Q14",
+          "question": "2027 财年第一季度 GAAP 摊薄每股收益指引区间是多少美元？说明这是指引。",
+          "kind": "guidance",
+          "value": "1.03–1.23",
+          "page": 3,
+          "metric": "GAAP diluted EPS",
+          "unit": "美元/股",
+          "passed": true,
+          "stage": "pass",
+          "answer": "2027 财年第1季度，公司整体  GAAP diluted EPS（指引）为 1.03 至 1.23 美元/股。原表第 3 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 3,
+              "excerpt": "GAAP diluted EPS $1.03 - $1.23"
+            },
+            {
+              "page": 3,
+              "excerpt": " input costs in our product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2027,
+              "requested_quarter": 1,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 3,
+              "label": "GAAP diluted EPS",
+              "scope": "Supplemental Revenue Information",
+              "basis": "",
+              "year": 2027,
+              "quarter": 1,
+              "column": 1,
+              "raw_cell": [
+                "$1.03",
+                "$1.23"
+              ],
+              "amounts": [
+                "1.03",
+                "1.23"
+              ],
+              "unit": "美元/股",
+              "priority": 0,
+              "header_excerpt": "product pricing. We anticipate the full benefit of these actions to be reflected in QCT gross margins in the second half of fiscal 2027. The following table summarizes GAAP and Non-GAAP guidance based on the current outlook. Current Guidance Q1 FY27 Estimates1",
+              "row": "GAAP diluted EPS $1.03 - $1.23"
+            }
+          ]
+        },
+        {
+          "id": "Q15",
+          "question": "截至研究日，期间结束日 2026-12-27 的完整季度实际营收是多少？",
+          "kind": "future",
+          "value": "",
+          "page": "",
+          "metric": "not_yet_disclosed",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-27）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-27",
+              "as_of": "2026-11-06",
+              "source": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "Q16",
+          "question": "期间结束日 2026-12-27 的完整季度已经实现的摊薄每股收益是多少？",
+          "kind": "future",
+          "value": "",
+          "page": "",
+          "metric": "not_yet_disclosed",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-27）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-27",
+              "as_of": "2026-11-06",
+              "source": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "Q17",
+          "question": "2026 财年第四季度单独来自悉尼市的汽车芯片营收是多少百万美元？只看本文件。",
+          "kind": "missing",
+          "value": "",
+          "page": "",
+          "metric": "insufficient_evidence",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 10,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "Q18",
+          "question": "2026 财年全年具体分配给大学读书会的员工培训费用是多少美元？只看这份业绩公告。",
+          "kind": "missing",
+          "value": "",
+          "page": "",
+          "metric": "insufficient_evidence",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"无法回答。文件中未提及‘大学读书会’或‘员工培训费用’的相关内容，也无与之匹配的财务数据或描述。\",\n  \"evidence\": []\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 财年全年具体分配给大学读书会的员工培训费用是多少美元？只看这份业绩公告。"
+              },
+              "pages": [
+                2,
+                10,
+                5,
+                10,
+                5
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "u_replay": {
+      "commit": "b59328969d377a63558ef44470c14be8ed8713a6",
+      "start_utc": "2026-11-06T11:21:10.414641+00:00",
+      "file_sha256": "771658eae3b120b31a2eea00345c363bd54f88be8db6a2a8139b9a09fe7ac97f",
+      "fixture_sha256": "11386f7fc21d648332bf421c83c755355cbd0c962ba5a240d980c988af9d889b",
+      "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf",
+      "scores": {
+        "lookup": [
+          8,
+          14
+        ],
+        "future": [
+          2,
+          2
+        ],
+        "missing": [
+          2,
+          2
+        ]
+      },
+      "cases": [
+        {
+          "id": "U01",
+          "kind": "quarter",
+          "question": "2026 年第三季度集团总营收是多少百万美元？请引原表。",
+          "value": "14,766",
+          "metric": "Revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体  Revenue（实际）为 14,766 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenue $ 13,467 $ 14,766 10 % 10 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenue",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 14,766"
+              ],
+              "amounts": [
+                "14,766"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Revenue  $ 13,467   $ 14,766    10 %   10 %"
+            }
+          ]
+        },
+        {
+          "id": "U02",
+          "kind": "quarter",
+          "question": "2026 年第三季度 GAAP 营业利润是多少百万美元？",
+          "value": "1,447",
+          "metric": "Income from operations",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7,
+            12,
+            13
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体  GAAP Income from operations（实际）为 1,447 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "GAAP Income from operations $ 1,113 $ 1,447 30 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 3,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "GAAP Income from operations",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 1,447"
+              ],
+              "amounts": [
+                "1,447"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "GAAP Income from operations  $ 1,113   $ 1,447    30 %"
+            }
+          ]
+        },
+        {
+          "id": "U03",
+          "kind": "quarter",
+          "question": "2026 年第三季度 GAAP 归属于 Uber 的净利润是多少百万美元？请保留归母口径。",
+          "value": "512",
+          "metric": "Net income attributable to Uber Technologies, Inc.",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7,
+            12
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体  GAAP Net income attributable to Uber Technologies, Inc. (2)（实际）为 512 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "GAAP Net income attributable to Uber Technologies, Inc. (2) $ 6,626 $ 512 (92) %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 4,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "GAAP Net income attributable to Uber Technologies, Inc. (2)",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 512"
+              ],
+              "amounts": [
+                "512"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "GAAP Net income attributable to Uber Technologies, Inc. (2)  $ 6,626   $ 512    (92) %"
+            }
+          ]
+        },
+        {
+          "id": "U04",
+          "kind": "quarter",
+          "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元？",
+          "value": "0.25",
+          "metric": "GAAP Diluted EPS",
+          "unit": "美元/股",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7,
+            12
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体  GAAP Diluted EPS（实际）为 0.25 美元/股。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "GAAP Diluted EPS $ 3.11 $ 0.25 (92) %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 2,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "GAAP Diluted EPS",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 0.25"
+              ],
+              "amounts": [
+                "0.25"
+              ],
+              "unit": "美元/股",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "GAAP Diluted EPS  $ 3.11   $ 0.25    (92) %"
+            }
+          ]
+        },
+        {
+          "id": "U05",
+          "kind": "quarter",
+          "question": "2026 年第三季度非 GAAP 经营利润是多少百万美元？",
+          "value": "2,304",
+          "metric": "Non-GAAP Operating Income",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            3,
+            12
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体 非 GAAP Non-GAAP Operating Income (1)（实际）为 2,304 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Non-GAAP Operating Income (1) $ 1,675 $ 2,304 38 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 4,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Non-GAAP Operating Income (1)",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 2,304"
+              ],
+              "amounts": [
+                "2,304"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Non-GAAP Operating Income (1)  $ 1,675   $ 2,304    38 %"
+            }
+          ]
+        },
+        {
+          "id": "U06",
+          "kind": "quarter",
+          "question": "2026 年第三季度非 GAAP 每股收益是多少美元？",
+          "value": "0.88",
+          "metric": "Non-GAAP EPS",
+          "unit": "美元/股",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            12
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026 财年第3季度，公司整体 非 GAAP Non-GAAP EPS (1)（实际）为 0.88 美元/股。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Non-GAAP EPS (1) $ 0.65 $ 0.88 35 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 2,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Non-GAAP EPS (1)",
+              "scope": "",
+              "basis": "",
+              "year": 2026,
+              "quarter": 3,
+              "column": 2,
+              "raw_cell": [
+                "$ 0.88"
+              ],
+              "amounts": [
+                "0.88"
+              ],
+              "unit": "美元/股",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Non-GAAP EPS (1)  $ 0.65   $ 0.88    35 %"
+            }
+          ]
+        },
+        {
+          "id": "U07",
+          "kind": "quarter",
+          "question": "2025 年第三季度集团营收是多少百万美元？只给可比季度的数值。",
+          "value": "13,467",
+          "metric": "Revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            7
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2025 财年第3季度，公司整体  Revenue（实际）为 13,467 百万美元。原表第 2 页。",
+          "verification": "source_earnings_cell",
+          "citations": [
+            {
+              "page": 2,
+              "excerpt": "Revenue $ 13,467 $ 14,766 10 % 10 %"
+            },
+            {
+              "page": 2,
+              "excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\"id\": 1}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 1,
+              "requested_scope": [],
+              "requested_year": 2025,
+              "requested_quarter": 3,
+              "unresolved_qualifier": false
+            },
+            {
+              "tool": "read_earnings_cell",
+              "row_id": 1,
+              "page": 2,
+              "label": "Revenue",
+              "scope": "",
+              "basis": "",
+              "year": 2025,
+              "quarter": 3,
+              "column": 1,
+              "raw_cell": [
+                "$ 13,467"
+              ],
+              "amounts": [
+                "13,467"
+              ],
+              "unit": "百万美元",
+              "priority": 0,
+              "header_excerpt": "2 Financial and Operational Highlights for Third Quarter 2026 Three Months Ended September 30, (In millions, except percentages and per share amounts) 2025 2026 % Change % Change (Constant Currency (1))",
+              "row": "Revenue  $ 13,467   $ 14,766    10 %   10 %"
+            }
+          ]
+        },
+        {
+          "id": "U08",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Mobility 出行业务的营收是多少百万美元？",
+          "value": "7,520",
+          "metric": "Mobility revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U09",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Delivery 配送业务的营收是多少百万美元？",
+          "value": "5,488",
+          "metric": "Delivery revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U10",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Freight 货运业务的营收是多少百万美元？",
+          "value": "1,758",
+          "metric": "Freight revenue",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U11",
+          "kind": "quarter",
+          "question": "2026 年第三季度 Delivery 配送业务的总预订额（Gross Bookings）是多少百万美元？",
+          "value": "28,539",
+          "metric": "Delivery Gross Bookings",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"2026年第三季度Delivery配送业务的总预订额（Gross Bookings）是28,539百万美元。\",\n  \"evidence\": [\n    {\n      \"page\": 2,\n      \"quote\": \"Gross Bookings:          \\nDelivery   23,322    28,539    22 %   23 %\"\n    }\n  ]\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第三季度 Delivery 配送业务的总预订额（Gross Bookings）是多少百万美元？"
+              },
+              "pages": [
+                2,
+                2,
+                1,
+                1,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "id": "U12",
+          "kind": "quarter",
+          "question": "2026 年第三季度自由现金流是多少百万美元？请引原表。",
+          "value": "2,535",
+          "metric": "Free cash flow",
+          "unit": "百万美元",
+          "page": 2,
+          "accepted_pages": [
+            2,
+            13
+          ],
+          "passed": true,
+          "stage": "pass",
+          "answer": "2026年第三季度自由现金流是2,535百万美元。（原文第 13 页）",
+          "verification": "cited_draft",
+          "citations": [
+            {
+              "page": 13,
+              "excerpt": "Free cash flow reconciliation: Net cash provided by operating activities $ 2,328 $ 2,639 $ 7,216 $ 7,852 Purchases of property and equipment (98) (104) (261) (239) Free cash flow $ 2,230 $ 2,535 $ 6,955 $ 7,613"
+            }
+          ],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"2026年第三季度自由现金流是2,535百万美元。\",\n  \"evidence\": [\n    {\n      \"page\": 13,\n      \"quote\": \"Free cash flow reconciliation:         \\nNet cash provided by operating activities  $ 2,328   $ 2,639   $ 7,216   $ 7,852  \\nPurchases of property and equipment   (98)   (104)   (261)   (239) \\nFree cash flow  $ 2,230   $ 2,535   $ 6,955   $ 7,613  \"\n    }\n  ]\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第三季度自由现金流是多少百万美元？请引原表。"
+              },
+              "pages": [
+                13,
+                1,
+                13,
+                2,
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "id": "U13",
+          "kind": "guidance",
+          "question": "2026 年第四季度总预订额（Gross Bookings）的管理层指引区间是多少十亿美元？",
+          "value": "63.25–65.25",
+          "metric": "Gross Bookings outlook",
+          "unit": "十亿美元",
+          "page": 1,
+          "accepted_pages": [
+            1
+          ],
+          "passed": false,
+          "stage": "unit_guard",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"2026年第四季度总预订额（Gross Bookings）的管理层指引区间是63.25亿至65.25十亿美元。\",\n  \"evidence\": [\n    {\n      \"page\": 1,\n      \"quote\": \"For Q4 2026, we anticipate: • Gross Bookings of $63.25 billion to $65.25 billion, representing growth of 18% to 22% YoY on a constant-currency basis.\"\n    }\n  ]\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第四季度总预订额（Gross Bookings）的管理层指引区间是多少十亿美元？"
+              },
+              "pages": [
+                1,
+                1,
+                2,
+                1,
+                2
+              ]
+            },
+            {
+              "tool": "check_range_units",
+              "result": "inconsistent_scale"
+            }
+          ]
+        },
+        {
+          "id": "U14",
+          "kind": "guidance",
+          "question": "2026 年第四季度非 GAAP 每股收益指引区间是多少美元？",
+          "value": "0.95–0.99",
+          "metric": "Non-GAAP EPS outlook",
+          "unit": "美元/股",
+          "page": 1,
+          "accepted_pages": [
+            1
+          ],
+          "passed": false,
+          "stage": "refused",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 4,
+              "unresolved_qualifier": false
+            }
+          ]
+        },
+        {
+          "id": "U15",
+          "kind": "future",
+          "question": "截至研究日，期间结束日 2026-12-31 的完整季度实际营收是多少？",
+          "metric": "not_yet_disclosed",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-31",
+              "as_of": "2026-11-06",
+              "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "U16",
+          "kind": "future",
+          "question": "期间结束日 2026-12-31 的完整季度已经实现的 GAAP 摊薄每股收益是多少？",
+          "metric": "not_yet_disclosed",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+          "verification": "not_yet_disclosed",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "check_reporting_period",
+              "period_end": "2026-12-31",
+              "as_of": "2026-11-06",
+              "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf"
+            }
+          ]
+        },
+        {
+          "id": "U17",
+          "kind": "missing",
+          "question": "2026 年第三季度单独来自悉尼市一所大学教职工的配送业务收入是多少百万美元？只看本文件。",
+          "metric": "insufficient_evidence",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [],
+          "tools": [
+            {
+              "tool": "search_earnings_rows",
+              "pages_scanned": 13,
+              "eligible_cells": 0,
+              "requested_scope": [],
+              "requested_year": 2026,
+              "requested_quarter": 3,
+              "unresolved_qualifier": true
+            }
+          ]
+        },
+        {
+          "id": "U18",
+          "kind": "missing",
+          "question": "2026 年第三季度分配给单一城市读书会的培训费用是多少美元？只看这份公司公告。",
+          "metric": "insufficient_evidence",
+          "value": "",
+          "page": "",
+          "unit": "",
+          "passed": true,
+          "stage": "pass",
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "verification": "insufficient_evidence",
+          "citations": [],
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"answer\": \"无法回答。公告中未提及‘单一城市读书会’或相关培训费用信息。\",\n  \"evidence\": []\n}"
+            }
+          ],
+          "tools": [
+            {
+              "tool": "search_report",
+              "origin": "server",
+              "arguments": {
+                "query": "2026 年第三季度分配给单一城市读书会的培训费用是多少美元？只看这份公司公告。"
+              },
+              "pages": [
+                2,
+                2,
+                1,
+                1,
+                1
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "q_first": {
+      "commit": "a537990df0dd72e7d880b2fe3041030368914427",
+      "scores": {
+        "lookup": [
+          4,
+          14
+        ],
+        "future": [
+          2,
+          2
+        ],
+        "missing": [
+          2,
+          2
+        ]
+      },
+      "cases": [
+        {
+          "id": "Q01",
+          "question": "2026 财年第四季度的 GAAP 营收是多少？按百万美元给出金额并引用业绩表。",
+          "kind": "quarter",
+          "passed": false,
+          "answer": "2026财年第四季度的GAAP营收是9015百万美元。（原文第 2 页）",
+          "stage": "wrong_scope"
+        },
+        {
+          "id": "Q02",
+          "question": "2026 财年全年的 GAAP 营收是多少？按百万美元给出金额并引用业绩表。",
+          "kind": "year",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q03",
+          "question": "2026 财年第四季度的 GAAP 净利润是多少百万美元？",
+          "kind": "quarter",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "not_retrieved"
+        },
+        {
+          "id": "Q04",
+          "question": "2026 财年全年的 GAAP 净利润是多少百万美元？",
+          "kind": "year",
+          "passed": true,
+          "answer": "2026财年全年的GAAP净利润是13,628百万美元。（原文第 1 页）",
+          "stage": "pass"
+        },
+        {
+          "id": "Q05",
+          "question": "2026 财年第四季度 GAAP 摊薄每股收益是多少美元？",
+          "kind": "quarter",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "not_retrieved"
+        },
+        {
+          "id": "Q06",
+          "question": "2026 财年全年非 GAAP 摊薄每股收益是多少美元？",
+          "kind": "year",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q07",
+          "question": "2026 财年第四季度 QCT 芯片部门的营收是多少百万美元？请引用分部业绩表。",
+          "kind": "quarter",
+          "passed": true,
+          "answer": "2026财年第四季度QCT芯片部门的营收是9,015百万美元。（原文第 2 页）",
+          "stage": "pass"
+        },
+        {
+          "id": "Q08",
+          "question": "2026 财年全年 QTL 授权部门营收是多少百万美元？请引用分部业绩表。",
+          "kind": "year",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q09",
+          "question": "2026 财年第四季度 QCT 汽车业务的营收是多少百万美元？",
+          "kind": "quarter",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q10",
+          "question": "2026 财年全年 QCT 汽车业务的营收是多少百万美元？",
+          "kind": "year",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q11",
+          "question": "2026 财年第四季度 QCT 手机业务的营收是多少百万美元？",
+          "kind": "quarter",
+          "passed": true,
+          "answer": "2026财年第四季度QCT手机业务的营收是5,137百万美元。（原文第 2 页）",
+          "stage": "pass"
+        },
+        {
+          "id": "Q12",
+          "question": "2026 财年全年 QCT 物联网业务的营收是多少百万美元？",
+          "kind": "year",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q13",
+          "question": "2027 财年第一季度公司总营收指引区间是多少十亿美元？说明这是指引。",
+          "kind": "guidance",
+          "passed": false,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "rejected_after_hit"
+        },
+        {
+          "id": "Q14",
+          "question": "2027 财年第一季度 GAAP 摊薄每股收益指引区间是多少美元？说明这是指引。",
+          "kind": "guidance",
+          "passed": true,
+          "answer": "2027财年第一季度GAAP摊薄每股收益指引区间是1.03至1.23美元。（原文第 3 页）",
+          "stage": "pass"
+        },
+        {
+          "id": "Q15",
+          "question": "截至研究日，期间结束日 2026-12-27 的完整季度实际营收是多少？",
+          "kind": "future",
+          "passed": true,
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-27）尚未结束，该期完整实际业绩尚未披露。",
+          "stage": "pass"
+        },
+        {
+          "id": "Q16",
+          "question": "期间结束日 2026-12-27 的完整季度已经实现的摊薄每股收益是多少？",
+          "kind": "future",
+          "passed": true,
+          "answer": "截至 2026-11-06，所问报告期（截至 2026-12-27）尚未结束，该期完整实际业绩尚未披露。",
+          "stage": "pass"
+        },
+        {
+          "id": "Q17",
+          "question": "2026 财年第四季度单独来自悉尼市的汽车芯片营收是多少百万美元？只看本文件。",
+          "kind": "missing",
+          "passed": true,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "pass"
+        },
+        {
+          "id": "Q18",
+          "question": "2026 财年全年具体分配给大学读书会的员工培训费用是多少美元？只看这份业绩公告。",
+          "kind": "missing",
+          "passed": true,
+          "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+          "stage": "pass"
+        }
+      ]
+    }
+  },
+  "tsmc": {
+    "original_replay": {
+      "commit": "d16bc36364b1fd4b278d5842cebc6d4cfd31d457",
+      "start_utc": "2026-11-06T11:13:05.459265+00:00",
+      "passed": 4,
+      "total": 4,
+      "cases": [
+        {
+          "id": "cash",
+          "question": "按研报，台积电 2026 年第三季度自由现金流约是多少？请写清币种、单位、计算口径及研报页码。",
+          "answer": "3Q26 单季度自由现金流（经营现金流减资本开支）　476.56 十亿新台币。研报第 10 页约为 477 十亿新台币。计算为 919.77 − 443.21 = 476.56，与公司披露的自由现金流一致。（研报第 10 页 · 管理报告第 5 页）",
+          "citations": [
+            {
+              "page": 5,
+              "quote": "3Q26 单季度自由现金流（经营现金流减资本开支）　476.56 十亿新台币",
+              "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=5",
+              "source": "研报第 10 页 · 管理报告第 5 页"
+            }
+          ],
+          "verification": "reviewed_evidence",
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"ids\": [\"fcf3\"]\n}"
+            }
+          ]
+        },
+        {
+          "id": "platform",
+          "question": "按研报，2026 年第三季度高性能计算平台营收占比是多少？这个占比能直接当作 AI 产品收入占比吗？请写出指标口径和出处页。",
+          "answer": "3Q26 HPC 高性能计算占净营收比例　68%。台积电净营收按客户平台分类。HPC 是平台分类，该项数据不足以单独得出 AI 产品营收占比。（研报第 4 页 · 管理报告第 2 页）",
+          "citations": [
+            {
+              "page": 2,
+              "quote": "3Q26 HPC 高性能计算占净营收比例　68%",
+              "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=2",
+              "source": "研报第 4 页 · 管理报告第 2 页"
+            }
+          ],
+          "verification": "reviewed_evidence",
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"ids\": [\n    \"platform\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "id": "guidance",
+          "question": "这份研报里台积电第四季度的美元营收区间是多少？请说明它是业绩还是指引，给出出处页。",
+          "answer": "4Q26 第四季度美元营收指引　52.3–54.3 十亿美元。管理层对未来季度的预计区间。（研报第 8、12 页 · 官方季度指引）",
+          "citations": [
+            {
+              "page": null,
+              "quote": "4Q26 第四季度美元营收指引　52.3–54.3 十亿美元",
+              "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "source": "研报第 8、12 页 · 官方季度指引"
+            }
+          ],
+          "verification": "reviewed_evidence",
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"ids\": [\n    \"guidance\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "id": "missing",
+          "question": "截至这份研报的数据截止日，2026 年第四季度已经实现的营业收入是多少？请只依据研报，实际值若缺失就明确说明。",
+          "answer": "截至 2026-10-26，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+          "citations": [],
+          "verification": "not_yet_disclosed",
+          "model_trace": []
+        }
+      ]
+    },
+    "shipping": {
+      "commit": "b59328969d377a63558ef44470c14be8ed8713a6",
+      "start_utc": "2026-11-06T11:21:01.962437+00:00",
+      "passed": 4,
+      "total": 4,
+      "cases": [
+        {
+          "id": "cash",
+          "question": "按研报，台积电 2026 年第三季度自由现金流约是多少？请写清币种、单位、计算口径及研报页码。",
+          "answer": "3Q26 单季度自由现金流（经营现金流减资本开支）　476.56 十亿新台币。研报第 10 页约为 477 十亿新台币。计算为 919.77 − 443.21 = 476.56，与公司披露的自由现金流一致。（研报第 10 页 · 管理报告第 5 页）",
+          "citations": [
+            {
+              "page": 5,
+              "quote": "3Q26 单季度自由现金流（经营现金流减资本开支）　476.56 十亿新台币",
+              "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=5",
+              "source": "研报第 10 页 · 管理报告第 5 页"
+            }
+          ],
+          "verification": "reviewed_evidence",
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"ids\": [\n    \"fcf3\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "id": "platform",
+          "question": "按研报，2026 年第三季度高性能计算平台营收占比是多少？这个占比能直接当作 AI 产品收入占比吗？请写出指标口径和出处页。",
+          "answer": "3Q26 HPC 高性能计算占净营收比例　68%。台积电净营收按客户平台分类。HPC 是平台分类，该项数据不足以单独得出 AI 产品营收占比。（研报第 4 页 · 管理报告第 2 页）",
+          "citations": [
+            {
+              "page": 2,
+              "quote": "3Q26 HPC 高性能计算占净营收比例　68%",
+              "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=2",
+              "source": "研报第 4 页 · 管理报告第 2 页"
+            }
+          ],
+          "verification": "reviewed_evidence",
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"ids\": [\n    \"platform\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "id": "guidance",
+          "question": "这份研报里台积电第四季度的美元营收区间是多少？请说明它是业绩还是指引，给出出处页。",
+          "answer": "4Q26 第四季度美元营收指引　52.3–54.3 十亿美元。管理层对未来季度的预计区间。（研报第 8、12 页 · 官方季度指引）",
+          "citations": [
+            {
+              "page": null,
+              "quote": "4Q26 第四季度美元营收指引　52.3–54.3 十亿美元",
+              "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "source": "研报第 8、12 页 · 官方季度指引"
+            }
+          ],
+          "verification": "reviewed_evidence",
+          "model_trace": [
+            {
+              "tool": "select_evidence",
+              "model": "qwen3:4b-instruct",
+              "http_status": 200,
+              "response": "{\n  \"ids\": [\n    \"guidance\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "id": "missing",
+          "question": "截至这份研报的数据截止日，2026 年第四季度已经实现的营业收入是多少？请只依据研报，实际值若缺失就明确说明。",
+          "answer": "截至 2026-10-26，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+          "citations": [],
+          "verification": "not_yet_disclosed",
+          "model_trace": []
+        }
+      ]
+    }
+  },
+  "sql_outcomes": [
+    {
+      "cohort": "q_first",
+      "outcome": "not_retrieved",
+      "questions": 2
+    },
+    {
+      "cohort": "q_first",
+      "outcome": "pass",
+      "questions": 4
+    },
+    {
+      "cohort": "q_first",
+      "outcome": "rejected_after_hit",
+      "questions": 7
+    },
+    {
+      "cohort": "q_first",
+      "outcome": "wrong_scope",
+      "questions": 1
+    },
+    {
+      "cohort": "q_retest",
+      "outcome": "pass",
+      "questions": 14
+    },
+    {
+      "cohort": "q_ship",
+      "outcome": "pass",
+      "questions": 14
+    },
+    {
+      "cohort": "u_first",
+      "outcome": "pass",
+      "questions": 3
+    },
+    {
+      "cohort": "u_first",
+      "outcome": "refused",
+      "questions": 6
+    },
+    {
+      "cohort": "u_first",
+      "outcome": "wrong_scope",
+      "questions": 1
+    },
+    {
+      "cohort": "u_first",
+      "outcome": "wrong_unit",
+      "questions": 1
+    },
+    {
+      "cohort": "u_first",
+      "outcome": "wrong_year",
+      "questions": 3
+    },
+    {
+      "cohort": "u_replay",
+      "outcome": "pass",
+      "questions": 8
+    },
+    {
+      "cohort": "u_replay",
+      "outcome": "refused",
+      "questions": 5
+    },
+    {
+      "cohort": "u_replay",
+      "outcome": "unit_guard",
+      "questions": 1
+    }
+  ]
+}
