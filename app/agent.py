@@ -10,6 +10,7 @@ import httpx
 from .finance import ALIASES, calculate
 from .retrieval import retrieve
 from .runtime import INITIAL, evidence_pages, fit_evidence, run_search
+from .table_lookup import lookup
 
 STOPWORDS = {
     "a", "an", "and", "apple", "apples", "at", "by", "did", "end", "fiscal", "for",
@@ -218,11 +219,17 @@ async def analyze(db, report_id, question, mode, settings):
         trace.append({"tool": name, "arguments": arguments, "result": output, "origin": origin})
         return output
 
+    async def initial_search(database, source, source_pages, query, config):
+        cell = await lookup(source_pages, query, config)
+        if cell is not None:
+            return cell
+        return await retrieve(database, source, source_pages, query, config)
+
     retrieval = None
     if mode == "rag":
         if not settings["model"]:
             raise ValueError("请先配置生成模型与嵌入模型")
-        hits, retrieval = await run_search(retrieve, db, report, pages, question, settings, runtime_events, "server")
+        hits, retrieval = await run_search(initial_search, db, report, pages, question, settings, runtime_events, "server")
         trace.append({"tool": "search_report", "arguments": {"query": question},
                       "result": hits, "origin": "server", "retrieval": retrieval})
     else:
@@ -249,7 +256,21 @@ async def analyze(db, report_id, question, mode, settings):
     if not hits and not calculations:
         answer = "没有检索到相关证据，无法回答。"
 
-    if retrieval and retrieval.get("status") == "timeout":
+    if retrieval and retrieval.get("strategy") == "table_cell":
+        event = retrieval.pop("selection_event")
+        model_trace.append(event)
+        if settings.get("on_model_event"):
+            settings["on_model_event"](deepcopy(event))
+        if retrieval["status"] == "found":
+            answer = (f"{retrieval['requested_year']} 财年，{retrieval['scope']} {retrieval['label']}："
+                      f"{retrieval['value_millions']} 百万美元。PDF 物理第 {retrieval['physical_page']} 页。")
+            verification = "source_table_cell"
+        else:
+            answer = {"year_absent":"所选原表未列示该年度，无法给出金额。",
+                      "blank_cell":"所选年度原表未提供数值。",
+                      "ambiguous":"无法唯一匹配所问指标与原表行，请核对报表或分部名称。"}[retrieval["status"]]
+            verification = "table_lookup_unavailable"
+    elif retrieval and retrieval.get("status") == "timeout":
         answer = "证据检索连续超时，已停止生成。请稍后重试。"
         verification = "tool_timeout"
     elif mode in {"ollama", "rag"}:
