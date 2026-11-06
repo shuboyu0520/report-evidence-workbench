@@ -131,3 +131,41 @@ def test_explicit_current_subtotal_excludes_current_and_noncurrent_components(mo
     hits, meta = asyncio.run(lookup(pages, f"2023 年合并资产负债表中流动{subject}合计是多少？",
                                   {"model": "test", "ollama_url": "http://test"}))
     assert meta["value_millions"] == "88" and hits[0]["page"] == 6
+
+
+@pytest.mark.parametrize("header", ["Year Ended June 30, 2024 2023", "As of Sept. 30, 2024 2023",
+                                    "December 31, 2024 2023"])
+def test_inline_date_and_fiscal_years(monkeypatch, header):
+    pages = statement(header, "61  (4,567)")
+    hits, meta = select(monkeypatch, pages, 2023)
+    assert meta["requested_year"] == 2023 and meta["column"] == 2
+    assert meta["value_millions"] == "-4.567" and hits[0]["page"] == 17
+
+
+def test_quarterly_date_is_not_an_annual_header():
+    assert not read_rows(statement("Quarter ended March 31, 2024 2023", "2  3"))
+
+
+def test_geographic_rows_stop_at_next_disclosure():
+    pages = [{"number": 36, "text": "Revenue, classified by geographic areas, was as follows:\n"
+              "(In millions)\nYear ended April 30, 2024 2023\nOther countries  220  102\n"
+              "Property by country was as follows:\n(In millions)\nApril 30, 2024 2023\n"
+              "Other countries  800  900"}]
+    assert [(r.scope, r.values) for r in read_rows(pages)] == [("Revenue by geography", ("220", "102"))]
+
+
+@pytest.mark.parametrize("policy,expected", [
+    ("Assets and liabilities recorded in foreign currencies are translated at the closing rate.",True),
+    ("Assets and liabilities recorded in foreign currencies are translated. Our reporting currency is Canadian dollars.",False),
+    ("Foreign exchange derivative notionals are measured in USD.",False),
+])
+def test_reporting_currency_inference_requires_corroboration(monkeypatch, policy, expected):
+    pages = statement("Year ended June 30, 2024 2023", "$ 100  75")
+    pages[0]["text"] = pages[0]["text"].replace(" of U.S. dollars","")
+    pages.append({"number": 25, "text": policy+" Fluctuations in the U.S. dollar relative to other "
+                  "foreign currencies had a material impact on reported revenue."})
+    result = select(monkeypatch, pages, 2023)
+    if expected:
+        assert result[1]["currency_page"] == 25 and result[1]["currency_basis"] == "reported_results_fx_and_translation_policy"
+    else:
+        assert result is None

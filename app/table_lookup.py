@@ -13,9 +13,14 @@ from .finance import numeric
 STATEMENTS = {
     "income": r"(?:consolidated |combined )?(?:statements? of (?:operations|earnings|income)|income statements?)",
     "balance": r"(?:consolidated |combined )?(?:balance sheets?|statements? of financial position)",
-    "cash": r"(?:consolidated |combined )?statements? of cash flows?",
+    "cash": r"(?:consolidated |combined )?(?:statements? of cash flows?|cash flows? statements?)",
 }
 YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
+MONTH = r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
+DATE_PREFIX = re.compile(
+    rf"^(?:(?:fiscal years? ended|years? ended|as (?:of|at))\s+)?{MONTH}\.?\s+"
+    r"(?:0?[1-9]|[12]\d|3[01])\s*,?\s+(?=(?:19|20)\d{2}\b)", re.I,
+)
 CELL = r"(?:\(\s*\d[\d,]*(?:\.\d+)?\s*\)|-?\d[\d,]*(?:\.\d+)?|[—–-])"
 CELL_SUFFIX = re.compile(rf"(?P<values>(?:\s+(?:\$\s*)?{CELL})+)\s*$")
 SCALE = re.compile(r"\b(?:in |amounts in |dollars in )(millions|thousands|billions)\b", re.I)
@@ -24,6 +29,10 @@ USD = re.compile(
     r"(?: (?:our|its|the|these|financial|consolidated|results|statements|amounts)){0,5} (?:in|into|to))"
     r"\s+(?:the )?(?:U\.?\s*S\.?|United States)\s*dollars?\b",
     re.I,
+)
+USD_EXPOSURE = re.compile(
+    r"(?:fluctuations|changes) in the U\.?\s*S\.? dollar relative to (?:certain |other )?foreign currencies"
+    r"[^.]{0,120}\breported (?:revenue|earnings|results)", re.I,
 )
 
 
@@ -73,6 +82,7 @@ def read_rows(pages):
             year_text = re.sub(
                 r"^\([^)]*(?:millions|thousands|billions)[^)]*\)\s*", "", text, flags=re.I
             )
+            year_text = DATE_PREFIX.sub("", year_text)
             if len(header_years) >= 2 and re.fullmatch(
                 r"[\s,]*(?:(?:19|20)\d{2}[\s,]*)+", year_text
             ):
@@ -83,7 +93,7 @@ def read_rows(pages):
                 kind = base or (
                     "segment"
                     if re.search(
-                        r"reportable segments?|(?:our|business|operating) segments?\b|segment (?:information|results|data)",
+                        r"reportable segments?|(?:our|business|operating) segments?\b|segment (?:information|results|data|revenues?)",
                         context,
                         re.I,
                     )
@@ -94,6 +104,13 @@ def read_rows(pages):
                     "",
                 )
                 caption = ""
+                # Some notes put a geographic area in each row, others title a separate table per area.
+                recent = context.rsplit(":", 2)
+                geography_rows = not base and re.search(
+                    r"\b(?:revenues?|sales)\s*,?\s+(?:classified |disaggregated )?by "
+                    r"(?:the |major )*(?:geographic(?:al)? (?:areas?|regions?)|geography)\b",
+                    recent[-2] if len(recent) > 1 else context, re.I,
+                )
                 if not base and re.search(
                     r"by (?:geographic(?:al)? )?region\b|by geography\b|geographic(?:al)? areas?\b",
                     previous_tail + " " + " ".join(lines[:i]), re.I,
@@ -107,6 +124,8 @@ def read_rows(pages):
                         unit_line = surrounding[0]
                     else:
                         unit_line = text if SCALE.search(text) else ""
+                elif geography_rows:
+                    kind, caption = "geography", "Revenue by geography"
                 if not kind or not unit_line:
                     continue
                 years = tuple(map(int, header_years))
@@ -134,7 +153,7 @@ def read_rows(pages):
                 continue
             label = line[: match.start()].strip().rstrip("$").strip()
             # Membership and subscriber counts share these tables with revenue.
-            if kind == "geography" and not re.search(r"\b(?:revenues?|sales)\b", label, re.I):
+            if kind == "geography" and scope != "Revenue by geography" and not re.search(r"\b(?:revenues?|sales)\b", label, re.I):
                 continue
             values = re.findall(CELL, match["values"])
             if not re.match(r"^[A-Za-z]", label) or len(values) != len(years) or len(label) > 150:
@@ -192,7 +211,8 @@ async def lookup(pages, question, settings):
     if year is None:
         return None
     kind = target_kind(question)
-    rows = [r for r in read_rows(pages) if (r.kind == kind if kind else r.kind not in {"segment", "geography"})]
+    table_rows = read_rows(pages)
+    rows = [r for r in table_rows if (r.kind == kind if kind else r.kind not in {"segment", "geography"})]
     # An explicitly requested balance-sheet subtotal excludes its components.
     for subject, english in (("资产", "assets"), ("负债", "liabilities")):
         if re.search(rf"(?<!非)流动{subject}(?:的)?(?:合计|总计|总额)|total current {english}\b", question, re.I):
@@ -205,6 +225,19 @@ async def lookup(pages, question, settings):
         return None
     # Currency and scale must be evidenced independently of the denomination requested by the user.
     usd_page = next((p["number"] for p in pages if USD.search(" ".join(p["text"].split()))), None)
+    currency_basis = "reporting_currency"
+    if usd_page is None and any("$" in r.line for r in table_rows if r.kind in STATEMENTS):
+        # When no explicit declaration exists, require both translation accounting and
+        # an FX disclosure tying US-dollar movements specifically to reported results.
+        translation_policy = any(re.search(r"(?:assets and liabilities|financial statements)[^.]{0,100}"
+                                           r"foreign currencies[^.]{0,60}translated", " ".join(p["text"].split()), re.I)
+                                 for p in pages)
+        conflicting_currency = any(re.search(r"(?:reporting|presentation) currency (?:is|was) "
+                                             r"(?:the )?(?!U\.?S\.? dollars?\b|USD\b|United States dollars?\b)\w+",
+                                             " ".join(p["text"].split()), re.I) for p in pages)
+        if translation_policy and not conflicting_currency:
+            usd_page = next((p["number"] for p in pages if USD_EXPOSURE.search(" ".join(p["text"].split()))), None)
+            currency_basis = "reported_results_fx_and_translation_policy"
     if usd_page is None and not all(
         re.search(r"US\$|USD|U\.S\. dollars", r.unit_line, re.I) for r in rows
     ):
@@ -278,6 +311,7 @@ async def lookup(pages, question, settings):
         year_header=r.header,
         unit=r.unit_line,
         currency_page=usd_page,
+        currency_basis=currency_basis if usd_page else "table_unit",
         physical_page=r.page,
         requested_year=year,
     )
