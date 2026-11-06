@@ -2,7 +2,7 @@
 
 用年报原文复核一个财务数字。使用者可以定位证据、确认年度和单位，再由模型调用工具计算比率并导出依据。
 
-[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
+[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [微软修复与跨行业盲测](https://shuboyu0520.github.io/report-evidence-workbench/dated.html) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
 
 ![工作台实际操作界面](docs/demo.png)
 
@@ -76,3 +76,11 @@ uv run python -m scripts.evaluate_model_ab --url http://127.0.0.1:11434 --out da
 冻结读取器后，Netflix 原题 14/14（前次 10/14），Amazon 14/14（持平），Alphabet 12/14（前次 11/14）。对上一版已通过的每道题做配对检查，零退步。随后用微软 FY2024 年报首次盲测，查数严格通过 4/14，缺数拒答 4/4。其主表日期与多个年份同栏，18 题均回退至向量检索。99 项自动化回归通过。运行口径、证据与剩余失败可在[逐题页面](docs/regional.html)查看。
 
 使用 [微软标注](evaluation/microsoft_holdout.json) 的 PDF 和 SHA-256，可运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/microsoft_holdout.json --pdf data/microsoft-2024.pdf --out data/microsoft-new-run`。运行 `uv run python -m scripts.analyze_table_runs --audit docs/regional-audit.json` 可复算本轮 SQL 归因。
+
+## 日期表头与跨行业验证
+
+微软原题查数从 4/14 提高到 14/14。英伟达首测 1/14，补充逐列完整日期后同题复测 12/14。最终冻结版在 Costco 首次盲测通过 2/14。 Netflix 与 Amazon 维持 14/14，Alphabet 维持 12/14。六家在最终版的缺数拒答各为 4/4，既往逐题无退步。Costco 的日期、年度跨行，当前版本在其独立 10-K 上仍存在金额配错年度、漏原行与引错页的问题。
+
+[11 轮逐题数据](docs/dated-audit.json) · [SQL 归因](docs/dated-failures.json) · [英伟达标注](evaluation/nvidia_holdout.json) · [Costco 标注](evaluation/costco_holdout.json)
+
+下载对应标注的 PDF 后，运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/costco_holdout.json --pdf data/costco-fy24-10k.pdf --out data/costco-fresh-run`。用 `uv run python -m scripts.analyze_table_runs --audit docs/dated-audit.json` 复算归因。最终版 109 项 pytest 回归通过。
