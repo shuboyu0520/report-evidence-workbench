@@ -2,7 +2,7 @@
 
 用年报原文复核一个财务数字。使用者可以定位证据、确认年度和单位，再由模型调用工具计算比率并导出依据。
 
-[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [Costco 修复与沃尔玛盲测](https://shuboyu0520.github.io/report-evidence-workbench/wrapped.html) · [微软修复与跨行业盲测](https://shuboyu0520.github.io/report-evidence-workbench/dated.html) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
+[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [沃尔玛修复与最新独立验证](https://shuboyu0520.github.io/report-evidence-workbench/currency.html) · [Costco 修复与沃尔玛盲测](https://shuboyu0520.github.io/report-evidence-workbench/wrapped.html) · [微软修复与跨行业盲测](https://shuboyu0520.github.io/report-evidence-workbench/dated.html) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
 
 ![工作台实际操作界面](docs/demo.png)
 
@@ -92,3 +92,11 @@ Costco 原题查数从 2/14 提高到 14/14。前五家公司重跑 90 题，此
 [逐题判定和版本指纹](docs/wrapped-audit.json) · [SQL 归因](docs/wrapped-failures.json) · [冻结的沃尔玛题集与来源](evaluation/walmart_holdout.json)
 
 用题集中的 PDF 原件运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/walmart_holdout.json --pdf data/walmart-2024.pdf --out data/walmart-fresh-run`。使用 `uv run python -m scripts.analyze_table_runs --audit docs/wrapped-audit.json` 可复算各轮归因。
+
+## 美元口径与独立验证
+
+沃尔玛原题查数由 1/14 提至 14/14，缺数拒答由 3/4 提至 4/4。前六家公司 108 道旧题全部通过。百事首次查数 10/14，修复后同题 14/14。最终冻结版在宝洁首次盲测中查数 0/14、缺数拒答 4/4。 127 项自动化测试通过。
+
+[17 轮逐题记录](docs/currency-audit.json) · [SQL 失败归因](docs/currency-failures.json) · [百事预标注](evaluation/pepsico_holdout.json) · [宝洁预标注](evaluation/pg_holdout.json)
+
+使用对应题集中的原件运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/pg_holdout.json --pdf data/pg-2024.pdf --out data/pg-fresh-run`。使用 `uv run python -m scripts.analyze_table_runs --audit docs/currency-audit.json` 复算失败归因。

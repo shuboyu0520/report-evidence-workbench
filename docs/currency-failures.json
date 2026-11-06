@@ -1,0 +1,142 @@
+[
+  {
+    "issuer": "Walmart",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "WM01,WM02,WM03,WM04,WM05,WM06,WM07,WM08,WM09,WM10,WM11,WM12,WM13,WM14"
+  },
+  {
+    "issuer": "Costco",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "CO01,CO02,CO03,CO04,CO05,CO06,CO07,CO08,CO09,CO10,CO11,CO12,CO13,CO14"
+  },
+  {
+    "issuer": "Microsoft",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "MS01,MS02,MS03,MS04,MS05,MS06,MS07,MS08,MS09,MS10,MS11,MS12,MS13,MS14"
+  },
+  {
+    "issuer": "Netflix",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "NF01,NF02,NF03,NF04,NF05,NF06,NF07,NF08,NF09,NF10,NF11,NF12,NF13,NF14"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AM01,AM02,AM03,AM04,AM05,AM06,AM07,AM08,AM09,AM10,AM11,AM12,AM13,AM14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AL01,AL02,AL03,AL04,AL05,AL06,AL07,AL08,AL09,AL10,AL11,AL12,AL13,AL14"
+  },
+  {
+    "issuer": "NVIDIA",
+    "phase": "首轮修复原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "NV01,NV02,NV03,NV04,NV05,NV06,NV07,NV08,NV09,NV10,NV11,NV12,NV13,NV14"
+  },
+  {
+    "issuer": "PepsiCo",
+    "phase": "首轮修复首次盲测",
+    "stage": "passed",
+    "count": 10,
+    "case_ids": "PE01,PE02,PE03,PE04,PE05,PE06,PE07,PE09,PE10,PE11"
+  },
+  {
+    "issuer": "PepsiCo",
+    "phase": "首轮修复首次盲测",
+    "stage": "source_row_hit_wrong_amount",
+    "count": 1,
+    "case_ids": "PE12"
+  },
+  {
+    "issuer": "PepsiCo",
+    "phase": "首轮修复首次盲测",
+    "stage": "source_row_missed",
+    "count": 3,
+    "case_ids": "PE08,PE13,PE14"
+  },
+  {
+    "issuer": "Walmart",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "WM01,WM02,WM03,WM04,WM05,WM06,WM07,WM08,WM09,WM10,WM11,WM12,WM13,WM14"
+  },
+  {
+    "issuer": "Costco",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "CO01,CO02,CO03,CO04,CO05,CO06,CO07,CO08,CO09,CO10,CO11,CO12,CO13,CO14"
+  },
+  {
+    "issuer": "Microsoft",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "MS01,MS02,MS03,MS04,MS05,MS06,MS07,MS08,MS09,MS10,MS11,MS12,MS13,MS14"
+  },
+  {
+    "issuer": "Netflix",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "NF01,NF02,NF03,NF04,NF05,NF06,NF07,NF08,NF09,NF10,NF11,NF12,NF13,NF14"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AM01,AM02,AM03,AM04,AM05,AM06,AM07,AM08,AM09,AM10,AM11,AM12,AM13,AM14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AL01,AL02,AL03,AL04,AL05,AL06,AL07,AL08,AL09,AL10,AL11,AL12,AL13,AL14"
+  },
+  {
+    "issuer": "NVIDIA",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "NV01,NV02,NV03,NV04,NV05,NV06,NV07,NV08,NV09,NV10,NV11,NV12,NV13,NV14"
+  },
+  {
+    "issuer": "PepsiCo",
+    "phase": "最终版原题复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "PE01,PE02,PE03,PE04,PE05,PE06,PE07,PE08,PE09,PE10,PE11,PE12,PE13,PE14"
+  },
+  {
+    "issuer": "PG",
+    "phase": "最终版首次盲测",
+    "stage": "source_row_hit_wrong_amount",
+    "count": 11,
+    "case_ids": "PG01,PG02,PG03,PG04,PG05,PG06,PG08,PG11,PG12,PG13,PG14"
+  },
+  {
+    "issuer": "PG",
+    "phase": "最终版首次盲测",
+    "stage": "source_row_missed",
+    "count": 3,
+    "case_ids": "PG07,PG09,PG10"
+  }
+]
