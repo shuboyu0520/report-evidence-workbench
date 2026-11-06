@@ -1,0 +1,30 @@
+{
+  "issuer": "PepsiCo, Inc.",
+  "report": "FY2024 Annual Report on Form 10-K, fiscal year ended December 28, 2024",
+  "source": "https://www.pepsico.com/docs/pepsico-5v9wci20/media/Files/investors/2024-pepsico-annual-report-01.pdf",
+  "issuer_source": "https://www.sec.gov/Archives/edgar/data/77476/000007747625000007/pep-20241228.htm",
+  "sha256": "2626c28e287a4137219963f0d1308f18223f5384467ee61da173678b5e1b4c6e",
+  "baseline": "ca597c111719779cd8ef87adbf8ed838cc74d7ad",
+  "protocol": "First-use independent issuer. Gold manually transcribed from the unmodified 154-page shareholder report, before model calls. The 543-page filing package with exhibits exceeds the product's 500-page upload limit and was excluded at file preflight. Use physical PDF pages and USD millions. Five income, four balance (including the unlabelled inventory subtotal), two cash flow, three segment and four out-of-period refusal questions. No change to the frozen application, model settings or strict grader after labelling.",
+  "instruction": "请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+  "cases": [
+    ["PE01",2024,"合并利润表中的净营业收入是多少？",73,"Net Revenue","91,854"],
+    ["PE02",2023,"合并利润表中的毛利润是多少？",73,"Gross profit","49,590"],
+    ["PE03",2024,"合并利润表中的销售成本是多少？",73,"Cost of sales","41,744"],
+    ["PE04",2023,"合并利润表中的营业利润是多少？",73,"Operating Profit","11,986"],
+    ["PE05",2024,"合并利润表的税前利润是多少？",73,"Income before income taxes","11,946"],
+    ["PE06",2024,"合并资产负债表上的现金及现金等价物是多少？",77,"Cash and cash equivalents","8,505"],
+    ["PE07",2023,"合并资产负债表中不含短期债务的长期债务余额是多少？",77,"Long-Term Debt Obligations","37,595"],
+    ["PE08",2024,"合并资产负债表中的存货合计是多少？",77,"5,306","5,306"],
+    ["PE09",2023,"资产负债表中流动负债合计是多少？",77,"Total Current Liabilities","31,647"],
+    ["PE10",2024,"现金流量表中经营活动产生的现金净额是多少？",75,"Net Cash Provided by Operating Activities","12,507"],
+    ["PE11",2023,"合并现金流量表中的股权薪酬费用是多少？",75,"Share-based compensation expense","380"],
+    ["PE12",2024,"分部附注中菲多利北美（FLNA）的净营业收入是多少？",82,"Net revenue $","24,755"],
+    ["PE13",2023,"分部附注中拉丁美洲（LatAm）的净营业收入是多少？",82,"Net revenue $","11,654"],
+    ["PE14",2024,"分部附注中欧洲分部的营业利润是多少？",82,"Division operating profit","2,019"],
+    ["PE15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+    ["PE16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+    ["PE17",2027,"这份财报披露的北美饮料分部实际净营业收入是多少？",null,null,null],
+    ["PE18",2028,"这份财报披露的经营活动现金净额实际值是多少？",null,null,null]
+  ]
+}
