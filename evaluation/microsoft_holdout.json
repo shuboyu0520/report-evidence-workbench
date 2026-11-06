@@ -1,0 +1,29 @@
+{
+ "issuer":"Microsoft Corporation","report":"FY2024 Annual Report",
+ "source":"https://www.annualreports.com/HostedData/AnnualReportArchive/m/NASDAQ_MSFT_2024.pdf",
+ "issuer_source":"https://www.microsoft.com/investor/reports/ar24/",
+ "sha256":"96de32a720641251b44c3e27e25ce2aa7ab035a15182b6260ef0ef06aa041dc0",
+ "baseline":"5cdaa744069935a8129b4f0ce374c1b815f9f828",
+ "protocol":"New issuer not previously evaluated in this project. Pre-registered before the first question API request, with frozen application, model settings and unchanged judge. Five income, four balance sheet, two cash flow and three note questions (two geography and one segment); four out-of-period refusals. Physical pages refer to the hashed 91-page PDF. Units are USD millions.",
+ "instruction":"请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+ "cases":[
+ ["MS01",2024,"合并利润表中的营业收入总额是多少？",44,"Total revenue","245,122"],
+ ["MS02",2023,"利润表中研发费用是多少？",44,"Research and development","27,195"],
+ ["MS03",2024,"合并利润表中销售与市场推广费用是多少？",44,"Sales and marketing","24,456"],
+ ["MS04",2023,"合并利润表中的营业利润是多少？",44,"Operating income","88,523"],
+ ["MS05",2024,"利润表的税前利润是多少？",44,"Income before income taxes","107,787"],
+ ["MS06",2024,"资产负债表上的现金及现金等价物是多少？",46,"Cash and cash equivalents $","18,315"],
+ ["MS07",2023,"合并资产负债表中的长期债务余额是多少？",46,"Long-term debt","41,990"],
+ ["MS08",2024,"合并资产负债表中的存货账面值是多少？",46,"Inventories","1,246"],
+ ["MS09",2023,"合并资产负债表中流动负债总额是多少？",46,"Total current liabilities","104,149"],
+ ["MS10",2024,"经营活动产生了多少净现金？请引用现金流量表。",47,"Net cash from operations","118,548"],
+ ["MS11",2023,"现金流量表中股权薪酬费用是多少？",47,"Stock-based compensation expense","9,611"],
+ ["MS12",2024,"按地区披露的美国收入是多少？请引用地理信息附注。",81,"United States (a)","124,704"],
+ ["MS13",2023,"地区附注中美国以外的其他国家贡献了多少收入？",81,"Other countries","105,171"],
+ ["MS14",2024,"分部附注中智能云分部的营业收入是多少？",80,"Intelligent Cloud","105,362"],
+ ["MS15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+ ["MS16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+ ["MS17",2027,"这份财报披露的美国地区实际收入是多少？",null,null,null],
+ ["MS18",2028,"这份财报披露的经营活动现金净额实际值是多少？",null,null,null]
+ ]
+}
