@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 from datetime import date
+from decimal import Decimal
 from pathlib import Path
 from uuid import uuid4
 
@@ -193,7 +194,7 @@ async def from_document(db, report, pages, question, config, tools, calls, event
             return MISSING, "insufficient_evidence", []
         # Equally qualified sources must agree before an amount is shown to a reader.
         candidates = [c for c in candidates if c["priority"] == candidates[0]["priority"]]
-        if len({tuple(c["amounts"]) for c in candidates}) != 1:
+        if len({tuple(Decimal(a.replace(",", "")) for a in c["amounts"]) for c in candidates}) != 1:
             tools.append({"tool": "check_cell_consistency", "result": "conflicting_amounts"})
             return MISSING, "insufficient_evidence", []
         # Give the selector the source concepts, not the amounts. Compute from the printed cell.
@@ -236,13 +237,15 @@ async def from_document(db, report, pages, question, config, tools, calls, event
         amount = " 至 ".join(cell["amounts"])
         classification = "指引" if request.guidance else "实际"
         answer = f"{request.year} 财年{period}，{scope} {basis} {cell['label']}（{classification}）为 {amount} {cell['unit']}。原表第 {cell['page']} 页。"
+        refs = [
+            {"page": cell["page"], "quote": cell[k]}
+            for k in ("quote", "header", "context_quote")
+            if cell.get(k)
+        ]
         return (
             answer,
             "source_earnings_cell",
-            [
-                {"page": cell["page"], "quote": cell["quote"]},
-                {"page": cell["page"], "quote": cell["header"]},
-            ],
+            refs,
         )
     hits, meta = await run_search(retrieve, db, report, pages, question, config, events, "server")
     tools.append(
@@ -298,6 +301,18 @@ async def from_document(db, report, pages, question, config, tools, calls, event
         if quote not in " ".join(windows[p].split()) or quote not in " ".join(source[p].split()):
             return MISSING, "insufficient_evidence", []
         checked.append({"page": p, "quote": q.strip()})
+    if re.search(r"自由现金流|free cash flow", question, re.I) and re.search(
+        r"单季|滚动十二个月|\bTTM\b", question, re.I
+    ):
+        rolling = bool(re.search(r"滚动十二个月|\bTTM\b", question, re.I))
+        checked = [
+            c
+            for c in checked
+            if not re.search(r"free cash flow", c["quote"], re.I)
+            or bool(re.search(r"\bTTM\b|trailing twelve", c["quote"], re.I)) == rolling
+        ]
+        if not checked:
+            return MISSING, "insufficient_evidence", []
     numbers = amount_tokens(answer)
     support = amount_tokens("\n".join(c["quote"] for c in checked))
     # A question may supply the label of a fiscal year/quarter, never the answer amount.
