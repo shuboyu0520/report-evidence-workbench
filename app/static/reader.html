@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台积电财报联读 · 财报复核工作台</title>
+<style>
+:root{--ink:#17352d;--muted:#4c655b;--rule:#c9d5c9;--green:#15583f;--paper:#fafaf5;--wash:#edf2e7;font:16px/1.7 "Microsoft YaHei",system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:1080px;margin:auto;padding:0 32px}header{display:flex;align-items:center;justify-content:space-between;min-height:62px;border-bottom:1px solid var(--rule)}header strong{font-size:14px}a{color:var(--green);text-underline-offset:4px}header a{font-size:14px}h1,h2,h3,p{margin:0}h1,h2{font-family:Georgia,"Songti SC","SimSun",serif;line-height:1.25}h1{font-size:clamp(34px,5vw,56px);letter-spacing:-.04em;margin:30px 0 12px}h2{font-size:28px;margin:0 0 12px}h3{font-size:17px;margin-bottom:5px}p+p{margin-top:8px}.sub,small,figcaption{color:var(--muted)}.controls{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:end;margin:22px 0}label{display:block;font-size:14px;color:var(--muted)}button,select,input,textarea{font:inherit;max-width:100%}select,input,textarea{border:1px solid #9bab9e;background:white;color:var(--ink);padding:7px 9px;border-radius:4px}textarea{width:100%}button{background:var(--green);color:white;border:1px solid var(--green);padding:8px 14px;border-radius:4px;cursor:pointer}button:disabled{opacity:.55}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #ce8b31;outline-offset:2px}.mode{display:flex;gap:0}.mode button{border-radius:0;background:transparent;color:var(--green);font-size:14px}.mode button[aria-pressed=true]{background:var(--green);color:white}section{border-top:1px solid var(--rule);padding:28px 0}.kpis{display:grid;grid-template-columns:repeat(3,1fr);background:var(--ink);color:white;padding:20px 0}.kpis div{padding:0 24px;border-right:1px solid #6c8376}.kpis div:last-child{border:0}.kpis small{color:#d8e5d8;display:block}.kpis strong{display:block;font:600 clamp(25px,4vw,40px)/1.3 Georgia,serif;font-variant-numeric:tabular-nums}.columns{display:grid;grid-template-columns:1.05fr 1fr;gap:35px}.source{font-size:13px;color:var(--muted);display:block;margin-top:8px}.reading{padding:17px 0;border-bottom:1px solid var(--rule)}.reading:last-child{border:0}figure{margin:12px 0 0}.bar{height:11px;background:#e0e7dd;width:100%;display:block}.bar i{display:block;background:#327556;height:100%}.row{display:flex;justify-content:space-between;gap:8px;margin:8px 0 3px;font-size:14px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:8px;text-align:left;border-bottom:1px solid var(--rule)}th{background:var(--wash)}details{padding:11px 0;border-bottom:1px solid var(--rule)}summary{cursor:pointer;font-weight:600}details p{margin-top:11px}.source a+a{margin-left:12px}.liveform{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}.liveform label>input:not([type=checkbox]),.liveform label>select{width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}.state{font-size:14px;color:var(--green);margin-top:10px}footer{padding-bottom:38px;font-size:14px}[hidden]{display:none!important}
+@media(max-width:690px){header,main,footer{padding-left:17px;padding-right:17px}.columns,.liveform{grid-template-columns:1fr;gap:16px}.kpis{gap:0}.kpis div{padding:0 8px}.kpis small{font-size:11px}.kpis strong{font-size:24px}.controls{gap:10px}h2{font-size:24px}section{padding:21px 0}}
+@media print{.controls,footer,#local,#replay,header a{display:none}section{break-inside:avoid}}
+</style></head><body><header><strong>财报复核工作台</strong><a id="homeLink" href="index.html">演示与评测</a></header><main>
+<h1>台积电这一季，钱从哪里来？</h1><p class="sub">2026 年第三季度财报联读 · 台积电、Intel、全球芯片销售与美国制造业投资税收抵免</p>
+<div class="controls"><label>研究截止日<br><select id="cutoff"><option value="2026-10-26">2026-10-26 · 原研报当日</option><option value="2026-11-06">2026-11-06 · 同行披露后</option></select></label>
+<div class="mode" aria-label="阅读深度"><button type="button" id="plain" aria-pressed="true">初读财报</button><button type="button" id="detail" aria-pressed="false">投资者复核</button></div></div>
+<div class="kpis"><div><small>台积电营收 · 十亿美元</small><strong id="rev"></strong></div><div><small>毛利率</small><strong id="gm"></strong></div><div><small>自由现金流 · 十亿新台币</small><strong id="fcf"></strong></div></div>
+<section class="columns"><article><h2>先看经营现金</h2><p id="cashStory"></p><p id="cashDetail"></p><span class="source" id="cashSource"></span></article><figure><figcaption>扣除资本开支后留下的现金 · 十亿新台币</figcaption><div id="bars"></div><div id="cashTable" hidden></div></figure></section>
+<section><h2>把公司放回同行和行业中看</h2><div id="peer" class="reading"></div><div id="market" class="reading"></div><div id="policy" class="reading"></div></section>
+<section><h2>下季看什么</h2><p id="outlook"></p><span id="outSource" class="source"></span></section>
+<section><h2>查这份案例</h2><form id="caseSearch"><label>输入关注的指标，如「资本开支」「行业销售」「税收抵免」<br><input type="search" id="caseTerms" required maxlength="60"> <button>查已核对资料</button></label></form><div id="searchMatches" aria-live="polite"></div></section>
+<section id="replay"><h2>原题怎么回答</h2><p class="sub">展开任一题，查看工作台在原研报截止日留下的答案和依据。</p><div id="examples"></div></section>
+<section id="local" hidden><h2>用自己的资料提问</h2><p class="sub">单份资料可直接查数。联读时为每份资料选择角色，系统会先检查发布日期。</p>
+<form id="upload" class="liveform"><label>资料名称<input name="company" required maxlength="100"></label><label>文件（文本 PDF 或 UTF-8 TXT）<input name="file" type="file" required accept=".pdf,.txt"></label><label>资料发布日期<input name="published_on" type="date" required></label><label>来源链接（可选）<input name="source_url" type="url"></label><label><input name="calendar_year" type="checkbox" value="true"> 公司财年与自然年一致（已核对）</label><div><button>导入资料</button></div></form>
+<p><button type="button" id="sample">载入台积电示例资料</button></p>
+<form id="liveAsk"><div class="liveform" id="selectors"></div><label>研究截止日 <input id="askDate" type="date" value="2026-11-06" required></label><label>想核对什么？<textarea id="query" rows="2" maxlength="800" required>本季度的实际营业收入是多少？请写出期间和币种。</textarea></label><button>查证并回答</button></form>
+<p id="status" role="status" class="state"></p><div id="liveResults"></div></section>
+<section id="publicNote"><p class="sub">此公开示例在浏览器内按日期选取已核对的资料并计算差额。上传自己的财报、自由提问和多资料模型联读可在本机工作台运行。<a href="https://github.com/shuboyu0520/report-evidence-workbench#run-reader">本机运行说明</a></p></section></main>
+<footer><a id="back" href="reader-evaluation.html">查看台积电复测与新公司盲测</a></footer>
+<script>
+const data=__SOURCE_DATA__, live=__IS_LIVE__, $=id=>document.getElementById(id), main=data.primary;
+let investor=false;
+const text=(id,value)=>$(id).textContent=value;
+function el(tag,value){const node=document.createElement(tag);if(value!=null)node.textContent=value;return node}
+function link(parent,label,url){const a=el('a',label);a.href=url;a.target='_blank';a.rel='noopener noreferrer';parent.append(a)}
+function sources(id,refs){const target=$(id);target.replaceChildren();for(const [label,url] of refs)link(target,label,url)}
+function block(id,title,body,refs){const target=$(id);target.replaceChildren(el('h3',title),el('p',body));const s=el('span');s.className='source';for(const [label,url] of refs)link(s,label,url);target.append(s)}
+function render(){
+ const day=$('cutoff').value, before=list=>list.filter(x=>x.published<=day).at(-1), peer=before(data.peers), m=before(data.market), f=main.cfo.map((n,i)=>n-main.capex[i]);
+ text('rev',main.revenue.toFixed(2));text('gm',main.margin+'%');text('fcf',f[0].toFixed(2));
+ text('cashStory','三季度，公司经营活动带来 '+main.cfo[0]+' 十亿新台币现金。扣除购买厂房、设备等资本开支 '+main.capex[0]+' 十亿，留下 '+f[0].toFixed(2)+' 十亿。这个余额有助于理解扩产之后还有多少经营现金可供调配。');
+ text('cashDetail',investor?'自由现金流较二季度增加 '+(f[0]-f[1]).toFixed(2)+' 十亿。其中经营现金增加 '+(main.cfo[0]-main.cfo[1]).toFixed(2)+' 十亿，资本开支现金流出减少 '+(main.capex[1]-main.capex[0]).toFixed(2)+' 十亿，两项相加可核对总差额。':'上一季度留下 '+f[1].toFixed(2)+' 十亿。这一季经营活动进来的现金更多，购建设备付出去的现金更少，两项都推高了余额。');
+ sources('cashSource',[['台积电管理报告 · 第 5 页',main.pdf+'#page=5']]);
+ const bars=$('bars');bars.replaceChildren();['二季度','三季度'].forEach((label,j)=>{const v=f[1-j],row=el('div');row.className='row';row.append(el('span',label),el('b',v.toFixed(2)));const bar=el('span');bar.className='bar';const fill=el('i');fill.style.width=(100*v/Math.max(...f))+'%';bar.append(fill);bars.append(row,bar)});
+ const table=$('cashTable');table.hidden=!investor;table.innerHTML='<table><tr><th>十亿新台币</th><th>第二季度</th><th>第三季度</th></tr><tr><td>经营现金流</td><td>'+main.cfo[1].toFixed(2)+'</td><td>'+main.cfo[0].toFixed(2)+'</td></tr><tr><td>资本开支（支出额）</td><td>'+main.capex[1].toFixed(2)+'</td><td>'+main.capex[0].toFixed(2)+'</td></tr></table>';
+ const same=peer.period.includes('第三');let peerStory='台积电三季度美元营收同比增长 '+main.yoy+'%。截至所选日期，Intel 最新已发布的是'+peer.period+'，合并营收 '+peer.revenue.toFixed(1)+' 十亿美元，同比增长 '+peer.yoy+'%。';
+ peerStory+=same?' 两家同期营收均增长。':' 两份数据相差一个季度，应分别和各自去年同期比较。';
+ if(investor)peerStory+=same?' Intel 的 GAAP 毛利率为 '+peer.margin.toFixed(1)+'%，与台积电相差 '+(main.margin-peer.margin).toFixed(1)+' 个百分点。台积电以晶圆代工为主，Intel 合并产品和代工业务，这个差额只描述报表表现。':' 要比较同一季度的毛利率，还需等 Intel 发布三季报。';
+ block('peer','同行 · Intel',peerStory,[['台积电 · 10 月 15 日',main.pdf+'#page=1'],['Intel · '+peer.published,peer.url]]);
+ block('market','市场 · 全球半导体销售',m.period+'全球销售 '+m.sales+' 十亿美元，同比增长 '+m.yoy+'%。这为台积电的增长提供行业背景。'+(investor?'WSTS 的月度数值是三个月移动平均，覆盖全球芯片销售。直接用台积电单季代工收入除以它，会混合期间与业务边界。':'行业数字涵盖多类芯片。要判断台积电是否获得更多代工订单，还需核对同口径的代工市场份额。'),[['SIA / WSTS · '+m.published,m.url]]);
+ block('policy','政策 · 美国先进制造投资税收抵免','美国法律把符合条件且在 2025 年底后投入使用的资产所适用的投资抵免率调整为 35%。台积电把本季 198.74 十亿新台币列为其他投资活动现金来源，说明其主要来自美国财政部投资税收抵免。'+(investor?'报表没有单列该项抵免的确切金额。计算自由现金流时用经营现金减资本开支，另加这笔投资流入会混入口径。':'读现金流时要看资金归在哪一栏。税收抵免列在投资活动里，不能拿这整笔钱解释卖芯片收回了多少现金。'),[['美国公法 §70308',data.policy.law],['IRS 适用说明',data.policy.irs],['台积电 · 第 5 页',main.pdf+'#page=5']]);
+ text('outlook','第四季度管理层给出 52.3–54.3 十亿美元的营收指引。所选研究日仍在季度内，需要等季末后的实际披露再核对。'+(investor?' 本季 HPC 占合并净营收 68%，7nm 及以下制程占晶圆收入 79%。两项分母不同，HPC 也涵盖多种工作负载，仅凭这两项无法算出 AI 产品收入。':' 可以先记下指引区间，下一份财报发布后再比较。'));sources('outSource',[['台积电季度业绩与指引',main.url],['平台与制程口径 · 第 2 页',main.pdf+'#page=2']]);
+ $('plain').setAttribute('aria-pressed',String(!investor));$('detail').setAttribute('aria-pressed',String(investor));
+}
+function searchCase(){
+ const q=$('caseTerms').value.trim().toLowerCase(), target=$('searchMatches');target.replaceChildren();if(!q)return;
+ const day=$('cutoff').value, p=data.peers.filter(x=>x.published<=day).at(-1), m=data.market.filter(x=>x.published<=day).at(-1);
+ const rows=[
+ [['自由现金流','fcf','现金流','现金'], $('cashStory').textContent,main.pdf+'#page=5'],
+ [['经营现金','cfo','资本开支','设备','capex'],'三季度经营活动现金净流入 919.77 十亿新台币，资本开支为 443.21 十亿新台币。',main.pdf+'#page=5'],
+ [['毛利率','毛利','净营收','营业收入','三季度营收'],'三季度营收 46.72 十亿美元，美元口径同比增长 41.2%，毛利率为 66.4%。',main.pdf+'#page=1'],
+ [['平台','hpc','高性能计算','ai收入','ai占比','先进制程','晶圆'],'HPC 平台占净营收 68%；7nm 及以下制程占晶圆收入 79%。公司没有在这两项统计里单列 AI 收入。',main.pdf+'#page=2'],
+ [['四季度','第四季度','指引','下季'],'截至 '+day+' 第四季度仍在进行。营收指引为 52.3–54.3 十亿美元；完整季度实际值尚未披露。',main.url],
+ [['intel','英特尔','同行'], $('peer').querySelector('p').textContent,p.url],
+ [['市场','行业','芯片销售','半导体销售'], $('market').querySelector('p').textContent,m.url],
+ [['政策','抵免','美国','税收'], $('policy').querySelector('p').textContent,data.policy.law]];
+ const matches=rows.filter(([keys])=>keys.some(key=>q.includes(key)));
+ if(!matches.length){target.append(el('p','该词在案例索引里没有匹配项。试试「行业」「毛利率」或查看下方实测原题。'));return}
+ for(const [,value,url] of matches){target.append(el('p',value));link(target,'核对原始来源',url)}
+}
+$('caseSearch').onsubmit=e=>{e.preventDefault();searchCase()};
+$('plain').onclick=()=>{investor=false;render();searchCase()};$('detail').onclick=()=>{investor=true;render();searchCase()};$('cutoff').onchange=()=>{render();searchCase()};render();
+const states={reviewed_evidence:'已核对证据卡',not_yet_disclosed:'报告期尚未结束',insufficient_evidence:'现有资料证据不足',cited_draft:'模型草稿 · 请复核指标及期间',tool_timeout:'检索超时'};
+function showResult(parent,row){parent.append(el('p',row.answer),el('small',states[row.verification]||row.verification));for(const c of row.citations||[]){const s=el('p');s.className='source';if(c.url)link(s,c.source||'原始资料',c.url);else s.textContent='第 '+c.page+' 页 · '+c.quote;parent.append(s)}}
+for(const row of data.examples){const d=el('details');d.append(el('summary',row.question));showResult(d,row);$('examples').append(d)}
+if(live){
+ $('local').hidden=false;$('publicNote').hidden=true;$('homeLink').href='/';$('homeLink').textContent='原表复核';$('back').href='https://shuboyu0520.github.io/report-evidence-workbench/reader-evaluation.html';
+ const roles={company:'主资料',peer:'同行（可选）',market:'市场（可选）',policy:'政策（可选）'};
+ for(const [key,name] of Object.entries(roles)){const label=el('label',name),select=el('select');select.id=key+'-id';select.required=key==='company';label.append(select);$('selectors').append(label)}
+ async function request(url,opts){const res=await fetch(url,opts);const value=await res.json();if(!res.ok)throw Error(typeof value.detail==='string'?value.detail:'请检查输入或模型配置。');return value}
+ async function refresh(chosen){const reports=await request('/reports?limit=100');for(const key of Object.keys(roles)){const select=$(key+'-id'),previous=select.value;select.replaceChildren(new Option('请选择',''));for(const r of reports)select.add(new Option(r.company+' · '+r.filename,r.id));select.value=key==='company'&&chosen?chosen:previous}}
+ function guarded(form,fn){return async e=>{e.preventDefault();const b=form.querySelector('button')||form;b.disabled=true;text('status','处理中…');try{await fn()}catch(err){text('status',err.message)}finally{b.disabled=false}}}
+ $('upload').onsubmit=guarded($('upload'),async()=>{const body=new FormData($('upload'));if(!body.get('source_url'))body.delete('source_url');const obj=await request('/reports',{method:'POST',body});await refresh(obj.id);text('status','资料已导入。')});
+ $('sample').onclick=guarded($('sample'),async()=>{const f=new FormData();f.set('company','台积电');f.set('file',new Blob([await (await fetch('/reader/case.txt')).text()]),'tsmc.txt');const obj=await request('/reports',{method:'POST',body:f});await refresh(obj.id);text('status','已选择台积电示例资料。')});
+ $('liveAsk').onsubmit=guarded($('liveAsk'),async()=>{const sources={};for(const key of Object.keys(roles)){const value=$(key+'-id').value;if(value)sources[key]=value}
+ const many=Object.keys(sources).length>1,question=$('query').value,as_of=$('askDate').value;
+ const result=await request(many?'/reader/compare':'/reports/'+sources.company+'/questions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(many?{question,as_of,sources}:{question,as_of,mode:'reader'})});
+ const holder=$('liveResults');holder.replaceChildren();if(many){holder.append(el('h3','跨资料解读'),el('p',result.summary.text),el('small',result.summary.status==='draft'?'模型草稿 · 引用来源 '+result.summary.roles.map(r=>roles[r]).join('、'):'跨资料证据不足'))}
+ for(const s of many?result.sections:[{role:'company',result}]){holder.append(el('h3',roles[s.role]));showResult(holder,s.result);const a=el('a','下载这份回答及调用记录');a.href='/analyses/'+s.result.id+'/export';holder.append(a)}
+ text('status','查证完成。')});refresh().catch(e=>text('status',e.message));
+}
+</script></body></html>

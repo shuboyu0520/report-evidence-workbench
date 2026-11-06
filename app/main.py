@@ -17,6 +17,7 @@ from pypdf.constants import UserAccessPermissions
 from starlette.concurrency import run_in_threadpool
 
 from .agent import analyze
+from .comparison import summarize
 from .db import Database
 from .finance import FACTORS, extract_metrics, numeric
 from .observatory import install_observatory
@@ -120,8 +121,9 @@ def create_app(db_path=None, settings=None):
     @api.post("/reader/compare")
     async def reader_compare(body: Comparison):
         try:
-            return {"as_of": body.as_of, "sections": await compare_reports(
-                db, body.sources, body.as_of, body.question, config)}
+            sections = await compare_reports(db, body.sources, body.as_of, body.question, config)
+            return {"as_of": body.as_of, "sections": sections,
+                    "summary": await summarize(sections, body.question, config)}
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc
         except httpx.HTTPError as exc:

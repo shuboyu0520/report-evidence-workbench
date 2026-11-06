@@ -1,0 +1,337 @@
+{
+  "model": "qwen3:4b-instruct",
+  "sample": "虚构小组的 10 条固定中文账单，提取测试，不写入账本。",
+  "fixture_sha256": "2e073820a6dafc5f245f2d123b2c3fddec0b18a5a1772d3404dd7cf251389b98",
+  "first_pass": 6,
+  "replay_pass": 10,
+  "cases": [
+    {
+      "id": "dinner",
+      "text": "晚饭共 90.00 澳元，小林垫付，小林、小周和小陈三人均摊。",
+      "expected": [
+        "90.00",
+        "AUD",
+        11,
+        [
+          11,
+          12,
+          13
+        ]
+      ],
+      "first": {
+        "description": "晚饭",
+        "amount": "90.00",
+        "currency": "AUD",
+        "payer_user_id": 11,
+        "participant_ids": [
+          11,
+          12,
+          13
+        ]
+      },
+      "first_pass": true,
+      "replay": {
+        "description": "晚饭",
+        "amount": "90.00",
+        "currency": "AUD",
+        "payer_user_id": 11,
+        "participant_ids": [
+          11,
+          12,
+          13
+        ]
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "taxi",
+      "text": "小周付了 37.50 澳元打车，仅小周和小陈平摊。",
+      "expected": [
+        "37.50",
+        "AUD",
+        12,
+        [
+          12,
+          13
+        ]
+      ],
+      "first": {
+        "description": "打车",
+        "amount": "37.50",
+        "currency": "AUD",
+        "payer_user_id": 12,
+        "participant_ids": [
+          12,
+          13
+        ]
+      },
+      "first_pass": true,
+      "replay": {
+        "description": "打车",
+        "amount": "37.50",
+        "currency": "AUD",
+        "payer_user_id": 12,
+        "participant_ids": [
+          12,
+          13
+        ]
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "cny",
+      "text": "小陈垫了 126 元人民币买食材，小林和小陈各一半。",
+      "expected": [
+        "126",
+        "CNY",
+        13,
+        [
+          11,
+          13
+        ]
+      ],
+      "first": {
+        "description": "小陈垫了126元人民币买食材，小林和小陈各一半",
+        "amount": "126.00",
+        "currency": "CNY",
+        "payer_user_id": null,
+        "participant_ids": [
+          13,
+          11
+        ]
+      },
+      "first_pass": false,
+      "replay": {
+        "description": "小陈垫了126元人民币买食材，小林和小陈各一半",
+        "amount": "126.00",
+        "currency": "CNY",
+        "payer_user_id": 13,
+        "participant_ids": [
+          13,
+          11
+        ]
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "coffee",
+      "text": "小林支付 12.40 美元买咖啡，只给小周和小陈均分。",
+      "expected": [
+        "12.40",
+        "USD",
+        11,
+        [
+          12,
+          13
+        ]
+      ],
+      "first": {
+        "description": "小林支付12.40美元买咖啡，只给小周和小陈均分",
+        "amount": "12.40",
+        "currency": "USD",
+        "payer_user_id": 11,
+        "participant_ids": [
+          12,
+          13
+        ]
+      },
+      "first_pass": true,
+      "replay": {
+        "description": "小林支付12.40美元买咖啡，只给小周和小陈均分",
+        "amount": "12.40",
+        "currency": "USD",
+        "payer_user_id": 11,
+        "participant_ids": [
+          12,
+          13
+        ]
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "no_payer",
+      "text": "三个人小林、小周、小陈一起吃饭，花了 66 澳元，均摊。",
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        "payer"
+      ],
+      "first": {
+        "description": "三个人小林、小周、小陈一起吃饭",
+        "amount": "66.00",
+        "currency": "AUD",
+        "payer_user_id": null,
+        "participant_ids": [
+          11,
+          12,
+          13
+        ]
+      },
+      "first_pass": true,
+      "replay": {
+        "description": "三个人小林、小周、小陈一起吃饭",
+        "amount": "66.00",
+        "currency": "AUD",
+        "payer_user_id": null,
+        "participant_ids": [
+          11,
+          12,
+          13
+        ]
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "no_people",
+      "text": "小周先付了 88.00 澳元的超市账单。参与分摊的人还没确定。",
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        "people"
+      ],
+      "first": {
+        "description": "超市账单",
+        "amount": "88.00",
+        "currency": "AUD",
+        "payer_user_id": 12,
+        "participant_ids": null
+      },
+      "first_pass": true,
+      "replay": {
+        "description": "超市账单",
+        "amount": "88.00",
+        "currency": "AUD",
+        "payer_user_id": 12,
+        "participant_ids": null
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "outside",
+      "text": "朋友小吴替小林和小周支付了 19.00 澳元车费，两人平摊。",
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        "payer"
+      ],
+      "first": {
+        "description": "车费",
+        "amount": "19.00",
+        "currency": "AUD",
+        "payer_user_id": 11,
+        "participant_ids": [
+          11,
+          12
+        ]
+      },
+      "first_pass": false,
+      "replay": {
+        "description": "车费",
+        "amount": "19.00",
+        "currency": "AUD",
+        "payer_user_id": null,
+        "participant_ids": [
+          11,
+          12
+        ]
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "two",
+      "text": "午餐 30 澳元小林付，晚餐 60 澳元小陈付，分两笔，两次都是全组均摊。",
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        "empty"
+      ],
+      "first": {
+        "description": "午餐",
+        "amount": "30.00",
+        "currency": "AUD",
+        "payer_user_id": null,
+        "participant_ids": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "first_pass": false,
+      "replay": {
+        "description": null,
+        "amount": null,
+        "currency": null,
+        "payer_user_id": null,
+        "participant_ids": null
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "unequal",
+      "text": "小林垫了 90 澳元，小林承担 60、小周承担 30，不均摊。",
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        "empty"
+      ],
+      "first": {
+        "description": "小林垫了 90 澳元，小林承担 60、小周承担 30",
+        "amount": "90.00",
+        "currency": "AUD",
+        "payer_user_id": 11,
+        "participant_ids": [
+          11,
+          12
+        ]
+      },
+      "first_pass": false,
+      "replay": {
+        "description": null,
+        "amount": null,
+        "currency": null,
+        "payer_user_id": null,
+        "participant_ids": null
+      },
+      "replay_pass": true
+    },
+    {
+      "id": "duplicate",
+      "text": "阿明付了 40 澳元，阿明和小周均摊。群里有两个阿明，没有提供 ID。",
+      "expected": [
+        null,
+        null,
+        null,
+        null,
+        "payer"
+      ],
+      "first": {
+        "description": "阿明付了 40 澳元，阿明和小周均摊",
+        "amount": "40.00",
+        "currency": "AUD",
+        "payer_user_id": null,
+        "participant_ids": null
+      },
+      "first_pass": true,
+      "replay": {
+        "description": "阿明付了 40 澳元，阿明和小周均摊",
+        "amount": "40.00",
+        "currency": "AUD",
+        "payer_user_id": null,
+        "participant_ids": null
+      },
+      "replay_pass": true
+    }
+  ]
+}

@@ -144,7 +144,19 @@ async def from_cards(question, config, tools, calls):
     ):
         return MISSING, "insufficient_evidence", []
     chosen = [candidates[i] for i in dict.fromkeys(ids)]
-    if re.search(r"实际|已实现", question) and all(c["id"] == "guidance" for c in chosen):
+    # A model can choose a real card for a different period or choose a forecast for actuals.
+    # Reject the whole selection if it crosses either boundary.
+    requested = {next(v for v in matches if v) for matches in QUARTER.findall(question)}
+    quarters = {"一二三四".index(q) + 1 if q in "一二三四" else int(q) for q in requested}
+    years = {int(y) for y in re.findall(r"(?<!\d)(20\d{2})(?!\d)", question)}
+    for card in chosen:
+        when = re.match(r"([1-4])Q(\d{2})", card["metric"])
+        if when and (
+            (quarters and int(when[1]) not in quarters)
+            or (years and 2000 + int(when[2]) not in years)
+        ):
+            return MISSING, "insufficient_evidence", []
+    if re.search(r"实际|已经实现|已实现", question) and any(c["id"] == "guidance" for c in chosen):
         return MISSING, "insufficient_evidence", []
     answer = "\n".join(f"{c['metric']}　{c['value']}。{c['note']}（{c['source']}）" for c in chosen)
     refs = [
@@ -293,7 +305,10 @@ async def compare_reports(db, sources, as_of, question, config):
     }
 
     async def one(role, rid):
-        prompt = question + "\n结合这份资料：" + prompts[role]
+        prompt = (
+            "读者的总问题是「" + question + "」。当前只做单份资料摘录，跨资料对照交给汇总步骤。"
+            "只回答这一个取证任务：" + prompts[role] + "不需要评论其他资料。"
+        )
         return {"role": role, "result": await read_report(db, rid, prompt, config, as_of)}
 
     return await asyncio.gather(*(one(role, rid) for role, rid in sources.items()))

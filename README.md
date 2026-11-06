@@ -1,10 +1,34 @@
 # 财报复核工作台
 
-用年报原文复核一个财务数字。使用者可以定位证据、确认年度和单位，再由模型调用工具计算比率并导出依据。
+一款面向财报初读者和投资者的中文阅读工具。选一个研究日期，从财务原表、同行披露、行业统计和政策出处核对自己的判断。
 
-[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [AMD 与 Apple 最新披露实测](https://shuboyu0520.github.io/report-evidence-workbench/largecap.html) · [沃尔玛修复与跨公司验证](https://shuboyu0520.github.io/report-evidence-workbench/currency.html) · [Costco 修复与沃尔玛盲测](https://shuboyu0520.github.io/report-evidence-workbench/wrapped.html) · [微软修复与跨行业盲测](https://shuboyu0520.github.io/report-evidence-workbench/dated.html) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
+[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [台积电与高通逐题结果](https://shuboyu0520.github.io/report-evidence-workbench/reader-evaluation.html)
 
-![工作台实际操作界面](docs/demo.png)
+![台积电财报联读](docs/reader-preview.png)
+
+## 案例与验收
+
+台积电原研报的四题初次用通用检索通过 2/4，已核准案例整合后复测 4/4。高通 2026 财年第四季度及全年公告首次使用原始 PDF、冻结引擎和预标注题集，查数与指引通过 4/14，报告期未到和资料缺证分别通过 2/2。四路联读还用四段来源公开、经核对的短摘录跑过一次真实模型调用。
+
+[可审阅记录](docs/reader-audit.json) · [SQL 归因](evaluation/reader_failures.sql) · [高通预设标注](evaluation/qcom-reader-blind.json) · [另一个项目 SplitAgent 的公开评测](docs/splitagent.html)
+
+<a id="run-reader"></a>
+## 在本机上传报告并提问
+
+安装 Python 3.12+、uv 与 Ollama。在两个终端分别启动 Ollama 与工作台。Ollama 安装所需模型后，PowerShell 可运行：
+
+```powershell
+ollama pull qwen3:4b-instruct
+ollama pull qwen3-embedding:0.6b
+$env:OLLAMA_MODEL='qwen3:4b-instruct'
+$env:OLLAMA_EMBED_MODEL='qwen3-embedding:0.6b'
+uv sync --frozen
+uv run uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
+```
+
+打开 <http://127.0.0.1:8000/reader>。单文档可导入文本型 PDF 或 UTF-8 TXT；跨资料联读需要给各来源填写发布日期。接口保留引文位置、查证状态与调用轨迹。默认 Ollama 端口为 11434，可通过 `OLLAMA_URL` 修改。GitHub Pages 提供免安装示例、指标搜索、原题回放和归因报告；自由提问使用本机模型。
+
+从题集中的发行人链接下载原件后，使用新输出目录运行 `uv run python -m scripts.evaluate_reader --fixture evaluation/qcom-reader-blind.json --file data/qcom.pdf --out data/run-qcom`。公开案例页面可用 `uv run python -m scripts.build_reader_site` 重建。二次上传相同原件保留其既有元数据。原第三方台积电研究报告未分发，公开示例使用自行核对的台积电资料卡。
 
 ## 2026 年 11 月 6 日实测
 

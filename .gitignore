@@ -1,4 +1,9 @@
 data/
+!app/data/
+app/data/*
+!app/data/market.json
+!app/data/tsmc.json
+!app/data/reader_examples.json
 .venv/
 __pycache__/
 .pytest*/
