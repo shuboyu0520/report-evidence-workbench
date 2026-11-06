@@ -288,6 +288,14 @@ async def lookup(pages, question, settings):
     kind = target_kind(question)
     table_rows = read_rows(pages)
     rows = [r for r in table_rows if (r.kind == kind if kind else r.kind not in {"segment", "geography"})]
+    if kind == "cash" and re.search(r"股[票权](?:支付|薪酬|激励)|(?:stock|share)[ -]based compensation", question, re.I) and not re.search(
+        r"代扣|税|结算|withhold|tax|settle", question, re.I
+    ):
+        expense = [r for r in rows if re.fullmatch(
+            r"(?:stock|share)[ -]based compensation(?: expense)?", r.label, re.I
+        )]
+        if expense:
+            rows = expense
     if any(r.source_column for r in rows):
         available = {}
         for r in rows:

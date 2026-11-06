@@ -176,6 +176,19 @@ def test_reject_partial_mixed_or_quarterly_wrapped_header(header):
     assert not read_rows(statement(header, "95  82"))
 
 
+@pytest.mark.parametrize("subject,expected_size", [("股权薪酬费用",1),("股权薪酬代扣税款",2)])
+def test_stock_compensation_is_distinct_from_award_tax(monkeypatch, subject, expected_size):
+    pages = [{"number":3, "text":"Consolidated statements of cash flows\nAmounts in millions of U.S. dollars\n"
+              "2024 2023\nStock-based compensation  13  18\nTax withholdings on stock-based awards  (4)  (3)"}]
+    client = httpx.AsyncClient
+    def respond(request):
+        menu = json.loads(json.loads(request.content)["messages"][1]["content"])["numbered_rows"]
+        assert len(menu.splitlines()) == expected_size
+        return httpx.Response(200,json={"message":{"content":'{"row":1}'}})
+    monkeypatch.setattr("app.table_lookup.httpx.AsyncClient",lambda **kw: client(transport=httpx.MockTransport(respond),**kw))
+    asyncio.run(lookup(pages, f"2023年现金流量表中的{subject}是多少？", {"model":"test","ollama_url":"http://test"}))
+
+
 def test_segment_columns_keep_wrapped_scope_and_year_blocks():
     from app.table_headers import segment_headers
 
