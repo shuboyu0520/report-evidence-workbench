@@ -66,7 +66,7 @@ function searchCase(){
 }
 $('caseSearch').onsubmit=e=>{e.preventDefault();searchCase()};
 $('plain').onclick=()=>{investor=false;render();searchCase()};$('detail').onclick=()=>{investor=true;render();searchCase()};$('cutoff').onchange=()=>{render();searchCase()};render();
-const states={reviewed_evidence:'已核对证据卡',not_yet_disclosed:'报告期尚未结束',insufficient_evidence:'现有资料证据不足',cited_draft:'模型草稿 · 请复核指标及期间',tool_timeout:'检索超时'};
+const states={reviewed_evidence:'已核对证据卡',source_earnings_cell:'已定位原表行列',not_yet_disclosed:'报告期尚未结束',insufficient_evidence:'现有资料证据不足',cited_draft:'模型草稿 · 请复核指标及期间',tool_timeout:'检索超时'};
 function showResult(parent,row){parent.append(el('p',row.answer),el('small',states[row.verification]||row.verification));for(const c of row.citations||[]){const s=el('p');s.className='source';if(c.url)link(s,c.source||'原始资料',c.url);else s.textContent='第 '+c.page+' 页 · '+c.quote;parent.append(s)}}
 for(const row of data.examples){const d=el('details');d.append(el('summary',row.question));showResult(d,row);$('examples').append(d)}
 if(live){

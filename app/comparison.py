@@ -7,7 +7,10 @@ async def summarize(sections, question, settings):
     supported = {}
     for section in sections:
         result = section["result"]
-        if result["verification"] in {"reviewed_evidence", "cited_draft"} and result["citations"]:
+        if (
+            result["verification"] in {"reviewed_evidence", "cited_draft", "source_earnings_cell"}
+            and result["citations"]
+        ):
             supported[section["role"]] = {
                 "answer": result["answer"],
                 "references": result["citations"],
@@ -38,7 +41,9 @@ async def summarize(sections, question, settings):
         and len(set(roles)) >= 2
     ):
         evidence = " ".join(
-            supported[role]["answer"] + " " + " ".join(c["quote"] for c in supported[role]["references"])
+            supported[role]["answer"]
+            + " "
+            + " ".join(c["quote"] for c in supported[role]["references"])
             for role in roles
         )
         if amount_tokens(text) <= amount_tokens(evidence):
