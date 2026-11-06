@@ -1,0 +1,29 @@
+{
+  "issuer":"Alphabet Inc.",
+  "report":"FY2024 Annual Report",
+  "source":"https://s206.q4cdn.com/479360582/files/doc_downloads/annualreport2024-web.pdf",
+  "sha256":"745700dad59d69a137d705194b7944c91dc1fb1d5de6b3866df0da7db9cee2d6",
+  "baseline":"25258f539deb02c71bb866a8bc3cdd0ad6adeb46",
+  "protocol":"Same fixed checks and question suffix as Amazon. One first pass after freezing the application; 5 income, 4 balance sheet, 2 cash flow, 3 segment and 4 future-year refusals. Source PDF physical pages, USD millions, no prefilled facts.",
+  "instruction":"请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+  "cases":[
+    ["AL01",2024,"合并利润表的营业收入是多少？",58,"Revenues $","350,018"],
+    ["AL02",2023,"合并利润表的研发支出是多少？",58,"Research and development","45,427"],
+    ["AL03",2024,"请查合并利润表，销售与市场推广费用是多少？",58,"Sales and marketing","27,808"],
+    ["AL04",2023,"合并利润表中的营业利润是多少？",58,"Income from operations","84,293"],
+    ["AL05",2024,"利润表中公司的税前利润是多少？",58,"Income before income taxes","119,815"],
+    ["AL06",2024,"资产负债表上的现金及现金等价物是多少？",57,"Cash and cash equivalents $","23,466"],
+    ["AL07",2023,"长期债务的期末金额是多少？请查合并资产负债表。",57,"Long-term debt","11,870"],
+    ["AL08",2024,"合并资产负债表中的商誉账面值是多少？",57,"Goodwill","31,885"],
+    ["AL09",2023,"合并资产负债表上短期需要偿付的流动负债总额是多少？",57,"Total current liabilities","81,814"],
+    ["AL10",2024,"经营活动带来的净现金是多少？请查现金流量表。",61,"Net cash provided by operating activities","125,299"],
+    ["AL11",2023,"请查现金流量表，用股票支付的薪酬费用是多少？",61,"Stock-based compensation expense","22,460"],
+    ["AL12",2024,"Google Cloud 分部的营业利润是多少？请引用分部附注。",97,"Google Cloud","6,112"],
+    ["AL13",2023,"Google Services 分部确认了多少收入？请引用分部附注。",97,"Google Services $","272,543"],
+    ["AL14",2024,"Google Cloud 分部的员工薪酬费用是多少？请引用分部附注。",97,"Employee compensation expenses $","20,519"],
+    ["AL15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+    ["AL16",2028,"这份财报披露的期末商誉实际账面值是多少？",null,null,null],
+    ["AL17",2027,"这份财报披露的 Google Cloud 分部实际营业利润是多少？",null,null,null],
+    ["AL18",2028,"这份财报披露的经营活动净现金实际金额是多少？",null,null,null]
+  ]
+}
