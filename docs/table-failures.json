@@ -1,0 +1,86 @@
+[
+  {
+    "issuer": "Amazon",
+    "phase": "旧版独立盲测",
+    "stage": "passed",
+    "count": 1,
+    "case_ids": "AM01"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "旧版独立盲测",
+    "stage": "source_row_hit_wrong_amount",
+    "count": 3,
+    "case_ids": "AM02,AM04,AM06"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "旧版独立盲测",
+    "stage": "source_row_missed",
+    "count": 10,
+    "case_ids": "AM03,AM05,AM07,AM08,AM09,AM10,AM11,AM12,AM13,AM14"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "原题修复后首次复测",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AM01,AM02,AM03,AM04,AM05,AM06,AM07,AM08,AM09,AM10,AM11,AM12,AM13,AM14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "首版读取器盲测",
+    "stage": "passed",
+    "count": 2,
+    "case_ids": "AL13,AL14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "首版读取器盲测",
+    "stage": "source_row_hit_wrong_amount",
+    "count": 3,
+    "case_ids": "AL09,AL11,AL12"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "首版读取器盲测",
+    "stage": "source_row_missed",
+    "count": 9,
+    "case_ids": "AL01,AL02,AL03,AL04,AL05,AL06,AL07,AL08,AL10"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "发布版回归",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AM01,AM02,AM03,AM04,AM05,AM06,AM07,AM08,AM09,AM10,AM11,AM12,AM13,AM14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "兼容布局后复测",
+    "stage": "passed",
+    "count": 11,
+    "case_ids": "AL01,AL02,AL03,AL04,AL05,AL06,AL07,AL08,AL10,AL13,AL14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "兼容布局后复测",
+    "stage": "source_row_missed",
+    "count": 3,
+    "case_ids": "AL09,AL11,AL12"
+  },
+  {
+    "issuer": "Netflix",
+    "phase": "发布版首次问答盲测",
+    "stage": "passed",
+    "count": 10,
+    "case_ids": "NF01,NF02,NF03,NF04,NF05,NF06,NF07,NF08,NF10,NF11"
+  },
+  {
+    "issuer": "Netflix",
+    "phase": "发布版首次问答盲测",
+    "stage": "source_row_missed",
+    "count": 4,
+    "case_ids": "NF09,NF12,NF13,NF14"
+  }
+]

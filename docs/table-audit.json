@@ -1,0 +1,5580 @@
+[
+  {
+    "issuer": "Amazon",
+    "phase": "旧版独立盲测",
+    "source": "https://s2.q4cdn.com/299287126/files/doc_financials/2025/ar/Amazon-2024-Annual-Report.pdf",
+    "commit": "9b33b9253a9ac365e29378d01880addd6cbf012b",
+    "fixture_sha256": "6d5deaf6162f7b8373bb32cea65fe96fee6683e017c44a28f7f9d1266e79543d",
+    "pdf_sha256": "d6c8919af431fbf38d5d92f2060ba8f45d084f26495c6f17ce81232102977908",
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "a0da68351f9cc201b059730264f1d4520957a10ff79c7278fe3a4b1a6f8e1742",
+      "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "42af7e5e7be23a5090d7c37fc4b33dfbdd48975267982568a147d6b8b699482c",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "9213fd6737887f2281774df22dc2b0b201ca8f2957d0307a61433dfed9a90735"
+    },
+    "counts": [
+      4,
+      3,
+      1,
+      4
+    ],
+    "cases": [
+      {
+        "answer": "目标年度：2024  \n金额：637,959（百万美元）  \n物理页码：第 49 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              79,
+              36,
+              1,
+              49,
+              86
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM01",
+        "question": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 15338,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "637,959",
+        "source_label": "Total net sales",
+        "printed_expected": "637,959",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "2023年，公司卖出商品获得的净销售额是513,983百万美元（即5139.83亿美元），第49页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              79,
+              49,
+              79,
+              86,
+              33
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 year net sales by product group or total net sales in consolidated statements of operations"
+            },
+            "pages": [
+              49,
+              79,
+              36,
+              36,
+              79
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2023,
+              "metric": "revenue"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "AM02",
+        "question": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2465,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "255,887",
+        "source_label": "Net product sales",
+        "printed_expected": "255,887",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              62,
+              86,
+              70,
+              1,
+              33
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM03",
+        "question": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 887,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "98,505",
+        "source_label": "Fulfillment",
+        "printed_expected": "98,505",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 37 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              38,
+              56,
+              1,
+              37,
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM04",
+        "question": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 701,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "43,907",
+        "source_label": "Sales and marketing",
+        "printed_expected": "43,907",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              86,
+              33,
+              65,
+              1,
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM05",
+        "question": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 611,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "36,852",
+        "source_label": "Operating income",
+        "printed_expected": "36,852",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 51 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              65,
+              51,
+              48,
+              86,
+              74
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM06",
+        "question": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 704,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "34,214",
+        "source_label": "Inventories",
+        "printed_expected": "34,214",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 48 页\n现金及现金等价物：78,779 百万美元",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": true,
+          "year": false,
+          "unit": true,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              65,
+              48,
+              86,
+              48,
+              35
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM07",
+        "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 908,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "78,779",
+        "source_label": "Cash and cash equivalents",
+        "printed_expected": "78,779",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "目标年度：2023  \n金额：58,314 百万美元  \nPDF 物理页码：第 69 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              69,
+              39,
+              69,
+              70,
+              69
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM08",
+        "question": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1092,
+        "target_page": 51,
+        "year": 2023,
+        "expected": "58,314",
+        "source_label": "Long-term debt",
+        "printed_expected": "58,314",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              59,
+              86,
+              1,
+              62,
+              65
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM09",
+        "question": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 726,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "23,074",
+        "source_label": "Goodwill",
+        "printed_expected": "23,074",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。缺少2024年及2023年经营活动产生的净现金流量数据，无法计算。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": true,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              65,
+              48,
+              48,
+              35,
+              86
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2024,
+              "metric": "operating_cash_flow"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 2,
+        "id": "AM10",
+        "question": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1200,
+        "target_page": 48,
+        "year": 2024,
+        "expected": "115,877",
+        "source_label": "Net cash provided by (used in) operating activities",
+        "printed_expected": "115,877",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              52,
+              65,
+              35,
+              35,
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM11",
+        "question": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 716,
+        "target_page": 48,
+        "year": 2023,
+        "expected": "24,023",
+        "source_label": "Stock-based compensation",
+        "printed_expected": "24,023",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              37,
+              78,
+              36,
+              62,
+              80
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM12",
+        "question": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 812,
+        "target_page": 78,
+        "year": 2024,
+        "expected": "39,834",
+        "source_label": "Operating income $",
+        "printed_expected": "39,834",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              44,
+              44,
+              36,
+              36,
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM13",
+        "question": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 632,
+        "target_page": 78,
+        "year": 2024,
+        "expected": "142,906",
+        "source_label": "Net sales $",
+        "printed_expected": "142,906",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              81,
+              54,
+              54,
+              39,
+              80
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM14",
+        "question": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 693,
+        "target_page": 78,
+        "year": 2023,
+        "expected": "337,951",
+        "source_label": "Operating expenses",
+        "printed_expected": "337,951",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              79,
+              49,
+              36,
+              79,
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM15",
+        "question": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 714,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              33,
+              86,
+              51,
+              51,
+              70
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM16",
+        "question": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 714,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78,
+              36,
+              78,
+              53,
+              37
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM17",
+        "question": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 672,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48,
+              48,
+              48,
+              65,
+              64
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2028,
+              "metric": "operating_cash_flow"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 3,
+        "id": "AM18",
+        "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 1421,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      }
+    ]
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "原题修复后首次复测",
+    "source": "https://s2.q4cdn.com/299287126/files/doc_financials/2025/ar/Amazon-2024-Annual-Report.pdf",
+    "commit": "30f615202af413e9207d05cb344ac700a960e585",
+    "fixture_sha256": "6d5deaf6162f7b8373bb32cea65fe96fee6683e017c44a28f7f9d1266e79543d",
+    "pdf_sha256": "d6c8919af431fbf38d5d92f2060ba8f45d084f26495c6f17ce81232102977908",
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "7b0d1fb860ffccfaddee4bff1164e531c5caf8140d3a93c2a7be97365e20172a",
+      "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "42af7e5e7be23a5090d7c37fc4b33dfbdd48975267982568a147d6b8b699482c",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_lookup.py": "c8d127a9340cc903a813fa0073cfe6b9904659397b6d0e4f64a71607e3021395"
+    },
+    "counts": [
+      14,
+      14,
+      14,
+      4
+    ],
+    "cases": [
+      {
+        "answer": "2024 财年， Total net sales：637,959 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM01",
+        "question": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2567,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "637,959",
+        "source_label": "Total net sales",
+        "printed_expected": "637,959",
+        "selected_source_line": "Total net sales  513,983  574,785  637,959",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Total net sales",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 3,
+          "raw_cell": "637,959",
+          "value_millions": "637,959"
+        }
+      },
+      {
+        "answer": "2023 财年， Net product sales：255,887 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM02",
+        "question": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 203,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "255,887",
+        "source_label": "Net product sales",
+        "printed_expected": "255,887",
+        "selected_source_line": "Net product sales $ 242,901 $ 255,887 $ 272,311",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net product sales",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 2,
+          "raw_cell": "255,887",
+          "value_millions": "255,887"
+        }
+      },
+      {
+        "answer": "2024 财年， Fulfillment：98,505 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM03",
+        "question": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 221,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "98,505",
+        "source_label": "Fulfillment",
+        "printed_expected": "98,505",
+        "selected_source_line": "Fulfillment  84,299  90,619  98,505",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Fulfillment",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 3,
+          "raw_cell": "98,505",
+          "value_millions": "98,505"
+        }
+      },
+      {
+        "answer": "2024 财年， Sales and marketing：43,907 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM04",
+        "question": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 212,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "43,907",
+        "source_label": "Sales and marketing",
+        "printed_expected": "43,907",
+        "selected_source_line": "Sales and marketing  42,238  44,370  43,907",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Sales and marketing",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 3,
+          "raw_cell": "43,907",
+          "value_millions": "43,907"
+        }
+      },
+      {
+        "answer": "2023 财年， Operating income：36,852 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM05",
+        "question": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 206,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "36,852",
+        "source_label": "Operating income",
+        "printed_expected": "36,852",
+        "selected_source_line": "Operating income  12,248  36,852  68,593",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating income",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 2,
+          "raw_cell": "36,852",
+          "value_millions": "36,852"
+        }
+      },
+      {
+        "answer": "2024 财年， Inventories：34,214 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM06",
+        "question": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 213,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "34,214",
+        "source_label": "Inventories",
+        "printed_expected": "34,214",
+        "selected_source_line": "Inventories  33,318  34,214",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Inventories",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 2,
+          "raw_cell": "34,214",
+          "value_millions": "34,214"
+        }
+      },
+      {
+        "answer": "2024 财年， Cash and cash equivalents：78,779 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM07",
+        "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 201,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "78,779",
+        "source_label": "Cash and cash equivalents",
+        "printed_expected": "78,779",
+        "selected_source_line": "Cash and cash equivalents $ 73,387 $ 78,779",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Cash and cash equivalents",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 2,
+          "raw_cell": "78,779",
+          "value_millions": "78,779"
+        }
+      },
+      {
+        "answer": "2023 财年， Long-term debt：58,314 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM08",
+        "question": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 222,
+        "target_page": 51,
+        "year": 2023,
+        "expected": "58,314",
+        "source_label": "Long-term debt",
+        "printed_expected": "58,314",
+        "selected_source_line": "Long-term debt  58,314  52,623",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Long-term debt",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 1,
+          "raw_cell": "58,314",
+          "value_millions": "58,314"
+        }
+      },
+      {
+        "answer": "2024 财年， Goodwill：23,074 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM09",
+        "question": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 203,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "23,074",
+        "source_label": "Goodwill",
+        "printed_expected": "23,074",
+        "selected_source_line": "Goodwill  22,789  23,074",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Goodwill",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 2,
+          "raw_cell": "23,074",
+          "value_millions": "23,074"
+        }
+      },
+      {
+        "answer": "2024 财年， Net cash provided by (used in) operating activities：115,877 百万美元。PDF 物理第 48 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM10",
+        "question": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 235,
+        "target_page": 48,
+        "year": 2024,
+        "expected": "115,877",
+        "source_label": "Net cash provided by (used in) operating activities",
+        "printed_expected": "115,877",
+        "selected_source_line": "Net cash provided by (used in) operating activities  46,752  84,946  115,877",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net cash provided by (used in) operating activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions)",
+          "physical_page": 48,
+          "column": 3,
+          "raw_cell": "115,877",
+          "value_millions": "115,877"
+        }
+      },
+      {
+        "answer": "2023 财年， Stock-based compensation：24,023 百万美元。PDF 物理第 48 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM11",
+        "question": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 232,
+        "target_page": 48,
+        "year": 2023,
+        "expected": "24,023",
+        "source_label": "Stock-based compensation",
+        "printed_expected": "24,023",
+        "selected_source_line": "Stock-based compensation  19,621  24,023  22,011",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Stock-based compensation",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions)",
+          "physical_page": 48,
+          "column": 2,
+          "raw_cell": "24,023",
+          "value_millions": "24,023"
+        }
+      },
+      {
+        "answer": "2024 财年，AWS Operating income：39,834 百万美元。PDF 物理第 78 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM12",
+        "question": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 207,
+        "target_page": 78,
+        "year": 2024,
+        "expected": "39,834",
+        "source_label": "Operating income $",
+        "printed_expected": "39,834",
+        "selected_source_line": "Operating income $ 22,841 $ 24,631 $ 39,834",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating income",
+          "scope": "AWS",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78,
+          "column": 3,
+          "raw_cell": "39,834",
+          "value_millions": "39,834"
+        }
+      },
+      {
+        "answer": "2024 财年，International Net sales：142,906 百万美元。PDF 物理第 78 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM13",
+        "question": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 189,
+        "target_page": 78,
+        "year": 2024,
+        "expected": "142,906",
+        "source_label": "Net sales $",
+        "printed_expected": "142,906",
+        "selected_source_line": "Net sales $ 118,007 $ 131,200 $ 142,906",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net sales",
+          "scope": "International",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78,
+          "column": 3,
+          "raw_cell": "142,906",
+          "value_millions": "142,906"
+        }
+      },
+      {
+        "answer": "2023 财年，North America Operating expenses：337,951 百万美元。PDF 物理第 78 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM14",
+        "question": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 197,
+        "target_page": 78,
+        "year": 2023,
+        "expected": "337,951",
+        "source_label": "Operating expenses",
+        "printed_expected": "337,951",
+        "selected_source_line": "Operating expenses  318,727  337,951  362,530",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating expenses",
+          "scope": "North America",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78,
+          "column": 2,
+          "raw_cell": "337,951",
+          "value_millions": "337,951"
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM15",
+        "question": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 5386,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Net product sales",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM16",
+        "question": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 342,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Inventories",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM17",
+        "question": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 226,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Operating income",
+          "scope": "AWS",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM18",
+        "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 311,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Net cash provided by (used in) operating activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions)",
+          "physical_page": 48
+        }
+      }
+    ]
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "首版读取器盲测",
+    "source": "https://s206.q4cdn.com/479360582/files/doc_downloads/annualreport2024-web.pdf",
+    "commit": "51e80e338a8bef8773c664ab4c06910d345d094e",
+    "fixture_sha256": "62a16af98a943dbe0854a87d3af6c6c5c6fe794c3e46bb75284432f9d2aa58ad",
+    "pdf_sha256": "745700dad59d69a137d705194b7944c91dc1fb1d5de6b3866df0da7db9cee2d6",
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "7b0d1fb860ffccfaddee4bff1164e531c5caf8140d3a93c2a7be97365e20172a",
+      "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "42af7e5e7be23a5090d7c37fc4b33dfbdd48975267982568a147d6b8b699482c",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_lookup.py": "c8d127a9340cc903a813fa0073cfe6b9904659397b6d0e4f64a71607e3021395"
+    },
+    "counts": [
+      5,
+      5,
+      2,
+      4
+    ],
+    "cases": [
+      {
+        "answer": "2024年，合并利润表的营业收入是350,018百万美元，第40页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表的营业收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              2,
+              1,
+              110,
+              70,
+              60
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年 营业收入"
+            },
+            "pages": [
+              2,
+              70,
+              1,
+              110,
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 3,
+        "id": "AL01",
+        "question": "2024 财年，合并利润表的营业收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 10788,
+        "target_page": 58,
+        "year": 2024,
+        "expected": "350,018",
+        "source_label": "Revenues $",
+        "printed_expected": "350,018",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 43 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表的研发支出是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              43,
+              70,
+              43,
+              40,
+              54
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL02",
+        "question": "2023 财年，合并利润表的研发支出是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 448,
+        "target_page": 58,
+        "year": 2023,
+        "expected": "45,427",
+        "source_label": "Research and development",
+        "printed_expected": "45,427",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "2024年，销售与市场推广费用为27,808百万美元，第43页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，请查合并利润表，销售与市场推广费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              43,
+              2,
+              1,
+              110,
+              60
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL03",
+        "question": "2024 财年，请查合并利润表，销售与市场推广费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 561,
+        "target_page": 58,
+        "year": 2024,
+        "expected": "27,808",
+        "source_label": "Sales and marketing",
+        "printed_expected": "27,808",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "2023年，合并利润表中的营业利润是84,293百万美元，第58页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表中的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              54,
+              2,
+              97,
+              34,
+              101
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 consolidated statements of income operating profit"
+            },
+            "pages": [
+              54,
+              39,
+              77,
+              61,
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 3,
+        "id": "AL04",
+        "question": "2023 财年，合并利润表中的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1450,
+        "target_page": 58,
+        "year": 2023,
+        "expected": "84,293",
+        "source_label": "Income from operations",
+        "printed_expected": "84,293",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，利润表中公司的税前利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              2,
+              1,
+              110,
+              83,
+              70
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL05",
+        "question": "2024 财年，利润表中公司的税前利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 544,
+        "target_page": 58,
+        "year": 2024,
+        "expected": "119,815",
+        "source_label": "Income before income taxes",
+        "printed_expected": "119,815",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 61 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              61,
+              2,
+              1,
+              110,
+              60
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL06",
+        "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 325,
+        "target_page": 57,
+        "year": 2024,
+        "expected": "23,466",
+        "source_label": "Cash and cash equivalents $",
+        "printed_expected": "23,466",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 81 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，长期债务的期末金额是多少？请查合并资产负债表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              81,
+              81,
+              47,
+              81,
+              47
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL07",
+        "question": "2023 财年，长期债务的期末金额是多少？请查合并资产负债表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 476,
+        "target_page": 57,
+        "year": 2023,
+        "expected": "11,870",
+        "source_label": "Long-term debt",
+        "printed_expected": "11,870",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并资产负债表中的商誉账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              2,
+              1,
+              110,
+              70,
+              60
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL08",
+        "question": "2024 财年，合并资产负债表中的商誉账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 426,
+        "target_page": 57,
+        "year": 2024,
+        "expected": "31,885",
+        "source_label": "Goodwill",
+        "printed_expected": "31,885",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表上短期需要偿付的流动负债总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              47,
+              47,
+              81,
+              47,
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL09",
+        "question": "2023 财年，合并资产负债表上短期需要偿付的流动负债总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 431,
+        "target_page": 57,
+        "year": 2023,
+        "expected": "81,814",
+        "source_label": "Total current liabilities",
+        "printed_expected": "81,814",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，经营活动带来的净现金是多少？请查现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              2,
+              61,
+              46,
+              40,
+              1
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "cash_conversion",
+              "year": 2024
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 2,
+        "id": "AL10",
+        "question": "2024 财年，经营活动带来的净现金是多少？请查现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 732,
+        "target_page": 61,
+        "year": 2024,
+        "expected": "125,299",
+        "source_label": "Net cash provided by operating activities",
+        "printed_expected": "125,299",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，请查现金流量表，用股票支付的薪酬费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              46,
+              61,
+              82,
+              60,
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL11",
+        "question": "2023 财年，请查现金流量表，用股票支付的薪酬费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 464,
+        "target_page": 61,
+        "year": 2023,
+        "expected": "22,460",
+        "source_label": "Stock-based compensation expense",
+        "printed_expected": "22,460",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，Google Cloud 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97,
+              44,
+              40,
+              41,
+              70
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL12",
+        "question": "2024 财年，Google Cloud 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 597,
+        "target_page": 97,
+        "year": 2024,
+        "expected": "6,112",
+        "source_label": "Google Cloud",
+        "printed_expected": "6,112",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "2023年，Google Services分部确认的收入为272,543百万美元，引用自第97页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，Google Services 分部确认了多少收入？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97,
+              44,
+              40,
+              70,
+              96
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL13",
+        "question": "2023 财年，Google Services 分部确认了多少收入？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 849,
+        "target_page": 97,
+        "year": 2023,
+        "expected": "272,543",
+        "source_label": "Google Services $",
+        "printed_expected": "272,543",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "第 97 页\n2024 财年，Google Cloud 分部的员工薪酬费用是 20,519 百万美元。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，Google Cloud 分部的员工薪酬费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97,
+              97,
+              40,
+              44,
+              84
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL14",
+        "question": "2024 财年，Google Cloud 分部的员工薪酬费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 879,
+        "target_page": 97,
+        "year": 2024,
+        "expected": "20,519",
+        "source_label": "Employee compensation expenses $",
+        "printed_expected": "20,519",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的合并营业收入实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              8,
+              101,
+              53,
+              2,
+              1
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年 合并营业收入 实际值"
+            },
+            "pages": [
+              8,
+              59,
+              97,
+              61,
+              34
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 3,
+        "id": "AL15",
+        "question": "2027 财年，这份财报披露的合并营业收入实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 1230,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的期末商誉实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97,
+              1,
+              110,
+              69,
+              69
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL16",
+        "question": "2028 财年，这份财报披露的期末商誉实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 472,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的 Google Cloud 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97,
+              44,
+              84,
+              96,
+              34
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL17",
+        "question": "2027 财年，这份财报披露的 Google Cloud 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 463,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              61,
+              2,
+              82,
+              61,
+              1
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "operating cash flow 2028"
+            },
+            "pages": [
+              46,
+              46,
+              46,
+              40,
+              46
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2028,
+              "metric": "operating_cash_flow"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "AL18",
+        "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 7209,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "dense"
+        }
+      }
+    ]
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "发布版回归",
+    "source": "https://s2.q4cdn.com/299287126/files/doc_financials/2025/ar/Amazon-2024-Annual-Report.pdf",
+    "commit": "2abd0f7470f3545c708df69b7726231e6943a614",
+    "fixture_sha256": "6d5deaf6162f7b8373bb32cea65fe96fee6683e017c44a28f7f9d1266e79543d",
+    "pdf_sha256": "d6c8919af431fbf38d5d92f2060ba8f45d084f26495c6f17ce81232102977908",
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "7b0d1fb860ffccfaddee4bff1164e531c5caf8140d3a93c2a7be97365e20172a",
+      "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "d8cf0092893d1fd636bd884ac58133bb88502f5400ffe296f693621470779b4c",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_lookup.py": "b52f2b0bfb87369c0cf6aa51ca69164c32438e7c248f5041a2968a0bcb13d64d"
+    },
+    "counts": [
+      14,
+      14,
+      14,
+      4
+    ],
+    "cases": [
+      {
+        "answer": "2024 财年， Total net sales：637,959 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM01",
+        "question": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 430,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "637,959",
+        "source_label": "Total net sales",
+        "printed_expected": "637,959",
+        "selected_source_line": "Total net sales  513,983  574,785  637,959",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Total net sales",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 3,
+          "raw_cell": "637,959",
+          "value_millions": "637,959"
+        }
+      },
+      {
+        "answer": "2023 财年， Net product sales：255,887 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM02",
+        "question": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 185,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "255,887",
+        "source_label": "Net product sales",
+        "printed_expected": "255,887",
+        "selected_source_line": "Net product sales $ 242,901 $ 255,887 $ 272,311",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net product sales",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 2,
+          "raw_cell": "255,887",
+          "value_millions": "255,887"
+        }
+      },
+      {
+        "answer": "2024 财年， Fulfillment：98,505 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM03",
+        "question": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 209,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "98,505",
+        "source_label": "Fulfillment",
+        "printed_expected": "98,505",
+        "selected_source_line": "Fulfillment  84,299  90,619  98,505",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Fulfillment",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 3,
+          "raw_cell": "98,505",
+          "value_millions": "98,505"
+        }
+      },
+      {
+        "answer": "2024 财年， Sales and marketing：43,907 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM04",
+        "question": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 202,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "43,907",
+        "source_label": "Sales and marketing",
+        "printed_expected": "43,907",
+        "selected_source_line": "Sales and marketing  42,238  44,370  43,907",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Sales and marketing",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 3,
+          "raw_cell": "43,907",
+          "value_millions": "43,907"
+        }
+      },
+      {
+        "answer": "2023 财年， Operating income：36,852 百万美元。PDF 物理第 49 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM05",
+        "question": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 223,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "36,852",
+        "source_label": "Operating income",
+        "printed_expected": "36,852",
+        "selected_source_line": "Operating income  12,248  36,852  68,593",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating income",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49,
+          "column": 2,
+          "raw_cell": "36,852",
+          "value_millions": "36,852"
+        }
+      },
+      {
+        "answer": "2024 财年， Inventories：34,214 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM06",
+        "question": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 195,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "34,214",
+        "source_label": "Inventories",
+        "printed_expected": "34,214",
+        "selected_source_line": "Inventories  33,318  34,214",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Inventories",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 2,
+          "raw_cell": "34,214",
+          "value_millions": "34,214"
+        }
+      },
+      {
+        "answer": "2024 财年， Cash and cash equivalents：78,779 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM07",
+        "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 219,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "78,779",
+        "source_label": "Cash and cash equivalents",
+        "printed_expected": "78,779",
+        "selected_source_line": "Cash and cash equivalents $ 73,387 $ 78,779",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Cash and cash equivalents",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 2,
+          "raw_cell": "78,779",
+          "value_millions": "78,779"
+        }
+      },
+      {
+        "answer": "2023 财年， Long-term debt：58,314 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM08",
+        "question": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 192,
+        "target_page": 51,
+        "year": 2023,
+        "expected": "58,314",
+        "source_label": "Long-term debt",
+        "printed_expected": "58,314",
+        "selected_source_line": "Long-term debt  58,314  52,623",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Long-term debt",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 1,
+          "raw_cell": "58,314",
+          "value_millions": "58,314"
+        }
+      },
+      {
+        "answer": "2024 财年， Goodwill：23,074 百万美元。PDF 物理第 51 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM09",
+        "question": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 182,
+        "target_page": 51,
+        "year": 2024,
+        "expected": "23,074",
+        "source_label": "Goodwill",
+        "printed_expected": "23,074",
+        "selected_source_line": "Goodwill  22,789  23,074",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Goodwill",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51,
+          "column": 2,
+          "raw_cell": "23,074",
+          "value_millions": "23,074"
+        }
+      },
+      {
+        "answer": "2024 财年， Net cash provided by (used in) operating activities：115,877 百万美元。PDF 物理第 48 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM10",
+        "question": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 204,
+        "target_page": 48,
+        "year": 2024,
+        "expected": "115,877",
+        "source_label": "Net cash provided by (used in) operating activities",
+        "printed_expected": "115,877",
+        "selected_source_line": "Net cash provided by (used in) operating activities  46,752  84,946  115,877",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net cash provided by (used in) operating activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions)",
+          "physical_page": 48,
+          "column": 3,
+          "raw_cell": "115,877",
+          "value_millions": "115,877"
+        }
+      },
+      {
+        "answer": "2023 财年， Stock-based compensation：24,023 百万美元。PDF 物理第 48 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM11",
+        "question": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 196,
+        "target_page": 48,
+        "year": 2023,
+        "expected": "24,023",
+        "source_label": "Stock-based compensation",
+        "printed_expected": "24,023",
+        "selected_source_line": "Stock-based compensation  19,621  24,023  22,011",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Stock-based compensation",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions)",
+          "physical_page": 48,
+          "column": 2,
+          "raw_cell": "24,023",
+          "value_millions": "24,023"
+        }
+      },
+      {
+        "answer": "2024 财年，AWS Operating income：39,834 百万美元。PDF 物理第 78 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM12",
+        "question": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 215,
+        "target_page": 78,
+        "year": 2024,
+        "expected": "39,834",
+        "source_label": "Operating income $",
+        "printed_expected": "39,834",
+        "selected_source_line": "Operating income $ 22,841 $ 24,631 $ 39,834",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating income",
+          "scope": "AWS",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78,
+          "column": 3,
+          "raw_cell": "39,834",
+          "value_millions": "39,834"
+        }
+      },
+      {
+        "answer": "2024 财年，International Net sales：142,906 百万美元。PDF 物理第 78 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM13",
+        "question": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 195,
+        "target_page": 78,
+        "year": 2024,
+        "expected": "142,906",
+        "source_label": "Net sales $",
+        "printed_expected": "142,906",
+        "selected_source_line": "Net sales $ 118,007 $ 131,200 $ 142,906",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net sales",
+          "scope": "International",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78,
+          "column": 3,
+          "raw_cell": "142,906",
+          "value_millions": "142,906"
+        }
+      },
+      {
+        "answer": "2023 财年，North America Operating expenses：337,951 百万美元。PDF 物理第 78 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM14",
+        "question": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 210,
+        "target_page": 78,
+        "year": 2023,
+        "expected": "337,951",
+        "source_label": "Operating expenses",
+        "printed_expected": "337,951",
+        "selected_source_line": "Operating expenses  318,727  337,951  362,530",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating expenses",
+          "scope": "North America",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78,
+          "column": 2,
+          "raw_cell": "337,951",
+          "value_millions": "337,951"
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              49
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM15",
+        "question": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 225,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Net product sales",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 49
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              51
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM16",
+        "question": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 238,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Inventories",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "2023 2024",
+          "unit": "(in millions, except per share data)",
+          "physical_page": 51
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM17",
+        "question": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 228,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Operating income",
+          "scope": "AWS",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "Information on reportable segments and reconciliation to consolidated net income (loss) is as follows (in millions):",
+          "physical_page": 78
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              48
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AM18",
+        "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 228,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Net cash provided by (used in) operating activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "(in millions)",
+          "physical_page": 48
+        }
+      }
+    ]
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "兼容布局后复测",
+    "source": "https://s206.q4cdn.com/479360582/files/doc_downloads/annualreport2024-web.pdf",
+    "commit": "2abd0f7470f3545c708df69b7726231e6943a614",
+    "fixture_sha256": "62a16af98a943dbe0854a87d3af6c6c5c6fe794c3e46bb75284432f9d2aa58ad",
+    "pdf_sha256": "745700dad59d69a137d705194b7944c91dc1fb1d5de6b3866df0da7db9cee2d6",
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "7b0d1fb860ffccfaddee4bff1164e531c5caf8140d3a93c2a7be97365e20172a",
+      "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "d8cf0092893d1fd636bd884ac58133bb88502f5400ffe296f693621470779b4c",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_lookup.py": "b52f2b0bfb87369c0cf6aa51ca69164c32438e7c248f5041a2968a0bcb13d64d"
+    },
+    "counts": [
+      11,
+      11,
+      11,
+      4
+    ],
+    "cases": [
+      {
+        "answer": "2024 财年， Revenues：350,018 百万美元。PDF 物理第 58 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表的营业收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL01",
+        "question": "2024 财年，合并利润表的营业收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 429,
+        "target_page": 58,
+        "year": 2024,
+        "expected": "350,018",
+        "source_label": "Revenues $",
+        "printed_expected": "350,018",
+        "selected_source_line": "Revenues $ 282,836 $ 307,394 $ 350,018",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Revenues",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except per share amounts) 2022 2023 2024",
+          "unit": "(in millions, except per share amounts) 2022 2023 2024",
+          "physical_page": 58,
+          "column": 3,
+          "raw_cell": "350,018",
+          "value_millions": "350,018"
+        }
+      },
+      {
+        "answer": "2023 财年， Research and development：45,427 百万美元。PDF 物理第 58 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表的研发支出是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL02",
+        "question": "2023 财年，合并利润表的研发支出是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 190,
+        "target_page": 58,
+        "year": 2023,
+        "expected": "45,427",
+        "source_label": "Research and development",
+        "printed_expected": "45,427",
+        "selected_source_line": "Research and development 39,500 45,427 49,326",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Research and development",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except per share amounts) 2022 2023 2024",
+          "unit": "(in millions, except per share amounts) 2022 2023 2024",
+          "physical_page": 58,
+          "column": 2,
+          "raw_cell": "45,427",
+          "value_millions": "45,427"
+        }
+      },
+      {
+        "answer": "2024 财年， Sales and marketing：27,808 百万美元。PDF 物理第 58 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，请查合并利润表，销售与市场推广费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL03",
+        "question": "2024 财年，请查合并利润表，销售与市场推广费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 193,
+        "target_page": 58,
+        "year": 2024,
+        "expected": "27,808",
+        "source_label": "Sales and marketing",
+        "printed_expected": "27,808",
+        "selected_source_line": "Sales and marketing 26,567 27,917 27,808",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Sales and marketing",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except per share amounts) 2022 2023 2024",
+          "unit": "(in millions, except per share amounts) 2022 2023 2024",
+          "physical_page": 58,
+          "column": 3,
+          "raw_cell": "27,808",
+          "value_millions": "27,808"
+        }
+      },
+      {
+        "answer": "2023 财年， Income from operations：84,293 百万美元。PDF 物理第 58 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表中的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL04",
+        "question": "2023 财年，合并利润表中的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 194,
+        "target_page": 58,
+        "year": 2023,
+        "expected": "84,293",
+        "source_label": "Income from operations",
+        "printed_expected": "84,293",
+        "selected_source_line": "Income from operations 74,842 84,293 112,390",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Income from operations",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except per share amounts) 2022 2023 2024",
+          "unit": "(in millions, except per share amounts) 2022 2023 2024",
+          "physical_page": 58,
+          "column": 2,
+          "raw_cell": "84,293",
+          "value_millions": "84,293"
+        }
+      },
+      {
+        "answer": "2024 财年， Income before income taxes：119,815 百万美元。PDF 物理第 58 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，利润表中公司的税前利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL05",
+        "question": "2024 财年，利润表中公司的税前利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 192,
+        "target_page": 58,
+        "year": 2024,
+        "expected": "119,815",
+        "source_label": "Income before income taxes",
+        "printed_expected": "119,815",
+        "selected_source_line": "Income before income taxes 71,328 85,717 119,815",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Income before income taxes",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except per share amounts) 2022 2023 2024",
+          "unit": "(in millions, except per share amounts) 2022 2023 2024",
+          "physical_page": 58,
+          "column": 3,
+          "raw_cell": "119,815",
+          "value_millions": "119,815"
+        }
+      },
+      {
+        "answer": "2024 财年， Cash and cash equivalents：23,466 百万美元。PDF 物理第 57 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL06",
+        "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 212,
+        "target_page": 57,
+        "year": 2024,
+        "expected": "23,466",
+        "source_label": "Cash and cash equivalents $",
+        "printed_expected": "23,466",
+        "selected_source_line": "Cash and cash equivalents $ 24,048 $ 23,466",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Cash and cash equivalents",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except par value per share amounts) 2023 2024",
+          "unit": "(in millions, except par value per share amounts) 2023 2024",
+          "physical_page": 57,
+          "column": 2,
+          "raw_cell": "23,466",
+          "value_millions": "23,466"
+        }
+      },
+      {
+        "answer": "2023 财年， Long-term debt：11,870 百万美元。PDF 物理第 57 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，长期债务的期末金额是多少？请查合并资产负债表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL07",
+        "question": "2023 财年，长期债务的期末金额是多少？请查合并资产负债表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 196,
+        "target_page": 57,
+        "year": 2023,
+        "expected": "11,870",
+        "source_label": "Long-term debt",
+        "printed_expected": "11,870",
+        "selected_source_line": "Long-term debt 11,870 10,883",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Long-term debt",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except par value per share amounts) 2023 2024",
+          "unit": "(in millions, except par value per share amounts) 2023 2024",
+          "physical_page": 57,
+          "column": 1,
+          "raw_cell": "11,870",
+          "value_millions": "11,870"
+        }
+      },
+      {
+        "answer": "2024 财年， Goodwill：31,885 百万美元。PDF 物理第 57 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并资产负债表中的商誉账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL08",
+        "question": "2024 财年，合并资产负债表中的商誉账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 214,
+        "target_page": 57,
+        "year": 2024,
+        "expected": "31,885",
+        "source_label": "Goodwill",
+        "printed_expected": "31,885",
+        "selected_source_line": "Goodwill 29,198 31,885",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Goodwill",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except par value per share amounts) 2023 2024",
+          "unit": "(in millions, except par value per share amounts) 2023 2024",
+          "physical_page": 57,
+          "column": 2,
+          "raw_cell": "31,885",
+          "value_millions": "31,885"
+        }
+      },
+      {
+        "answer": "2023 财年， Accrued expenses and other current liabilities：46,168 百万美元。PDF 物理第 57 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表上短期需要偿付的流动负债总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL09",
+        "question": "2023 财年，合并资产负债表上短期需要偿付的流动负债总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 211,
+        "target_page": 57,
+        "year": 2023,
+        "expected": "81,814",
+        "source_label": "Total current liabilities",
+        "printed_expected": "81,814",
+        "selected_source_line": "Accrued expenses and other current liabilities 46,168 51,228",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Accrued expenses and other current liabilities",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except par value per share amounts) 2023 2024",
+          "unit": "(in millions, except par value per share amounts) 2023 2024",
+          "physical_page": 57,
+          "column": 1,
+          "raw_cell": "46,168",
+          "value_millions": "46,168"
+        }
+      },
+      {
+        "answer": "2024 财年， Net cash provided by operating activities：125,299 百万美元。PDF 物理第 61 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，经营活动带来的净现金是多少？请查现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              61
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL10",
+        "question": "2024 财年，经营活动带来的净现金是多少？请查现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 194,
+        "target_page": 61,
+        "year": 2024,
+        "expected": "125,299",
+        "source_label": "Net cash provided by operating activities",
+        "printed_expected": "125,299",
+        "selected_source_line": "Net cash provided by operating activities 91,495 101,746 125,299",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net cash provided by operating activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions) 2022 2023 2024",
+          "unit": "(in millions) 2022 2023 2024",
+          "physical_page": 61,
+          "column": 3,
+          "raw_cell": "125,299",
+          "value_millions": "125,299"
+        }
+      },
+      {
+        "answer": "2023 财年， Net payments related to stock-based award activities：-9,837 百万美元。PDF 物理第 61 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，请查现金流量表，用股票支付的薪酬费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              61
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL11",
+        "question": "2023 财年，请查现金流量表，用股票支付的薪酬费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 199,
+        "target_page": 61,
+        "year": 2023,
+        "expected": "22,460",
+        "source_label": "Stock-based compensation expense",
+        "printed_expected": "22,460",
+        "selected_source_line": "Net payments related to stock-based award activities (9,300) (9,837) (12,190)",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net payments related to stock-based award activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions) 2022 2023 2024",
+          "unit": "(in millions) 2022 2023 2024",
+          "physical_page": 61,
+          "column": 2,
+          "raw_cell": "(9,837)",
+          "value_millions": "-9,837"
+        }
+      },
+      {
+        "answer": "无法唯一匹配所问指标与原表行，请核对报表或分部名称。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，Google Cloud 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL12",
+        "question": "2024 财年，Google Cloud 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 197,
+        "target_page": 97,
+        "year": 2024,
+        "expected": "6,112",
+        "source_label": "Google Cloud",
+        "printed_expected": "6,112",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "ambiguous"
+        }
+      },
+      {
+        "answer": "2023 财年，Revenues Google Services：272,543 百万美元。PDF 物理第 97 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，Google Services 分部确认了多少收入？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL13",
+        "question": "2023 财年，Google Services 分部确认了多少收入？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 173,
+        "target_page": 97,
+        "year": 2023,
+        "expected": "272,543",
+        "source_label": "Google Services $",
+        "printed_expected": "272,543",
+        "selected_source_line": "Google Services $ 253,528 $ 272,543 $ 304,930",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Google Services",
+          "scope": "Revenues",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "The following table presents revenue, profitability, and expense information about our segments (in millions):",
+          "physical_page": 97,
+          "column": 2,
+          "raw_cell": "272,543",
+          "value_millions": "272,543"
+        }
+      },
+      {
+        "answer": "2024 财年，Google Cloud Employee compensation expenses：20,519 百万美元。PDF 物理第 97 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，Google Cloud 分部的员工薪酬费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL14",
+        "question": "2024 财年，Google Cloud 分部的员工薪酬费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 185,
+        "target_page": 97,
+        "year": 2024,
+        "expected": "20,519",
+        "source_label": "Employee compensation expenses $",
+        "printed_expected": "20,519",
+        "selected_source_line": "Employee compensation expenses $ 16,132 $ 19,054 $ 20,519",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Employee compensation expenses",
+          "scope": "Google Cloud",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "The following table presents revenue, profitability, and expense information about our segments (in millions):",
+          "physical_page": 97,
+          "column": 3,
+          "raw_cell": "20,519",
+          "value_millions": "20,519"
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的合并营业收入实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL15",
+        "question": "2027 财年，这份财报披露的合并营业收入实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 210,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Revenues",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except per share amounts) 2022 2023 2024",
+          "unit": "(in millions, except per share amounts) 2022 2023 2024",
+          "physical_page": 58
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的期末商誉实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL16",
+        "question": "2028 财年，这份财报披露的期末商誉实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 237,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Goodwill",
+          "scope": "",
+          "years": [
+            2023,
+            2024
+          ],
+          "year_header": "(in millions, except par value per share amounts) 2023 2024",
+          "unit": "(in millions, except par value per share amounts) 2023 2024",
+          "physical_page": 57
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的 Google Cloud 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              97
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL17",
+        "question": "2027 财年，这份财报披露的 Google Cloud 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 232,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Google Cloud",
+          "scope": "Operating income (loss)",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "2022 2023 2024",
+          "unit": "The following table presents revenue, profitability, and expense information about our segments (in millions):",
+          "physical_page": 97
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              61
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "AL18",
+        "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 210,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Net cash provided by operating activities",
+          "scope": "",
+          "years": [
+            2022,
+            2023,
+            2024
+          ],
+          "year_header": "(in millions) 2022 2023 2024",
+          "unit": "(in millions) 2022 2023 2024",
+          "physical_page": 61
+        }
+      }
+    ]
+  },
+  {
+    "issuer": "Netflix",
+    "phase": "发布版首次问答盲测",
+    "source": "https://s22.q4cdn.com/959853165/files/doc_financials/2024/ar/Netflix-10-K-01272025.pdf",
+    "commit": "2abd0f7470f3545c708df69b7726231e6943a614",
+    "fixture_sha256": "2e5ba7953af8fe4508f5e44fc2aaca41c70a11971b206b2687305fc45fc823da",
+    "pdf_sha256": "a8a00a029bddb45fa83d151798a9c4c94b8725c9a0a1ee490e2e7da8ec1e9ddb",
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "7b0d1fb860ffccfaddee4bff1164e531c5caf8140d3a93c2a7be97365e20172a",
+      "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "d8cf0092893d1fd636bd884ac58133bb88502f5400ffe296f693621470779b4c",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_lookup.py": "b52f2b0bfb87369c0cf6aa51ca69164c32438e7c248f5041a2968a0bcb13d64d"
+    },
+    "counts": [
+      10,
+      10,
+      10,
+      4
+    ],
+    "cases": [
+      {
+        "answer": "2024 财年， Revenues：39,000.966 百万美元。PDF 物理第 40 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表中的营业收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF01",
+        "question": "2024 财年，合并利润表中的营业收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 430,
+        "target_page": 40,
+        "year": 2024,
+        "expected": "39,000.966",
+        "source_label": "Revenues $",
+        "printed_expected": "39,000,966",
+        "selected_source_line": "Revenues $ 39,000,966 $ 33,723,297 $ 31,615,550",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Revenues",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands, except per share data)",
+          "physical_page": 40,
+          "column": 1,
+          "raw_cell": "39,000,966",
+          "value_millions": "39,000.966"
+        }
+      },
+      {
+        "answer": "2023 财年， Technology and development：2,675.758 百万美元。PDF 物理第 40 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，请查利润表，技术与开发费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF02",
+        "question": "2023 财年，请查利润表，技术与开发费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 189,
+        "target_page": 40,
+        "year": 2023,
+        "expected": "2,675.758",
+        "source_label": "Technology and development",
+        "printed_expected": "2,675,758",
+        "selected_source_line": "Technology and development 2,925,295 2,675,758 2,711,041",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Technology and development",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands, except per share data)",
+          "physical_page": 40,
+          "column": 2,
+          "raw_cell": "2,675,758",
+          "value_millions": "2,675.758"
+        }
+      },
+      {
+        "answer": "2024 财年， Sales and marketing：2,917.554 百万美元。PDF 物理第 40 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并利润表中销售和市场推广费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF03",
+        "question": "2024 财年，合并利润表中销售和市场推广费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 202,
+        "target_page": 40,
+        "year": 2024,
+        "expected": "2,917.554",
+        "source_label": "Sales and marketing",
+        "printed_expected": "2,917,554",
+        "selected_source_line": "Sales and marketing 2,917,554 2,657,883 2,530,502",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Sales and marketing",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands, except per share data)",
+          "physical_page": 40,
+          "column": 1,
+          "raw_cell": "2,917,554",
+          "value_millions": "2,917.554"
+        }
+      },
+      {
+        "answer": "2023 财年， Operating income：6,954.003 百万美元。PDF 物理第 40 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并利润表中的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF04",
+        "question": "2023 财年，合并利润表中的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 197,
+        "target_page": 40,
+        "year": 2023,
+        "expected": "6,954.003",
+        "source_label": "Operating income",
+        "printed_expected": "6,954,003",
+        "selected_source_line": "Operating income 10,417,614 6,954,003 5,632,831",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Operating income",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands, except per share data)",
+          "physical_page": 40,
+          "column": 2,
+          "raw_cell": "6,954,003",
+          "value_millions": "6,954.003"
+        }
+      },
+      {
+        "answer": "2024 财年， Income before income taxes：9,965.657 百万美元。PDF 物理第 40 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，利润表的税前利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF05",
+        "question": "2024 财年，利润表的税前利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 197,
+        "target_page": 40,
+        "year": 2024,
+        "expected": "9,965.657",
+        "source_label": "Income before income taxes",
+        "printed_expected": "9,965,657",
+        "selected_source_line": "Income before income taxes 9,965,657 6,205,405 5,263,929",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Income before income taxes",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands, except per share data)",
+          "physical_page": 40,
+          "column": 1,
+          "raw_cell": "9,965,657",
+          "value_millions": "9,965.657"
+        }
+      },
+      {
+        "answer": "2024 财年， Cash and cash equivalents：7,804.733 百万美元。PDF 物理第 43 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              43
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF06",
+        "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 243,
+        "target_page": 43,
+        "year": 2024,
+        "expected": "7,804.733",
+        "source_label": "Cash and cash equivalents",
+        "printed_expected": "7,804,733",
+        "selected_source_line": "Cash and cash equivalents $ 7,804,733 $ 7,116,913",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Cash and cash equivalents",
+          "scope": "",
+          "years": [
+            2024,
+            2023
+          ],
+          "year_header": "2024 2023",
+          "unit": "(in thousands, except share and per share data)",
+          "physical_page": 43,
+          "column": 1,
+          "raw_cell": "7,804,733",
+          "value_millions": "7,804.733"
+        }
+      },
+      {
+        "answer": "2023 财年， Long-term debt：14,143.417 百万美元。PDF 物理第 43 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表中长期债务余额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              43
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF07",
+        "question": "2023 财年，合并资产负债表中长期债务余额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 264,
+        "target_page": 43,
+        "year": 2023,
+        "expected": "14,143.417",
+        "source_label": "Long-term debt",
+        "printed_expected": "14,143,417",
+        "selected_source_line": "Long-term debt 13,798,351 14,143,417",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Long-term debt",
+          "scope": "",
+          "years": [
+            2024,
+            2023
+          ],
+          "year_header": "2024 2023",
+          "unit": "(in thousands, except share and per share data)",
+          "physical_page": 43,
+          "column": 2,
+          "raw_cell": "14,143,417",
+          "value_millions": "14,143.417"
+        }
+      },
+      {
+        "answer": "2024 财年， Content assets, net：32,452.462 百万美元。PDF 物理第 43 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并资产负债表中内容资产的净账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              43
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF08",
+        "question": "2024 财年，合并资产负债表中内容资产的净账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 254,
+        "target_page": 43,
+        "year": 2024,
+        "expected": "32,452.462",
+        "source_label": "Content assets, net",
+        "printed_expected": "32,452,462",
+        "selected_source_line": "Content assets, net 32,452,462 31,658,056",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Content assets, net",
+          "scope": "",
+          "years": [
+            2024,
+            2023
+          ],
+          "year_header": "2024 2023",
+          "unit": "(in thousands, except share and per share data)",
+          "physical_page": 43,
+          "column": 1,
+          "raw_cell": "32,452,462",
+          "value_millions": "32,452.462"
+        }
+      },
+      {
+        "answer": "无法唯一匹配所问指标与原表行，请核对报表或分部名称。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，合并资产负债表中流动负债总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF09",
+        "question": "2023 财年，合并资产负债表中流动负债总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 227,
+        "target_page": 43,
+        "year": 2023,
+        "expected": "8,860.655",
+        "source_label": "Total current liabilities",
+        "printed_expected": "8,860,655",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "ambiguous"
+        }
+      },
+      {
+        "answer": "2024 财年， Net cash provided by operating activities：7,361.364 百万美元。PDF 物理第 42 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，经营活动产生了多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              42
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF10",
+        "question": "2024 财年，经营活动产生了多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 244,
+        "target_page": 42,
+        "year": 2024,
+        "expected": "7,361.364",
+        "source_label": "Net cash provided by operating activities",
+        "printed_expected": "7,361,364",
+        "selected_source_line": "Net cash provided by operating activities 7,361,364 7,274,301 2,026,257",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Net cash provided by operating activities",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands)",
+          "physical_page": 42,
+          "column": 1,
+          "raw_cell": "7,361,364",
+          "value_millions": "7,361.364"
+        }
+      },
+      {
+        "answer": "2023 财年， Stock-based compensation expense：339.368 百万美元。PDF 物理第 42 页。",
+        "verification": "source_table_cell",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，现金流量表中的股权薪酬费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              42
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF11",
+        "question": "2023 财年，现金流量表中的股权薪酬费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 237,
+        "target_page": 42,
+        "year": 2023,
+        "expected": "339.368",
+        "source_label": "Stock-based compensation expense",
+        "printed_expected": "339,368",
+        "selected_source_line": "Stock-based compensation expense 272,588 339,368 575,452",
+        "reader": {
+          "strategy": "table_cell",
+          "status": "found",
+          "label": "Stock-based compensation expense",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands)",
+          "physical_page": 42,
+          "column": 2,
+          "raw_cell": "339,368",
+          "value_millions": "339.368"
+        }
+      },
+      {
+        "answer": "无法唯一匹配所问指标与原表行，请核对报表或分部名称。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，按地区披露的美国和加拿大流媒体收入是多少？请引用收入附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF12",
+        "question": "2024 财年，按地区披露的美国和加拿大流媒体收入是多少？请引用收入附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 330,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "17,359.369",
+        "source_label": "Streaming revenues $",
+        "printed_expected": "17,359,369",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "ambiguous"
+        }
+      },
+      {
+        "answer": "无法唯一匹配所问指标与原表行，请核对报表或分部名称。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2023 财年，收入附注中欧洲、中东和非洲地区的流媒体收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF13",
+        "question": "2023 财年，收入附注中欧洲、中东和非洲地区的流媒体收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 340,
+        "target_page": 49,
+        "year": 2023,
+        "expected": "10,556.487",
+        "source_label": "Streaming revenues $",
+        "printed_expected": "10,556,487",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "ambiguous"
+        }
+      },
+      {
+        "answer": "无法唯一匹配所问指标与原表行，请核对报表或分部名称。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，收入附注中亚太地区取得多少流媒体收入？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF14",
+        "question": "2024 财年，收入附注中亚太地区取得多少流媒体收入？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 344,
+        "target_page": 49,
+        "year": 2024,
+        "expected": "4,414.746",
+        "source_label": "Streaming revenues $",
+        "printed_expected": "4,414,746",
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "ambiguous"
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的合并营业收入实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              40
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF15",
+        "question": "2027 财年，这份财报披露的合并营业收入实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 353,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Revenues",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands, except per share data)",
+          "physical_page": 40
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的期末现金及现金等价物实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              42
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF16",
+        "question": "2028 财年，这份财报披露的期末现金及现金等价物实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 373,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Cash, cash equivalents and restricted cash, end of year",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands)",
+          "physical_page": 42
+        }
+      },
+      {
+        "answer": "无法唯一匹配所问指标与原表行，请核对报表或分部名称。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2027 财年，这份财报披露的美国和加拿大地区流媒体实际收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF17",
+        "question": "2027 财年，这份财报披露的美国和加拿大地区流媒体实际收入是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 366,
+        "target_page": null,
+        "year": 2027,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "ambiguous"
+        }
+      },
+      {
+        "answer": "所选原表未列示该年度，无法给出金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              42
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "NF18",
+        "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 378,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "source_label": null,
+        "printed_expected": null,
+        "selected_source_line": null,
+        "reader": {
+          "strategy": "table_cell",
+          "status": "year_absent",
+          "label": "Net cash provided by operating activities",
+          "scope": "",
+          "years": [
+            2024,
+            2023,
+            2022
+          ],
+          "year_header": "2024 2023 2022",
+          "unit": "(in thousands)",
+          "physical_page": 42
+        }
+      }
+    ]
+  }
+]

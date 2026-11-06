@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>财报复核工作台 · 财报复核工作台</title><link rel="stylesheet" href="style.css"><style>@page{size:A4;margin:18mm}header{display:none}html,body{background:white;font:14px/1.65 "Microsoft YaHei",sans-serif}main{padding:0}h1{font-size:32px}h2{margin:17px 0 5px;font-size:19px}p{max-width:none;margin:6px 0}.intro{font-size:16px}</style></head><body><header><nav><a href="index.html">财报复核工作台</a><span><a href="case.pdf">一页案例</a><a href="results.html">历史评测</a></span></nav></header><main><h1>财报复核工作台</h1><p class="intro">帮助读年报的学生和研究助理核对一个数字的年度、单位和出处。</p>
 <h2>从一个同比问题开始</h2><p>用户导入 Apple 年报，找到销售额的原表行并人工确认两期数据。模型调用 Decimal 工具算出 2025 财年销售额增长 6.43%，答案关联物理第 32 页与当时的输入快照。</p>
 <h2>如何验收模型</h2><p>Apple 的 20 道开发题使用 15 条预确认指标，三轮共 120 次真实模型运行。末轮 A/B2 分别通过 5/20 和 20/20。SQL 复盘累计 56 次失败，其中 49 次缺少预期物理页。问题和运行轨迹可逐题展开。</p>
-<h2>换公司后出现了什么问题</h2><p>直接上传 Amazon 2024 年报，无预填指标。冻结 14 道查数题与 4 道拒答题后，首次严格通过 5/18。10 道题的前五条结果遗漏指定原行，3 道找到了原行却未给对金额。调整检索输入后，库存题改善，销售总额题退化，候选方案未提高严格通过率。</p>
-<h2>怎样处理工具故障</h2><p>只读检索超时最多重试一次，同一模型调用重复时在再次执行前终止。超过字节预算时优先保留排名靠前的完整引文，关键内容仍超限则结束生成。9 项新增故障注入测试覆盖停止、恢复与证据导出，全量 85 项应用测试通过。</p>
-<p>以上指标来自固定题集与自动化检查。中文改写题样本较少，真人试用仍待开展。</p></main></body></html>
+<h2>从正确证据读出正确金额</h2><p>Amazon 2023 年商品净销售额原先答成 513,983。新增行目录，模型只选择指标和分部，程序按原表年份列读取金额，定位到第 49 页的 255,887 百万美元。14 道原题查数从 1 道通过提升至 14 道。</p>
+<h2>新公司能否复现</h2><p>Alphabet 首次盲测查数 2/14，修复单位与年份同栏、分部表排版后复测 11/14。再用冻结的问答逻辑在 Netflix 的千美元报表上首测，10/14 道查数题通过，4/4 道缺数题拒答。未通过的 4 道中，1 道是流动负债合计，3 道是地区收入。</p>
+<h2>异常处理与回归</h2><p>只读检索超时重试一次，工具重复调用或关键证据超限时停止。回归覆盖年度升序与降序、空值、括号负数、换算和 PDF 提取权限，共 96 项通过。作品保留各轮逐题结果及原始年报入口。</p></main></body></html>

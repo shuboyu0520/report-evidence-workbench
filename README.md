@@ -2,7 +2,7 @@
 
 用年报原文复核一个财务数字。使用者可以定位证据、确认年度和单位，再由模型调用工具计算比率并导出依据。
 
-[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
+[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
 
 ![工作台实际操作界面](docs/demo.png)
 
@@ -53,10 +53,20 @@ uv run python -m scripts.evaluate_model_ab --url http://127.0.0.1:11434 --out da
 
 从 [分块、向量和融合排序](app/retrieval.py)、[Agent 工具调用及回答检查](app/agent.py)、[财务口径和确定性计算](app/finance.py) 或 [逐题评测脚本](scripts/evaluate_hybrid.py) 阅读核心实现。
 
-## 跨公司独立评测
+## Amazon 旧版盲测记录
 
-首次通过 5/18，候选复测通过 5/18，最终发布版复测通过 5/18。14 道查数题和 4 道报告期间之外的缺数题采用预先冻结的原表物理页标注。候选检索策略没有通过比较，发布版保留原策略及新增的三类异常保护。9 项新增 API 故障注入测试计入全量 85 项。
+首次通过 5/18，候选复测通过 5/18，当时版本的回归通过 5/18。14 道查数题和 4 道报告期间之外的缺数题采用预先冻结的原表物理页标注。候选检索策略没有通过比较，发布版保留原策略及新增的三类异常保护。9 项新增 API 故障注入测试计入全量 85 项。
 
 [逐题对照与 SQL 复盘](https://shuboyu0520.github.io/report-evidence-workbench/holdout.html) · [冻结题集](evaluation/amazon_holdout.json) · [SQL](evaluation/failure_analysis.sql)
 
 运行 `uv run python -m scripts.analyze_failures` 即可从公开数据重建 SQL 汇总。从标注的 source 下载年报，再运行 `uv run python -m scripts.evaluate_holdout --pdf data/amazon-2024.pdf --url http://127.0.0.1:11434 --out data/amazon-new-run`。输出目录必须为新目录，便于保留每次结果。
+
+## 从原表定位金额
+
+亚马逊原题的查数通过数从 1/14 提升到 14/14。Alphabet 首测 2/14，兼容不同表头后复测 11/14。最终冻结的问答逻辑在 Netflix 首次盲测中通过 10/14。三组的 4 道缺数题均满足拒答判据。模型只选择候选行，金额来自实际表头和原始单元格。Netflix 有 3 道地区收入附注题和 1 道合计题未通过。
+
+[逐题记录](docs/table-audit.json) · [读取器](app/table_lookup.py) · [Alphabet 预标注](evaluation/alphabet_holdout.json) · [Netflix 预标注](evaluation/netflix_holdout.json)
+
+下载对应标注的原件，可用 `uv run python -m scripts.evaluate_holdout --fixture evaluation/netflix_holdout.json --pdf data/netflix-2024.pdf --out data/netflix-new-run` 复测。96 项本地自动化回归通过。早期评测中的“发布版”指对应阶段的历史版本。
+
+运行 `uv run python -m scripts.analyze_table_runs` 可从公开逐题数据重建六轮 [SQL 失败归因](docs/table-failures.json)。旧版 Amazon 有 10 题漏掉原行，3 题命中原行但金额错误。
