@@ -120,6 +120,20 @@ def test_text_pdf_retrieval(client):
     assert "Revenue increased" in result["citations"][0]["quote"]
 
 
+@pytest.mark.parametrize("allow_copy,expected", [(True, 201), (False, 422)])
+def test_public_pdf_respects_text_extraction_permission(client, allow_copy, expected):
+    from pypdf import PdfReader
+    from pypdf.constants import UserAccessPermissions as Permissions
+
+    writer = PdfWriter()
+    writer.append(PdfReader(io.BytesIO(make_pdf("Public report"))))
+    flags = Permissions.PRINT | (Permissions.EXTRACT if allow_copy else Permissions(0))
+    writer.encrypt("", "owner-pass", permissions_flag=flags)
+    output = io.BytesIO()
+    writer.write(output)
+    assert upload(client, output.getvalue(), filename="report.pdf").status_code == expected
+
+
 @pytest.mark.parametrize("encrypted", [False, True])
 def test_empty_or_encrypted_pdf_rejected(client, encrypted):
     r = upload(client, make_pdf(encrypted=encrypted), filename="report.pdf")

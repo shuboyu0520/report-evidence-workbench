@@ -12,6 +12,7 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel, Field
 from pypdf import PdfReader
+from pypdf.constants import UserAccessPermissions
 from starlette.concurrency import run_in_threadpool
 
 from .agent import analyze
@@ -55,7 +56,8 @@ def parse_upload(content, filename):
         try:
             reader = PdfReader(io.BytesIO(content))
             if reader.is_encrypted:
-                raise ValueError("不支持加密 PDF")
+                if not reader.decrypt("") or not ((reader.user_access_permissions or 0) & UserAccessPermissions.EXTRACT):
+                    raise ValueError("PDF 需要打开密码或未授权提取文本")
             if len(reader.pages) > 500:
                 raise ValueError("最多支持 500 页")
             texts = [page.extract_text() or "" for page in reader.pages]
