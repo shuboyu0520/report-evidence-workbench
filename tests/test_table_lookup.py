@@ -269,3 +269,25 @@ def test_local_table_denomination_precedes_report_currency(monkeypatch):
     pages[0]["text"] = pages[0]["text"].replace("U.S. dollars","Canadian dollars")
     pages.append({"number":30,"text":"Our consolidated financial statements are denominated in U.S. dollars."})
     assert select(monkeypatch,pages,2023) is None
+
+
+@pytest.mark.parametrize("printed,valid",[("  12  9",True),("  12  8",False),("  12",False)])
+def test_unlabelled_total_reconciles_every_column(printed,valid):
+    pages=[{"number":2,"text":"Consolidated balance sheets\n(in millions)\n2024 2023\n"
+            "Inventories\nMaterials  8  3\nFinished goods  4  6\n"+printed}]
+    totals=[r for r in read_rows(pages) if r.label=="Inventories, total"]
+    assert bool(totals)==valid
+    if valid:
+        assert totals[0].line==printed.strip() and totals[0].values==("12","9")
+
+
+def test_year_above_segment_labels_and_units_in_notes():
+    from app.table_headers import year_then_columns
+    note={"number":2,"text":"Notes to the consolidated financial statements\nBasis of presentation\n"
+          "We report these operations together.\nUnless otherwise noted, tabular dollars are in millions."}
+    table={"number":4,"text":"Net results for each division:\n2024\nWest East Total\n"
+           "Net revenue  18  10  28\nSelling and administrative\nexpenses  6  2  8\nDivision operating profit  12  8  20"}
+    table["segment_columns"]=year_then_columns(table["text"])
+    rows=[r for r in read_rows([note,table]) if r.scope=="East"]
+    assert [(r.label,r.values,r.unit_page,r.source_column) for r in rows]==[
+        ("Net revenue",("10",),2,2),("Division operating profit",("8",),2,2)]

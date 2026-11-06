@@ -19,7 +19,7 @@ from .agent import analyze
 from .db import Database
 from .finance import FACTORS, extract_metrics, numeric
 from .observatory import install_observatory
-from .table_headers import YEAR_GROUP, segment_headers
+from .table_headers import YEAR_GROUP, segment_headers, year_then_columns
 
 MAX_BYTES = 15 * 1024 * 1024
 
@@ -64,11 +64,11 @@ def parse_upload(content, filename):
                 raise ValueError("最多支持 500 页")
             texts = [page.extract_text() or "" for page in reader.pages]
             for i, text in enumerate(texts):
-                if re.search(r"reportable segments?|segment reporting|(?:our|company's|operating) segments\b", text, re.I) and any(
+                if re.search(r"reportable segments?|segment reporting|(?:our|company's|operating) segments\b|\beach division\b", text, re.I) and any(
                     YEAR_GROUP.fullmatch(s.strip()) for s in text.splitlines()
                 ):
                     layout = reader.pages[i].extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
-                    labels = segment_headers(layout)
+                    labels = {**year_then_columns(text), **segment_headers(layout)}
                     if labels:
                         columns[i+1] = labels
         except ValueError:

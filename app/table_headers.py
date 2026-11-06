@@ -72,3 +72,20 @@ def segment_headers(layout):
         key = " ".join(line.split()).casefold()
         result[key] = list(columns) if key not in result else []
     return {k:v for k,v in result.items() if v}
+
+
+def year_then_columns(text):
+    """A repeated fiscal-year block may print its own row of single-token segment names."""
+    lines = [s.strip() for s in text.splitlines() if s.strip()]
+    headers = {}
+    for i, heading in enumerate(lines[:-2]):
+        if not YEAR_GROUP.fullmatch(heading):
+            continue
+        labels = lines[i+1].split()
+        if len(labels)<2 or len(set(labels))!=len(labels) or not all(re.fullmatch(r"[A-Z][A-Za-z.-]*",s) for s in labels):
+            continue
+        first = NUMERIC_ROW.fullmatch(" ".join(lines[i+2].split()))
+        if first and len(re.findall(NUMBER,first[1]))==len(labels):
+            key = " ".join(heading.split()).casefold()
+            headers[key] = labels if key not in headers else []
+    return {k:v for k,v in headers.items() if v}

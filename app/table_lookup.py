@@ -96,8 +96,12 @@ def segment_matrix_rows(page, lines, notes_unit):
             continue
         if not columns:
             continue
+        if text.split() == columns:
+            continue
         match = CELL_SUFFIX.search(line)
         if not match:
+            if i+1 < len(lines) and re.match(r"\s*[a-z]",lines[i+1]) and CELL_SUFFIX.search(lines[i+1]):
+                continue
             if text:
                 columns = []
             continue
@@ -126,6 +130,34 @@ def regional_caption(lines, year_index):
     return ""
 
 
+def reconciled_subtotal(lines, index, years):
+    """Bind an unlabelled printed total only when every year reconciles with its labelled items."""
+    line = lines[index]
+    if not re.fullmatch(rf"\s*\$?\s*{CELL}(?:\s+\$?\s*{CELL})+\s*",line):
+        return None
+    total = re.findall(CELL,line)
+    if len(total)!=len(years):
+        return None
+    items = []
+    for prior in reversed(lines[max(0,index-20):index]):
+        match = CELL_SUFFIX.search(prior)
+        if not match:
+            heading = prior.strip().rstrip(":")
+            if len(items)<2 or not re.fullmatch(r"[A-Za-z][A-Za-z &,-]{1,65}",heading):
+                return None
+            def amount(cell):
+                return Decimal(0) if cell in ("—","–","-") else numeric(cell.replace(" ",""))
+            if all(sum(amount(row[j]) for row in items)==amount(value) for j,value in enumerate(total)):
+                return heading+", total",tuple(total)
+            return None
+        label = prior[:match.start()].strip()
+        values = re.findall(CELL,match["values"])
+        if not re.fullmatch(r"[A-Za-z][A-Za-z &,'-]*",label) or len(values)!=len(years):
+            return None
+        items.append(values)
+    return None
+
+
 def read_rows(pages):
     rows = []
     previous_tail = ""
@@ -135,6 +167,10 @@ def read_rows(pages):
         for i, title in enumerate(lines[:8]):
             if re.fullmatch(r"notes to (?:the )?consolidated financial statements", title.strip(), re.I):
                 notes_unit = next(((page["number"], s.strip()) for s in lines[i+1:i+3] if SCALE.search(s)), notes_unit)
+                for s in lines[i+1:]:
+                    if re.search(r"\btabular (?:dollars|amounts) are (?:stated )?in (?:millions|thousands|billions)\b",s,re.I):
+                        notes_unit = (page["number"],s.strip())
+                        break
         if page.get("segment_columns"):
             rows.extend(segment_matrix_rows(page, lines, notes_unit))
         titles = [s.strip().lower().rstrip(":") for s in lines[:8]]
@@ -215,6 +251,10 @@ def read_rows(pages):
                 table_scale = SCALE.search(unit_line)[1].lower()
                 continue
             if not years or not text:
+                continue
+            if kind=="balance" and (subtotal:=reconciled_subtotal(lines,i,years)):
+                label,values = subtotal
+                rows.append(Row(page["number"],kind,scope,label,header,years,text,values,table_scale,unit_line))
                 continue
             if re.search(
                 r"per share|shares outstanding|shares used|earnings per|weighted.average shares",
@@ -313,6 +353,8 @@ async def lookup(pages, question, settings):
         )]
         if expense:
             rows = expense
+    if kind == "balance" and re.search(r"存货(?:的)?(?:合计|总计|总额)|total inventor(?:y|ies)", question, re.I):
+        rows = [r for r in rows if re.fullmatch(r"(?:total |merchandise )?inventor(?:y|ies)(?:,? (?:total|net))?",r.label,re.I)]
     if any(r.source_column for r in rows):
         available = {}
         for r in rows:
