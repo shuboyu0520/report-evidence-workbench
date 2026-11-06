@@ -16,7 +16,7 @@ QUARTER = re.compile(
     r"\b(?:q([1-4])|([1-4])q)\b|\b(first|second|third|fourth)[ -](?:fiscal )?quarter\b", re.I
 )
 CN_Q = re.compile(r"第?\s*([一二三四1-4])\s*(?:财季|季度)|\bQ([1-4])\b", re.I)
-CELL = r"(?:\(?[+-]?\s*[$€£]?\s*\d[\d,]*(?:\.\d+)?\s*[%BMK]?\)?|[$€£]?[—–]|N/?M)"
+CELL = r"(?:\(?[+-]?\s*[$€£]?\s*\d[\d,]*(?:\.\d+)?\s*[%BMK]?(?:\)\s*%?)?|[$€£]?[—–]|N/?M)"
 TAIL = re.compile(rf"(?P<cells>(?:\s+{CELL}){{2,}})\s*$", re.I)
 ATOM = re.compile(CELL, re.I)
 RANGE = re.compile(
@@ -208,6 +208,11 @@ def data_line(text):
     ):
         return None
     cells = tuple(m.group().strip() for m in ATOM.finditer(match["cells"]))
+    # Superscripts flatten to a single space after the row name. A currency cell
+    # follows the wider column gap. Never discard a negative first data column.
+    if re.match(r"^ \(\d{1,2}\) {2,}\$", match["cells"]):
+        label = label + " " + cells[0]
+        cells = cells[1:]
     if len(cells) < 2 or all(x.isdigit() and YEAR.fullmatch(x) for x in cells):
         return None
     return label, cells, False
@@ -305,6 +310,13 @@ def column_labels(row, release_q):
         return [(year, qnum(header), None, False)]
     # Only the last full column cycle belongs to this table.
     slots = list(SLOTS.finditer(header))
+    last_line = header.rsplit("\n", 1)[-1]
+    horizontal = list(SLOTS.finditer(header, len(header) - len(last_line)))
+    if sum(bool(YEAR.fullmatch(s.group())) for s in horizontal) >= 2:
+        # A blank trailing variance column doesn't move the first year column.
+        if len(horizontal) < w or any(YEAR.fullmatch(s.group()) for s in horizontal[w:]):
+            return []
+        slots = horizontal[:w]
     if len(slots) < w:
         return []
     slots = slots[-w:]
@@ -413,7 +425,9 @@ def resolve_sources(pages, req, rows=None):
         ):
             continue
         if req.metric == "eps" and re.search(
-            r"\b(?:less|basic|dividend|adjustment|attributable to (?!common))\b", row.label, re.I
+            r"\b(?:less|basic|dividend|adjustment|outstanding|weighted|denominator|attributable to (?!common))\b",
+            row.label,
+            re.I,
         ):
             continue
         if req.metric != "eps" and "per share" in row.label.lower():

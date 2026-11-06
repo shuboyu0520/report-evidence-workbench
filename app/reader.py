@@ -301,6 +301,14 @@ async def from_document(db, report, pages, question, config, tools, calls, event
     periods = set(re.findall(r"(?<!\d)20\d{2}(?!\d)", question))
     if not numbers <= support | periods:
         return MISSING, "insufficient_evidence", []
+    if re.search(r"指引|区间|guidance|outlook", question, re.I):
+        expected_unit = re.search(r"百万美元|十亿美元|亿美元", question)
+        explicit_scales = re.findall(r"\d[\d,.]*\s*(十亿|百万|亿|万)(?:美元)?", answer)
+        if expected_unit and any(
+            scale + "美元" != expected_unit.group() for scale in explicit_scales
+        ):
+            tools.append({"tool": "check_range_units", "result": "inconsistent_scale"})
+            return MISSING, "insufficient_evidence", []
     cited = "、".join(str(p) for p in dict.fromkeys(c["page"] for c in checked))
     return answer + f"（原文第 {cited} 页）", "cited_draft", checked
 
