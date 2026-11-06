@@ -41,8 +41,19 @@ class Row:
     unit_line: str
 
 
+def regional_caption(lines, year_index):
+    before = [s.strip() for s in lines[max(0, year_index - 4):year_index] if s.strip()]
+    if len(before) < 2 or not re.match(r"(?:as of(?:/year ended)?|years? ended)\b", before[-1], re.I):
+        return ""
+    caption = before[-2]
+    if re.fullmatch(r"[A-Z][A-Za-zÀ-ÿ ,&.'()/-]{2,75}", caption) and not caption.endswith("."):
+        return caption
+    return ""
+
+
 def read_rows(pages):
     rows = []
+    previous_tail = ""
     for page in pages:
         lines = page["text"].splitlines()
         titles = [s.strip().lower().rstrip(":") for s in lines[:8]]
@@ -82,10 +93,24 @@ def read_rows(pages):
                     (s.strip() for s in reversed(lines[max(0, i - 9) : i + 1]) if SCALE.search(s)),
                     "",
                 )
+                caption = ""
+                if not base and re.search(
+                    r"by (?:geographic(?:al)? )?region\b|by geography\b|geographic(?:al)? areas?\b",
+                    previous_tail + " " + " ".join(lines[:i]), re.I,
+                ):
+                    caption = regional_caption(lines, i)
+                if caption:
+                    kind = "geography"
+                    # The unit can appear immediately below each regional year header.
+                    surrounding = [s.strip() for s in lines[i + 1:i + 3] if s.strip()]
+                    if surrounding and SCALE.search(surrounding[0]):
+                        unit_line = surrounding[0]
+                    else:
+                        unit_line = text if SCALE.search(text) else ""
                 if not kind or not unit_line:
                     continue
                 years = tuple(map(int, header_years))
-                header, scope = text, ""
+                header, scope = text, caption
                 table_scale = SCALE.search(unit_line)[1].lower()
                 continue
             if not years or not text:
@@ -108,6 +133,9 @@ def read_rows(pages):
                     scope = text.rstrip(":")
                 continue
             label = line[: match.start()].strip().rstrip("$").strip()
+            # Membership and subscriber counts share these tables with revenue.
+            if kind == "geography" and not re.search(r"\b(?:revenues?|sales)\b", label, re.I):
+                continue
             values = re.findall(CELL, match["values"])
             if not re.match(r"^[A-Za-z]", label) or len(values) != len(years) or len(label) > 150:
                 continue
@@ -127,6 +155,7 @@ def read_rows(pages):
                     unit_line,
                 )
             )
+        previous_tail = " ".join(lines[-14:])
     return rows
 
 
@@ -147,6 +176,7 @@ def lookup_year(question):
 
 def target_kind(q):
     for kind, pattern in (
+        ("geography", r"(?=.*(?:地区|区域|按地域|geograph(?:ic|ical|y)|\bregions?\b))(?=.*(?:收入|销售额|revenue|sales))"),
         ("segment", r"分部|分部附注|segment"),
         ("balance", r"资产负债表|balance sheet"),
         ("income", r"利润表|损益表|income statement"),
@@ -162,7 +192,15 @@ async def lookup(pages, question, settings):
     if year is None:
         return None
     kind = target_kind(question)
-    rows = [r for r in read_rows(pages) if (r.kind == kind if kind else r.kind != "segment")]
+    rows = [r for r in read_rows(pages) if (r.kind == kind if kind else r.kind not in {"segment", "geography"})]
+    # An explicitly requested balance-sheet subtotal excludes its components.
+    for subject, english in (("资产", "assets"), ("负债", "liabilities")):
+        if re.search(rf"(?<!非)流动{subject}(?:的)?(?:合计|总计|总额)|total current {english}\b", question, re.I):
+            rows = [
+                r for r in rows if r.kind == "balance"
+                and re.fullmatch(rf"total current {english}|current {english},? total", r.label, re.I)
+            ]
+            break
     if not rows:
         return None
     # Currency and scale must be evidenced independently of the denomination requested by the user.

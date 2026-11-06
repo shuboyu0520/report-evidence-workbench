@@ -98,3 +98,36 @@ def test_segment_metrics_above_the_business_name():
         ("Revenue", "Services", "60"),
         ("Operating income (loss)", "Services", "6"),
     ]
+
+
+def test_regional_tables_keep_named_scope_and_unit_at_each_header():
+    pages = [{"number": 8, "text": "The following table presents sales by geographic region."},
+             {"number": 9, "text":
+              "Northern Europe\nYear ended December 31,\n2024 2023\n(in thousands)\n"
+              "Net sales $ 12,000 $ 8,000\nSubscriber count  55  30\n"
+              "South America\nYear ended December 31,\n2024 2023\n(in millions)\n"
+              "Net sales $ 150 $ 70\n"
+              "Other markets\nYear ended December 31,\n2024 2023\nNet sales $ 10 $ 5"}]
+    assert [(r.kind, r.scope, r.scale, r.values[-1]) for r in read_rows(pages)] == [
+        ("geography", "Northern Europe", "thousands", "8,000"),
+        ("geography", "South America", "millions", "70"),
+    ]
+
+
+@pytest.mark.parametrize("subject,label", [("资产", "assets"), ("负债", "liabilities")])
+def test_explicit_current_subtotal_excludes_current_and_noncurrent_components(monkeypatch, subject, label):
+    pages = [{"number": 6, "text": "Consolidated Balance Sheets\n(in millions of U.S. dollars)\n"
+              f"2024 2023\nOther current {label}  9  8\nTotal current {label}  56  88\n"
+              f"Total non-current {label}  78  79"}]
+    client = httpx.AsyncClient
+
+    def respond(req):
+        menu = json.loads(json.loads(req.content)["messages"][-1]["content"])["numbered_rows"]
+        assert menu.splitlines() == [f"1. balance | consolidated | Total current {label}"]
+        return httpx.Response(200, json={"message": {"content": '{"row":1}'}})
+
+    monkeypatch.setattr("app.table_lookup.httpx.AsyncClient",
+                        lambda **kw: client(transport=httpx.MockTransport(respond), **kw))
+    hits, meta = asyncio.run(lookup(pages, f"2023 年合并资产负债表中流动{subject}合计是多少？",
+                                  {"model": "test", "ollama_url": "http://test"}))
+    assert meta["value_millions"] == "88" and hits[0]["page"] == 6
