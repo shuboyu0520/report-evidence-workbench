@@ -1,0 +1,1826 @@
+{
+  "model": "qwen3-embedding:0.6b",
+  "digest": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+  "chunking": "page-800-overlap-120-v1",
+  "rrf_k": 60,
+  "candidate_depth": 40,
+  "summary": {
+    "Apple EN": {
+      "table_lexical": {
+        "hit_at_5": 20,
+        "n": 20,
+        "mrr_at_5": 1.0
+      },
+      "bm25": {
+        "hit_at_5": 12,
+        "n": 20,
+        "mrr_at_5": 0.262
+      },
+      "dense": {
+        "hit_at_5": 15,
+        "n": 20,
+        "mrr_at_5": 0.438
+      },
+      "hybrid": {
+        "hit_at_5": 12,
+        "n": 20,
+        "mrr_at_5": 0.4
+      }
+    },
+    "Meta EN": {
+      "table_lexical": {
+        "hit_at_5": 9,
+        "n": 10,
+        "mrr_at_5": 0.442
+      },
+      "bm25": {
+        "hit_at_5": 2,
+        "n": 10,
+        "mrr_at_5": 0.125
+      },
+      "dense": {
+        "hit_at_5": 7,
+        "n": 10,
+        "mrr_at_5": 0.292
+      },
+      "hybrid": {
+        "hit_at_5": 8,
+        "n": 10,
+        "mrr_at_5": 0.483
+      }
+    },
+    "Chinese paraphrases": {
+      "table_lexical": {
+        "hit_at_5": 0,
+        "n": 6,
+        "mrr_at_5": 0.0
+      },
+      "bm25": {
+        "hit_at_5": 0,
+        "n": 6,
+        "mrr_at_5": 0.0
+      },
+      "dense": {
+        "hit_at_5": 4,
+        "n": 6,
+        "mrr_at_5": 0.458
+      },
+      "hybrid": {
+        "hit_at_5": 1,
+        "n": 6,
+        "mrr_at_5": 0.167
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "2025-sales",
+      "subset": "Apple EN",
+      "question": "What were Apple's total net sales in fiscal 2025?",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": 4,
+          "pages": [
+            27,
+            51,
+            39,
+            32,
+            25
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "pages": [
+            25,
+            26,
+            26,
+            32,
+            51
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            25,
+            51,
+            32,
+            26,
+            39
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            25,
+            26,
+            39,
+            51
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-sales-zh",
+      "subset": "Chinese paraphrases",
+      "question": "苹果在这一财年把所有商品和服务卖出去，一共收了多少钱？",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": []
+        },
+        "dense": {
+          "rank": 1,
+          "pages": [
+            32,
+            39,
+            50,
+            26,
+            36
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            32,
+            39,
+            50,
+            26,
+            36
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": []
+        }
+      }
+    },
+    {
+      "id": "2025-cost",
+      "subset": "Apple EN",
+      "question": "What was Apple's total cost of sales in fiscal 2025?",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": 1,
+          "pages": [
+            32,
+            39,
+            48,
+            27,
+            50
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "pages": [
+            32,
+            42,
+            25,
+            50,
+            26
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            32,
+            39,
+            50,
+            51,
+            24
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            32,
+            25,
+            26,
+            39
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-income",
+      "subset": "Apple EN",
+      "question": "What was Apple's net income in fiscal 2025?",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": 4,
+          "pages": [
+            33,
+            33,
+            24,
+            32,
+            48
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            32,
+            26,
+            25,
+            26,
+            24
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            24,
+            33,
+            32,
+            32,
+            39
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            36,
+            33,
+            35,
+            39
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-rd",
+      "subset": "Apple EN",
+      "question": "How much did Apple spend on research and development in fiscal 2025?",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            27,
+            6,
+            24,
+            24,
+            50
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            42,
+            32,
+            50,
+            24,
+            24
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            32,
+            50,
+            24,
+            6,
+            24
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            27,
+            44,
+            44,
+            50
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-rd-zh",
+      "subset": "Chinese paraphrases",
+      "question": "苹果 2025 财年为开发新技术和产品花了多少？",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            61,
+            22,
+            25,
+            26,
+            22
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "pages": [
+            24,
+            42,
+            26,
+            32,
+            39
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            24,
+            26,
+            25,
+            42,
+            77
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": []
+        }
+      }
+    },
+    {
+      "id": "2025-assets",
+      "subset": "Apple EN",
+      "question": "What were Apple's total assets at the end of fiscal 2025?",
+      "target_page": 34,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": 5,
+          "pages": [
+            2,
+            44,
+            24,
+            45,
+            34
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "pages": [
+            42,
+            51,
+            34,
+            34,
+            24
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "pages": [
+            51,
+            34,
+            24,
+            45,
+            80
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            34,
+            34,
+            43,
+            44,
+            44
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-liabilities",
+      "subset": "Apple EN",
+      "question": "What were Apple's total liabilities at the end of fiscal 2025?",
+      "target_page": 34,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            2,
+            45,
+            44,
+            24,
+            45
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            45,
+            34,
+            34,
+            24,
+            42
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            45,
+            34,
+            34,
+            80,
+            24
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            34,
+            34,
+            43,
+            44,
+            45
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-cash",
+      "subset": "Apple EN",
+      "question": "How much cash did Apple generate from operating activities in fiscal 2025?",
+      "target_page": 36,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": 2,
+          "pages": [
+            36,
+            36,
+            36,
+            41,
+            50
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            36,
+            36,
+            32,
+            42,
+            52
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            36,
+            36,
+            52,
+            24,
+            32
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            36,
+            36,
+            32,
+            32,
+            34
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-cash-zh",
+      "subset": "Chinese paraphrases",
+      "question": "苹果 2025 财年的主营业务实际带来了多少现金？",
+      "target_page": 36,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            61,
+            22,
+            25,
+            26,
+            22
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            36,
+            42,
+            32,
+            36,
+            26
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            25,
+            42,
+            26,
+            24,
+            51
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": []
+        }
+      }
+    },
+    {
+      "id": "2025-china",
+      "subset": "Apple EN",
+      "question": "What were Apple's Greater China net sales in fiscal 2025?",
+      "target_page": 25,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": 2,
+          "pages": [
+            25,
+            25,
+            39,
+            51,
+            50
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            25,
+            25,
+            51,
+            50,
+            26
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "pages": [
+            25,
+            25,
+            51,
+            50,
+            39
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            25,
+            25,
+            32,
+            26,
+            39
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-services",
+      "subset": "Apple EN",
+      "question": "How much revenue did Apple report from Services in fiscal 2025?",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            37,
+            24,
+            1,
+            24,
+            80
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "pages": [
+            32,
+            26,
+            26,
+            39,
+            25
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            24,
+            39,
+            24,
+            26,
+            80
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            32,
+            34,
+            26,
+            27
+          ]
+        }
+      }
+    },
+    {
+      "id": "2025-products",
+      "subset": "Apple EN",
+      "question": "How much revenue did Apple report from Products in fiscal 2025?",
+      "target_page": 32,
+      "report": "apple-2025",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            37,
+            24,
+            1,
+            24,
+            80
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            24,
+            32,
+            26,
+            26,
+            25
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            24,
+            24,
+            80,
+            1,
+            39
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            32,
+            34,
+            27,
+            44
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-sales",
+      "subset": "Apple EN",
+      "question": "What were Apple's total net sales in fiscal 2024?",
+      "target_page": 32,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            38,
+            26,
+            27,
+            50,
+            25
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "pages": [
+            38,
+            26,
+            32,
+            26,
+            25
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            38,
+            26,
+            32,
+            25,
+            26
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            50,
+            25,
+            26,
+            38
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-cost",
+      "subset": "Apple EN",
+      "question": "What was Apple's total cost of sales in fiscal 2024?",
+      "target_page": 32,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": 1,
+          "pages": [
+            32,
+            27,
+            41,
+            38,
+            39
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "pages": [
+            32,
+            38,
+            26,
+            25,
+            39
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            32,
+            38,
+            27,
+            26,
+            25
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            32,
+            50,
+            25,
+            26
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-income",
+      "subset": "Apple EN",
+      "question": "What was Apple's net income in fiscal 2024?",
+      "target_page": 32,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": 5,
+          "pages": [
+            28,
+            33,
+            33,
+            50,
+            32
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "pages": [
+            32,
+            26,
+            32,
+            38,
+            26
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            32,
+            33,
+            24,
+            33,
+            36
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            36,
+            33,
+            35,
+            39
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-rd",
+      "subset": "Apple EN",
+      "question": "How much did Apple spend on research and development in fiscal 2024?",
+      "target_page": 32,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": 4,
+          "pages": [
+            27,
+            43,
+            6,
+            32,
+            24
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            27,
+            32,
+            39,
+            24,
+            24
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "pages": [
+            27,
+            32,
+            24,
+            43,
+            24
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            50,
+            27,
+            43,
+            44
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-assets",
+      "subset": "Apple EN",
+      "question": "What were Apple's total assets at the end of fiscal 2024?",
+      "target_page": 34,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": 4,
+          "pages": [
+            2,
+            44,
+            50,
+            34,
+            42
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            42,
+            34,
+            39,
+            34,
+            36
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            34,
+            50,
+            24,
+            24,
+            42
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            34,
+            34,
+            50,
+            42,
+            44
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-liabilities",
+      "subset": "Apple EN",
+      "question": "What were Apple's total liabilities at the end of fiscal 2024?",
+      "target_page": 34,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            2,
+            44,
+            42,
+            45,
+            45
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            34,
+            42,
+            34,
+            39,
+            46
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            34,
+            34,
+            42,
+            118,
+            24
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            34,
+            34,
+            42,
+            42,
+            44
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-cash",
+      "subset": "Apple EN",
+      "question": "How much cash did Apple generate from operating activities in fiscal 2024?",
+      "target_page": 36,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": 3,
+          "pages": [
+            36,
+            40,
+            36,
+            36,
+            13
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            36,
+            36,
+            42,
+            32,
+            32
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            36,
+            24,
+            42,
+            36,
+            24
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            36,
+            36,
+            32,
+            32,
+            34
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-china",
+      "subset": "Apple EN",
+      "question": "What were Apple's Greater China net sales in fiscal 2024?",
+      "target_page": 25,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": 2,
+          "pages": [
+            25,
+            25,
+            50,
+            39,
+            50
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            25,
+            25,
+            25,
+            50,
+            50
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "pages": [
+            25,
+            25,
+            50,
+            50,
+            25
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            25,
+            25,
+            32,
+            50,
+            50
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-services",
+      "subset": "Apple EN",
+      "question": "How much revenue did Apple report from Services in fiscal 2024?",
+      "target_page": 32,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            37,
+            13,
+            1,
+            24,
+            38
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            38,
+            32,
+            26,
+            26,
+            25
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            38,
+            24,
+            38,
+            24,
+            26
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            32,
+            34,
+            26,
+            27
+          ]
+        }
+      }
+    },
+    {
+      "id": "2024-products",
+      "subset": "Apple EN",
+      "question": "How much revenue did Apple report from Products in fiscal 2024?",
+      "target_page": 32,
+      "report": "apple-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            37,
+            1,
+            13,
+            24,
+            38
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "pages": [
+            32,
+            38,
+            24,
+            26,
+            26
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            24,
+            38,
+            38,
+            24,
+            1
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            32,
+            32,
+            34,
+            27,
+            44
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-revenue",
+      "subset": "Meta EN",
+      "question": "What was Meta's revenue in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            57,
+            57,
+            54,
+            113,
+            102
+          ]
+        },
+        "dense": {
+          "rank": 4,
+          "pages": [
+            84,
+            8,
+            133,
+            89,
+            14
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            61,
+            65,
+            60,
+            74,
+            87
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": [
+            61,
+            62,
+            73,
+            73,
+            74
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-cost",
+      "subset": "Meta EN",
+      "question": "What was Meta's cost of revenue in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            72,
+            75,
+            75,
+            95,
+            57
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            84,
+            89,
+            87,
+            15,
+            61
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            72,
+            75,
+            89,
+            61,
+            65
+          ]
+        },
+        "table_lexical": {
+          "rank": 3,
+          "pages": [
+            73,
+            75,
+            89,
+            103,
+            103
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-rd",
+      "subset": "Meta EN",
+      "question": "How much did Meta spend on research and development in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            75,
+            14,
+            9,
+            103,
+            77
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            8,
+            8,
+            84,
+            14,
+            15
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            75,
+            9,
+            89,
+            14,
+            75
+          ]
+        },
+        "table_lexical": {
+          "rank": 3,
+          "pages": [
+            73,
+            75,
+            89,
+            103,
+            103
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-marketing",
+      "subset": "Meta EN",
+      "question": "What were Meta's marketing and sales expenses in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            72,
+            75,
+            75,
+            10,
+            96
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "pages": [
+            75,
+            84,
+            89,
+            15,
+            133
+          ]
+        },
+        "hybrid": {
+          "rank": 2,
+          "pages": [
+            75,
+            89,
+            10,
+            75,
+            96
+          ]
+        },
+        "table_lexical": {
+          "rank": 4,
+          "pages": [
+            75,
+            73,
+            75,
+            89,
+            103
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-marketing-zh",
+      "subset": "Chinese paraphrases",
+      "question": "Meta 在 2024 年为推广产品与销售花了多少钱？",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            127,
+            87,
+            57,
+            56,
+            84
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            61,
+            89,
+            84,
+            74,
+            10
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            84,
+            87,
+            15,
+            65,
+            133
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": [
+            2,
+            2,
+            4,
+            5,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-admin",
+      "subset": "Meta EN",
+      "question": "What were Meta's general and administrative expenses in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": 4,
+          "pages": [
+            76,
+            72,
+            98,
+            89,
+            11
+          ]
+        },
+        "dense": {
+          "rank": 3,
+          "pages": [
+            84,
+            14,
+            89,
+            87,
+            15
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            89,
+            76,
+            73,
+            87,
+            93
+          ]
+        },
+        "table_lexical": {
+          "rank": 3,
+          "pages": [
+            73,
+            76,
+            89,
+            103,
+            88
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-operating-income",
+      "subset": "Meta EN",
+      "question": "What was Meta's income from operations in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            76,
+            62,
+            61,
+            84,
+            94
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            84,
+            89,
+            61,
+            87,
+            14
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            84,
+            61,
+            89,
+            62,
+            76
+          ]
+        },
+        "table_lexical": {
+          "rank": 3,
+          "pages": [
+            73,
+            76,
+            89,
+            123,
+            123
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-net-income",
+      "subset": "Meta EN",
+      "question": "What was Meta's net income in 2024?",
+      "target_page": 89,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            90,
+            119,
+            97,
+            92,
+            78
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            84,
+            89,
+            87,
+            15,
+            61
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            89,
+            90,
+            92,
+            62,
+            84
+          ]
+        },
+        "table_lexical": {
+          "rank": 3,
+          "pages": [
+            92,
+            73,
+            89,
+            90,
+            91
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-assets",
+      "subset": "Meta EN",
+      "question": "What were Meta's total assets in 2024?",
+      "target_page": 88,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": 1,
+          "pages": [
+            88,
+            121,
+            60,
+            108,
+            75
+          ]
+        },
+        "dense": {
+          "rank": 2,
+          "pages": [
+            84,
+            88,
+            15,
+            14,
+            133
+          ]
+        },
+        "hybrid": {
+          "rank": 1,
+          "pages": [
+            88,
+            60,
+            92,
+            62,
+            127
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            88,
+            88,
+            121,
+            124,
+            92
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-assets-zh",
+      "subset": "Chinese paraphrases",
+      "question": "截至 2024 年底，这家公司控制的全部经济资源有多少？",
+      "target_page": 88,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            68,
+            69,
+            69,
+            65,
+            62
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            1,
+            62,
+            62,
+            108,
+            125
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            62,
+            62,
+            65,
+            1,
+            65
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": []
+        }
+      }
+    },
+    {
+      "id": "meta-liabilities",
+      "subset": "Meta EN",
+      "question": "What were Meta's total liabilities in 2024?",
+      "target_page": 88,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            88,
+            109,
+            60,
+            121,
+            60
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            84,
+            88,
+            15,
+            14,
+            133
+          ]
+        },
+        "hybrid": {
+          "rank": 3,
+          "pages": [
+            88,
+            93,
+            88,
+            127,
+            87
+          ]
+        },
+        "table_lexical": {
+          "rank": 1,
+          "pages": [
+            88,
+            88,
+            121,
+            92,
+            92
+          ]
+        }
+      }
+    },
+    {
+      "id": "meta-liabilities-zh",
+      "subset": "Chinese paraphrases",
+      "question": "这家公司在 2024 年底一共承担多少尚需偿付的义务？",
+      "target_page": 88,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            68,
+            69,
+            69,
+            65,
+            62
+          ]
+        },
+        "dense": {
+          "rank": 1,
+          "pages": [
+            88,
+            111,
+            111,
+            80,
+            62
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            62,
+            62,
+            1,
+            101,
+            80
+          ]
+        },
+        "table_lexical": {
+          "rank": null,
+          "pages": []
+        }
+      }
+    },
+    {
+      "id": "meta-cash",
+      "subset": "Meta EN",
+      "question": "What was Meta's net cash provided by operating activities in 2024?",
+      "target_page": 92,
+      "report": "meta-2024",
+      "results": {
+        "bm25": {
+          "rank": null,
+          "pages": [
+            78,
+            79,
+            79,
+            92,
+            79
+          ]
+        },
+        "dense": {
+          "rank": null,
+          "pages": [
+            84,
+            92,
+            78,
+            14,
+            89
+          ]
+        },
+        "hybrid": {
+          "rank": null,
+          "pages": [
+            78,
+            92,
+            93,
+            88,
+            79
+          ]
+        },
+        "table_lexical": {
+          "rank": 2,
+          "pages": [
+            78,
+            92,
+            79,
+            78,
+            92
+          ]
+        }
+      }
+    }
+  ],
+  "documents": [
+    {
+      "id": "apple-2025",
+      "file": "data/apple-2025-10k.pdf",
+      "source": "https://s2.q4cdn.com/470004039/files/doc_financials/2025/ar/_10-K-2025-As-Filed.pdf",
+      "sha256": "3eb270b22acb7d8d8e9c32a43dc221dec3345f8e4bca02755fdbc1ee16c823de"
+    },
+    {
+      "id": "apple-2024",
+      "file": "data/apple-2024-10k.pdf",
+      "source": "https://s2.q4cdn.com/470004039/files/doc_earnings/2024/q4/filing/10-Q4-2024-As-Filed.pdf",
+      "sha256": "319e1217afe72f194575e63350ea6c813eaf5caf0c24e59ce8b221fc1b3ea0d4"
+    },
+    {
+      "id": "meta-2024",
+      "file": "data/meta-2024-10k.pdf",
+      "source": "https://s21.q4cdn.com/399680738/files/doc_financials/2024/ar/Meta-12-31-2024-10K-ARS.pdf",
+      "sha256": "9b81ad9b6ecb9e23b1d810b9cecabcad05e00386d24dd64b4cd44a5bab54a13f"
+    }
+  ],
+  "limits": "Fixed reports. Six Chinese questions reuse annotated facts. Table baseline uses line windows; other three use identical 800-character chunks. Measures retrieval, not generated-answer accuracy."
+}

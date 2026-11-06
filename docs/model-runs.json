@@ -1,0 +1,6520 @@
+[
+  {
+    "round": 1,
+    "case_id": "Q01_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "6.43",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "ReadTimeout: "
+    ],
+    "model_tool_calls": null,
+    "answer": "",
+    "verification": "error",
+    "elapsed_ms": 60055.73,
+    "model_requests": 1,
+    "output_tokens": 0,
+    "prompt_tokens": 0,
+    "trace": []
+  },
+  {
+    "round": 1,
+    "case_id": "Q01_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "6.43",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "2025年营业收入同比增长是6.43%，数据来源于第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 21809.88,
+    "model_requests": 3,
+    "output_tokens": 72,
+    "prompt_tokens": 18805,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q02_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "2.02",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "2024年营业收入同比增长是2.02%，数据来源于第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3183.36,
+    "model_requests": 3,
+    "output_tokens": 72,
+    "prompt_tokens": 18805,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q02_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "2.02",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年营业收入同比增长为2.02%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3139.48,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18094,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q03_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "5.04",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2025年营业成本同比增长为5.04%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3213.08,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18182,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q03_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "5.04",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "2025年营业成本同比增长是5.04%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2963.61,
+    "model_requests": 3,
+    "output_tokens": 70,
+    "prompt_tokens": 18893,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q04_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-1.77",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 2904.94,
+    "model_requests": 3,
+    "output_tokens": 71,
+    "prompt_tokens": 18893,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q04_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-1.77",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 4019.64,
+    "model_requests": 3,
+    "output_tokens": 174,
+    "prompt_tokens": 18182,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q05_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "19.50",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 4901.24,
+    "model_requests": 3,
+    "output_tokens": 248,
+    "prompt_tokens": 18069,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q05_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "19.50",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "2025年净利润同比增长是19.50%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3192.97,
+    "model_requests": 3,
+    "output_tokens": 71,
+    "prompt_tokens": 19164,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q06_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-3.36",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年净利润同比增长是 -3.36%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1723.75,
+    "model_requests": 2,
+    "output_tokens": 55,
+    "prompt_tokens": 3575,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q06_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-3.36",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法回答。\n\n问题“2024年净利润同比增长是多少？”要求计算净利润的同比增长率，这需要比较2024年与2023年的净利润数据。\n\n虽然报告中提供了2024年和2023年的净利润（分别为93,736万美元和96,995万美元），但当前工具无法直接计算同比增长率。尽管已调用“calculate”工具尝试计算净利率，但该工具用于计算利润率而非增长率。\n\n要计算同比增长，需使用以下公式：\n$$\n\\text{同比增长率} = \\frac{\\text{2024年净利润} - \\text{2023年净利润}}{\\text{2023年净利润}} \\times 100\\%\n$$\n\n由于缺少2023年净利润与2024年净利润的直接对比计算工具支持，且当前工具无法执行此类运算，因此无法基于现有工具链完成该问题的解答。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 4631.02,
+    "model_requests": 3,
+    "output_tokens": 262,
+    "prompt_tokens": 18067,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q07_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2025,
+      "value": "46.91",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 3,
+    "answer": "2025年毛利率为 **46.91%**。\n\n该数据基于报告第32页的“CONSOLIDATED STATEMENTS OF OPERATIONS”中提供的营业收入（416,161百万美元）和总成本（220,960百万美元）计算得出，计算公式为：\n\n$$\n\\text{毛利率} = \\frac{\\text{营业收入} - \\text{成本}}{\\text{营业收入}} \\times 100\\%\n$$\n\n$$\n= \\frac{416,161 - 220,960}{416,161} \\times 100\\% = 46.91\\%\n$$\n\n证据来源：报告第32页，Apple Inc. CONSOLIDATED STATEMENTS OF OPERATIONS。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 6627.43,
+    "model_requests": 4,
+    "output_tokens": 410,
+    "prompt_tokens": 24512,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2025,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q07_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2025,
+      "value": "46.91",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法回答。缺失关于2025年毛利率的直接数据或证据，无法通过现有信息计算或检索。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1383.67,
+    "model_requests": 1,
+    "output_tokens": 26,
+    "prompt_tokens": 666,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q08_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2024,
+      "value": "46.21",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法回答。缺失相关数据，无法计算2024年毛利率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 274.14,
+    "model_requests": 1,
+    "output_tokens": 17,
+    "prompt_tokens": 666,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q08_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2024,
+      "value": "46.21",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "2024年毛利率为46.21%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2441.05,
+    "model_requests": 4,
+    "output_tokens": 92,
+    "prompt_tokens": 24357,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q09_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2025,
+      "value": "26.92",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 4318.48,
+    "model_requests": 2,
+    "output_tokens": 253,
+    "prompt_tokens": 8118,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q09_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2025,
+      "value": "26.92",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法计算2025年净利率。缺失相关数据，无法调用工具获取指标值。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1076.09,
+    "model_requests": 1,
+    "output_tokens": 23,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q10_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2024,
+      "value": "23.97",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法回答。缺失相关数据，无法计算2024年净利率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 273.82,
+    "model_requests": 1,
+    "output_tokens": 18,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q10_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2024,
+      "value": "23.97",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年净利率为23.97%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2183.33,
+    "model_requests": 3,
+    "output_tokens": 68,
+    "prompt_tokens": 16858,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q11_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2025,
+      "value": "79.48",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3409.38,
+    "model_requests": 2,
+    "output_tokens": 145,
+    "prompt_tokens": 8118,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q11_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2025,
+      "value": "79.48",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法计算2025年资产负债率。缺失相关财务数据，无法调用工具获取指标值。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 986.54,
+    "model_requests": 1,
+    "output_tokens": 24,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q12_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2024,
+      "value": "84.40",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法计算2024年资产负债率。缺失必要的财务数据（如总资产和总负债），无法调用计算工具。缺少数据项，无法提供第 N 页的引文。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 521.74,
+    "model_requests": 1,
+    "output_tokens": 43,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q12_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2024,
+      "value": "84.40",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法找到2024年资产负债率的直接证据。虽然报告中提供了2024年总负债（308,030万元）和总资产（364,980万元）的数据，但资产负债率的计算需要明确的公式和数据支持。由于缺乏直接提及或计算的证据，无法确认该比率的具体数值。\n\n若需进一步分析，可基于现有数据进行计算，但需明确该计算是否符合报告口径。当前证据不足以支持该结论。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2948.02,
+    "model_requests": 3,
+    "output_tokens": 149,
+    "prompt_tokens": 15845,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率"
+        },
+        "result": "0 条记录"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q13_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2025,
+      "value": "99.53",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法回答。\n\n“现金含量”通常指企业经营活动现金流与净利润的比率（即现金转换率），但根据现有数据，该比率的计算依赖于“经营现金流”与“净利润”两个指标。虽然报告中提供了2025年“经营现金流”（111,482,000,000元）和“净利润”（112,010,000,000元）的数值，但计算出的比率（99.53%）是基于“经营现金流”与“净利润”的比值，而非“现金含量”这一标准财务指标。\n\n此外，报告中未明确“现金含量”的定义或计算口径，且“现金含量”并非标准财务术语，其含义在不同语境下可能不同。因此，基于现有信息，无法确认“现金含量”的具体定义或计算方式。\n\n综上，**无法回答2025年现金含量是多少**。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 4959.76,
+    "model_requests": 3,
+    "output_tokens": 258,
+    "prompt_tokens": 17147,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q13_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2025,
+      "value": "99.53",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法计算2025年现金含量。缺失必要的财务数据（如经营现金流和净利润），无法调用 calculate 工具进行计算。缺少数据项，无法提供结果。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1072.57,
+    "model_requests": 1,
+    "output_tokens": 40,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q14_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2024,
+      "value": "126.16",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法计算2024年现金含量。缺失经营现金流和净利润数据，无法计算现金含量（经营现金流/净利润）。缺少必要指标值，无法进行计算。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 462.3,
+    "model_requests": 1,
+    "output_tokens": 37,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q14_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2024,
+      "value": "126.16",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法回答。报告中未提供“现金含量”（cash content）的定义或计算方法，且无直接或间接证据支持该指标的计算。尽管可计算经营现金流与净利润的比率（即现金转换率），但该比率并非“现金含量”。因此，基于现有证据，无法得出2024年现金含量的数值。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2932.0,
+    "model_requests": 3,
+    "output_tokens": 129,
+    "prompt_tokens": 17150,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2024,
+          "metric": "operating_cash_flow"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q15_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。2026年的营业收入同比增长数据缺失，报告中未提供2026年或其相邻年度（如2025年）的营业收入数据，无法进行计算或推断。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3066.54,
+    "model_requests": 3,
+    "output_tokens": 100,
+    "prompt_tokens": 17491,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q15_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法计算2026年营业收入同比增长，因为缺少2026年及之前年度的营业收入数据。缺失项包括2026年营业收入和2025年营业收入，无法进行同比计算。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3098.9,
+    "model_requests": 3,
+    "output_tokens": 98,
+    "prompt_tokens": 18202,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q16_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法计算2026年营业成本同比增长，缺少2026年及2025年营业成本数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2721.64,
+    "model_requests": 3,
+    "output_tokens": 78,
+    "prompt_tokens": 18097,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "cost"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q16_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": false,
+    "failure_reasons": [
+      "percentage_given_for_missing_data",
+      "missing_explicit_refusal"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2026年营业成本同比增长是5.04%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2733.08,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18182,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q17_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": false,
+    "failure_reasons": [
+      "tool_budget_exhausted",
+      "missing_explicit_refusal"
+    ],
+    "model_tool_calls": 4,
+    "answer": "模型达到调用轮数限制，请查看工具结果。",
+    "verification": "tool_budget_exhausted",
+    "elapsed_ms": 3711.62,
+    "model_requests": 4,
+    "output_tokens": 123,
+    "prompt_tokens": 28266,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q17_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法计算2026年净利润同比增长，因为缺少2026年及相邻年度（2025年）的净利润数据。缺失项包括“net_profit”在2026年的值，无法进行同比计算。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3156.1,
+    "model_requests": 3,
+    "output_tokens": 103,
+    "prompt_tokens": 17815,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "net_profit"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q18_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_citation",
+      "no_model_tool_evidence",
+      "missing_explicit_refusal"
+    ],
+    "model_tool_calls": 0,
+    "answer": "模型回答引用了未检索到的页码，已拦截；请查看原文证据。",
+    "verification": "model_rejected_citation",
+    "elapsed_ms": 935.84,
+    "model_requests": 1,
+    "output_tokens": 27,
+    "prompt_tokens": 666,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q18_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。  \n\n检索结果中未包含2026年毛利率的任何数据。报告中提供的毛利率数据仅涵盖2023年、2024年和2025年，且未提及2026年的相关信息。  \n\n此外，报告原文中未提供关于2026年财务数据的预测或推算依据，因此无法基于现有证据计算或推断2026年毛利率。  \n\n**结论**：缺乏2026年的直接证据，且无可靠推算路径，故无法回答该问题。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3061.11,
+    "model_requests": 3,
+    "output_tokens": 163,
+    "prompt_tokens": 16281,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "gross margin 2026"
+        },
+        "result": "5 条记录"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q19_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "2026年资产负债率无法回答，因为报告中没有提供2026年的财务数据，且所有可查数据均截止至2025年。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3081.35,
+    "model_requests": 3,
+    "output_tokens": 92,
+    "prompt_tokens": 17058,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2025,
+          "metric": "total_liabilities"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q19_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": false,
+    "failure_reasons": [
+      "no_model_tool_evidence"
+    ],
+    "model_tool_calls": 0,
+    "answer": "无法计算2026年资产负债率。缺失相关数据，无法进行计算或检索。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 902.67,
+    "model_requests": 1,
+    "output_tokens": 21,
+    "prompt_tokens": 667,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q20_B",
+    "variant": "B",
+    "expected": {
+      "question": "2022年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2022,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2022年营业收入同比增长，缺少2022年及2021年营业收入数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 762.81,
+    "model_requests": 2,
+    "output_tokens": 61,
+    "prompt_tokens": 2487,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2022年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2022
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2022,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 1,
+    "case_id": "Q20_A",
+    "variant": "A",
+    "expected": {
+      "question": "2022年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2022,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。缺少2022年及之前年度的营业收入数据，无法计算同比增长。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2213.7,
+    "model_requests": 3,
+    "output_tokens": 75,
+    "prompt_tokens": 17491,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2022年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2022
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2022,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q01_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "6.43",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2025年营业收入同比增长为6.43%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2758.29,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18030,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q01_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "6.43",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年营业收入同比增长为6.43%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1541.19,
+    "model_requests": 2,
+    "output_tokens": 54,
+    "prompt_tokens": 3224,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q02_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "2.02",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年营业收入同比增长为2.02%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 978.2,
+    "model_requests": 2,
+    "output_tokens": 54,
+    "prompt_tokens": 3224,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q02_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "2.02",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年营业收入同比增长为2.02%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2381.74,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18030,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q03_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "5.04",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2025年营业成本同比增长为5.04%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2646.44,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18118,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q03_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "5.04",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年营业成本同比增长是5.04%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1450.99,
+    "model_requests": 2,
+    "output_tokens": 54,
+    "prompt_tokens": 3346,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q04_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-1.77",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年营业成本同比增长是-1.77%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1041.54,
+    "model_requests": 2,
+    "output_tokens": 55,
+    "prompt_tokens": 3346,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q04_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-1.77",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3463.99,
+    "model_requests": 3,
+    "output_tokens": 174,
+    "prompt_tokens": 18118,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q05_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "19.50",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2025年净利润同比增长为19.50%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2875.72,
+    "model_requests": 3,
+    "output_tokens": 67,
+    "prompt_tokens": 18389,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q05_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "19.50",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年净利润同比增长是19.50%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1516.75,
+    "model_requests": 2,
+    "output_tokens": 55,
+    "prompt_tokens": 3712,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q06_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-3.36",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年净利润同比增长是 -3.36%。第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1152.78,
+    "model_requests": 2,
+    "output_tokens": 56,
+    "prompt_tokens": 3709,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q06_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-3.36",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年净利润同比增长无法回答，因为报告中未提供2023年净利润与2024年净利润的对比数据，无法计算同比增长率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2543.38,
+    "model_requests": 3,
+    "output_tokens": 93,
+    "prompt_tokens": 18003,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q07_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2025,
+      "value": "46.91",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法找到2025年毛利率的直接证据。虽然报告中提供了2025年总收入和总成本数据，但毛利率的计算需要从“净销售额”和“销售成本”中得出，而该信息未在检索结果中明确列出。因此，无法基于现有证据回答该问题。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2927.98,
+    "model_requests": 3,
+    "output_tokens": 108,
+    "prompt_tokens": 15781,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率"
+        },
+        "result": "0 条记录"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q07_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2025,
+      "value": "46.91",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年毛利率为46.91%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1247.83,
+    "model_requests": 2,
+    "output_tokens": 48,
+    "prompt_tokens": 2250,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q08_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2024,
+      "value": "46.21",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年毛利率为46.21%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 796.37,
+    "model_requests": 2,
+    "output_tokens": 48,
+    "prompt_tokens": 2250,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q08_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2024,
+      "value": "46.21",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "2024年毛利率为46.21%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2509.3,
+    "model_requests": 4,
+    "output_tokens": 92,
+    "prompt_tokens": 24263,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q09_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2025,
+      "value": "26.92",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "根据报告数据，2025年Apple Inc.的净收入（Net Income）为 **112,010,000,000 元**（即1120.1亿美元），该数据来源于“CONSOLIDATED STATEMENTS OF OPERATIONS”中的“Net income”项目，物理页码为32页。\n\n此数值是直接从报告中提取的，无需进一步计算。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2765.9,
+    "model_requests": 2,
+    "output_tokens": 108,
+    "prompt_tokens": 8088,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q09_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2025,
+      "value": "26.92",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年净利率为26.92%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1238.54,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2515,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q10_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2024,
+      "value": "23.97",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年净利率为23.97%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 888.91,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2513,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q10_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2024,
+      "value": "23.97",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年净利率为23.97%。该数据基于报告中2024年净收入93,736,000,000元和总收入391,035,000,000元计算得出，引用页码32。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2879.33,
+    "model_requests": 3,
+    "output_tokens": 122,
+    "prompt_tokens": 16794,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q11_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2025,
+      "value": "79.48",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3728.56,
+    "model_requests": 2,
+    "output_tokens": 206,
+    "prompt_tokens": 8088,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q11_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2025,
+      "value": "79.48",
+      "page": 34
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年资产负债率为79.48%，第34页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1377.42,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2711,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q12_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2024,
+      "value": "84.40",
+      "page": 34
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年资产负债率为84.40%，第34页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 918.16,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2711,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q12_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2024,
+      "value": "84.40",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法找到2024年资产负债率的直接证据。虽然报告中提供了2024年总负债（308,030,000,000元）和总资产（364,980,000,000元）的数据，但资产负债率的计算需要明确的公式和数据支持。由于缺乏直接提及或计算的证据，无法确认该比率的具体数值。\n\n若需进一步分析，可提供更具体的计算依据或上下文。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2956.1,
+    "model_requests": 3,
+    "output_tokens": 151,
+    "prompt_tokens": 15785,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率"
+        },
+        "result": "0 条记录"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q13_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2025,
+      "value": "99.53",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3774.45,
+    "model_requests": 3,
+    "output_tokens": 170,
+    "prompt_tokens": 17083,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q13_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2025,
+      "value": "99.53",
+      "page": 36
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年现金含量为99.53%，第36页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1359.53,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2802,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q14_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2024,
+      "value": "126.16",
+      "page": 36
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年现金含量为126.16%，第36页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 942.78,
+    "model_requests": 2,
+    "output_tokens": 50,
+    "prompt_tokens": 2801,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q14_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2024,
+      "value": "126.16",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "无法回答。\n\n报告中未定义“现金含量”（cash content）的计算方法或指标，且未提供与之相关的直接数据或公式。尽管已检索到经营现金流、收入和净利润等数据，但“现金含量”并非标准财务指标，其定义在报告中缺失，无法通过现有信息进行推导或计算。\n\n因此，基于当前证据，无法确定2024年现金含量的具体数值。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3618.24,
+    "model_requests": 4,
+    "output_tokens": 169,
+    "prompt_tokens": 25728,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "cash conversion ratio or cash content definition"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q15_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。缺少2026年营业收入数据，且无相邻年度数据支持计算同比增长。根据现有证据，仅能确认2025年营业收入为416,161万美元，但无法推导2026年数据或其同比增长率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3099.29,
+    "model_requests": 3,
+    "output_tokens": 114,
+    "prompt_tokens": 17431,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q15_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年营业收入同比增长，缺少2026年及2025年营业收入数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1378.72,
+    "model_requests": 2,
+    "output_tokens": 61,
+    "prompt_tokens": 2625,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q16_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年营业成本同比增长，缺少2026年及2025年营业成本的数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 779.13,
+    "model_requests": 2,
+    "output_tokens": 62,
+    "prompt_tokens": 2554,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "cost"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q16_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "missing_explicit_refusal"
+    ],
+    "model_tool_calls": 2,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3766.49,
+    "model_requests": 3,
+    "output_tokens": 203,
+    "prompt_tokens": 18118,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q17_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。缺少2026年净利润及其相邻年度（2025年）的净利润数据，无法计算同比增长。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2724.09,
+    "model_requests": 3,
+    "output_tokens": 80,
+    "prompt_tokens": 17044,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "net_profit"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q17_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年净利润同比增长，缺少2026年及2025年净利润的指标数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1342.08,
+    "model_requests": 2,
+    "output_tokens": 63,
+    "prompt_tokens": 2367,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "net_profit"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q18_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年毛利率，缺少2026年的营业收入和营业成本数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 646.35,
+    "model_requests": 2,
+    "output_tokens": 51,
+    "prompt_tokens": 1552,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2026
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q18_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。报告中未提供2026年的毛利率数据，且无相关预测或推算依据。所有可查数据均限于2023年至2025年。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2282.57,
+    "model_requests": 3,
+    "output_tokens": 85,
+    "prompt_tokens": 16221,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "gross margin 2026"
+        },
+        "result": "5 条记录"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q19_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。报告中没有关于2026年资产负债率的任何数据，且无证据支持该年份的财务指标。资产负债率 = 总负债 / 总资产，但2026年的相关数据缺失，无法计算。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2694.72,
+    "model_requests": 3,
+    "output_tokens": 96,
+    "prompt_tokens": 15785,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率"
+        },
+        "result": "0 条记录"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q19_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年资产负债率。缺少2026年的总负债（total_liabilities）和总资产（total_assets）数据，无法确定资产负债率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1299.41,
+    "model_requests": 2,
+    "output_tokens": 67,
+    "prompt_tokens": 1557,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2026
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q20_B",
+    "variant": "B",
+    "expected": {
+      "question": "2022年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2022,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2022年营业收入同比增长，缺少2022年及2021年营业收入数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 757.77,
+    "model_requests": 2,
+    "output_tokens": 61,
+    "prompt_tokens": 2625,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2022年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2022
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2022,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 2,
+    "case_id": "Q20_A",
+    "variant": "A",
+    "expected": {
+      "question": "2022年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2022,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。缺少2022年及之前年度的营业收入数据，无法计算同比增长率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2158.39,
+    "model_requests": 3,
+    "output_tokens": 76,
+    "prompt_tokens": 17431,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2022年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2022
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2022,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q01_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "6.43",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2025年营业收入同比增长为6.43%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2621.42,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18126,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q01_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "6.43",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年营业收入同比增长为6.43%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1449.35,
+    "model_requests": 2,
+    "output_tokens": 54,
+    "prompt_tokens": 3230,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q02_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "2.02",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年营业收入同比增长为2.02%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1026.64,
+    "model_requests": 2,
+    "output_tokens": 54,
+    "prompt_tokens": 3230,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q02_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "2.02",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年营业收入同比增长为2.02%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2627.37,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18126,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q03_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "5.04",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2025年营业成本同比增长为5.04%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2974.99,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18214,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q03_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "5.04",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年营业成本同比增长是5.04%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1695.07,
+    "model_requests": 2,
+    "output_tokens": 54,
+    "prompt_tokens": 3352,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q04_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-1.77",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年营业成本同比增长是-1.77%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1138.64,
+    "model_requests": 2,
+    "output_tokens": 55,
+    "prompt_tokens": 3352,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q04_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-1.77",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年营业成本同比增长为-1.77%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2642.87,
+    "model_requests": 3,
+    "output_tokens": 70,
+    "prompt_tokens": 18214,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q05_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "19.50",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "2025年净利润同比增长为19.50%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3997.72,
+    "model_requests": 4,
+    "output_tokens": 103,
+    "prompt_tokens": 28703,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q05_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2025,
+      "value": "19.50",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年净利润同比增长是19.50%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1930.28,
+    "model_requests": 2,
+    "output_tokens": 55,
+    "prompt_tokens": 3718,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q06_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-3.36",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年净利润同比增长是 -3.36%（第32页）。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1234.11,
+    "model_requests": 2,
+    "output_tokens": 56,
+    "prompt_tokens": 3715,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q06_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2024,
+      "value": "-3.36",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2024年净利润同比增长无法回答，因为报告中未提供2023年净利润与2024年净利润的对比数据，无法计算同比增长率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2783.78,
+    "model_requests": 3,
+    "output_tokens": 93,
+    "prompt_tokens": 18099,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q07_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2025,
+      "value": "46.91",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法找到2025年毛利率的直接证据。虽然报告中提供了2025年的营业收入和成本数据，但未明确列出毛利率的具体数值。根据财务报表结构，毛利率可通过“净销售额”减去“销售成本”计算得出，但当前证据中缺少该计算的直接引用或结果。\n\n因此，基于现有信息，无法回答2025年毛利率是多少。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3252.54,
+    "model_requests": 3,
+    "output_tokens": 125,
+    "prompt_tokens": 15871,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率"
+        },
+        "result": "0 条记录"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q07_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2025,
+      "value": "46.91",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年毛利率为46.91%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1380.16,
+    "model_requests": 2,
+    "output_tokens": 48,
+    "prompt_tokens": 2256,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q08_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2024,
+      "value": "46.21",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年毛利率为46.21%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1063.55,
+    "model_requests": 2,
+    "output_tokens": 48,
+    "prompt_tokens": 2256,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q08_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2024,
+      "value": "46.21",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "2024年毛利率为46.21%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 4272.61,
+    "model_requests": 4,
+    "output_tokens": 92,
+    "prompt_tokens": 24404,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年毛利率"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2024,
+          "metric": "revenue"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q09_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2025,
+      "value": "26.92",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 4145.27,
+    "model_requests": 2,
+    "output_tokens": 211,
+    "prompt_tokens": 8133,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q09_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2025,
+      "value": "26.92",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年净利率为26.92%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1389.28,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2521,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q10_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2024,
+      "value": "23.97",
+      "page": 32
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年净利率为23.97%，第32页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1092.06,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2519,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q10_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年净利率是多少？",
+      "kind": "net_margin",
+      "year": 2024,
+      "value": "23.97",
+      "page": 32
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3415.06,
+    "model_requests": 2,
+    "output_tokens": 197,
+    "prompt_tokens": 8133,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年净利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q11_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2025,
+      "value": "79.48",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "model_did_not_call_correct_calculation",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 1,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3311.79,
+    "model_requests": 2,
+    "output_tokens": 146,
+    "prompt_tokens": 8133,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q11_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2025,
+      "value": "79.48",
+      "page": 34
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年资产负债率为79.48%，第34页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1368.87,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2717,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q12_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2024,
+      "value": "84.40",
+      "page": 34
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年资产负债率为84.40%，第34页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1009.75,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2717,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q12_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2024,
+      "value": "84.40",
+      "page": 34
+    },
+    "passed": false,
+    "failure_reasons": [
+      "model_rejected_numeric_claim",
+      "answer_missing_expected_percentage",
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。",
+    "verification": "model_rejected_numeric_claim",
+    "elapsed_ms": 3534.96,
+    "model_requests": 4,
+    "output_tokens": 148,
+    "prompt_tokens": 24871,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年资产负债率"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2024,
+          "metric": "total_liabilities"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q13_A",
+    "variant": "A",
+    "expected": {
+      "question": "2025年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2025,
+      "value": "99.53",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 2,
+    "answer": "无法回答。报告中未提供“现金含量”（cash content）的定义或相关指标，且“现金含量”并非标准财务比率或可计算指标。尽管已计算2025年经营现金流与净利润的比率（为99.53%），但该比率并非“现金含量”。根据现有证据，无法确定“现金含量”的具体含义或计算方式，因此无法给出答案。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3814.7,
+    "model_requests": 3,
+    "output_tokens": 140,
+    "prompt_tokens": 17179,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q13_B",
+    "variant": "B",
+    "expected": {
+      "question": "2025年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2025,
+      "value": "99.53",
+      "page": 36
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2025年现金含量为99.53%，第36页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1532.43,
+    "model_requests": 2,
+    "output_tokens": 49,
+    "prompt_tokens": 2808,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2025年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2025
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2025
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q14_B",
+    "variant": "B",
+    "expected": {
+      "question": "2024年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2024,
+      "value": "126.16",
+      "page": 36
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "2024年现金含量为126.16%，第36页。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1014.12,
+    "model_requests": 2,
+    "output_tokens": 50,
+    "prompt_tokens": 2807,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2024
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q14_A",
+    "variant": "A",
+    "expected": {
+      "question": "2024年现金含量是多少？",
+      "kind": "cash_conversion",
+      "year": 2024,
+      "value": "126.16",
+      "page": 36
+    },
+    "passed": false,
+    "failure_reasons": [
+      "answer_missing_expected_physical_page"
+    ],
+    "model_tool_calls": 3,
+    "answer": "无法回答。\n\n报告中未定义“现金含量”（cash content）的计算方法或指标，且未提供与之相关的明确公式或定义。尽管已检索到经营现金流、净利润、总资产和总负债等数据，但“现金含量”并非标准财务比率，也未在报告中明确提及。\n\n此外，虽然已通过工具计算出2024年经营现金流与净利润的比率（126.16%），但该比率并非“现金含量”的标准定义，且该计算基于假设的公式，缺乏明确依据。\n\n因此，基于现有证据，无法确定“2024年现金含量”是多少。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 4250.98,
+    "model_requests": 4,
+    "output_tokens": 217,
+    "prompt_tokens": 25873,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2024年现金含量是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "metric": "revenue",
+          "year": 2024
+        },
+        "result": "ok"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "cash conversion ratio or cash content definition"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "cash_conversion",
+          "year": 2024,
+          "metric": "operating_cash_flow"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q15_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。缺少2026年营业收入数据，无法计算同比增长。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2923.37,
+    "model_requests": 3,
+    "output_tokens": 71,
+    "prompt_tokens": 17550,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q15_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年营业收入同比增长，缺少2026年营业收入数据。缺少项为：2026年营业收入。第32页和第25页的原文中仅提供2025年及更早年度的营业收入数据，未包含2026年数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1919.93,
+    "model_requests": 2,
+    "output_tokens": 102,
+    "prompt_tokens": 2654,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q16_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年营业成本同比增长，缺少2026年营业成本的数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1172.79,
+    "model_requests": 2,
+    "output_tokens": 56,
+    "prompt_tokens": 2581,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "cost"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q16_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年营业成本同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": false,
+    "failure_reasons": [
+      "percentage_given_for_missing_data",
+      "missing_explicit_refusal"
+    ],
+    "model_tool_calls": 2,
+    "answer": "2026年营业成本同比增长是5.04%。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2579.88,
+    "model_requests": 3,
+    "output_tokens": 69,
+    "prompt_tokens": 18214,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年营业成本同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "cost",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2025,
+          "metric": "cost"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q17_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。\n\n问题“2026年净利润同比增长是多少？”中涉及的年份“2026年”在提供的证据中不存在。所有可查证的数据均来自2023年、2024年和2025年，没有关于2026年的任何信息。因此，无法计算或推断2026年的净利润同比增长。\n\n此外，即使存在2026年的数据，也必须基于可验证的财务报表证据，而当前报告中未包含此类信息。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3878.13,
+    "model_requests": 3,
+    "output_tokens": 165,
+    "prompt_tokens": 18101,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "net_margin",
+          "year": 2025,
+          "metric": "net_profit"
+        },
+        "result": "ok"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q17_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年净利润同比增长是多少？",
+      "kind": "growth",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年净利润同比增长，缺少2026年净利润数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1418.77,
+    "model_requests": 2,
+    "output_tokens": 55,
+    "prompt_tokens": 2397,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年净利润同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "net_profit",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2026,
+          "metric": "net_profit"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q18_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年毛利率，缺少2026年的营业收入和营业成本数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 681.79,
+    "model_requests": 2,
+    "output_tokens": 51,
+    "prompt_tokens": 1588,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "year": 2026
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q18_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年毛利率是多少？",
+      "kind": "gross_margin",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。  \n\n查询“2026年毛利率”时，检索到的报告证据中仅包含2023年、2024年和2025年的毛利率数据（分别为169,148万、180,683万、195,201万），且未提供任何关于2026年的预测或实际数据。报告中也无任何关于未来年份（如2026年）的财务指标或趋势推算。  \n\n因此，基于现有证据，无法确定2026年的毛利率。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 3268.31,
+    "model_requests": 3,
+    "output_tokens": 170,
+    "prompt_tokens": 16311,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年毛利率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "gross_margin",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "gross margin 2026"
+        },
+        "result": "5 条记录"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q19_A",
+    "variant": "A",
+    "expected": {
+      "question": "2026年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。报告中没有关于2026年资产负债率的任何数据，且无证据支持该年份的财务指标。资产负债率 = 总负债 / 总资产，但2026年的相关数据缺失，无法计算。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2850.02,
+    "model_requests": 3,
+    "output_tokens": 96,
+    "prompt_tokens": 15875,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率"
+        },
+        "result": "0 条记录"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q19_B",
+    "variant": "B",
+    "expected": {
+      "question": "2026年资产负债率是多少？",
+      "kind": "debt_ratio",
+      "year": 2026,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2026年资产负债率，缺少2026年的总负债（total_liabilities）和总资产（total_assets）数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 1315.89,
+    "model_requests": 2,
+    "output_tokens": 62,
+    "prompt_tokens": 1598,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2026年资产负债率是多少？"
+        },
+        "result": "0 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "metric": "revenue",
+          "year": 2026
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "debt_ratio",
+          "year": 2026
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q20_B",
+    "variant": "B",
+    "expected": {
+      "question": "2022年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2022,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 1,
+    "answer": "无法计算2022年营业收入同比增长，缺少2022年及2021年营业收入数据。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 851.48,
+    "model_requests": 2,
+    "output_tokens": 61,
+    "prompt_tokens": 2662,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2022年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2022
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2022,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  },
+  {
+    "round": 3,
+    "case_id": "Q20_A",
+    "variant": "A",
+    "expected": {
+      "question": "2022年营业收入同比增长是多少？",
+      "kind": "growth",
+      "year": 2022,
+      "status": "unavailable"
+    },
+    "passed": true,
+    "failure_reasons": [],
+    "model_tool_calls": 2,
+    "answer": "无法回答。证据显示缺少2022年及2021年的营业收入数据，无法计算同比增长。",
+    "verification": "model_draft_unverified",
+    "elapsed_ms": 2251.48,
+    "model_requests": 3,
+    "output_tokens": 79,
+    "prompt_tokens": 17558,
+    "trace": [
+      {
+        "origin": "server",
+        "tool": "search_report",
+        "arguments": {
+          "query": "2022年营业收入同比增长是多少？"
+        },
+        "result": "5 条记录"
+      },
+      {
+        "origin": "server",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "metric": "revenue",
+          "year": 2022
+        },
+        "result": "unavailable"
+      },
+      {
+        "origin": "model",
+        "tool": "list_metrics",
+        "arguments": {},
+        "result": "15 条记录"
+      },
+      {
+        "origin": "model",
+        "tool": "calculate",
+        "arguments": {
+          "kind": "growth",
+          "year": 2022,
+          "metric": "revenue"
+        },
+        "result": "unavailable"
+      }
+    ]
+  }
+]

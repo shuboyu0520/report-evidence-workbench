@@ -1,0 +1,23 @@
+{
+  "purpose": "Different-company holdout; do not tune retrieval on these cases.",
+  "documents": [
+    {
+      "id": "meta-2024",
+      "file": "data/meta-2024-10k.pdf",
+      "source": "https://s21.q4cdn.com/399680738/files/doc_financials/2024/ar/Meta-12-31-2024-10K-ARS.pdf",
+      "sha256": "9b81ad9b6ecb9e23b1d810b9cecabcad05e00386d24dd64b4cd44a5bab54a13f"
+    }
+  ],
+  "cases": [
+    {"id":"meta-revenue","document":"meta-2024","question":"What was Meta's revenue in 2024?","page":89,"marker":"Revenue","value":"164,501"},
+    {"id":"meta-cost","document":"meta-2024","question":"What was Meta's cost of revenue in 2024?","page":89,"marker":"Cost of revenue","value":"30,161"},
+    {"id":"meta-rd","document":"meta-2024","question":"How much did Meta spend on research and development in 2024?","page":89,"marker":"Research and development","value":"43,873"},
+    {"id":"meta-marketing","document":"meta-2024","question":"What were Meta's marketing and sales expenses in 2024?","page":89,"marker":"Marketing and sales","value":"11,347"},
+    {"id":"meta-admin","document":"meta-2024","question":"What were Meta's general and administrative expenses in 2024?","page":89,"marker":"General and administrative","value":"9,740"},
+    {"id":"meta-operating-income","document":"meta-2024","question":"What was Meta's income from operations in 2024?","page":89,"marker":"Income from operations","value":"69,380"},
+    {"id":"meta-net-income","document":"meta-2024","question":"What was Meta's net income in 2024?","page":89,"marker":"Net income","value":"62,360"},
+    {"id":"meta-assets","document":"meta-2024","question":"What were Meta's total assets in 2024?","page":88,"marker":"Total assets","value":"276,054"},
+    {"id":"meta-liabilities","document":"meta-2024","question":"What were Meta's total liabilities in 2024?","page":88,"marker":"Total liabilities","value":"93,417"},
+    {"id":"meta-cash","document":"meta-2024","question":"What was Meta's net cash provided by operating activities in 2024?","page":92,"marker":"Net cash provided by operating activities","value":"91,328"}
+  ]
+}

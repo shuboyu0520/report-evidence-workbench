@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>财报分析工作台</title>
+<style>
+body{margin:0;background:#f3f5f8;color:#192637;font:16px/1.7 system-ui,sans-serif}main{max-width:1000px;margin:50px auto;padding:0 24px}h1{font-size:32px;margin-bottom:5px}h2{font-size:19px}small,.hint{color:#586679}section{background:white;border:1px solid #dce3ed;border-radius:12px;padding:24px;margin:22px 0}textarea{box-sizing:border-box;width:100%;font:inherit}#metric-list{display:flex;flex-wrap:wrap;gap:8px}#source-page{max-height:320px;overflow:auto}input,select,button{font:inherit;padding:10px;margin:5px 0;border:1px solid #c6cfdb;border-radius:6px}input[type=text]{width:min(90%,650px)}button{background:#1747aa;color:white;cursor:pointer}button:disabled{opacity:.5}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.65 ui-monospace,monospace}a{color:#1747aa}#status{min-height:28px}label{display:block}details{border-top:1px solid #eee;padding-top:12px}#answer{white-space:pre-wrap}
+input,select,button{box-sizing:border-box;max-width:100%}#metric-list button{white-space:normal;overflow-wrap:anywhere;text-align:left}#metric-history{overflow-wrap:anywhere}
+@media(max-width:600px){main{margin:24px auto;padding:0 16px}section{padding:18px}h1{font-size:28px}}
+</style><main>
+<small>AI APPLICATION × FINANCIAL RESEARCH</small><h1>财报分析工作台</h1>
+<p class="hint">从原文找到依据，让每一步计算可追溯。</p>
+<section><h2>1. 导入报告</h2><form id="upload"><label>公司名称 <input id="company" type="text" required maxlength="100" placeholder="如：星河制造（演示）"></label><label>报告文件 <input id="file" type="file" accept=".pdf,.txt" required></label><button>上传并解析</button></form><p class="hint">支持文本型 PDF、UTF-8 TXT。复杂表格可在下方对照原文确认指标。</p></section>
+<section><h2>2. 核对财报指标</h2><label>选择报告 <select id="reports" aria-label="报告"></select></label>
+<p class="hint">先选择报告。文本复杂时可对照原文确认指标，再进行计算。金额单位“元”表示所选币种的基本单位，不进行换汇。</p>
+<button type="button" id="metric-reload">重新加载指标</button><p id="metric-status" role="status"></p>
+<details><summary>展开指标复核与修订</summary><div id="metric-list"></div>
+<form id="metric-form">
+<label>指标 <select id="metric-name"><option value="revenue">营业收入</option><option value="cost">营业成本</option><option value="net_profit">净利润</option><option value="operating_cash_flow">经营现金流</option><option value="total_assets">总资产</option><option value="total_liabilities">总负债</option></select></label>
+<label>年度 <input id="metric-year" type="number" min="2000" max="2099" value="2025" required></label>
+<label>原文数值 <input id="metric-value" type="text" maxlength="40" required></label>
+<label>原文单位 <select id="metric-unit" required><option value="">请按原文选择单位</option><option>元</option><option>万元</option><option>百万元</option><option>亿元</option></select></label>
+<label>币种 <input id="metric-currency" value="USD" pattern="[A-Z]{3}" maxlength="3" required></label>
+<label>PDF 物理页码 <input id="metric-page" type="number" min="1" value="1" required></label>
+<button id="read-page" type="button">读取此页原文</button><pre id="source-page"></pre>
+<label>原文引文 <textarea id="metric-quote" rows="4" maxlength="2000" required></textarea></label>
+<label>确认或修订说明 <input id="metric-reason" type="text" maxlength="500" required placeholder="例如：已核对合并利润表的本年收入"></label>
+<p id="metric-review-summary" class="hint" role="status">请选择原文单位并填写数值，再核对保存内容。</p>
+<p class="hint">系统核验引文和数值是否存在；单位、年度对应关系和口径仍需你对照原文确认。</p>
+<label><input id="metric-confirmed" type="checkbox" required> 我已核对指标、年度、单位、币种与合并年度口径</label>
+<button id="metric-save" type="submit" disabled>确认并保存指标</button>
+</form><h3>修订历史</h3><div id="metric-history"></div></details></section>
+<section><h2>3. 提出问题</h2><form id="ask"><label>问题 <input id="question" type="text" required maxlength="1000" value="2025 年营业收入同比增长率和毛利率是多少？"></label><label>分析模式 <select id="mode"><option value="rules">检索与计算（无需模型）</option><option value="ollama" disabled>Agent（正在检查配置）</option><option value="rag" disabled>RAG（语义与混合检索）</option></select></label><p id="mode-status" class="hint">检索与计算可直接使用，正在检查模型配置。</p><button>开始分析</button></form><p class="hint">可问：净利率、资产负债率、经营现金流/净利润（关键词：现金含量），或检索风险因素。</p></section>
+<p id="status" role="status"></p><section id="result" hidden><h2>分析结果</h2><a id="export-evidence">下载本次分析的证据包</a><p id="snapshot-version" class="hint"></p><p id="verification" class="hint"></p><p id="answer"></p><h2>原文依据</h2><div id="citations"></div><details><summary>查看工具调用与计算过程</summary><pre id="trace"></pre></details></section>
+<p class="hint">本地单用户原型 · <a href="/docs">API 文档与指标确认接口</a></p>
+</main><script>
+const el=id=>document.getElementById(id);let busy=false;let analysisGeneration=0;
+function invalidateAnalysis(){analysisGeneration++;el('result').hidden=true}
+el('reports').addEventListener('change',invalidateAnalysis);
+window.addEventListener('reports-loaded',invalidateAnalysis);
+window.addEventListener('metrics-updated',invalidateAnalysis);
+async function request(url,options){const r=await fetch(url,options);const data=await r.json();if(!r.ok)throw Error(typeof data.detail==='string'?data.detail:JSON.stringify(data.detail));return data}
+async function refresh(selected){const data=await request('/reports?limit=100');el('reports').replaceChildren(...data.map(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.company+' / '+r.filename;return o}));if(selected)el('reports').value=selected;window.dispatchEvent(new Event('reports-loaded'))}
+async function run(fn){if(busy)return;busy=true;document.querySelectorAll('button').forEach(b=>b.disabled=true);el('status').textContent='处理中…';try{await fn()}catch(e){el('status').textContent=e.message}finally{busy=false;document.querySelectorAll('button').forEach(b=>b.disabled=false)}}
+el('upload').onsubmit=e=>{e.preventDefault();run(async()=>{const body=new FormData();body.append('company',el('company').value);body.append('file',el('file').files[0]);const r=await request('/reports',{method:'POST',body});await refresh(r.id);el('status').textContent=(r.deduplicated?'报告已存在':'导入成功，识别 '+r.metrics+' 项指标')+'。'+(r.warnings||[]).join(' ')})};
+el('ask').onsubmit=e=>{e.preventDefault();run(async()=>{const id=el('reports').value;const generation=analysisGeneration;if(!id)throw Error('请先上传报告');el('result').hidden=true;const r=await request('/reports/'+encodeURIComponent(id)+'/questions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:el('question').value,mode:el('mode').value})});if(generation!==analysisGeneration){el('status').textContent='报告或指标已更新，请重新分析。';return}el('export-evidence').href='/analyses/'+encodeURIComponent(r.id)+'/export';el('snapshot-version').textContent='本次分析使用指标版本 '+r.input_snapshot.revision+'；证据包保留当时输入。';el('result').hidden=false;el('answer').textContent=r.answer;el('verification').textContent=r.verification==='model_draft_unverified'?'模型分析草稿，文字尚未逐条核验':'结果状态：'+r.verification;el('trace').textContent=JSON.stringify(r.trace,null,2);el('citations').replaceChildren(...r.citations.map(c=>{const p=document.createElement('pre');p.textContent='第 '+c.page+' 页\n'+c.quote;return p}));el('status').textContent=r.warnings.join(' ')})};
+refresh().catch(e=>el('status').textContent=e.message);
+request('/health').then(data=>{const option=el('mode').querySelector('[value="ollama"]');option.disabled=!data.model_configured;el('mode').querySelector('[value="rag"]').disabled=!data.model_configured;option.textContent=data.model_configured?'Agent（模型已配置）':'Agent（未配置，暂不可用）';el('mode-status').textContent=data.model_configured?'模型已配置；连接失败时可切回检索与计算。':'当前未配置模型，请使用检索与计算完成指标分析。'}).catch(()=>{el('mode').querySelector('[value="ollama"]').textContent='Agent（配置状态未知）';el('mode-status').textContent='暂时无法确认模型配置，检索与计算仍可使用。'});
+</script>
+<script src="/review.js"></script></html>

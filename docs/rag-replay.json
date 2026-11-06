@@ -1,0 +1,32 @@
+[
+  {
+    "strategy": "等权混合",
+    "question": "苹果 2025 财年研发费用为多少百万美元？请查找原文并给出物理页码。",
+    "answer": "没有检索到关于苹果2025财年研发费用的具体数据。提供的证据中仅包含关于资产、股份补偿费用及区域销售情况的信息，未提及研发费用（R&D expenses）的相关内容。\n\n因此，无法根据现有证据回答苹果2025财年研发费用为多少百万美元。\n\n物理页码：无相关证据。",
+    "verification": "model_draft_unverified",
+    "pages": [
+      24,
+      42,
+      48,
+      25,
+      77
+    ],
+    "evidence": []
+  },
+  {
+    "strategy": "中文查英文优先纯向量",
+    "question": "苹果 2025 财年研发费用为多少百万美元？请查找原文并给出物理页码。",
+    "answer": "苹果2025财年研发费用为34,550百万美元（即345.5亿美元），数据来源为“CONSOLIDATED STATEMENTS OF OPERATIONS”表格，物理页码为32页。\n\n该信息在报告中明确列出：“Research and development  34,550  31,370  29,915”，对应2025财年（September 27, 2025）的研发费用。同时，页码27的“Research and Development”部分也确认了该数值及其同比增长情况。",
+    "verification": "model_draft_unverified",
+    "pages": [
+      32,
+      42,
+      24,
+      26,
+      27
+    ],
+    "evidence": [
+      "Research and development  34,550  31,370  29,915"
+    ]
+  }
+]
