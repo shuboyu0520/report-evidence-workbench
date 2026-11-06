@@ -70,6 +70,19 @@ def amount_tokens(text):
     return {s.replace(",", "").replace("−", "-") for s in AMOUNT.findall(text)}
 
 
+def matching_cash_flow_period(quote, page, rolling):
+    """A quotation may begin after the TTM prefix on the original row."""
+    if not re.search(r"free cash flow", quote, re.I):
+        return True
+    pattern = r"\s+".join(re.escape(part) for part in quote.split())
+    periods = set()
+    for match in re.finditer(pattern, page):
+        start = page.rfind("\n", 0, match.start()) + 1
+        source_row = page[start : match.end()]
+        periods.add(bool(re.search(r"\bTTM\b|trailing twelve", source_row, re.I)))
+    return periods == {rolling}
+
+
 async def select_json(config, system, payload, events):
     if not config.get("model"):
         raise ValueError("请配置本机模型后再提问，已核准的数据解读可直接浏览。")
@@ -306,10 +319,7 @@ async def from_document(db, report, pages, question, config, tools, calls, event
     ):
         rolling = bool(re.search(r"滚动十二个月|\bTTM\b", question, re.I))
         checked = [
-            c
-            for c in checked
-            if not re.search(r"free cash flow", c["quote"], re.I)
-            or bool(re.search(r"\bTTM\b|trailing twelve", c["quote"], re.I)) == rolling
+            c for c in checked if matching_cash_flow_period(c["quote"], source[c["page"]], rolling)
         ]
         if not checked:
             return MISSING, "insufficient_evidence", []

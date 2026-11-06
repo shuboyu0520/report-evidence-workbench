@@ -3,6 +3,15 @@
 import pytest
 
 from app.earnings_tables import lookup_request, resolve_sources
+from app.reader import matching_cash_flow_period
+
+
+def test_cash_flow_citation_inherits_an_omitted_period_prefix():
+    page = "Free Cash Flow $310M $320M\nTTM Free Cash Flow $960M $980M"
+    assert matching_cash_flow_period("Free Cash Flow $310M $320M", page, False)
+    assert not matching_cash_flow_period("Free Cash Flow $960M $980M", page, False)
+    assert matching_cash_flow_period("TTM Free Cash Flow $960M $980M", page, True)
+
 
 GRID = """Quarterly Summary
 2027 2028
