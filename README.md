@@ -52,3 +52,11 @@ uv run python -m scripts.evaluate_model_ab --url http://127.0.0.1:11434 --out da
 ```
 
 从 [分块、向量和融合排序](app/retrieval.py)、[Agent 工具调用及回答检查](app/agent.py)、[财务口径和确定性计算](app/finance.py) 或 [逐题评测脚本](scripts/evaluate_hybrid.py) 阅读核心实现。
+
+## 跨公司独立评测
+
+首次通过 5/18，候选复测通过 5/18，最终发布版复测通过 5/18。14 道查数题和 4 道报告期间之外的缺数题采用预先冻结的原表物理页标注。候选检索策略没有通过比较，发布版保留原策略及新增的三类异常保护。9 项新增 API 故障注入测试计入全量 85 项。
+
+[逐题对照与 SQL 复盘](https://shuboyu0520.github.io/report-evidence-workbench/holdout.html) · [冻结题集](evaluation/amazon_holdout.json) · [SQL](evaluation/failure_analysis.sql)
+
+运行 `uv run python -m scripts.analyze_failures` 即可从公开数据重建 SQL 汇总。从标注的 source 下载年报，再运行 `uv run python -m scripts.evaluate_holdout --pdf data/amazon-2024.pdf --url http://127.0.0.1:11434 --out data/amazon-new-run`。输出目录必须为新目录，便于保留每次结果。

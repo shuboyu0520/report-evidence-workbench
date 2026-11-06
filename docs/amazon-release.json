@@ -1,0 +1,760 @@
+{
+  "commit": "00085547823d9a42730deb895416213198e28e4d",
+  "app_sha256": {
+    "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agent.py": "d6e5d64bbd9f1eba3b68f227a8055b76bc6f16638eb8d4b9189d5380c1b6c46a",
+    "db.py": "5f05812f57f6ecdf4a4464cfc066d98d2b1f3ad3cc17a3a9570ad82acd086dd2",
+    "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+    "main.py": "42af7e5e7be23a5090d7c37fc4b33dfbdd48975267982568a147d6b8b699482c",
+    "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+    "retrieval.py": "9213fd6737887f2281774df22dc2b0b201ca8f2957d0307a61433dfed9a90735",
+    "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f"
+  },
+  "pdf_sha256": "d6c8919af431fbf38d5d92f2060ba8f45d084f26495c6f17ce81232102977908",
+  "fixture_sha256": "6d5deaf6162f7b8373bb32cea65fe96fee6683e017c44a28f7f9d1266e79543d",
+  "runner_sha256": "f42f812813406eddaf9596a5f30a10dfe8b621aa7d9601b1b9ac6fc928f40749",
+  "prompt_sha256": "ea566346d4230661227520b537e7df8c7ff070f84468e6c76f62985d6f08060a",
+  "model_options": {
+    "temperature": 0,
+    "seed": 42,
+    "num_ctx": 16384,
+    "num_predict": 1024
+  },
+  "models": {
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+  },
+  "started_utc": "2026-11-06T05:22:43.499189+00:00",
+  "cases": [
+    {
+      "answer": "目标年度：2024  \n金额：637,959（百万美元）  \n物理页码：第 49 页",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": true,
+        "amount": true,
+        "year": true,
+        "unit": true,
+        "page": true
+      },
+      "passed": true,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            79,
+            36,
+            1,
+            49,
+            86
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM01",
+      "question": "2024 财年，合并利润表中的净销售总额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 14697,
+      "target_page": 49,
+      "year": 2024,
+      "expected": "637,959"
+    },
+    {
+      "answer": "2023年，公司卖出商品获得的净销售额是513,983百万美元，第49页。",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": true,
+        "amount": false,
+        "year": true,
+        "unit": true,
+        "page": true
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            79,
+            49,
+            79,
+            86,
+            33
+          ],
+          "status": null
+        },
+        {
+          "origin": "model",
+          "tool": "list_metrics",
+          "args": {},
+          "pages": [],
+          "status": null
+        },
+        {
+          "origin": "model",
+          "tool": "search_report",
+          "args": {
+            "query": "2023 year net sales by group or total net sales in consolidated statements of operations"
+          },
+          "pages": [
+            49,
+            36,
+            79,
+            37,
+            79
+          ],
+          "status": null
+        },
+        {
+          "origin": "model",
+          "tool": "calculate",
+          "args": {
+            "kind": "net_margin",
+            "year": 2023,
+            "metric": "net_profit"
+          },
+          "pages": [],
+          "status": "unavailable"
+        }
+      ],
+      "model_requests": 4,
+      "id": "AM02",
+      "question": "2023 财年，公司卖出商品获得的净销售额是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 2544,
+      "target_page": 49,
+      "year": 2023,
+      "expected": "255,887"
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            62,
+            86,
+            70,
+            1,
+            33
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM03",
+      "question": "2024 财年，请查合并利润表，履约费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 716,
+      "target_page": 49,
+      "year": 2024,
+      "expected": "98,505"
+    },
+    {
+      "answer": "目标年度：2024 财年  \n销售和营销费用：43,907 百万美元  \nPDF 物理页码：第 37 页",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": true,
+        "amount": true,
+        "year": true,
+        "unit": true,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            38,
+            56,
+            1,
+            37,
+            49
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM04",
+      "question": "2024 财年，销售和营销费用是多少？请查合并利润表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 905,
+      "target_page": 49,
+      "year": 2024,
+      "expected": "43,907"
+    },
+    {
+      "answer": "未披露。",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            86,
+            33,
+            65,
+            1,
+            40
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM05",
+      "question": "2023 财年，合并利润表的营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 582,
+      "target_page": 49,
+      "year": 2023,
+      "expected": "36,852"
+    },
+    {
+      "answer": "第 51 页",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": true,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": true
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            65,
+            51,
+            48,
+            86,
+            74
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM06",
+      "question": "2024 财年，合并资产负债表中，库存的期末账面价值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 689,
+      "target_page": 51,
+      "year": 2024,
+      "expected": "34,214"
+    },
+    {
+      "answer": "第 48 页\n现金及现金等价物：78,779 百万美元",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": true,
+        "year": false,
+        "unit": true,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            65,
+            48,
+            86,
+            48,
+            35
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM07",
+      "question": "2024 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 864,
+      "target_page": 51,
+      "year": 2024,
+      "expected": "78,779"
+    },
+    {
+      "answer": "目标年度：2023  \n金额：58,314 百万美元  \nPDF 物理页码：第 69 页",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": true,
+        "year": true,
+        "unit": true,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            69,
+            39,
+            69,
+            70,
+            69
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM08",
+      "question": "2023 财年，合并资产负债表列示的长期债务是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 896,
+      "target_page": 51,
+      "year": 2023,
+      "expected": "58,314"
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            59,
+            86,
+            1,
+            62,
+            65
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM09",
+      "question": "2024 财年，资产负债表中商誉的账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 699,
+      "target_page": 51,
+      "year": 2024,
+      "expected": "23,074"
+    },
+    {
+      "answer": "未披露。缺少2024年及2023年经营活动产生的净现金流量数据，无法计算2024财年经营活动实际带来的净现金。",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": true,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            65,
+            48,
+            48,
+            35,
+            86
+          ],
+          "status": null
+        },
+        {
+          "origin": "model",
+          "tool": "calculate",
+          "args": {
+            "kind": "growth",
+            "year": 2024,
+            "metric": "operating_cash_flow"
+          },
+          "pages": [],
+          "status": "unavailable"
+        }
+      ],
+      "model_requests": 2,
+      "id": "AM10",
+      "question": "2024 财年，经营活动实际带来多少净现金？请引用现金流量表。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 1284,
+      "target_page": 48,
+      "year": 2024,
+      "expected": "115,877"
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            52,
+            65,
+            35,
+            35,
+            40
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM11",
+      "question": "2023 财年，现金流量表列示的股份支付费用是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 648,
+      "target_page": 48,
+      "year": 2023,
+      "expected": "24,023"
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            37,
+            78,
+            36,
+            62,
+            80
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM12",
+      "question": "2024 财年，AWS 分部的营业利润是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 528,
+      "target_page": 78,
+      "year": 2024,
+      "expected": "39,834"
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            44,
+            44,
+            36,
+            36,
+            78
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM13",
+      "question": "2024 财年，国际分部对外净销售额是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 560,
+      "target_page": 78,
+      "year": 2024,
+      "expected": "142,906"
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "retrieval": false,
+        "amount": false,
+        "year": false,
+        "unit": false,
+        "page": false
+      },
+      "passed": false,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            81,
+            54,
+            54,
+            39,
+            80
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM14",
+      "question": "2023 财年，北美分部的营业费用是多少？请引用分部附注。请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "lookup",
+      "http": 200,
+      "elapsed_ms": 595,
+      "target_page": 78,
+      "year": 2023,
+      "expected": "337,951"
+    },
+    {
+      "answer": "未披露。",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "refusal": true
+      },
+      "passed": true,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            79,
+            49,
+            36,
+            79,
+            78
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM15",
+      "question": "2027 财年，这份财报披露的合并净销售总额实际值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "missing",
+      "http": 200,
+      "elapsed_ms": 800,
+      "target_page": null,
+      "year": 2027,
+      "expected": null
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "refusal": true
+      },
+      "passed": true,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            33,
+            86,
+            51,
+            51,
+            70
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM16",
+      "question": "2028 财年，这份财报披露的期末存货实际账面值是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "missing",
+      "http": 200,
+      "elapsed_ms": 776,
+      "target_page": null,
+      "year": 2028,
+      "expected": null
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "refusal": true
+      },
+      "passed": true,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            78,
+            36,
+            78,
+            53,
+            37
+          ],
+          "status": null
+        }
+      ],
+      "model_requests": 1,
+      "id": "AM17",
+      "question": "2027 财年，这份财报披露的 AWS 分部实际营业利润是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "missing",
+      "http": 200,
+      "elapsed_ms": 542,
+      "target_page": null,
+      "year": 2027,
+      "expected": null
+    },
+    {
+      "answer": "未披露",
+      "verification": "model_draft_unverified",
+      "checks": {
+        "refusal": true
+      },
+      "passed": true,
+      "trace": [
+        {
+          "origin": "server",
+          "tool": "search_report",
+          "args": {
+            "query": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。"
+          },
+          "pages": [
+            48,
+            48,
+            48,
+            65,
+            64
+          ],
+          "status": null
+        },
+        {
+          "origin": "model",
+          "tool": "list_metrics",
+          "args": {},
+          "pages": [],
+          "status": null
+        },
+        {
+          "origin": "model",
+          "tool": "calculate",
+          "args": {
+            "kind": "growth",
+            "year": 2028,
+            "metric": "operating_cash_flow"
+          },
+          "pages": [],
+          "status": "unavailable"
+        }
+      ],
+      "model_requests": 3,
+      "id": "AM18",
+      "question": "2028 财年，这份财报披露的经营活动净现金实际金额是多少？请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+      "type": "missing",
+      "http": 200,
+      "elapsed_ms": 1441,
+      "target_page": null,
+      "year": 2028,
+      "expected": null
+    }
+  ]
+}
