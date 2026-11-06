@@ -1,0 +1,29 @@
+{
+ "issuer":"Netflix, Inc.","report":"FY2024 Form 10-K",
+ "source":"https://s22.q4cdn.com/959853165/files/doc_financials/2024/ar/Netflix-10-K-01272025.pdf",
+ "sha256":"a8a00a029bddb45fa83d151798a9c4c94b8725c9a0a1ee490e2e7da8ec1e9ddb",
+ "baseline":"f8a069cadc528396cf54eb7a26919b318bd20539",
+ "protocol":"Fresh issuer after freezing the second release. Five income, four balance sheet, two cash flow and three geographic disclosure questions; four out-of-period refusals. PDF prints USD thousands. Printed source cell is checked separately from the required USD millions amount. Same judge and question suffix.",
+ "instruction":"请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+ "printed_values":{"NF01":"39,000,966","NF02":"2,675,758","NF03":"2,917,554","NF04":"6,954,003","NF05":"9,965,657","NF06":"7,804,733","NF07":"14,143,417","NF08":"32,452,462","NF09":"8,860,655","NF10":"7,361,364","NF11":"339,368","NF12":"17,359,369","NF13":"10,556,487","NF14":"4,414,746"},
+ "cases":[
+ ["NF01",2024,"合并利润表中的营业收入是多少？",40,"Revenues $","39,000.966"],
+ ["NF02",2023,"请查利润表，技术与开发费用是多少？",40,"Technology and development","2,675.758"],
+ ["NF03",2024,"合并利润表中销售和市场推广费用是多少？",40,"Sales and marketing","2,917.554"],
+ ["NF04",2023,"合并利润表中的营业利润是多少？",40,"Operating income","6,954.003"],
+ ["NF05",2024,"利润表的税前利润是多少？",40,"Income before income taxes","9,965.657"],
+ ["NF06",2024,"资产负债表上的现金及现金等价物是多少？",43,"Cash and cash equivalents","7,804.733"],
+ ["NF07",2023,"合并资产负债表中长期债务余额是多少？",43,"Long-term debt","14,143.417"],
+ ["NF08",2024,"合并资产负债表中内容资产的净账面值是多少？",43,"Content assets, net","32,452.462"],
+ ["NF09",2023,"合并资产负债表中流动负债总额是多少？",43,"Total current liabilities","8,860.655"],
+ ["NF10",2024,"经营活动产生了多少净现金？请引用现金流量表。",42,"Net cash provided by operating activities","7,361.364"],
+ ["NF11",2023,"现金流量表中的股权薪酬费用是多少？",42,"Stock-based compensation expense","339.368"],
+ ["NF12",2024,"按地区披露的美国和加拿大流媒体收入是多少？请引用收入附注。",49,"Streaming revenues $","17,359.369"],
+ ["NF13",2023,"收入附注中欧洲、中东和非洲地区的流媒体收入是多少？",49,"Streaming revenues $","10,556.487"],
+ ["NF14",2024,"收入附注中亚太地区取得多少流媒体收入？",49,"Streaming revenues $","4,414.746"],
+ ["NF15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+ ["NF16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+ ["NF17",2027,"这份财报披露的美国和加拿大地区流媒体实际收入是多少？",null,null,null],
+ ["NF18",2028,"这份财报披露的经营活动净现金实际金额是多少？",null,null,null]
+ ]
+}

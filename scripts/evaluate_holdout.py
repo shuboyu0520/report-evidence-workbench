@@ -69,8 +69,10 @@ def main():
     evidence = {}
     for id_, _, _, page, marker, value in gold["cases"]:
         if page:
+            # Some reports print USD thousands while the question requests USD millions.
+            printed = gold.get("printed_values", {}).get(id_, value)
             matches = [s.strip() for s in reader.pages[page-1].extract_text().splitlines()
-                       if marker in s and value in s]
+                       if marker in s and printed in s]
             if len(matches) != 1:
                 raise ValueError(f"Ambiguous or missing source line: {id_}")
             evidence[id_]=matches[0]
