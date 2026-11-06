@@ -73,3 +73,28 @@ def test_ambiguous_duplicate_and_mismatched_width(monkeypatch):
 def test_keep_ratio_and_multi_period_questions_on_existing_path():
     assert lookup_year("2024年比2023年营业利润增长了多少？") is None
     assert lookup_year("2025 财年净利润率为多少？") is None
+
+
+def test_combined_unit_and_year_header_and_reverse_order(monkeypatch):
+    page = {
+        "number": 12,
+        "text": "Consolidated Statements of Income\n"
+        "(in millions of U.S. dollars, except per share data) 2024 2023 2022\n"
+        "Operating income  101  88  76",
+    }
+    _, meta = select(monkeypatch, [page], 2022)
+    assert meta["value_millions"] == "76" and meta["column"] == 3
+
+
+def test_segment_metrics_above_the_business_name():
+    page = {
+        "number": 30,
+        "text": "The following is information about our segments (in millions):\n"
+        "Year ended December 31,\n2023 2024\nRevenue:\nServices  52  60\n"
+        "Operating income (loss):\nServices  4  6",
+    }
+    rows = read_rows([page])
+    assert [(r.scope, r.label, r.values[-1]) for r in rows] == [
+        ("Revenue", "Services", "60"),
+        ("Operating income (loss)", "Services", "6"),
+    ]

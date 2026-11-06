@@ -20,7 +20,8 @@ CELL = r"(?:\(\s*\d[\d,]*(?:\.\d+)?\s*\)|-?\d[\d,]*(?:\.\d+)?|[—–-])"
 CELL_SUFFIX = re.compile(rf"(?P<values>(?:\s+(?:\$\s*)?{CELL})+)\s*$")
 SCALE = re.compile(r"\b(?:in |amounts in |dollars in )(millions|thousands|billions)\b", re.I)
 USD = re.compile(
-    r"(?:reporting currency (?:is|was)|(?:translat\w*|present\w*|report\w*|express\w*) (?:in|into))"
+    r"(?:reporting currency (?:is|was)|(?:translat\w*|present\w*|report\w*|express\w*|remeasur\w*)"
+    r"(?: (?:our|its|the|these|financial|consolidated|results|statements|amounts)){0,5} (?:in|into|to))"
     r"\s+(?:the )?(?:U\.?\s*S\.?|United States)\s*dollars?\b",
     re.I,
 )
@@ -57,8 +58,13 @@ def read_rows(pages):
         for i, line in enumerate(lines):
             text = line.strip()
             header_years = YEAR.findall(text)
-            # Requiring a standalone year header prevents incidental dates in narrative text.
-            if len(header_years) >= 2 and re.fullmatch(r"[\s,]*(?:(?:19|20)\d{2}[\s,]*)+", text):
+            # Publishers may put the scale and the year labels on a single physical line.
+            year_text = re.sub(
+                r"^\([^)]*(?:millions|thousands|billions)[^)]*\)\s*", "", text, flags=re.I
+            )
+            if len(header_years) >= 2 and re.fullmatch(
+                r"[\s,]*(?:(?:19|20)\d{2}[\s,]*)+", year_text
+            ):
                 years = ()
                 if len(set(header_years)) != len(header_years):
                     continue
@@ -66,12 +72,15 @@ def read_rows(pages):
                 kind = base or (
                     "segment"
                     if re.search(
-                        r"reportable segments?|segment (?:information|results|data)", context, re.I
+                        r"reportable segments?|(?:our|business|operating) segments?\b|segment (?:information|results|data)",
+                        context,
+                        re.I,
                     )
                     else None
                 )
                 unit_line = next(
-                    (s.strip() for s in reversed(lines[max(0, i - 9) : i]) if SCALE.search(s)), ""
+                    (s.strip() for s in reversed(lines[max(0, i - 9) : i + 1]) if SCALE.search(s)),
+                    "",
                 )
                 if not kind or not unit_line:
                     continue
@@ -93,10 +102,10 @@ def read_rows(pages):
             if not match:
                 if (
                     kind == "segment"
-                    and re.fullmatch(r"[\w &/,.()-]{1,52}", text)
+                    and re.fullmatch(r"[\w &/,.()-]{1,52}:?", text)
                     and not text.endswith(".")
                 ):
-                    scope = text
+                    scope = text.rstrip(":")
                 continue
             label = line[: match.start()].strip().rstrip("$").strip()
             values = re.findall(CELL, match["values"])
