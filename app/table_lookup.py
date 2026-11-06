@@ -17,10 +17,11 @@ STATEMENTS = {
 }
 YEAR = re.compile(r"\b(?:19|20)\d{2}\b")
 MONTH = r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
+MONTH_DAY = rf"{MONTH}\.?\s+(?:0?[1-9]|[12]\d|3[01])\s*,?\s+"
 DATE_PREFIX = re.compile(
-    rf"^(?:(?:fiscal years? ended|years? ended|as (?:of|at))\s+)?{MONTH}\.?\s+"
-    r"(?:0?[1-9]|[12]\d|3[01])\s*,?\s+(?=(?:19|20)\d{2}\b)", re.I,
+    rf"^(?:(?:fiscal years? ended|years? ended|as (?:of|at))\s+)?{MONTH_DAY}(?=(?:19|20)\d{{2}}\b)", re.I,
 )
+FULL_DATE_COLUMNS = re.compile(rf"(?:{MONTH_DAY}(?:19|20)\d{{2}}\s*){{2,}}", re.I)
 CELL = r"(?:\(\s*\d[\d,]*(?:\.\d+)?\s*\)|-?\d[\d,]*(?:\.\d+)?|[—–-])"
 CELL_SUFFIX = re.compile(rf"(?P<values>(?:\s+(?:\$\s*)?{CELL})+)\s*$")
 SCALE = re.compile(r"\b(?:in |amounts in |dollars in )(millions|thousands|billions)\b", re.I)
@@ -82,7 +83,14 @@ def read_rows(pages):
             year_text = re.sub(
                 r"^\([^)]*(?:millions|thousands|billions)[^)]*\)\s*", "", text, flags=re.I
             )
-            year_text = DATE_PREFIX.sub("", year_text)
+            if FULL_DATE_COLUMNS.fullmatch(year_text):
+                year_text = " ".join(header_years)
+                period = next((part for part in reversed(lines[:i]) if part.strip()), "")
+                if re.search(r"quarters? ended|(?:three|six|nine) months ended", period, re.I):
+                    years = ()
+                    continue
+            else:
+                year_text = DATE_PREFIX.sub("", year_text)
             if len(header_years) >= 2 and re.fullmatch(
                 r"[\s,]*(?:(?:19|20)\d{2}[\s,]*)+", year_text
             ):
@@ -126,6 +134,9 @@ def read_rows(pages):
                         unit_line = text if SCALE.search(text) else ""
                 elif geography_rows:
                     kind, caption = "geography", "Revenue by geography"
+                    following = next((s.strip() for s in lines[i+1:i+3] if s.strip()), "")
+                    if re.fullmatch(r"(?:revenues?|sales)?\s*:?\s*\([^)]*\)", following, re.I) and SCALE.search(following):
+                        unit_line = following
                 if not kind or not unit_line:
                     continue
                 years = tuple(map(int, header_years))

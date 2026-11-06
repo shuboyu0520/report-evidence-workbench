@@ -146,6 +146,20 @@ def test_quarterly_date_is_not_an_annual_header():
     assert not read_rows(statement("Quarter ended March 31, 2024 2023", "2  3"))
 
 
+def test_each_column_has_its_own_fiscal_end_date(monkeypatch):
+    pages = statement("Year ended\nFeb 03, 2024 Jan 28, 2023", "95  82")
+    hits, meta = select(monkeypatch, pages, 2023)
+    assert hits[0]["page"] == 17 and meta["value_millions"] == "0.082"
+    assert not read_rows(statement("Quarter ended\nFeb 03, 2024 Jan 28, 2023", "95  82"))
+
+
+def test_geographic_revenue_scale_below_full_date_columns():
+    pages = [{"number":5,"text":"Revenue by geographic areas was as follows:\nYear Ended\n"
+              "Jan 28, 2024 Jan 29, 2023\nRevenue: (In millions)\nWest $ 45 $ 60"}]
+    assert [(r.scope,r.scale,r.years,r.values) for r in read_rows(pages)] == [
+        ("Revenue by geography","millions",(2024,2023),("45","60"))]
+
+
 def test_geographic_rows_stop_at_next_disclosure():
     pages = [{"number": 36, "text": "Revenue, classified by geographic areas, was as follows:\n"
               "(In millions)\nYear ended April 30, 2024 2023\nOther countries  220  102\n"
