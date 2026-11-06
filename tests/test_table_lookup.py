@@ -229,3 +229,43 @@ def test_reporting_currency_inference_requires_corroboration(monkeypatch, policy
         assert result[1]["currency_page"] == 25 and result[1]["currency_basis"] == "reported_results_fx_and_translation_policy"
     else:
         assert result is None
+
+
+@pytest.mark.parametrize("text,accepted", [
+    ("Our consolidated financial statements are denominated in\nU.S. dollars.", True),
+    ("The financial statements were presented in United States dollars.", True),
+    ("All amounts in this report are stated in USD.", True),
+    ("Our derivatives are denominated in U.S. dollars.", False),
+    ("Our consolidated financial statements are denominated in Canadian dollars.", False),
+])
+def test_statement_denomination_is_traced_to_the_declaration(monkeypatch,text,accepted):
+    pages = statement("2024 2023", "$ 100 75")
+    pages[0]["text"] = pages[0]["text"].replace(" of U.S. dollars","")
+    pages.append({"number":31,"text":text})
+    result = select(monkeypatch,pages,2023)
+    if accepted:
+        _, meta = result
+        assert meta["currency_page"]==31 and meta["physical_page"]==17
+        assert meta["currency_quote"] in " ".join(text.split())
+    else:
+        assert result is None
+
+
+def test_fiscal_segment_block_preserves_sparse_reconciliation_and_wrapped_names():
+    from app.table_headers import segment_headers
+    text = ("Our two operating segments are North East and South.\nFinancial information follows:\n"
+            "              EastNorth           South          Total\n(Amounts in millions)\n"
+            "Fiscal Year Ended May 31, 2024\nRevenue  $ 6  $ 5  $ 11\nInterest, net  (2)\n"
+            "Operating income (loss)  1  2  3\nFiscal Year Ended May 31, 2023\nRevenue  3  4  7")
+    cols = segment_headers(text)
+    assert list(cols.values()) == [["North East","South","Total"]]*2
+    rows = read_rows([{"number":7,"text":text,"segment_columns":cols}])
+    assert [(r.years,r.values) for r in rows if r.scope=="North East"] == [
+        ((2024,),("6",)),((2024,),("1",)),((2023,),("3",))]
+
+
+def test_local_table_denomination_precedes_report_currency(monkeypatch):
+    pages = statement("2024 2023", "$ 82 91")
+    pages[0]["text"] = pages[0]["text"].replace("U.S. dollars","Canadian dollars")
+    pages.append({"number":30,"text":"Our consolidated financial statements are denominated in U.S. dollars."})
+    assert select(monkeypatch,pages,2023) is None

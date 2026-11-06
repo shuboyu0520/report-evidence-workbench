@@ -2,13 +2,33 @@
 
 import re
 
-YEAR_GROUP = re.compile(r"(?:Year ended\s+[A-Za-z.]+\s+\d{1,2},?\s+)?((?:19|20)\d{2}):?", re.I)
+YEAR_GROUP = re.compile(r"(?:(?:Fiscal )?Year ended\s+[A-Za-z.]+\s+\d{1,2},?\s+)?((?:19|20)\d{2}):?", re.I)
 NUMBER = r"(?:\([\d,]+(?:\.\d+)?\)|[\d,]+(?:\.\d+)?|[—–-])"
 NUMERIC_ROW = re.compile(rf"^\s*[A-Za-z].*?((?:\s+\$?\s*{NUMBER}){{2,}})\s*$")
 
 
 def _label_fragments(line):
     return [(m.start(), m.end(), m.group()) for m in re.finditer(r"\S+(?: \S+)*", line)]
+
+
+def _printed_name(label, prose):
+    """When the layout extractor fuses wrapped words, recover their order from nearby prose."""
+    key = "".join(label.casefold().split())
+    words = prose.split()
+    matches = {}
+    for i, word in enumerate(words):
+        if not word or word[0].casefold() not in key:
+            continue
+        for end in range(i+1, min(i+8,len(words))+1):
+            phrase = " ".join(words[i:end]).strip(",;:")
+            compact = "".join(phrase.casefold().split())
+            if len(compact) > len(key):
+                break
+            if len(compact)==len(key) and compact in key+key:
+                matches[phrase.casefold()] = phrase
+    if len(matches)==1:
+        return next(iter(matches.values()))
+    return label
 
 
 def segment_headers(layout):
@@ -18,7 +38,7 @@ def segment_headers(layout):
     columns = []
     for i, line in enumerate(lines):
         if not YEAR_GROUP.fullmatch(line.strip()):
-            if not NUMERIC_ROW.fullmatch(" ".join(line.split())):
+            if not re.search(rf"\s{NUMBER}$",line.rstrip()):
                 columns = []
             continue
         if i+1 >= len(lines) or not (data := NUMERIC_ROW.fullmatch(" ".join(lines[i+1].split()))):
@@ -32,7 +52,7 @@ def segment_headers(layout):
             if j < 0:
                 continue
             bottom = _label_fragments(lines[j])
-            if len(bottom) != width or not all(re.fullmatch(r"[A-Za-z][A-Za-z &/().-]*", label) for _,_,label in bottom):
+            if len(bottom) != width or not all(re.fullmatch(r"[A-Za-z][A-Za-z '&/().’-]*", label) for _,_,label in bottom):
                 continue
             columns = [part[2] for part in bottom]
             # Only vertically overlapping text belongs to the same column.
@@ -44,6 +64,8 @@ def segment_headers(layout):
                         break
                     k = slots[0]
                     columns[k] = label + " " + columns[k]
+            prose = " ".join(lines[max(0,j-28):j-1])
+            columns = [_printed_name(label, prose) for label in columns]
         if len(columns) != width or len(set(columns)) != width:
             columns = []
             continue

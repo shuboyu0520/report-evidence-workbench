@@ -64,7 +64,7 @@ def parse_upload(content, filename):
                 raise ValueError("最多支持 500 页")
             texts = [page.extract_text() or "" for page in reader.pages]
             for i, text in enumerate(texts):
-                if re.search(r"reportable segments?|segment reporting", text, re.I) and any(
+                if re.search(r"reportable segments?|segment reporting|(?:our|company's|operating) segments\b", text, re.I) and any(
                     YEAR_GROUP.fullmatch(s.strip()) for s in text.splitlines()
                 ):
                     layout = reader.pages[i].extract_text(extraction_mode="layout", layout_mode_space_vertically=False)

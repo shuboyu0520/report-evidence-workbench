@@ -10,7 +10,7 @@ import httpx
 from .finance import ALIASES, calculate
 from .retrieval import retrieve
 from .runtime import INITIAL, evidence_pages, fit_evidence, run_search
-from .table_lookup import lookup
+from .table_lookup import lookup, lookup_year, target_kind
 
 STOPWORDS = {
     "a", "an", "and", "apple", "apples", "at", "by", "did", "end", "fiscal", "for",
@@ -266,7 +266,7 @@ async def analyze(db, report_id, question, mode, settings):
                       f"{retrieval['value_millions']} 百万美元。PDF 物理第 {retrieval['physical_page']} 页。")
             verification = "source_table_cell"
         else:
-            answer = {"year_absent":"所选原表未列示该年度，无法给出金额。",
+            answer = {"year_absent":"未披露",
                       "blank_cell":"所选年度原表未提供数值。",
                       "ambiguous":"无法唯一匹配所问指标与原表行，请核对报表或分部名称。"}[retrieval["status"]]
             verification = "table_lookup_unavailable"
@@ -400,6 +400,12 @@ async def analyze(db, report_id, question, mode, settings):
             answer = "模型回答包含未经计算工具支持的百分比，已拦截；请查看工具结果。"
         elif verification == "model_rejected_citation":
             answer = "模型回答引用了未检索到的页码，已拦截；请查看原文证据。"
+    if mode == "rag" and verification == "model_draft_unverified" and lookup_year(question):
+        # Dense chunks alone do not establish the requested statement, year column and currency.
+        # Preserve the draft in the trace. Never add a missing year or endorse its guessed page.
+        if target_kind(question) or re.match(r"\s*(?:无法回答|未披露|这份(?:年报|财报)未披露|报告中未披露)", answer):
+            answer = "无法核实所问年度的原表金额。"
+            verification = "table_lookup_unavailable"
     result = {
         "id": uuid4().hex,
         "report_id": report_id,

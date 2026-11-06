@@ -36,6 +36,13 @@ USD_EXPOSURE = re.compile(
     r"(?:fluctuations|changes) in the U\.?\s*S\.? dollar relative to (?:certain |other )?foreign currencies"
     r"[^.]{0,120}\breported (?:revenue|earnings|results)", re.I,
 )
+STATEMENT_CURRENCY = re.compile(
+    r"\b(?:(?:our|the|its|these|accompanying|company.s)\s+(?:consolidated\s+)?financial statements\s+"
+    r"(?:are|were)\s+(?:denominated|presented|expressed|reported|prepared)\s+in|"
+    r"all (?:dollar |monetary )?amounts (?:in (?:these financial statements|this (?:report|form 10-k)) )?"
+    r"(?:are|were) (?:expressed |stated |presented |reported )?in)\s+"
+    r"(?:the\s+)?(?:U\.?S\.?\s*dollars?|United States dollars?|USD)\b", re.I
+)
 
 
 @dataclass(frozen=True)
@@ -98,9 +105,9 @@ def segment_matrix_rows(page, lines, notes_unit):
         cells = re.findall(CELL, match["values"])
         unit = local_unit or notes_unit
         if len(cells) != len(columns):
-            columns = []
+            # A reconciliation row may print only the consolidated column.
             continue
-        if not unit or not re.fullmatch(r"[A-Za-z &,-]+", label) or not re.search(
+        if not unit or not re.fullmatch(r"[A-Za-z &(),-]+", label) or not re.search(
             r"\brevenues?|\bsales|\bincome|\bearnings|\bprofit|\bassets|\bdepreciation|\bproperty and equipment", label, re.I
         ) or re.search(r"per share|margin|ratio|percent",label,re.I):
             continue
@@ -288,6 +295,16 @@ async def lookup(pages, question, settings):
     kind = target_kind(question)
     table_rows = read_rows(pages)
     rows = [r for r in table_rows if (r.kind == kind if kind else r.kind not in {"segment", "geography"})]
+    rows = [r for r in rows if not re.search(
+        r"Canadian dollars?|Australian dollars?|HK dollars?|euros?|pounds sterling|\b(?:CAD|AUD|HKD|EUR|GBP|RMB|CNY)\b",
+        r.unit_line, re.I
+    )]
+    if kind == "segment" and re.search(r"附注|notes?\b", question,re.I):
+        start = next((p["number"] for p in pages if any(re.fullmatch(
+            r"notes to (?:the )?consolidated financial statements", s.strip(),re.I
+        ) for s in p["text"].splitlines()[:10])), None)
+        if start is not None:
+            rows = [r for r in rows if r.page >= start]
     if kind == "cash" and re.search(r"股[票权](?:支付|薪酬|激励)|(?:stock|share)[ -]based compensation", question, re.I) and not re.search(
         r"代扣|税|结算|withhold|tax|settle", question, re.I
     ):
@@ -314,8 +331,18 @@ async def lookup(pages, question, settings):
     if not rows:
         return None
     # Currency and scale must be evidenced independently of the denomination requested by the user.
-    usd_page = next((p["number"] for p in pages if USD.search(" ".join(p["text"].split()))), None)
+    usd_page = None
     currency_basis = "reporting_currency"
+    currency_quote = None
+    for pattern, basis in ((STATEMENT_CURRENCY,"financial_statement_denomination"), (USD,"reporting_currency")):
+        for p in pages:
+            declaration = pattern.search(" ".join(p["text"].split()))
+            if declaration:
+                usd_page, currency_quote = p["number"], declaration.group()
+                currency_basis = basis
+                break
+        if usd_page is not None:
+            break
     if usd_page is None and any("$" in r.line for r in table_rows if r.kind in STATEMENTS):
         # When no explicit declaration exists, require both translation accounting and
         # an FX disclosure tying US-dollar movements specifically to reported results.
@@ -383,6 +410,9 @@ async def lookup(pages, question, settings):
         choice = 0
     metadata = {"strategy": "table_cell", "selection_event": event, "status": "ambiguous"}
     if type(choice) is not int or not 1 <= choice <= len(rows):
+        statement_years = [y for row in table_rows if row.kind in STATEMENTS for y in row.years]
+        if statement_years and year > max(statement_years) and all(year not in row.years for row in rows):
+            metadata.update(status="year_absent", requested_year=year)
         return [], metadata
     r = rows[choice - 1]
     same = [
@@ -401,6 +431,7 @@ async def lookup(pages, question, settings):
         year_header=r.header,
         unit=r.unit_line,
         currency_page=usd_page,
+        currency_quote=currency_quote,
         currency_basis=currency_basis if usd_page else "table_unit",
         physical_page=r.page,
         unit_page=r.unit_page or r.page,
