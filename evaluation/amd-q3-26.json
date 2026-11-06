@@ -1,0 +1,189 @@
+{
+  "issuer": "Advanced Micro Devices, Inc.",
+  "report": "FY2026 Q3 Form 10-Q",
+  "release_date": "2026-11-04",
+  "source": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000191/0000002488-26-000191.pdf",
+  "sha256": "947676e58e73138cdcc2eac30621e8feb6c718cc5770069b858ad7ce5bcd2f14",
+  "baseline": "f7709c5ffa3ec8bd416a854152d0a61f36d1a57d",
+  "strict_period_protocol": true,
+  "protocol": "Pre-registered on native physical PDF pages. Lookups require the right source row in the first five results, amount, year, USD millions and physical page. Mixed-period sheets also require the requested interval or balance date in the answer. Missing actuals require a bare refusal. Fiscal-year comparison has no interval check. No application or prompt changes between runs.",
+  "instruction": "请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+  "prefixes": {
+    "ADQ01": "2026财年第三季度",
+    "ADQ02": "2026财年前九个月累计",
+    "ADQ03": "2026财年前九个月累计",
+    "ADQ04": "2025财年第三季度",
+    "ADQ05": "2026财年第三季度",
+    "ADQ06": "截至2026-09-26当日",
+    "ADQ07": "截至2025-12-27当日",
+    "ADQ08": "截至2026-09-26当日",
+    "ADQ09": "截至2025-12-27当日",
+    "ADQ10": "2026财年前九个月累计",
+    "ADQ11": "2025财年前九个月累计",
+    "ADQ12": "2026财年第三季度",
+    "ADQ13": "2026财年前九个月累计",
+    "ADQ14": "2026财年第三季度"
+  },
+  "periods": {
+    "ADQ01": "Q3",
+    "ADQ02": "9M",
+    "ADQ03": "9M",
+    "ADQ04": "Q3",
+    "ADQ05": "Q3",
+    "ADQ06": "2026-09-26",
+    "ADQ07": "2025-12-27",
+    "ADQ08": "2026-09-26",
+    "ADQ09": "2025-12-27",
+    "ADQ10": "9M",
+    "ADQ11": "9M",
+    "ADQ12": "Q3",
+    "ADQ13": "9M",
+    "ADQ14": "Q3"
+  },
+  "cases": [
+    [
+      "ADQ01",
+      2026,
+      "合并利润表的净收入（Net revenue）是多少？",
+      3,
+      "Net revenue $",
+      "13,377"
+    ],
+    [
+      "ADQ02",
+      2026,
+      "合并利润表的净收入（Net revenue）是多少？",
+      3,
+      "Net revenue $",
+      "35,166"
+    ],
+    [
+      "ADQ03",
+      2026,
+      "合并毛利润是多少？",
+      3,
+      "Gross profit",
+      "18,829"
+    ],
+    [
+      "ADQ04",
+      2025,
+      "合并营业利润是多少？",
+      3,
+      "Operating income",
+      "1,270"
+    ],
+    [
+      "ADQ05",
+      2026,
+      "合并研发费用是多少？",
+      3,
+      "Research and development",
+      "2,803"
+    ],
+    [
+      "ADQ06",
+      2026,
+      "资产负债表上的现金及现金等价物是多少？",
+      5,
+      "Cash and cash equivalents",
+      "7,404"
+    ],
+    [
+      "ADQ07",
+      2025,
+      "扣除一年内到期部分后的长期债务净额是多少？",
+      5,
+      "Long-term debt, net",
+      "2,348"
+    ],
+    [
+      "ADQ08",
+      2026,
+      "资产负债表上的存货是多少？",
+      5,
+      "Inventories",
+      "11,463"
+    ],
+    [
+      "ADQ09",
+      2025,
+      "资产负债表的流动负债合计是多少？",
+      5,
+      "Total current liabilities",
+      "9,455"
+    ],
+    [
+      "ADQ10",
+      2026,
+      "现金流量表的经营活动现金净额（含终止经营）是多少？",
+      6,
+      "Net cash provided by operating activities 6",
+      "6,523"
+    ],
+    [
+      "ADQ11",
+      2025,
+      "现金流量表的股份支付费用是多少？",
+      6,
+      "Stock-based compensation",
+      "1,152"
+    ],
+    [
+      "ADQ12",
+      2026,
+      "数据中心分部的净收入是多少？",
+      12,
+      "Data Center $",
+      "8,546"
+    ],
+    [
+      "ADQ13",
+      2026,
+      "数据中心分部的净收入是多少？",
+      12,
+      "Data Center $",
+      "21,039"
+    ],
+    [
+      "ADQ14",
+      2026,
+      "嵌入式分部的营业利润是多少？",
+      12,
+      "Embedded",
+      "453"
+    ],
+    [
+      "ADQ15",
+      2028,
+      "本报告披露的合并收入实际金额是多少？",
+      null,
+      null,
+      null
+    ],
+    [
+      "ADQ16",
+      2029,
+      "本报告披露的期末现金及现金等价物实际金额是多少？",
+      null,
+      null,
+      null
+    ],
+    [
+      "ADQ17",
+      2028,
+      "本报告披露的经营活动现金净额实际金额是多少？",
+      null,
+      null,
+      null
+    ],
+    [
+      "ADQ18",
+      2029,
+      "本报告披露的合并研发费用实际金额是多少？",
+      null,
+      null,
+      null
+    ]
+  ]
+}

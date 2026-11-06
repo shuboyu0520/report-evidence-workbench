@@ -5,7 +5,7 @@ import json
 import re
 import subprocess
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import httpx
@@ -26,7 +26,26 @@ def write(path, value):
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def judge(case, result, line):
+PERIOD_PATTERNS = {
+    "Q3": r"(?<!前)(?:第\s*)?[三3]\s*(?:财季|季度)|Q3(?!\d)|third (?:fiscal )?quarter",
+    "Q4": r"(?:第\s*)?[四4]\s*(?:财季|季度)|Q4(?!\d)|fourth (?:fiscal )?quarter",
+    "9M": r"前\s*[三3]\s*季|(?:前|累计)\s*[九9]\s*月|[九9]\s*个月|nine months?",
+    "FY": r"全年|全财年|完整财年|(?:十二|12)\s*个月|full (?:fiscal )?year|twelve months?",
+}
+
+
+def matches_period(answer, period):
+    # An exact closing date distinguishes a balance from a flow over a period.
+    if period.startswith("20"):
+        year, month, day = map(int, period.split("-"))
+        english_date = date(year, month, day).strftime("%B") + rf"\s+{day},?\s+{year}"
+        return bool(re.search(rf"{year}[-/.年]\s*0?{month}[-/.月]\s*0?{day}(?!\d)|{english_date}", answer, re.I))
+    return bool(re.search(PERIOD_PATTERNS[period], answer, re.I)) and not any(
+        re.search(pattern, answer, re.I) for other, pattern in PERIOD_PATTERNS.items() if other != period
+    )
+
+
+def judge(case, result, line, period=None, strict=False):
     _, year, _, page, _, value = case
     answer = result.get("answer", "").replace("，", ",")
     clean = re.sub(r"(?<=\d),(?=\d{3}(?!\d))", "", answer)
@@ -44,6 +63,14 @@ def judge(case, result, line):
             "unit": bool(re.search(r"百万美元|百万\s*美金|USD\s*(?:millions?|mn)|million\s*(?:USD|US dollars)", answer,re.I)),
             "page": bool(re.search(rf"(?:第\s*{page}\s*页|{page}\s*页|(?:pages?|页码|物理页)\s*[:：]?\s*{page}(?!\d))", answer,re.I)),
         }
+    if strict and page:
+        # Spaces inserted by PDF layout do not alter the identity of a source row.
+        checks["retrieval"] = any(h["page"] == page and " ".join(line.split()) in " ".join(h["quote"].split())
+                                  for h in initial[:5])
+        if period:
+            checks["period"] = matches_period(answer, period)
+    if strict and not page:
+        checks["refusal"] = answer.strip().rstrip("。.!！").strip() == "未披露"
     trace = [{"origin": s["origin"], "tool": s["tool"], "args": s["arguments"],
               "pages": [h["page"] for h in s["result"] if "page" in h] if isinstance(s["result"],list) else [],
               "status": s["result"].get("status") if isinstance(s["result"],dict) else None}
@@ -93,12 +120,13 @@ def main():
         rid=upload.json()["id"]
         for case in gold["cases"]:
             id_,year,label,page,_,_ = case
-            question=f"{year} 财年，{label}{gold['instruction']}"
+            prefix = gold.get("prefixes", {}).get(id_, f"{year} 财年")
+            question=f"{prefix}，{label}{gold['instruction']}"
             begin=time.perf_counter()
             r=api.post(f"/reports/{rid}/questions",json={"mode":"rag","question":question})
             data=r.json()
             write(args.out/(id_+".json"),data)
-            row=judge(case,data,evidence.get(id_))
+            row=judge(case,data,evidence.get(id_),gold.get("periods", {}).get(id_),gold.get("strict_period_protocol",False))
             row.update(id=id_,question=question,type="lookup" if page else "missing",http=r.status_code,
                        elapsed_ms=round((time.perf_counter()-begin)*1000),target_page=page,year=year,expected=case[-1])
             meta["cases"].append(row)

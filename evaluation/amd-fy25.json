@@ -1,0 +1,159 @@
+{
+  "issuer": "Advanced Micro Devices, Inc.",
+  "report": "FY2025 Form 10-K (annual comparison)",
+  "release_date": "2026-02-04",
+  "source": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000018/0000002488-26-000018.pdf",
+  "sha256": "b38e61bfeb17c63e82741a61b8e416ddeac05259fbae5de047159f335e32e7a8",
+  "baseline": "f7709c5ffa3ec8bd416a854152d0a61f36d1a57d",
+  "strict_period_protocol": true,
+  "protocol": "Pre-registered on native physical PDF pages. Lookups require the right source row in the first five results, amount, year, USD millions and physical page. Mixed-period sheets also require the requested interval or balance date in the answer. Missing actuals require a bare refusal. Fiscal-year comparison has no interval check. No application or prompt changes between runs.",
+  "instruction": "请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+  "prefixes": {},
+  "periods": {},
+  "cases": [
+    [
+      "ADA01",
+      2025,
+      "合并利润表的净收入（Net revenue）是多少？",
+      61,
+      "Net revenue",
+      "34,639"
+    ],
+    [
+      "ADA02",
+      2024,
+      "合并毛利润是多少？",
+      61,
+      "Gross profit",
+      "12,725"
+    ],
+    [
+      "ADA03",
+      2025,
+      "合并利润表的总销售成本是多少？",
+      61,
+      "Total cost of sales",
+      "17,487"
+    ],
+    [
+      "ADA04",
+      2024,
+      "合并营业利润是多少？",
+      61,
+      "Operating income",
+      "1,900"
+    ],
+    [
+      "ADA05",
+      2025,
+      "合并研发费用是多少？",
+      61,
+      "Research and development",
+      "8,091"
+    ],
+    [
+      "ADA06",
+      2025,
+      "资产负债表上的现金及现金等价物是多少？",
+      63,
+      "Cash and cash equivalents",
+      "5,539"
+    ],
+    [
+      "ADA07",
+      2024,
+      "扣除一年内到期部分后的长期债务净额是多少？",
+      63,
+      "Long-term debt, net of current portion",
+      "1,721"
+    ],
+    [
+      "ADA08",
+      2025,
+      "资产负债表上的存货是多少？",
+      63,
+      "Inventories",
+      "7,920"
+    ],
+    [
+      "ADA09",
+      2024,
+      "资产负债表的流动负债合计是多少？",
+      63,
+      "Total current liabilities",
+      "7,281"
+    ],
+    [
+      "ADA10",
+      2025,
+      "现金流量表的经营活动现金净额（含终止经营）是多少？",
+      65,
+      "Net cash provided by operating activities",
+      "7,709"
+    ],
+    [
+      "ADA11",
+      2024,
+      "现金流量表的股份支付费用是多少？",
+      65,
+      "Stock-based compensation",
+      "1,407"
+    ],
+    [
+      "ADA12",
+      2025,
+      "数据中心分部的净收入是多少？",
+      74,
+      "Data Center $",
+      "16,635"
+    ],
+    [
+      "ADA13",
+      2024,
+      "客户端与游戏分部的合计净收入是多少？",
+      74,
+      "Total Client and Gaming",
+      "9,649"
+    ],
+    [
+      "ADA14",
+      2025,
+      "嵌入式分部的营业利润是多少？",
+      74,
+      "Embedded",
+      "1,243"
+    ],
+    [
+      "ADA15",
+      2028,
+      "本报告披露的合并收入实际金额是多少？",
+      null,
+      null,
+      null
+    ],
+    [
+      "ADA16",
+      2029,
+      "本报告披露的期末现金及现金等价物实际金额是多少？",
+      null,
+      null,
+      null
+    ],
+    [
+      "ADA17",
+      2028,
+      "本报告披露的经营活动现金净额实际金额是多少？",
+      null,
+      null,
+      null
+    ],
+    [
+      "ADA18",
+      2029,
+      "本报告披露的合并研发费用实际金额是多少？",
+      null,
+      null,
+      null
+    ]
+  ]
+}
