@@ -2,7 +2,7 @@
 
 用年报原文复核一个财务数字。使用者可以定位证据、确认年度和单位，再由模型调用工具计算比率并导出依据。
 
-[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
+[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
 
 ![工作台实际操作界面](docs/demo.png)
 
@@ -70,3 +70,9 @@ uv run python -m scripts.evaluate_model_ab --url http://127.0.0.1:11434 --out da
 下载对应标注的原件，可用 `uv run python -m scripts.evaluate_holdout --fixture evaluation/netflix_holdout.json --pdf data/netflix-2024.pdf --out data/netflix-new-run` 复测。96 项本地自动化回归通过。早期评测中的“发布版”指对应阶段的历史版本。
 
 运行 `uv run python -m scripts.analyze_table_runs` 可从公开逐题数据重建六轮 [SQL 失败归因](docs/table-failures.json)。旧版 Amazon 有 10 题漏掉原行，3 题命中原行但金额错误。
+
+## 地区收入与合计行
+
+冻结读取器后，Netflix 原题 14/14（前次 10/14），Amazon 14/14（持平），Alphabet 12/14（前次 11/14）。对上一版已通过的每道题做配对检查，零退步。随后用微软 FY2024 年报首次盲测，查数严格通过 4/14，缺数拒答 4/4。其主表日期与多个年份同栏，18 题均回退至向量检索。99 项自动化回归通过。运行口径、证据与剩余失败可在[逐题页面](docs/regional.html)查看。
+
+使用 [微软标注](evaluation/microsoft_holdout.json) 的 PDF 和 SHA-256，可运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/microsoft_holdout.json --pdf data/microsoft-2024.pdf --out data/microsoft-new-run`。运行 `uv run python -m scripts.analyze_table_runs --audit docs/regional-audit.json` 可复算本轮 SQL 归因。

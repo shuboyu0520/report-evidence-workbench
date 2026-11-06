@@ -1,0 +1,58 @@
+[
+  {
+    "issuer": "Netflix",
+    "phase": "原题回归",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "NF01,NF02,NF03,NF04,NF05,NF06,NF07,NF08,NF09,NF10,NF11,NF12,NF13,NF14"
+  },
+  {
+    "issuer": "Amazon",
+    "phase": "原题回归",
+    "stage": "passed",
+    "count": 14,
+    "case_ids": "AM01,AM02,AM03,AM04,AM05,AM06,AM07,AM08,AM09,AM10,AM11,AM12,AM13,AM14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "原题回归",
+    "stage": "passed",
+    "count": 12,
+    "case_ids": "AL01,AL02,AL03,AL04,AL05,AL06,AL07,AL08,AL09,AL10,AL13,AL14"
+  },
+  {
+    "issuer": "Alphabet",
+    "phase": "原题回归",
+    "stage": "source_row_missed",
+    "count": 2,
+    "case_ids": "AL11,AL12"
+  },
+  {
+    "issuer": "Microsoft",
+    "phase": "首次盲测",
+    "stage": "passed",
+    "count": 4,
+    "case_ids": "MS02,MS03,MS12,MS14"
+  },
+  {
+    "issuer": "Microsoft",
+    "phase": "首次盲测",
+    "stage": "source_row_hit_wrong_amount",
+    "count": 1,
+    "case_ids": "MS13"
+  },
+  {
+    "issuer": "Microsoft",
+    "phase": "首次盲测",
+    "stage": "source_row_missed",
+    "count": 6,
+    "case_ids": "MS04,MS05,MS07,MS09,MS10,MS11"
+  },
+  {
+    "issuer": "Microsoft",
+    "phase": "首次盲测",
+    "stage": "year_unit_or_page_failed",
+    "count": 3,
+    "case_ids": "MS01,MS06,MS08"
+  }
+]

@@ -1,5 +1,6 @@
 """Rebuild the lookup failure breakdown from public per-question traces."""
 
+import argparse
 import json
 import sqlite3
 from pathlib import Path
@@ -8,8 +9,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--audit", type=Path, default=ROOT / "docs/table-audit.json")
+    args = parser.parse_args()
     query = (ROOT / "evaluation/table_failure_stages.sql").read_text(encoding="utf-8")
-    runs = (ROOT / "docs/table-audit.json").read_text(encoding="utf-8")
+    runs = args.audit.read_text(encoding="utf-8")
     with sqlite3.connect(":memory:") as db:
         db.row_factory = sqlite3.Row
         rows = [dict(row) for row in db.execute(query, {"runs": runs})]
