@@ -1,0 +1,29 @@
+{
+ "issuer":"NVIDIA Corporation","report":"FY2024 Form 10-K, accession 0001045810-24-000029",
+ "source":"https://d18rn0p25nwr6d.cloudfront.net/CIK-0001045810/1cbe8fe7-e08a-46e3-8dcc-b429fc06c1a4.pdf",
+ "issuer_source":"https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/0001045810-24-000029-index.htm",
+ "sha256":"536f66d7f1c3413abbf643e0a02bd0aab65639116fe630225f3f93529244658b",
+ "baseline":"62be7a10356a1000a2d93acfca6f1e1f4dec9471",
+ "protocol":"New issuer after four paired regressions. Same 14 lookup and four out-of-period refusal design as Microsoft: five income, four balance sheet, two cash flow, two geographical revenue and one segment revenue. Pre-registered before model questions. Original unmodified standalone Form 10-K, 96 physical pages, in USD millions; not the illustrated annual-report and proxy bundle.",
+ "instruction":"请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+ "cases":[
+ ["NV01",2024,"合并利润表中的营业收入总额是多少？",50,"Revenue $","60,922"],
+ ["NV02",2023,"利润表中研发费用是多少？",50,"Research and development","7,339"],
+ ["NV03",2024,"合并利润表中销售、一般及行政费用合计是多少？",50,"Sales, general and administrative","2,654"],
+ ["NV04",2023,"合并利润表中的营业利润是多少？",50,"Operating income","4,224"],
+ ["NV05",2024,"利润表的税前利润是多少？",50,"Income before income tax","33,818"],
+ ["NV06",2024,"资产负债表上的现金及现金等价物是多少？",52,"Cash and cash equivalents $","7,280"],
+ ["NV07",2023,"合并资产负债表中的长期债务余额是多少？",52,"Long-term debt","9,703"],
+ ["NV08",2024,"合并资产负债表中的存货账面值是多少？",52,"Inventories","5,282"],
+ ["NV09",2023,"合并资产负债表中流动负债总额是多少？",52,"Total current liabilities","6,563"],
+ ["NV10",2024,"经营活动产生了多少净现金？请引用现金流量表。",54,"Net cash provided by operating activities","28,090"],
+ ["NV11",2023,"现金流量表中股权薪酬费用是多少？",54,"Stock-based compensation expense","2,709"],
+ ["NV12",2024,"按客户账单地区披露的美国收入是多少？请引用地理信息附注。",79,"United States $","26,966"],
+ ["NV13",2023,"按客户账单地区披露的中国（含香港）收入是多少？请引用地理信息附注。",79,"China (including Hong Kong)","5,785"],
+ ["NV14",2024,"分部附注中计算与网络分部取得的收入是多少？",78,"Revenue $","47,405"],
+ ["NV15",2027,"这份财报披露的合并营业收入实际值是多少？",null,null,null],
+ ["NV16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+ ["NV17",2027,"这份财报披露的美国地区实际收入是多少？",null,null,null],
+ ["NV18",2028,"这份财报披露的经营活动现金净额实际值是多少？",null,null,null]
+ ]
+}
