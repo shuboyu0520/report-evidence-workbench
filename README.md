@@ -2,15 +2,17 @@
 
 一款面向财报初读者和投资者的中文阅读工具。选一个研究日期，从财务原表、同行披露、行业统计和政策出处核对自己的判断。
 
-[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [高通、台积电与 Uber 逐题对照](https://shuboyu0520.github.io/report-evidence-workbench/earnings-evaluation.html)
+[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [Uber 指标演示、旧题回归与 Airbnb 独立首轮](https://shuboyu0520.github.io/report-evidence-workbench/offering-evaluation.html)
 
 ![台积电财报联读](docs/reader-preview.png)
 
 ## 案例与验收
 
-高通同一批查数与指引题从 4/14 到 14/14；台积电原四题回归保持 4/4。冻结代码后首次上传 Uber 最新季度业绩公告，查数/指引为 3/14，未到期与缺证两类分别为 2/2。新增空列、每股单位与指引单位校验后，Uber 同题复测 8/14，余下四道业务线题与两道指引题仍需查原表。两次运行使用同一 PDF 和标注。GitHub Pages 是可离线体验的示例，任意新上传文档使用本地 Qwen 模型。
+Uber 查数及指引的独立首轮为 3/14，两次同题复测分别为 8/14、14/14。最新版本按指标表头区分同名业务行，并从管理层指引原句读取两个端点。高通 18/18、台积电 4/4 原答、引文和判断与上版逐题一致。Uber 的 4 道披露状态题也全部通过。
 
-[本轮逐题记录](docs/earnings-audit.json) · [SQL 归因](evaluation/earnings_outcomes.sql) · [Uber 首轮标注](evaluation/uber-reader-blind.json) · [历史盲测及四源联读](docs/reader-evaluation.html) · [SplitAgent 的公开案例](docs/splitagent.html)
+随后以全新公司 Airbnb 的第三季度股东信做独立首轮。冻结引擎、登记题目和原页后，14 道查数及指引通过 3 道，4 道披露状态全部通过。9 道有答案却拒答，2 道给出了错误精度或费用分项。通过的单季自由现金流题还附带一条滚动期间引文。页面保留失败原答、原件链接、工具轨迹和分组 SQL。GitHub Pages 提供免安装演示，本机工作台支持自由上传及提问。
+
+[本轮逐题记录](docs/offering-audit.json) · [Airbnb 预登记题集](evaluation/airbnb-reader-blind.json) · [SQL 归因](evaluation/earnings_outcomes.sql) · [上一轮高通、Uber 首测与回归](docs/earnings-evaluation.html) · [历史盲测及四源联读](docs/reader-evaluation.html) · [SplitAgent 的公开案例](docs/splitagent.html)
 
 <a id="run-reader"></a>
 ## 在本机上传报告并提问
