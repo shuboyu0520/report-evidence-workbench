@@ -2,11 +2,25 @@
 
 一款面向财报初读者和投资者的中文阅读工具。选一个研究日期，从财务原表、同行披露、行业统计和政策出处核对自己的判断。
 
-[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [Uber 指标演示、旧题回归与 Airbnb 独立首轮](https://shuboyu0520.github.io/report-evidence-workbench/offering-evaluation.html)
+[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [Airbnb 原表演示、40 题回归与 Booking 首测](https://shuboyu0520.github.io/report-evidence-workbench/quarterly-precision.html)
 
 ![台积电财报联读](docs/reader-preview.png)
 
 ## 案例与验收
+
+Airbnb 股东信的查数与指引从首测 3/14 提升至原题复测 14/14，披露判断仍为 4/4。模型从经校验的候选中选证据，程序按年份、季度、单位与费用类别读原表。第 22 页产品开发总费用为 664 百万美元，278 百万美元是其中的股权激励。第 21 页精确平均预订价格为 178.83 美元。Uber、高通和台积电共 40 道既有题的答复、引文全文、页码及状态与上版逐题一致。
+
+版本冻结后，首次用 Booking Holdings 11 月 3 日发布的季度业绩公告评测。查数与指引 **2/14**，披露判断 **4/4**。通过的两题是摊薄每股收益和人员总费用。其余 12 题中，7 题没有合格原行，4 题召回证据页后拒答，1 题把本季摘要约数错配给上年。逐题记录分别保留了同题复测和跨公司首轮的原答、引文与判分依据。
+
+[交互案例与 76 条回答](docs/quarterly-precision.html) · [本轮逐题证据 JSON](docs/quarterly-precision-audit.json) · [Booking 首测题目、原件摘要与判分规则](evaluation/booking-reader-blind.json) · [Booking 官方业绩公告](https://www.bookingholdings.com/wp-content/uploads/2026/11/Q3-26-BKNG-Earnings-Release-Final.pdf) · [分组分析 SQL](evaluation/earnings_outcomes.sql)
+
+如需复现，用下文的环境启动 Ollama，将官方公告保存为 `booking-q3.pdf`，在一个新的输出目录运行以下命令。脚本先核验 PDF 的 SHA-256，再走工作台的上传和提问接口，并保存逐题原答与工具轨迹。重跑属于复测，第一次作答的原始成绩保留在上方的逐题记录中。
+
+```powershell
+uv run python -m scripts.evaluate_reader --fixture evaluation/booking-reader-blind.json --file booking-q3.pdf --out replay-booking
+```
+
+### 上一轮记录
 
 Uber 查数及指引的独立首轮为 3/14，两次同题复测分别为 8/14、14/14。最新版本按指标表头区分同名业务行，并从管理层指引原句读取两个端点。高通 18/18、台积电 4/4 原答、引文和判断与上版逐题一致。Uber 的 4 道披露状态题也全部通过。
 
