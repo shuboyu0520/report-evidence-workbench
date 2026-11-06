@@ -1,0 +1,70 @@
+{
+  "primary": {
+    "name": "台积电",
+    "published": "2026-10-15",
+    "period": "2026 年第三季度",
+    "quarterEnd": "2026-09-30",
+    "revenue": 46.72,
+    "yoy": 41.2,
+    "margin": 66.4,
+    "hpc": 68,
+    "advanced": 79,
+    "cfo": [
+      919.77,
+      783.36
+    ],
+    "capex": [
+      443.21,
+      496
+    ],
+    "guidance": [
+      52.3,
+      54.3
+    ],
+    "investing": 198.74,
+    "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+    "pdf": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf"
+  },
+  "peers": [
+    {
+      "name": "Intel",
+      "period": "2026 财年第二季度",
+      "published": "2026-07-23",
+      "revenue": 16.1,
+      "yoy": 25,
+      "url": "https://www.intc.com/filings-reports/all-sec-filings/content/0000050863-26-000155/0000050863-26-000155.pdf"
+    },
+    {
+      "name": "Intel",
+      "period": "2026 财年第三季度",
+      "published": "2026-10-29",
+      "revenue": 16.5,
+      "yoy": 21,
+      "margin": 43,
+      "url": "https://www.intc.com/news-events/press-releases/detail/1786/intel-reports-third-quarter-2026-financial-results"
+    }
+  ],
+  "market": [
+    {
+      "period": "2026 年 8 月",
+      "published": "2026-10-05",
+      "sales": 159.7,
+      "yoy": 144.3,
+      "url": "https://www.semiconductors.org/year-to-date-global-semiconductor-sales-top-1-trillion-through-august/"
+    },
+    {
+      "period": "2026 年 9 月",
+      "published": "2026-11-03",
+      "sales": 172.6,
+      "yoy": 146.8,
+      "url": "https://www.semiconductors.org/global-semiconductor-sales-increase-24-1-from-q2-2026-to-q3-2026/"
+    }
+  ],
+  "policy": {
+    "published": "2025-07-04",
+    "rate": 35,
+    "section": "§70308 / IRC §48D",
+    "law": "https://www.govinfo.gov/content/pkg/PLAW-119publ21/html/PLAW-119publ21.htm",
+    "irs": "https://www.irs.gov/forms-pubs/correction-to-the-2025-instructions-for-form-3468-of-the-applicability-of-the-35-rate-on-line-1c-in-part-iv-advanced-manufacturing-investment-credit-under-section-48d"
+  }
+}

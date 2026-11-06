@@ -1,0 +1,115 @@
+{
+  "issuer_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+  "as_of": "2026-10-26",
+  "reference_digest": "d905217f428d807ccac6662ed984e988c90e4812bb3b6138a3ea0bf84a279393",
+  "facts": [
+    {
+      "id": "platform",
+      "metric": "3Q26 HPC 高性能计算占净营收比例",
+      "value": "68%",
+      "note": "台积电净营收按客户平台分类。HPC 是平台分类，该项数据不足以单独得出 AI 产品营收占比。",
+      "source": "研报第 4 页 · 管理报告第 2 页",
+      "official_page": 2,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=2"
+    },
+    {
+      "id": "node",
+      "metric": "3Q26 先进制程在晶圆收入占比",
+      "value": "79%",
+      "note": "7nm 及以下占晶圆收入。",
+      "source": "研报第 9 页 · 管理报告第 2 页",
+      "official_page": 2,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=2"
+    },
+    {
+      "id": "node2",
+      "metric": "3Q26 2nm 在晶圆收入占比",
+      "value": "8%",
+      "note": "该占比的分母是晶圆收入。",
+      "source": "研报第 9 页 · 管理报告第 2 页",
+      "official_page": 2,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=2"
+    },
+    {
+      "id": "phone",
+      "metric": "3Q26 智能手机平台净营收占比",
+      "value": "21%",
+      "note": "智能手机平台占公司净营收的比例。",
+      "source": "研报第 4 页 · 管理报告第 2 页",
+      "official_page": 2,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=2"
+    },
+    {
+      "id": "margin",
+      "metric": "3Q26 毛利率",
+      "value": "66.4%",
+      "note": "为第三季度已实现的利润率。",
+      "source": "研报第 7 页 · 管理报告第 1 页",
+      "official_page": 1,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=1"
+    },
+    {
+      "id": "actual",
+      "metric": "3Q26 合并营业收入",
+      "value": "46.72 十亿美元",
+      "note": "为第三季度实际收入，币种为美元。",
+      "source": "研报第 7 页 · 管理报告第 1 页",
+      "official_page": 1,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=1"
+    },
+    {
+      "id": "guidance",
+      "metric": "4Q26 第四季度美元营收指引",
+      "value": "52.3–54.3 十亿美元",
+      "note": "管理层对未来季度的预计区间。",
+      "source": "研报第 8、12 页 · 官方季度指引",
+      "official_page": null,
+      "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3"
+    },
+    {
+      "id": "asof",
+      "metric": "4Q26 实际营收披露状态",
+      "value": "实际值待披露",
+      "note": "截至研报截止日 2026-10-26，第四季度尚未结束。其实际收入仍待披露。",
+      "source": "研报第 8 页 · 官方季度指引",
+      "official_page": null,
+      "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3"
+    },
+    {
+      "id": "cfo3",
+      "metric": "3Q26 单季经营活动现金流入净额",
+      "value": "919.77 十亿新台币",
+      "note": "台积电单季经营现金流。",
+      "source": "研报第 10 页为约数 · 管理报告第 5 页",
+      "official_page": 5,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=5"
+    },
+    {
+      "id": "capex3",
+      "metric": "3Q26 单季资本开支现金流出额",
+      "value": "443.21 十亿新台币",
+      "note": "以支出绝对额列示。",
+      "source": "研报第 10 页为约数 · 管理报告第 5 页",
+      "official_page": 5,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=5"
+    },
+    {
+      "id": "fcf3",
+      "metric": "3Q26 单季度自由现金流（经营现金流减资本开支）",
+      "value": "476.56 十亿新台币",
+      "note": "研报第 10 页约为 477 十亿新台币。计算为 919.77 − 443.21 = 476.56，与公司披露的自由现金流一致。",
+      "source": "研报第 10 页 · 管理报告第 5 页",
+      "official_page": 5,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=5"
+    },
+    {
+      "id": "fcf2",
+      "metric": "2Q26 单季自由现金流",
+      "value": "287.36 十亿新台币",
+      "note": "第二季度经营现金流 783.36，资本开支支出额 496.00，单位均为十亿新台币。",
+      "source": "管理报告第 5 页",
+      "official_page": 5,
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/f83780000ddc0c3b48e57a87eab6814c4ab35058/3Q26%20ManagementReport.pdf#page=5"
+    }
+  ]
+}

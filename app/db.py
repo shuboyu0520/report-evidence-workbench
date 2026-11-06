@@ -16,6 +16,10 @@ class Database:
                     digest TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
                     UNIQUE(company, digest)
                 );
+                CREATE TABLE IF NOT EXISTS reader_context (
+                    report_id TEXT PRIMARY KEY REFERENCES reports(id) ON DELETE CASCADE,
+                    published_on TEXT NOT NULL, calendar_year INTEGER NOT NULL, url TEXT NOT NULL
+                );
                 CREATE TABLE IF NOT EXISTS pages (
                     report_id TEXT REFERENCES reports(id) ON DELETE CASCADE,
                     number INTEGER NOT NULL, text TEXT NOT NULL,

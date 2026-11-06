@@ -3,14 +3,15 @@ import io
 import json
 import os
 import re
+from datetime import date
 from pathlib import Path
 from typing import Literal
 from uuid import uuid4
 
 import httpx
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse, Response
-from pydantic import BaseModel, Field
+from fastapi.responses import FileResponse, HTMLResponse, Response
+from pydantic import BaseModel, Field, HttpUrl
 from pypdf import PdfReader
 from pypdf.constants import UserAccessPermissions
 from starlette.concurrency import run_in_threadpool
@@ -19,6 +20,7 @@ from .agent import analyze
 from .db import Database
 from .finance import FACTORS, extract_metrics, numeric
 from .observatory import install_observatory
+from .reader import CASE_DIGESTS, CASE_TEXT, compare_reports, read_report
 from .table_headers import YEAR_GROUP, segment_headers, year_then_columns
 
 MAX_BYTES = 15 * 1024 * 1024
@@ -26,7 +28,14 @@ MAX_BYTES = 15 * 1024 * 1024
 
 class Question(BaseModel):
     question: str = Field(min_length=2, max_length=1000)
-    mode: Literal["rules", "ollama", "rag"] = "rules"
+    mode: Literal["rules", "ollama", "rag", "reader"] = "rules"
+    as_of: date | None = None
+
+
+class Comparison(BaseModel):
+    sources: dict[Literal["company", "peer", "market", "policy"], str]
+    as_of: date
+    question: str = Field(min_length=2, max_length=800)
 
 
 class ConfirmedMetric(BaseModel):
@@ -99,6 +108,25 @@ def create_app(db_path=None, settings=None):
     api.state.db = db
     install_observatory(api, db)
 
+    @api.get("/reader", include_in_schema=False)
+    def reader_home():
+        from .reader_view import reader_html
+        return HTMLResponse(reader_html(live=True))
+
+    @api.get("/reader/case.txt", include_in_schema=False)
+    def reader_case():
+        return Response(CASE_TEXT, media_type="text/plain")
+
+    @api.post("/reader/compare")
+    async def reader_compare(body: Comparison):
+        try:
+            return {"as_of": body.as_of, "sections": await compare_reports(
+                db, body.sources, body.as_of, body.question, config)}
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        except httpx.HTTPError as exc:
+            raise HTTPException(502, "模型服务调用失败，请稍后重试。") from exc
+
     @api.exception_handler(LookupError)
     async def missing_handler(request, exc):
         from fastapi.responses import JSONResponse
@@ -120,7 +148,9 @@ def create_app(db_path=None, settings=None):
         return {"status": "ok", "model_configured": bool(config["model"])}
 
     @api.post("/reports", status_code=201)
-    async def upload(company: str = Form(min_length=1, max_length=100), file: UploadFile = File()):
+    async def upload(company: str = Form(min_length=1, max_length=100), file: UploadFile = File(),
+                     published_on: date | None = Form(None), calendar_year: bool = Form(False),
+                     source_url: HttpUrl | None = Form(None)):
         try:
             content = await file.read(MAX_BYTES + 1)
         finally:
@@ -142,6 +172,14 @@ def create_app(db_path=None, settings=None):
             duplicate = conn.execute(
                 "SELECT id FROM reports WHERE company=? AND digest=?", (company.strip(), digest)
             ).fetchone()
+            if published_on:
+                metadata = (published_on.isoformat(), int(calendar_year), str(source_url or ""))
+                if duplicate:
+                    previous = conn.execute("SELECT published_on,calendar_year,url FROM reader_context WHERE report_id=?",
+                                            (duplicate["id"],)).fetchone()
+                    if previous and tuple(previous) != metadata:
+                        raise HTTPException(409, "相同资料已有不同的日期或来源记录，请先核对文件。")
+                    conn.execute("INSERT OR IGNORE INTO reader_context VALUES(?,?,?,?)", (duplicate["id"], *metadata))
             if duplicate:
                 db.save_column_headers(conn, duplicate["id"], pages)
                 return {
@@ -153,6 +191,8 @@ def create_app(db_path=None, settings=None):
                 "INSERT INTO reports(id,company,filename,digest) VALUES(?,?,?,?)",
                 (report_id, company.strip(), filename, digest),
             )
+            if published_on:
+                conn.execute("INSERT INTO reader_context VALUES(?,?,?,?)", (report_id, *metadata))
             conn.executemany(
                 "INSERT INTO pages(report_id,number,text) VALUES(?,?,?)",
                 [(report_id, p["number"], p["text"]) for p in pages],
@@ -311,6 +351,8 @@ def create_app(db_path=None, settings=None):
         if not body.question.strip():
             raise HTTPException(422, "问题不能为空")
         try:
+            if body.mode == "reader" or (body.mode == "rag" and db.report(report_id)["digest"] in CASE_DIGESTS):
+                return await read_report(db, report_id, body.question, config, body.as_of)
             return await analyze(db, report_id, body.question, body.mode, config)
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc

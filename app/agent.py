@@ -266,7 +266,7 @@ async def analyze(db, report_id, question, mode, settings):
                       f"{retrieval['value_millions']} 百万美元。PDF 物理第 {retrieval['physical_page']} 页。")
             verification = "source_table_cell"
         else:
-            answer = {"year_absent":"未披露",
+            answer = {"year_absent":"所查原表未列所问年度，现有证据不足。",
                       "blank_cell":"所选年度原表未提供数值。",
                       "ambiguous":"无法唯一匹配所问指标与原表行，请核对报表或分部名称。"}[retrieval["status"]]
             verification = "table_lookup_unavailable"
@@ -406,6 +406,9 @@ async def analyze(db, report_id, question, mode, settings):
         if target_kind(question) or re.match(r"\s*(?:无法回答|未披露|这份(?:年报|财报)未披露|报告中未披露)", answer):
             answer = "无法核实所问年度的原表金额。"
             verification = "table_lookup_unavailable"
+    if verification == "model_draft_unverified" and re.search(r"未披露|尚未公布|未曾发布|not (?:yet )?disclosed", answer, re.I):
+        answer = "在所选资料中没找到足够证据，无法确认该指标的披露状态。"
+        verification = "insufficient_evidence"
     result = {
         "id": uuid4().hex,
         "report_id": report_id,
