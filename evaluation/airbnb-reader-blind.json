@@ -1,0 +1,241 @@
+{
+  "company": "Airbnb, Inc. (ABNB)",
+  "published_on": "2026-11-05",
+  "as_of": "2026-11-07",
+  "calendar_year": true,
+  "engine_commit": "20eddac497d4e70ae439427d0da5ab5840bae74f",
+  "source": "https://s26.q4cdn.com/656283129/files/content_files/Airbnb-Q3-2026-Shareholder-Letter.pdf",
+  "html_source": "https://news.airbnb.com/airbnb-q3-2026-financial-results",
+  "sha256": "9824f9818c184057138fc8ff1ce16d6f7ae3995cc2eb1a64bf8d204134c9e112",
+  "physical_pages": 28,
+  "selection": "First Airbnb run in the repository, after verifying Uber, Qualcomm and TSMC. The Nov 5 Q3 shareholder letter was the newest quarterly release on the issuer IR page at the Nov 7 Sydney cutoff. Input PDF downloaded directly from the investor page. The engine was frozen before issuer selection. Gold values annotated from the original PDF without running the application on the issuer. No retuning/rerolling the blind.",
+  "rubric": "A01–A14 count only a first end-to-end answer giving the requested period (including TTM versus quarter), metric, scope, accurate value, currency/unit or exact equivalent, and a verbatim supporting original row or passage on a preregistered physical page. A13 must identify a forecast and include both amount endpoints. A14 must identify a full-year forecast of about 36 percent, not the Q3 actual margin. A07 is a count, not currency. A15–A16 require explicit period-end and research date and no monetary guess. A17–A18 require evidence-insufficient status with no implied non-disclosure or invented amount. Report 14 numerical/guidance cases separately from the two future and two missing cases. Score infrastructure errors as such if any occur.",
+  "cases": [
+    {
+      "id": "A01",
+      "kind": "quarter",
+      "question": "2026 年第三季度集团总营收是多少百万美元？请引含精确金额的原表。",
+      "value": "4,869",
+      "metric": "Revenue",
+      "unit": "百万美元",
+      "page": 21,
+      "accepted_pages": [
+        21,
+        22,
+        26,
+        27
+      ]
+    },
+    {
+      "id": "A02",
+      "kind": "quarter",
+      "question": "2025 年第三季度集团营收是多少百万美元？请按可比季度原表作答。",
+      "value": "4,095",
+      "metric": "Revenue",
+      "unit": "百万美元",
+      "page": 21,
+      "accepted_pages": [
+        21,
+        22,
+        26,
+        27
+      ]
+    },
+    {
+      "id": "A03",
+      "kind": "quarter",
+      "question": "2026 年第三季度 GAAP 净利润是多少百万美元？请引用精确金额。",
+      "value": "1,890",
+      "metric": "Net income",
+      "unit": "百万美元",
+      "page": 21,
+      "accepted_pages": [
+        21,
+        22,
+        26
+      ]
+    },
+    {
+      "id": "A04",
+      "kind": "quarter",
+      "question": "2026 年第三季度集团的营业利润是多少百万美元？请引经营报表。",
+      "value": "2,021",
+      "metric": "Income from operations",
+      "unit": "百万美元",
+      "page": 22,
+      "accepted_pages": [
+        22
+      ]
+    },
+    {
+      "id": "A05",
+      "kind": "quarter",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元？",
+      "value": "3.16",
+      "metric": "Diluted earnings per share",
+      "unit": "美元/股",
+      "page": 22,
+      "accepted_pages": [
+        22
+      ]
+    },
+    {
+      "id": "A06",
+      "kind": "quarter",
+      "question": "2026 年第三季度平台的总预订价值（Gross Booking Value）是多少十亿美元？",
+      "value": "27.7",
+      "metric": "Gross Booking Value",
+      "unit": "十亿美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        3,
+        10,
+        21,
+        25
+      ]
+    },
+    {
+      "id": "A07",
+      "kind": "quarter",
+      "question": "2026 年第三季度预订住宿晚数与活动席位数合计（Nights and Seats Booked）是多少百万个？",
+      "value": "155.0",
+      "metric": "Nights and Seats Booked",
+      "unit": "百万个",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        10,
+        21,
+        25
+      ]
+    },
+    {
+      "id": "A08",
+      "kind": "quarter",
+      "question": "2026 年第三季度，每晚或每个席位的平均预订价格 ADR 是多少美元？请保留小数。",
+      "value": "178.83",
+      "metric": "Gross Booking Value per Night and Seats Booked (ADR)",
+      "unit": "美元",
+      "page": 21,
+      "accepted_pages": [
+        21
+      ]
+    },
+    {
+      "id": "A09",
+      "kind": "quarter",
+      "question": "2026 年第三季度集团产品开发费用（Product development）是多少百万美元？查总费用。",
+      "value": "664",
+      "metric": "Product development expense",
+      "unit": "百万美元",
+      "page": 22,
+      "accepted_pages": [
+        22
+      ]
+    },
+    {
+      "id": "A10",
+      "kind": "quarter",
+      "question": "2026 年第三季度调整后 EBITDA 是多少百万美元？请给出调节表或季度汇总表的精确金额。",
+      "value": "2,509",
+      "metric": "Adjusted EBITDA",
+      "unit": "百万美元",
+      "page": 21,
+      "accepted_pages": [
+        21,
+        26
+      ]
+    },
+    {
+      "id": "A11",
+      "kind": "quarter",
+      "question": "2026 年第三季度单季自由现金流是多少百万美元？请引用精确金额。",
+      "value": "1,426",
+      "metric": "Free Cash Flow",
+      "unit": "百万美元",
+      "page": 21,
+      "accepted_pages": [
+        21,
+        27
+      ]
+    },
+    {
+      "id": "A12",
+      "kind": "trailing",
+      "question": "截至 2026 年第三季度末的滚动十二个月自由现金流（TTM Free Cash Flow）是多少百万美元？",
+      "value": "4,904",
+      "metric": "TTM Free Cash Flow",
+      "unit": "百万美元",
+      "page": 21,
+      "accepted_pages": [
+        21,
+        27
+      ]
+    },
+    {
+      "id": "A13",
+      "kind": "guidance",
+      "question": "2026 年第四季度公司给出的营收指引区间是多少十亿美元？请说明是管理层预期。",
+      "value": "3.22–3.28",
+      "metric": "Revenue outlook",
+      "unit": "十亿美元",
+      "page": 7,
+      "accepted_pages": [
+        7
+      ]
+    },
+    {
+      "id": "A14",
+      "kind": "guidance",
+      "question": "2026 年全年的调整后 EBITDA 利润率指引约为百分之多少？请说明是预期。",
+      "value": "36",
+      "metric": "Adjusted EBITDA Margin outlook",
+      "unit": "%",
+      "page": 7,
+      "accepted_pages": [
+        7
+      ]
+    },
+    {
+      "id": "A15",
+      "kind": "future",
+      "question": "截至研究日，期间结束日 2026-12-31 的完整季度实际营收是多少？",
+      "value": "",
+      "metric": "not_yet_disclosed",
+      "unit": "",
+      "page": "",
+      "accepted_pages": []
+    },
+    {
+      "id": "A16",
+      "kind": "future",
+      "question": "期间结束日 2026-12-31 的完整季度已经实现的摊薄每股收益是多少美元？",
+      "value": "",
+      "metric": "not_yet_disclosed",
+      "unit": "",
+      "page": "",
+      "accepted_pages": []
+    },
+    {
+      "id": "A17",
+      "kind": "missing",
+      "question": "2026 年第三季度单独来自悉尼市某大学宿舍的预订净营收是多少百万美元？只查这份股东信。",
+      "value": "",
+      "metric": "insufficient_evidence",
+      "unit": "",
+      "page": "",
+      "accepted_pages": []
+    },
+    {
+      "id": "A18",
+      "kind": "missing",
+      "question": "2026 年第三季度专门分配给墨尔本单一图书俱乐部的员工培训费是多少美元？只看本文件。",
+      "value": "",
+      "metric": "insufficient_evidence",
+      "unit": "",
+      "page": "",
+      "accepted_pages": []
+    }
+  ]
+}
