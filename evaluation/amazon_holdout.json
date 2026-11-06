@@ -1,0 +1,29 @@
+{
+  "issuer": "Amazon.com, Inc.",
+  "report": "FY2024 Annual Report",
+  "source": "https://s2.q4cdn.com/299287126/files/doc_financials/2025/ar/Amazon-2024-Annual-Report.pdf",
+  "sha256": "d6c8919af431fbf38d5d92f2060ba8f45d084f26495c6f17ce81232102977908",
+  "baseline": "b120ca5eedcd21fb32438c8d75a83bb5e4890feb",
+  "protocol": "One pass per release, same 18 Chinese requests via POST /reports/{id}/questions, rag mode, no manual facts, new independent company. For 14 lookup questions require initial top-5 exact labelled line at designated physical page, exact amount in USD millions, requested fiscal year, explicit unit and page in answer. Refusals require explicit unavailability with no numeric answer other than the requested year. This is a document holdout, not evidence that the model never saw the report in training. Later replays are regression checks.",
+  "instruction": "请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+  "cases": [
+    ["AM01",2024,"合并利润表中的净销售总额是多少？",49,"Total net sales","637,959"],
+    ["AM02",2023,"公司卖出商品获得的净销售额是多少？请查合并利润表。",49,"Net product sales","255,887"],
+    ["AM03",2024,"请查合并利润表，履约费用是多少？",49,"Fulfillment","98,505"],
+    ["AM04",2024,"销售和营销费用是多少？请查合并利润表。",49,"Sales and marketing","43,907"],
+    ["AM05",2023,"合并利润表的营业利润是多少？",49,"Operating income","36,852"],
+    ["AM06",2024,"合并资产负债表中，库存的期末账面价值是多少？",51,"Inventories","34,214"],
+    ["AM07",2024,"资产负债表上的现金及现金等价物是多少？",51,"Cash and cash equivalents","78,779"],
+    ["AM08",2023,"合并资产负债表列示的长期债务是多少？",51,"Long-term debt","58,314"],
+    ["AM09",2024,"资产负债表中商誉的账面值是多少？",51,"Goodwill","23,074"],
+    ["AM10",2024,"经营活动实际带来多少净现金？请引用现金流量表。",48,"Net cash provided by (used in) operating activities","115,877"],
+    ["AM11",2023,"现金流量表列示的股份支付费用是多少？",48,"Stock-based compensation","24,023"],
+    ["AM12",2024,"AWS 分部的营业利润是多少？请引用分部附注。",78,"Operating income $","39,834"],
+    ["AM13",2024,"国际分部对外净销售额是多少？请引用分部附注。",78,"Net sales $","142,906"],
+    ["AM14",2023,"北美分部的营业费用是多少？请引用分部附注。",78,"Operating expenses","337,951"],
+    ["AM15",2027,"这份财报披露的合并净销售总额实际值是多少？",null,null,null],
+    ["AM16",2028,"这份财报披露的期末存货实际账面值是多少？",null,null,null],
+    ["AM17",2027,"这份财报披露的 AWS 分部实际营业利润是多少？",null,null,null],
+    ["AM18",2028,"这份财报披露的经营活动净现金实际金额是多少？",null,null,null]
+  ]
+}
