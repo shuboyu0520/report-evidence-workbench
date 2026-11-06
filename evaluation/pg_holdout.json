@@ -1,0 +1,30 @@
+{
+  "issuer": "The Procter & Gamble Company",
+  "report": "FY2024 Annual Report, fiscal year ended June 30, 2024",
+  "source": "https://s204.q4cdn.com/332108499/files/doc_financials/2024/ar/2024_annual_report.pdf",
+  "issuer_source": "https://www.pginvestor.com/financials/annual-reports/default.aspx",
+  "sha256": "9ce6fc2a1608588ce9264a616d9fbd84f2fffe53446d10e0598f2c504f71bdf2",
+  "baseline": "193d317002eb0024e3e3e8771ff497a7df61fe60",
+  "protocol": "Final untouched issuer. Annotated from the official 92-page PDF before any application/model call on this issuer. Freeze after PepsiCo remediation. 5 income, 4 balance, 2 cash flow and 3 segment cases in USD millions plus 4 out-of-period refusals. Score every case with unchanged strict grader. Use physical PDF pages.",
+  "instruction": "请只给目标年度、金额（以百万美元为单位）和 PDF 物理页码。如果这份报告没有披露该年度实际金额，请只回答“未披露”。",
+  "cases": [
+    ["PG01",2024,"合并利润表中的净销售额是多少？",48,"NET SALES","84,039"],
+    ["PG02",2023,"合并利润表中的销售、一般及行政费用是多少？",48,"Selling, general and administrative expense","21,112"],
+    ["PG03",2024,"合并利润表中已售产品成本是多少？",48,"Cost of products sold","40,848"],
+    ["PG04",2023,"合并利润表中的营业利润是多少？",48,"OPERATING INCOME","18,134"],
+    ["PG05",2024,"合并利润表中的税前利润是多少？",48,"EARNINGS BEFORE INCOME TAXES","18,761"],
+    ["PG06",2024,"合并资产负债表上的现金及现金等价物是多少？",49,"Cash and cash equivalents","9,482"],
+    ["PG07",2023,"合并资产负债表中的长期债务余额是多少？",49,"LONG-TERM DEBT","24,378"],
+    ["PG08",2024,"合并资产负债表中的存货合计是多少？",49,"Total inventories","7,016"],
+    ["PG09",2023,"合并资产负债表中流动负债合计是多少？",49,"TOTAL CURRENT LIABILITIES","35,756"],
+    ["PG10",2024,"现金流量表中经营活动产生的现金净额是多少？",51,"TOTAL OPERATING ACTIVITIES","19,846"],
+    ["PG11",2023,"合并现金流量表中的股权薪酬费用是多少？",51,"Share-based compensation expense","545"],
+    ["PG12",2024,"分部附注中美容（Beauty）分部的净销售额是多少？",56,"BEAUTY 2024","15,220"],
+    ["PG13",2023,"分部附注中健康护理（Health Care）分部的净销售额是多少？",56,"2023","11,226"],
+    ["PG14",2024,"分部附注中织物与家居护理（Fabric & Home Care）分部的税前利润是多少？",56,"FABRIC & HOME CARE 2024","7,339"],
+    ["PG15",2027,"这份财报披露的合并净销售额实际值是多少？",null,null,null],
+    ["PG16",2028,"这份财报披露的期末现金及现金等价物实际值是多少？",null,null,null],
+    ["PG17",2027,"这份财报披露的美容分部实际净销售额是多少？",null,null,null],
+    ["PG18",2028,"这份财报披露的经营活动现金净额实际值是多少？",null,null,null]
+  ]
+}
