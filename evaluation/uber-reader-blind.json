@@ -1,0 +1,231 @@
+{
+  "company": "Uber Technologies, Inc. (UBER)",
+  "published_on": "2026-11-04",
+  "as_of": "2026-11-06",
+  "calendar_year": true,
+  "engine_commit": "d16bc36364b1fd4b278d5842cebc6d4cfd31d457",
+  "source": "https://investor.uber.com/files/doc_earnings/2026/q3/earnings-result/Uber-Q3-26-Earnings-Press-Release.pdf",
+  "html_source": "https://investor.uber.com/news-events/news/press-release-details/2026/Uber-Announces-Results-for-Third-Quarter-2026/default.aspx",
+  "sha256": "771658eae3b120b31a2eea00345c363bd54f88be8db6a2a8139b9a09fe7ac97f",
+  "selection": "First test of Uber in this repository. Latest quarterly earnings release at cutoff; 13-page original PDF. Lilly was considered first but its original could not be downloaded in this environment. No Lilly model run or evaluation was performed. Engine frozen before issuer selection. Gold annotated against the original, with no model outputs or issuer data added to the application.",
+  "rubric": "Grade first end-to-end response only. U01–U14 must have the requested company/offering, quarter/year, GAAP/non-GAAP and measure, exact amount in correct units or exact equivalent, and a verbatim source row/passage on a preregistered physical PDF page. Identical supporting original statement/reconciliation pages listed above are accepted. Guidance requires both bounds and clear forecast status. U15–16 must abstain with a date-grounded future-period status and no guessed amount. U17–18 must separately abstain for missing evidence without guessing a date or value. Keep positive and negative scores separate.",
+  "cases": [
+    {
+      "id": "U01",
+      "kind": "quarter",
+      "question": "2026 年第三季度集团总营收是多少百万美元？请引原表。",
+      "value": "14,766",
+      "metric": "Revenue",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        7
+      ]
+    },
+    {
+      "id": "U02",
+      "kind": "quarter",
+      "question": "2026 年第三季度 GAAP 营业利润是多少百万美元？",
+      "value": "1,447",
+      "metric": "Income from operations",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        7,
+        12,
+        13
+      ]
+    },
+    {
+      "id": "U03",
+      "kind": "quarter",
+      "question": "2026 年第三季度 GAAP 归属于 Uber 的净利润是多少百万美元？请保留归母口径。",
+      "value": "512",
+      "metric": "Net income attributable to Uber Technologies, Inc.",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        7,
+        12
+      ]
+    },
+    {
+      "id": "U04",
+      "kind": "quarter",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元？",
+      "value": "0.25",
+      "metric": "GAAP Diluted EPS",
+      "unit": "美元/股",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        7,
+        12
+      ]
+    },
+    {
+      "id": "U05",
+      "kind": "quarter",
+      "question": "2026 年第三季度非 GAAP 经营利润是多少百万美元？",
+      "value": "2,304",
+      "metric": "Non-GAAP Operating Income",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        3,
+        12
+      ]
+    },
+    {
+      "id": "U06",
+      "kind": "quarter",
+      "question": "2026 年第三季度非 GAAP 每股收益是多少美元？",
+      "value": "0.88",
+      "metric": "Non-GAAP EPS",
+      "unit": "美元/股",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        12
+      ]
+    },
+    {
+      "id": "U07",
+      "kind": "quarter",
+      "question": "2025 年第三季度集团营收是多少百万美元？只给可比季度的数值。",
+      "value": "13,467",
+      "metric": "Revenue",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        7
+      ]
+    },
+    {
+      "id": "U08",
+      "kind": "quarter",
+      "question": "2026 年第三季度 Mobility 出行业务的营收是多少百万美元？",
+      "value": "7,520",
+      "metric": "Mobility revenue",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2
+      ]
+    },
+    {
+      "id": "U09",
+      "kind": "quarter",
+      "question": "2026 年第三季度 Delivery 配送业务的营收是多少百万美元？",
+      "value": "5,488",
+      "metric": "Delivery revenue",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2
+      ]
+    },
+    {
+      "id": "U10",
+      "kind": "quarter",
+      "question": "2026 年第三季度 Freight 货运业务的营收是多少百万美元？",
+      "value": "1,758",
+      "metric": "Freight revenue",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2
+      ]
+    },
+    {
+      "id": "U11",
+      "kind": "quarter",
+      "question": "2026 年第三季度 Delivery 配送业务的总预订额（Gross Bookings）是多少百万美元？",
+      "value": "28,539",
+      "metric": "Delivery Gross Bookings",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2
+      ]
+    },
+    {
+      "id": "U12",
+      "kind": "quarter",
+      "question": "2026 年第三季度自由现金流是多少百万美元？请引原表。",
+      "value": "2,535",
+      "metric": "Free cash flow",
+      "unit": "百万美元",
+      "page": 2,
+      "accepted_pages": [
+        2,
+        13
+      ]
+    },
+    {
+      "id": "U13",
+      "kind": "guidance",
+      "question": "2026 年第四季度总预订额（Gross Bookings）的管理层指引区间是多少十亿美元？",
+      "value": "63.25–65.25",
+      "metric": "Gross Bookings outlook",
+      "unit": "十亿美元",
+      "page": 1,
+      "accepted_pages": [
+        1
+      ]
+    },
+    {
+      "id": "U14",
+      "kind": "guidance",
+      "question": "2026 年第四季度非 GAAP 每股收益指引区间是多少美元？",
+      "value": "0.95–0.99",
+      "metric": "Non-GAAP EPS outlook",
+      "unit": "美元/股",
+      "page": 1,
+      "accepted_pages": [
+        1
+      ]
+    },
+    {
+      "id": "U15",
+      "kind": "future",
+      "question": "截至研究日，期间结束日 2026-12-31 的完整季度实际营收是多少？",
+      "metric": "not_yet_disclosed",
+      "value": "",
+      "page": "",
+      "unit": ""
+    },
+    {
+      "id": "U16",
+      "kind": "future",
+      "question": "期间结束日 2026-12-31 的完整季度已经实现的 GAAP 摊薄每股收益是多少？",
+      "metric": "not_yet_disclosed",
+      "value": "",
+      "page": "",
+      "unit": ""
+    },
+    {
+      "id": "U17",
+      "kind": "missing",
+      "question": "2026 年第三季度单独来自悉尼市一所大学教职工的配送业务收入是多少百万美元？只看本文件。",
+      "metric": "insufficient_evidence",
+      "value": "",
+      "page": "",
+      "unit": ""
+    },
+    {
+      "id": "U18",
+      "kind": "missing",
+      "question": "2026 年第三季度分配给单一城市读书会的培训费用是多少美元？只看这份公司公告。",
+      "metric": "insufficient_evidence",
+      "value": "",
+      "page": "",
+      "unit": ""
+    }
+  ]
+}
