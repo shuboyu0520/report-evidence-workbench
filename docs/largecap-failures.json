@@ -1,0 +1,79 @@
+[
+  {
+    "report_id": "amd-q3-26",
+    "question_type": "lookup",
+    "stage": "page",
+    "cases": 1,
+    "case_ids": "ADQ08"
+  },
+  {
+    "report_id": "amd-q3-26",
+    "question_type": "lookup",
+    "stage": "source_row_hit_amount_missing_or_wrong",
+    "cases": 5,
+    "case_ids": "ADQ05,ADQ07,ADQ12,ADQ13,ADQ14"
+  },
+  {
+    "report_id": "amd-q3-26",
+    "question_type": "lookup",
+    "stage": "source_row_missed",
+    "cases": 8,
+    "case_ids": "ADQ01,ADQ02,ADQ03,ADQ04,ADQ06,ADQ09,ADQ10,ADQ11"
+  },
+  {
+    "report_id": "amd-q3-26",
+    "question_type": "missing",
+    "stage": "passed",
+    "cases": 4,
+    "case_ids": "ADQ15,ADQ16,ADQ17,ADQ18"
+  },
+  {
+    "report_id": "apple-q4-26",
+    "question_type": "lookup",
+    "stage": "passed",
+    "cases": 4,
+    "case_ids": "APQ02,APQ06,APQ08,APQ13"
+  },
+  {
+    "report_id": "apple-q4-26",
+    "question_type": "lookup",
+    "stage": "source_row_hit_amount_missing_or_wrong",
+    "cases": 9,
+    "case_ids": "APQ01,APQ03,APQ04,APQ05,APQ07,APQ10,APQ11,APQ12,APQ14"
+  },
+  {
+    "report_id": "apple-q4-26",
+    "question_type": "lookup",
+    "stage": "unit",
+    "cases": 1,
+    "case_ids": "APQ09"
+  },
+  {
+    "report_id": "apple-q4-26",
+    "question_type": "missing",
+    "stage": "passed",
+    "cases": 4,
+    "case_ids": "APQ15,APQ16,APQ17,APQ18"
+  },
+  {
+    "report_id": "amd-fy25",
+    "question_type": "lookup",
+    "stage": "source_row_hit_amount_missing_or_wrong",
+    "cases": 5,
+    "case_ids": "ADA03,ADA09,ADA12,ADA13,ADA14"
+  },
+  {
+    "report_id": "amd-fy25",
+    "question_type": "lookup",
+    "stage": "source_row_missed",
+    "cases": 9,
+    "case_ids": "ADA01,ADA02,ADA04,ADA05,ADA06,ADA07,ADA08,ADA10,ADA11"
+  },
+  {
+    "report_id": "amd-fy25",
+    "question_type": "missing",
+    "stage": "refusal_format",
+    "cases": 4,
+    "case_ids": "ADA15,ADA16,ADA17,ADA18"
+  }
+]

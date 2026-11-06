@@ -1,0 +1,3144 @@
+[
+  {
+    "commit": "9484b34ead2fd088d570b82d2c2e81b74c98a269",
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "6d1a3d3d433c235da0e504e10188b45cc56a6e0ce54bbd565c914b2a18fce2e0",
+      "db.py": "47f091ca6318a1cb67492d19b1aaffcf52b4d3a69a472c3617b7006238ea2639",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "6630e6eb522ebfe1b4e4424f3ecce69e65063281e45e96c6e8687b665dfedfa8",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_headers.py": "6d3a4082a7440827c598f8e6b8439e944a0294e4deb3653dc845d7cf4c13e460",
+      "table_lookup.py": "9b19b024df4dd844a7cc94670aab67bad258fd65903f14a4b64ba4e04db4512b"
+    },
+    "pdf_sha256": "947676e58e73138cdcc2eac30621e8feb6c718cc5770069b858ad7ce5bcd2f14",
+    "fixture_sha256": "db0c4c2e21f817f429ad0c725e7970ada3ba5f10949bc236a88fe08a6a1fcf17",
+    "runner_sha256": "a5d2338c874caa05509e4ae77a007e028a7bc5248148a9f9817f87e2882b303d",
+    "prompt_sha256": "ea566346d4230661227520b537e7df8c7ff070f84468e6c76f62985d6f08060a",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    },
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "started_utc": "2026-11-06T07:33:09.475815+00:00",
+    "cases": [
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第三季度，合并利润表的净收入（Net revenue）是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              29,
+              29,
+              26,
+              30,
+              26
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ01",
+        "question": "2026财年第三季度，合并利润表的净收入（Net revenue）是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 21838,
+        "target_page": 3,
+        "year": 2026,
+        "expected": "13,377",
+        "period": "Q3",
+        "source_row": "Net revenue $ 13,377 $ 9,246 $ 35,166 $ 24,369",
+        "retrieved_pages": [
+          29,
+          29,
+          26,
+          30,
+          26
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年前九个月累计，合并利润表的净收入（Net revenue）是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              29,
+              29,
+              33,
+              29,
+              26
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ02",
+        "question": "2026财年前九个月累计，合并利润表的净收入（Net revenue）是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1174,
+        "target_page": 3,
+        "year": 2026,
+        "expected": "35,166",
+        "period": "9M",
+        "source_row": "Net revenue $ 13,377 $ 9,246 $ 35,166 $ 24,369",
+        "retrieved_pages": [
+          29,
+          29,
+          33,
+          29,
+          26
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年前九个月累计，合并毛利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              30,
+              29,
+              30,
+              27,
+              33
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "nine months ended September 26, 2026 gross profit"
+            },
+            "pages": [
+              30,
+              30,
+              26,
+              29,
+              29
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "gross_margin",
+              "year": 2026,
+              "metric": "revenue"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADQ03",
+        "question": "2026财年前九个月累计，合并毛利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 3191,
+        "target_page": 3,
+        "year": 2026,
+        "expected": "18,829",
+        "period": "9M",
+        "source_row": "Gross profit 7,210 4,780 18,829 11,575",
+        "retrieved_pages": [
+          30,
+          29,
+          30,
+          27,
+          33
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025财年第三季度，合并营业利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              9,
+              30,
+              34,
+              3,
+              4
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ04",
+        "question": "2025财年第三季度，合并营业利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1905,
+        "target_page": 3,
+        "year": 2025,
+        "expected": "1,270",
+        "period": "Q3",
+        "source_row": "Operating income 2,832 1,270 6,298 1,942",
+        "retrieved_pages": [
+          9,
+          30,
+          34,
+          3,
+          4
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第三季度，合并研发费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              30,
+              30,
+              3,
+              29,
+              27
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ05",
+        "question": "2026财年第三季度，合并研发费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2140,
+        "target_page": 3,
+        "year": 2026,
+        "expected": "2,803",
+        "period": "Q3",
+        "source_row": "Research and development 2,803 2,139 7,728 5,761",
+        "retrieved_pages": [
+          30,
+          30,
+          3,
+          29,
+          27
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2026-09-26当日，资产负债表上的现金及现金等价物是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              26,
+              7,
+              33,
+              33,
+              15
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ06",
+        "question": "截至2026-09-26当日，资产负债表上的现金及现金等价物是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 486,
+        "target_page": 5,
+        "year": 2026,
+        "expected": "7,404",
+        "period": "2026-09-26",
+        "source_row": "Cash and cash equivalents $ 7,404 $ 5,539",
+        "retrieved_pages": [
+          26,
+          7,
+          33,
+          33,
+          15
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2025-12-27当日，扣除一年内到期部分后的长期债务净额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              31,
+              18,
+              32,
+              31,
+              5
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ07",
+        "question": "截至2025-12-27当日，扣除一年内到期部分后的长期债务净额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 527,
+        "target_page": 5,
+        "year": 2025,
+        "expected": "2,348",
+        "period": "2025-12-27",
+        "source_row": "Long-term debt, net 7,079 2,348",
+        "retrieved_pages": [
+          31,
+          18,
+          32,
+          31,
+          5
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "存货金额为11,463百万美元，所属期间为截至2026年9月26日的期末日期（即2026年第三季度末），PDF物理页码第10页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": false,
+          "period": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2026-09-26当日，资产负债表上的存货是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              27,
+              5,
+              10,
+              10,
+              15
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ08",
+        "question": "截至2026-09-26当日，资产负债表上的存货是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 990,
+        "target_page": 5,
+        "year": 2026,
+        "expected": "11,463",
+        "period": "2026-09-26",
+        "source_row": "Inventories 11,463 7,920",
+        "retrieved_pages": [
+          27,
+          5,
+          10,
+          10,
+          15
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2025-12-27当日，资产负债表的流动负债合计是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              5,
+              31,
+              7,
+              9,
+              34
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ09",
+        "question": "截至2025-12-27当日，资产负债表的流动负债合计是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 461,
+        "target_page": 5,
+        "year": 2025,
+        "expected": "9,455",
+        "period": "2025-12-27",
+        "source_row": "Total current liabilities 14,486 9,455",
+        "retrieved_pages": [
+          5,
+          31,
+          7,
+          9,
+          34
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年前九个月累计，现金流量表的经营活动现金净额（含终止经营）是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              33,
+              33,
+              34,
+              26,
+              6
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ10",
+        "question": "2026财年前九个月累计，现金流量表的经营活动现金净额（含终止经营）是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 508,
+        "target_page": 6,
+        "year": 2026,
+        "expected": "6,523",
+        "period": "9M",
+        "source_row": "Net cash provided by operating activities 6,523 5,109",
+        "retrieved_pages": [
+          33,
+          33,
+          34,
+          26,
+          6
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025财年前九个月累计，现金流量表的股份支付费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              34,
+              34,
+              26,
+              15,
+              10
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ11",
+        "question": "2025财年前九个月累计，现金流量表的股份支付费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 436,
+        "target_page": 6,
+        "year": 2025,
+        "expected": "1,152",
+        "period": "9M",
+        "source_row": "Stock-based compensation 1,513 1,152",
+        "retrieved_pages": [
+          34,
+          34,
+          26,
+          15,
+          10
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第三季度，数据中心分部的净收入是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              28,
+              28,
+              26,
+              12,
+              26
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ12",
+        "question": "2026财年第三季度，数据中心分部的净收入是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 560,
+        "target_page": 12,
+        "year": 2026,
+        "expected": "8,546",
+        "period": "Q3",
+        "source_row": "Data Center $ 8,546 $ 4,341 $ 21,039 $ 11,255",
+        "retrieved_pages": [
+          28,
+          28,
+          26,
+          12,
+          26
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年前九个月累计，数据中心分部的净收入是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              28,
+              28,
+              12,
+              26,
+              26
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ13",
+        "question": "2026财年前九个月累计，数据中心分部的净收入是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 558,
+        "target_page": 12,
+        "year": 2026,
+        "expected": "21,039",
+        "period": "9M",
+        "source_row": "Data Center $ 8,546 $ 4,341 $ 21,039 $ 11,255",
+        "retrieved_pages": [
+          28,
+          28,
+          12,
+          26,
+          26
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第三季度，嵌入式分部的营业利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              29,
+              29,
+              26,
+              26,
+              12
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ14",
+        "question": "2026财年第三季度，嵌入式分部的营业利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 559,
+        "target_page": 12,
+        "year": 2026,
+        "expected": "453",
+        "period": "Q3",
+        "source_row": "Embedded 453 283 1,177 886",
+        "retrieved_pages": [
+          29,
+          29,
+          26,
+          26,
+          12
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，本报告披露的合并收入实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              28,
+              9,
+              4,
+              12,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ15",
+        "question": "2028 财年，本报告披露的合并收入实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 524,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          28,
+          9,
+          4,
+          12,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2029 财年，本报告披露的期末现金及现金等价物实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              26,
+              7,
+              33,
+              7,
+              31
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ16",
+        "question": "2029 财年，本报告披露的期末现金及现金等价物实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 524,
+        "target_page": null,
+        "year": 2029,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          26,
+          7,
+          33,
+          7,
+          31
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，本报告披露的经营活动现金净额实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              33,
+              6,
+              33,
+              26,
+              7
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "operating activities cash amount in nine months ended September 26, 2026"
+            },
+            "pages": [
+              33,
+              33,
+              34,
+              29,
+              26
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2028,
+              "metric": "revenue"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADQ17",
+        "question": "2028 财年，本报告披露的经营活动现金净额实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 3532,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          33,
+          6,
+          33,
+          26,
+          7
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2029 财年，本报告披露的合并研发费用实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              30,
+              30,
+              27,
+              3,
+              30
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADQ18",
+        "question": "2029 财年，本报告披露的合并研发费用实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 2198,
+        "target_page": null,
+        "year": 2029,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          30,
+          30,
+          27,
+          3,
+          30
+        ],
+        "model_http_status": [
+          200
+        ]
+      }
+    ],
+    "report_id": "amd-q3-26",
+    "title": "AMD 2026 财年第三季度",
+    "scope": "首次测试 AMD，73 页 10-Q",
+    "source": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000191/0000002488-26-000191.pdf",
+    "release_date": "2026-11-04"
+  },
+  {
+    "commit": "9484b34ead2fd088d570b82d2c2e81b74c98a269",
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "6d1a3d3d433c235da0e504e10188b45cc56a6e0ce54bbd565c914b2a18fce2e0",
+      "db.py": "47f091ca6318a1cb67492d19b1aaffcf52b4d3a69a472c3617b7006238ea2639",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "6630e6eb522ebfe1b4e4424f3ecce69e65063281e45e96c6e8687b665dfedfa8",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_headers.py": "6d3a4082a7440827c598f8e6b8439e944a0294e4deb3653dc845d7cf4c13e460",
+      "table_lookup.py": "9b19b024df4dd844a7cc94670aab67bad258fd65903f14a4b64ba4e04db4512b"
+    },
+    "pdf_sha256": "bf4b4b934fd06703a63feb63c2e4f5b0c6bd17cb96d3a67a7188307d71034d83",
+    "fixture_sha256": "16377c0ebe093d49eb5728d4b21eeab3cdfb6631b31fcca832e85353b15aaccc",
+    "runner_sha256": "a5d2338c874caa05509e4ae77a007e028a7bc5248148a9f9817f87e2882b303d",
+    "prompt_sha256": "ea566346d4230661227520b537e7df8c7ff070f84468e6c76f62985d6f08060a",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    },
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "started_utc": "2026-11-06T07:34:11.644338+00:00",
+    "cases": [
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第四季度，合并利润表的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              3,
+              2,
+              1,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ01",
+        "question": "2026财年第四季度，合并利润表的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2683,
+        "target_page": 1,
+        "year": 2026,
+        "expected": "114,477",
+        "period": "Q4",
+        "source_row": "Total net sales (1)  114,477    102,466    478,834    416,161",
+        "retrieved_pages": [
+          1,
+          3,
+          2,
+          1,
+          1
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "该问题询问的是“2026财年全年，合并利润表的净销售额是多少”，需要明确以下几点：\n\n1. **期间**：问题中要求“全年”，即“十二个月”期间，对应“Twelve Months Ended September 26, 2026”。\n2. **指标**：“净销售额”即“Net sales”。\n3. **数据来源**：在报告中，合并利润表（Condensed Consolidated Statements of Operations）中，“Total net sales”在“Twelve Months Ended September 26, 2026”下的数值为 **$478,834 million**（百万美元）。\n4. **物理页码**：该数据出现在第1页，具体在“Total net sales (1)”部分，其后紧跟“Net sales by reportable segment”表格，属于同一页内容。\n\n因此，答案如下：\n\n**2026财年全年（十二个月期，截至2026年9月26日），合并利润表的净销售额为 478,834 百万美元，位于第1页。**",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true,
+          "period": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年全年，合并利润表的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              3,
+              2,
+              1,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ02",
+        "question": "2026财年全年，合并利润表的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 4271,
+        "target_page": 1,
+        "year": 2026,
+        "expected": "478,834",
+        "period": "FY",
+        "source_row": "Total net sales (1)  114,477    102,466    478,834    416,161",
+        "retrieved_pages": [
+          1,
+          3,
+          2,
+          1,
+          1
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第四季度，合并利润表的毛利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              1,
+              2,
+              1,
+              1
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第四季度合并利润表毛利润"
+            },
+            "pages": [
+              3,
+              1,
+              2,
+              1,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 3,
+        "id": "APQ03",
+        "question": "2026财年第四季度，合并利润表的毛利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 3854,
+        "target_page": 1,
+        "year": 2026,
+        "expected": "54,820",
+        "period": "Q4",
+        "source_row": "Gross margin  54,820    48,341    233,602    195,201",
+        "retrieved_pages": [
+          3,
+          1,
+          2,
+          1,
+          1
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025财年第四季度，合并利润表的营业利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              3,
+              1,
+              1,
+              3
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ04",
+        "question": "2025财年第四季度，合并利润表的营业利润是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1864,
+        "target_page": 1,
+        "year": 2025,
+        "expected": "32,427",
+        "period": "Q4",
+        "source_row": "Operating income  35,631    32,427    158,063    133,050",
+        "retrieved_pages": [
+          1,
+          3,
+          1,
+          1,
+          3
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年全年，合并研发费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              1,
+              1,
+              2,
+              3
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ05",
+        "question": "2026财年全年，合并研发费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1400,
+        "target_page": 1,
+        "year": 2026,
+        "expected": "45,765",
+        "period": "FY",
+        "source_row": "Research and development  11,730    8,866    45,765    34,550",
+        "retrieved_pages": [
+          3,
+          1,
+          1,
+          2,
+          3
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "第 2 页  \n截至2026年9月26日，资产负债表上的现金及现金等价物为36,305百万美元（即363.05亿美元）。该数据对应“十二个月截至2026年9月26日”的期末日期，属于全年期间。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true,
+          "period": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2026-09-26当日，资产负债表上的现金及现金等价物是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              2,
+              3,
+              3,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ06",
+        "question": "截至2026-09-26当日，资产负债表上的现金及现金等价物是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2711,
+        "target_page": 2,
+        "year": 2026,
+        "expected": "36,305",
+        "period": "2026-09-26",
+        "source_row": "Cash and cash equivalents $ 36,305   $ 35,934",
+        "retrieved_pages": [
+          3,
+          2,
+          3,
+          3,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2025-09-27当日，非流动负债中的定期债务余额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              2,
+              3,
+              3,
+              3,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ07",
+        "question": "截至2025-09-27当日，非流动负债中的定期债务余额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1092,
+        "target_page": 2,
+        "year": 2025,
+        "expected": "78,328",
+        "period": "2025-09-27",
+        "source_row": "Term debt  68,208    78,328",
+        "retrieved_pages": [
+          2,
+          3,
+          3,
+          3,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "所属年度和期间：十二个月 Ended September 26, 2026（即2026财年全年，截至2026年9月26日期末）\n\n存货金额：14,541 百万美元\n\nPDF 物理页码：第 2 页",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true,
+          "period": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2026-09-26当日，资产负债表上的存货是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              2,
+              1,
+              3,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ08",
+        "question": "截至2026-09-26当日，资产负债表上的存货是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1919,
+        "target_page": 2,
+        "year": 2026,
+        "expected": "14,541",
+        "period": "2026-09-26",
+        "source_row": "Inventories  14,541    5,718",
+        "retrieved_pages": [
+          3,
+          2,
+          1,
+          3,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法回答。\n\n理由：用户询问的是“截至2025-09-27当日，资产负债表上的流动负债合计是多少？”，但报告中披露的负债数据均是按“十二个月结束日”（如“十二个月 Ended September 26, 2026”和“September 27, 2025”）分列的，且未提供“截至2025-09-27当日”的具体流动负债合计金额。流动负债合计在报告中仅以“Total current liabilities”形式出现，其数值为“$169,915”（对应2026年9月26日）和“$165,631”（对应2025年9月27日），但该数据是按年度末累计披露，而非“截至当日”的实时金额。\n\n此外，报告中未明确说明“流动负债合计”在2025年9月27日当天的实际金额，也未提供该期间的实时流动负债明细或动态数据。因此，无法确认该期间的实际金额。\n\n结论：未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": false,
+          "page": false,
+          "period": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "截至2025-09-27当日，资产负债表上的流动负债合计是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              2,
+              3,
+              3,
+              3,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ09",
+        "question": "截至2025-09-27当日，资产负债表上的流动负债合计是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 4629,
+        "target_page": 2,
+        "year": 2025,
+        "expected": "165,631",
+        "period": "2025-09-27",
+        "source_row": "Total current liabilities  169,915    165,631",
+        "retrieved_pages": [
+          2,
+          3,
+          3,
+          3,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法回答。缺少2026年及2025年的营业收入数据，无法计算2026财年全年经营活动现金净额。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": true,
+          "unit": false,
+          "page": false,
+          "period": true
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年全年，现金流量表的经营活动现金净额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              3,
+              3,
+              1,
+              2
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2026,
+              "metric": "revenue"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 2,
+        "id": "APQ10",
+        "question": "2026财年全年，现金流量表的经营活动现金净额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2447,
+        "target_page": 3,
+        "year": 2026,
+        "expected": "145,097",
+        "period": "FY",
+        "source_row": "Cash generated by operating activities  145,097    111,482",
+        "retrieved_pages": [
+          3,
+          3,
+          3,
+          1,
+          2
+        ],
+        "model_http_status": [
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025财年全年，现金流量表的股份支付费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              3,
+              3,
+              2,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ11",
+        "question": "2025财年全年，现金流量表的股份支付费用是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1224,
+        "target_page": 3,
+        "year": 2025,
+        "expected": "12,863",
+        "period": "FY",
+        "source_row": "Share-based compensation expense  13,789    12,863",
+        "retrieved_pages": [
+          3,
+          3,
+          3,
+          2,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年第四季度，大中华区的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              1,
+              3,
+              2,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ12",
+        "question": "2026财年第四季度，大中华区的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1205,
+        "target_page": 1,
+        "year": 2026,
+        "expected": "17,539",
+        "period": "Q4",
+        "source_row": "Greater China  17,539    14,493    82,378    64,377",
+        "retrieved_pages": [
+          1,
+          1,
+          3,
+          2,
+          1
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "初始检索证据中，关于“大中华区”的净销售额信息出现在第1页的引文部分，具体如下：\n\n> (1) Net sales by reportable segment:  \n> Greater China  17,539    14,493    82,378    64,377  \n\n该段落中，“Greater China”（大中华区）的净销售额在“Twelve Months Ended September 26, 2026”期间为 **82,378**（单位：百万美元）。\n\n该数据对应的是 **2026财年全年**，期间为“十二个月结束于2026年9月26日”，即全年累计期间。\n\n物理页码：第1页。\n\n答案：  \n**82,378**（百万美元），第1页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": true,
+          "year": true,
+          "unit": true,
+          "page": true,
+          "period": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2026财年全年，大中华区的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              3,
+              1,
+              2,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ13",
+        "question": "2026财年全年，大中华区的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 4069,
+        "target_page": 1,
+        "year": 2026,
+        "expected": "82,378",
+        "period": "FY",
+        "source_row": "Greater China  17,539    14,493    82,378    64,377",
+        "retrieved_pages": [
+          1,
+          3,
+          1,
+          2,
+          1
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false,
+          "period": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025财年第四季度，欧洲分部的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              1,
+              1,
+              3,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ14",
+        "question": "2025财年第四季度，欧洲分部的净销售额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1326,
+        "target_page": 1,
+        "year": 2025,
+        "expected": "28,703",
+        "period": "Q4",
+        "source_row": "Europe  32,008    28,703    127,604    111,032",
+        "retrieved_pages": [
+          1,
+          1,
+          1,
+          3,
+          1
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，本报告披露的合并收入实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              1,
+              3,
+              3,
+              1
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年 合并收入 实际金额 金额 百万美元 期间"
+            },
+            "pages": [
+              1,
+              3,
+              1,
+              3,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 3,
+        "id": "APQ15",
+        "question": "2028 财年，本报告披露的合并收入实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 3095,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          1,
+          1,
+          3,
+          3,
+          1
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2029 财年，本报告披露的期末现金及现金等价物实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              3,
+              2,
+              3,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ16",
+        "question": "2029 财年，本报告披露的期末现金及现金等价物实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 1502,
+        "target_page": null,
+        "year": 2029,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          3,
+          3,
+          2,
+          3,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "未披露",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，本报告披露的经营活动现金净额实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              3,
+              3,
+              3,
+              1,
+              1
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "operating activities cash generated by operating activities 2028"
+            },
+            "pages": [
+              3,
+              3,
+              3,
+              1,
+              1
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 2,
+        "id": "APQ17",
+        "question": "2028 财年，本报告披露的经营活动现金净额实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 2953,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          3,
+          3,
+          3,
+          1,
+          1
+        ],
+        "model_http_status": [
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "未披露。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "refusal": true
+        },
+        "passed": true,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2029 财年，本报告披露的合并研发费用实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              1,
+              3,
+              3,
+              3,
+              2
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "APQ18",
+        "question": "2029 财年，本报告披露的合并研发费用实际金额是多少？请写清所属年度和期间（含季度、累计月数、全年或期末日期），只给该期间的金额（百万美元）和 PDF 物理页码。如果报告没有披露这个期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 1617,
+        "target_page": null,
+        "year": 2029,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          1,
+          3,
+          3,
+          3,
+          2
+        ],
+        "model_http_status": [
+          200
+        ]
+      }
+    ],
+    "report_id": "apple-q4-26",
+    "title": "Apple 2026 财年第四季度及全年业绩报表",
+    "scope": "已测公司的新文件，3 页未经审计业绩表",
+    "source": "https://www.apple.com/newsroom/pdfs/fy2026q4/FY26_Q4_Consolidated_Financial_Statements.pdf",
+    "release_date": "2026-11-02"
+  },
+  {
+    "commit": "9484b34ead2fd088d570b82d2c2e81b74c98a269",
+    "app_sha256": {
+      "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent.py": "6d1a3d3d433c235da0e504e10188b45cc56a6e0ce54bbd565c914b2a18fce2e0",
+      "db.py": "47f091ca6318a1cb67492d19b1aaffcf52b4d3a69a472c3617b7006238ea2639",
+      "finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+      "main.py": "6630e6eb522ebfe1b4e4424f3ecce69e65063281e45e96c6e8687b665dfedfa8",
+      "observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+      "retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+      "runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+      "table_headers.py": "6d3a4082a7440827c598f8e6b8439e944a0294e4deb3653dc845d7cf4c13e460",
+      "table_lookup.py": "9b19b024df4dd844a7cc94670aab67bad258fd65903f14a4b64ba4e04db4512b"
+    },
+    "pdf_sha256": "b38e61bfeb17c63e82741a61b8e416ddeac05259fbae5de047159f335e32e7a8",
+    "fixture_sha256": "cecbaf9a49a832caaae828f4ea772e607a78b72bfeddf0b91bb6ac860f2cfb08",
+    "runner_sha256": "a5d2338c874caa05509e4ae77a007e028a7bc5248148a9f9817f87e2882b303d",
+    "prompt_sha256": "ea566346d4230661227520b537e7df8c7ff070f84468e6c76f62985d6f08060a",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    },
+    "models": {
+      "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d",
+      "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+    },
+    "started_utc": "2026-11-06T07:34:59.451200+00:00",
+    "cases": [
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，合并利润表的净收入（Net revenue）是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              55,
+              50,
+              74,
+              56,
+              62
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA01",
+        "question": "2025 财年，合并利润表的净收入（Net revenue）是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 43332,
+        "target_page": 61,
+        "year": 2025,
+        "expected": "34,639",
+        "period": null,
+        "source_row": "Net revenue $ 34,639 $ 25,785 $ 22,680",
+        "retrieved_pages": [
+          55,
+          50,
+          74,
+          56,
+          62
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "2024年，合并毛利润是17,152百万美元，第56页。",
+        "verification": "model_draft_unverified",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": true,
+          "unit": true,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并毛利润是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              56,
+              50,
+              50,
+              73,
+              50
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 fiscal year gross profit amount"
+            },
+            "pages": [
+              56,
+              50,
+              78,
+              61,
+              50
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "gross_margin",
+              "year": 2024
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADA02",
+        "question": "2024 财年，合并毛利润是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 4565,
+        "target_page": 61,
+        "year": 2024,
+        "expected": "12,725",
+        "period": null,
+        "source_row": "Gross profit 17,152 12,725 10,460",
+        "retrieved_pages": [
+          56,
+          50,
+          50,
+          73,
+          50
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，合并利润表的总销售成本是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              55,
+              56,
+              61,
+              73,
+              75
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 year cost of sales"
+            },
+            "pages": [
+              55,
+              73,
+              73,
+              56,
+              61
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "net_margin",
+              "year": 2025,
+              "metric": "cost"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADA03",
+        "question": "2025 财年，合并利润表的总销售成本是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 3981,
+        "target_page": 61,
+        "year": 2025,
+        "expected": "17,487",
+        "period": null,
+        "source_row": "Total cost of sales 17,487 13,060 12,220",
+        "retrieved_pages": [
+          55,
+          56,
+          61,
+          73,
+          75
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，合并营业利润是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              50,
+              56,
+              50,
+              149,
+              151
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA04",
+        "question": "2024 财年，合并营业利润是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1256,
+        "target_page": 61,
+        "year": 2024,
+        "expected": "1,900",
+        "period": null,
+        "source_row": "Operating income 3,694 1,900 401",
+        "retrieved_pages": [
+          50,
+          56,
+          50,
+          149,
+          151
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，合并研发费用是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              56,
+              50,
+              78,
+              50,
+              55
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA05",
+        "question": "2025 财年，合并研发费用是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1183,
+        "target_page": 61,
+        "year": 2025,
+        "expected": "8,091",
+        "period": null,
+        "source_row": "Research and development 8,091 6,456 5,872",
+        "retrieved_pages": [
+          56,
+          50,
+          78,
+          50,
+          55
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57,
+              65,
+              58,
+              66,
+              72
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "cash, cash equivalents and restricted cash at end of year 2025"
+            },
+            "pages": [
+              65,
+              66,
+              65,
+              58,
+              57
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "debt_ratio",
+              "year": 2025,
+              "metric": "total_assets"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADA06",
+        "question": "2025 财年，资产负债表上的现金及现金等价物是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 3300,
+        "target_page": 63,
+        "year": 2025,
+        "expected": "5,539",
+        "period": null,
+        "source_row": "Cash and cash equivalents $ 5,539 $ 3,787",
+        "retrieved_pages": [
+          57,
+          65,
+          58,
+          66,
+          72
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，扣除一年内到期部分后的长期债务净额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              81,
+              82,
+              50,
+              89,
+              57
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA07",
+        "question": "2024 财年，扣除一年内到期部分后的长期债务净额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1261,
+        "target_page": 63,
+        "year": 2024,
+        "expected": "1,721",
+        "period": null,
+        "source_row": "Long-term debt, net of current portion 2,348 1,721",
+        "retrieved_pages": [
+          81,
+          82,
+          50,
+          89,
+          57
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，资产负债表上的存货是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              72,
+              50,
+              57,
+              88,
+              80
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA08",
+        "question": "2025 财年，资产负债表上的存货是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1290,
+        "target_page": 63,
+        "year": 2025,
+        "expected": "7,920",
+        "period": null,
+        "source_row": "Inventories 7,920 5,734",
+        "retrieved_pages": [
+          72,
+          50,
+          57,
+          88,
+          80
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，资产负债表的流动负债合计是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              57,
+              89,
+              63,
+              59,
+              92
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 fiscal year current liabilities total flow liabilities"
+            },
+            "pages": [
+              63,
+              72,
+              63,
+              67,
+              92
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "debt_ratio",
+              "year": 2024,
+              "metric": "total_assets"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADA09",
+        "question": "2024 财年，资产负债表的流动负债合计是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 3459,
+        "target_page": 63,
+        "year": 2024,
+        "expected": "7,281",
+        "period": null,
+        "source_row": "Total current liabilities 9,455 7,281",
+        "retrieved_pages": [
+          57,
+          89,
+          63,
+          59,
+          92
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，现金流量表的经营活动现金净额（含终止经营）是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              58,
+              59,
+              58,
+              58,
+              59
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA10",
+        "question": "2025 财年，现金流量表的经营活动现金净额（含终止经营）是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1632,
+        "target_page": 65,
+        "year": 2025,
+        "expected": "7,709",
+        "period": null,
+        "source_row": "Net cash provided by operating activities 7,709 3,041 1,667",
+        "retrieved_pages": [
+          58,
+          59,
+          58,
+          58,
+          59
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": false,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，现金流量表的股份支付费用是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              65,
+              59,
+              57,
+              66,
+              59
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA11",
+        "question": "2024 财年，现金流量表的股份支付费用是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1243,
+        "target_page": 65,
+        "year": 2024,
+        "expected": "1,407",
+        "period": null,
+        "source_row": "Stock-based compensation 1,638 1,407 1,384",
+        "retrieved_pages": [
+          65,
+          59,
+          57,
+          66,
+          59
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，数据中心分部的净收入是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              55,
+              55,
+              74,
+              50,
+              58
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA12",
+        "question": "2025 财年，数据中心分部的净收入是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 2677,
+        "target_page": 74,
+        "year": 2025,
+        "expected": "16,635",
+        "period": null,
+        "source_row": "Data Center $ 16,635 $ 12,579 $ 6,496",
+        "retrieved_pages": [
+          55,
+          55,
+          74,
+          50,
+          58
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2024 财年，客户端与游戏分部的合计净收入是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              50,
+              74,
+              55,
+              55,
+              50
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA13",
+        "question": "2024 财年，客户端与游戏分部的合计净收入是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1246,
+        "target_page": 74,
+        "year": 2024,
+        "expected": "9,649",
+        "period": null,
+        "source_row": "Total Client and Gaming 14,550 9,649 10,863",
+        "retrieved_pages": [
+          50,
+          74,
+          55,
+          55,
+          50
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "retrieval": true,
+          "amount": false,
+          "year": false,
+          "unit": false,
+          "page": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2025 财年，嵌入式分部的营业利润是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              56,
+              55,
+              74,
+              58,
+              74
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA14",
+        "question": "2025 财年，嵌入式分部的营业利润是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "lookup",
+        "http": 200,
+        "elapsed_ms": 1603,
+        "target_page": 74,
+        "year": 2025,
+        "expected": "1,243",
+        "period": null,
+        "source_row": "Embedded 1,243 1,421 2,628",
+        "retrieved_pages": [
+          56,
+          55,
+          74,
+          58,
+          74
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，本报告披露的合并收入实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              50,
+              62,
+              149,
+              151,
+              101
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 fiscal year revenue or income amount"
+            },
+            "pages": [
+              50,
+              73,
+              55,
+              74,
+              78
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 3,
+        "id": "ADA15",
+        "question": "2028 财年，本报告披露的合并收入实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 2594,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          50,
+          62,
+          149,
+          151,
+          101
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2029 财年，本报告披露的期末现金及现金等价物实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              65,
+              57,
+              65,
+              149,
+              151
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA16",
+        "question": "2029 财年，本报告披露的期末现金及现金等价物实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 1234,
+        "target_page": null,
+        "year": 2029,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          65,
+          57,
+          65,
+          149,
+          151
+        ],
+        "model_http_status": [
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2028 财年，本报告披露的经营活动现金净额实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              4,
+              65,
+              149,
+              151,
+              65
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "list_metrics",
+            "args": {},
+            "pages": [],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "search_report",
+            "args": {
+              "query": "operating cash flow actual amount in 2028"
+            },
+            "pages": [
+              58,
+              58,
+              58,
+              59,
+              65
+            ],
+            "status": null
+          },
+          {
+            "origin": "model",
+            "tool": "calculate",
+            "args": {
+              "kind": "growth",
+              "year": 2028,
+              "metric": "operating_cash_flow"
+            },
+            "pages": [],
+            "status": "unavailable"
+          }
+        ],
+        "model_requests": 4,
+        "id": "ADA17",
+        "question": "2028 财年，本报告披露的经营活动现金净额实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 3122,
+        "target_page": null,
+        "year": 2028,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          4,
+          65,
+          149,
+          151,
+          65
+        ],
+        "model_http_status": [
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "answer": "无法核实所问年度的原表金额。",
+        "verification": "table_lookup_unavailable",
+        "checks": {
+          "refusal": false
+        },
+        "passed": false,
+        "trace": [
+          {
+            "origin": "server",
+            "tool": "search_report",
+            "args": {
+              "query": "2029 财年，本报告披露的合并研发费用实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。"
+            },
+            "pages": [
+              56,
+              149,
+              151,
+              62,
+              56
+            ],
+            "status": null
+          }
+        ],
+        "model_requests": 1,
+        "id": "ADA18",
+        "question": "2029 财年，本报告披露的合并研发费用实际金额是多少？请只给目标年度、金额（百万美元）和 PDF 物理页码。如果报告没有披露目标期间的实际金额，请只回答“未披露”。",
+        "type": "missing",
+        "http": 200,
+        "elapsed_ms": 1265,
+        "target_page": null,
+        "year": 2029,
+        "expected": null,
+        "period": null,
+        "source_row": "",
+        "retrieved_pages": [
+          56,
+          149,
+          151,
+          62,
+          56
+        ],
+        "model_http_status": [
+          200
+        ]
+      }
+    ],
+    "report_id": "amd-fy25",
+    "title": "AMD 2025 财年年报",
+    "scope": "同一家公司年度对照，154 页 10-K",
+    "source": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000018/0000002488-26-000018.pdf",
+    "release_date": "2026-02-04"
+  }
+]

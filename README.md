@@ -2,9 +2,17 @@
 
 用年报原文复核一个财务数字。使用者可以定位证据、确认年度和单位，再由模型调用工具计算比率并导出依据。
 
-[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [沃尔玛修复与最新独立验证](https://shuboyu0520.github.io/report-evidence-workbench/currency.html) · [Costco 修复与沃尔玛盲测](https://shuboyu0520.github.io/report-evidence-workbench/wrapped.html) · [微软修复与跨行业盲测](https://shuboyu0520.github.io/report-evidence-workbench/dated.html) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
+[打开作品演示与逐题评测](https://shuboyu0520.github.io/report-evidence-workbench/) · [AMD 与 Apple 最新披露实测](https://shuboyu0520.github.io/report-evidence-workbench/largecap.html) · [沃尔玛修复与跨公司验证](https://shuboyu0520.github.io/report-evidence-workbench/currency.html) · [Costco 修复与沃尔玛盲测](https://shuboyu0520.github.io/report-evidence-workbench/wrapped.html) · [微软修复与跨行业盲测](https://shuboyu0520.github.io/report-evidence-workbench/dated.html) · [Netflix 修复与微软首测](https://shuboyu0520.github.io/report-evidence-workbench/regional.html) · [原表查数与独立验证](https://shuboyu0520.github.io/report-evidence-workbench/table-cases.html) · [观看三分钟实录](docs/demo.webm) · [一页项目案例](docs/case.pdf) · [36 道检索题](docs/retrieval.json) · [120 次模型运行](docs/model-runs.json) · [RAG 同题复测](docs/rag-replay.json)
 
 ![工作台实际操作界面](docs/demo.png)
+
+## 2026 年 11 月 6 日实测
+
+AMD 季报查数通过 0/14，Apple 业绩报表通过 4/14。两份新披露的 8 道缺数题均按要求拒答。AMD 年报作为年度对照，查数通过 0/14，缺数拒答通过 0/4。 季报和业绩报表要求写明期间或期末日期。AMD 季报首次检索命中 6/14，Apple 命中 14/14。每份均为 14 道查数和 4 道缺数，分别计分。
+
+[54 道题的逐题原答](docs/largecap-audit.json) · [SQL 首个失败环节](docs/largecap-failures.json) · [评测 SQL](evaluation/period_failures.sql)
+
+从对应题集的 `source` 下载原始 PDF。以 AMD 季报为例，运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/amd-q3-26.json --pdf data/amd-q3-26.pdf --out data/new-amd-q3-run`。同样方式可运行 `apple-q4-26` 和 `amd-fy25`。默认使用本机 Ollama 11434 端口，可用 `--url` 指定。
 
 ## 一个例子
 
