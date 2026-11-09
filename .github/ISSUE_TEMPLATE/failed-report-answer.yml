@@ -1,0 +1,32 @@
+name: 提交财报问答失败样例
+description: 提供公开资料、问题和原页引文，帮助维护者复现错误。
+title: "[评测样例] "
+body:
+  - type: input
+    id: source
+    attributes:
+      label: 公司与原始财报链接
+      description: 优先填写发行人或监管机构发布的公开版本。
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: 当时输入的问题与研究截止日
+      description: 保留原问题的季度、单位及指引口径。
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: 实际回答
+      description: 粘贴答案和引用页。查看已有评测时也可填写批次和题号。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 预期结果和支持证据
+      description: 填写 PDF 物理页码、原行和表头。主张证据不足时，说明已检查的表或附注。
+    validations:
+      required: true

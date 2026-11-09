@@ -1,0 +1,15 @@
+{
+  "sealed_utc": "2026-11-09T18:01:15.229276+00:00",
+  "fixture_sha256": "c881521b0f01e2d61c8f32d6aebdf13d6fce4a423e771526b8572ed5cf6e81e7",
+  "pdf_sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+  "gold_generation": "Independent manual readings checked against local pypdf text. No workbench requests made.",
+  "source_event": "https://ir.expediagroup.com/news-and-events/investor-events/event-details/2026/Expedia-Group-Q3-2026-Earnings-Call/default.aspx",
+  "source": "https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf",
+  "sec_release": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000059/earningsrelease-q32026.htm",
+  "physical_pages": 14,
+  "set_sizes": {
+    "actuals": 12,
+    "guidance": 2,
+    "disclosure_status": 4
+  }
+}

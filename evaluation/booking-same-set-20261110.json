@@ -1,0 +1,465 @@
+{
+  "cohort": "same-question development replay of previously exposed Booking first-run fixture",
+  "source": "https://www.bookingholdings.com/wp-content/uploads/2026/11/Q3-26-BKNG-Earnings-Release-Final.pdf",
+  "sha256_pdf": "ee8d404ee88b884d9ebb06b34930c8c90872c5319f182eb44a765c42bdb6efbe",
+  "sha256_fixture": "761ccac985ae4f444ca41fa0c0687b467eba6bf930d535d99127060551e081d6",
+  "as_of": "2026-11-07",
+  "replay_start_utc": "2026-11-09T17:44:20.998426+00:00",
+  "base_commit": "967d26f96e43a848d247ddad1ba5a020bb300558",
+  "config": {
+    "model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "source_sha256": {
+    "app/earnings_tables.py": "0cbfb3163683cbcd471fafd96f3a0bd565da9e1f46824e15ce848776b907d2a4",
+    "app/reader.py": "d994d4116defbb74c95f84215835cadb5cdf65af756f47ef665cd7da34174a84"
+  },
+  "sha256_raw_replay": "70e146d95580fee981445e984636d223b2d5f2c50e20bd51e425ceb8884eb957",
+  "sha256_first_run": "a389d738c669dd3e92cfc7fd6ebcb66e9235559242c1f4bb211093938bea8c9b",
+  "scores": {
+    "lookup_guidance": [
+      10,
+      14
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "cases": [
+    {
+      "id": "B01",
+      "question": "2026 年第三季度集团 GAAP 总营收是多少百万美元？请引用精确金额。",
+      "kind": "quarter",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，公司整体  Total revenues（实际）为 8,893 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Total revenues  8,893  9,008  21,777  20,568"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "question": "2025 年第三季度集团总营收是多少百万美元？只查去年同期。",
+      "kind": "quarter",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "2025 财年第3季度，公司整体  Revenue（实际）为 8,900.0 百万美元。原表第 1 页。",
+      "answer": "2025 财年第3季度，公司整体  Total revenues（实际）为 9,008 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Total revenues  8,893  9,008  21,777  20,568"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "question": "2026 年第三季度集团 GAAP 净利润是多少百万美元？请按精确金额作答。",
+      "kind": "quarter",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，公司整体  Net income（实际）为 2,717 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Net income $ 2,717 $ 2,748 $ 5,750 $ 3,976"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B04",
+      "question": "2026 年第三季度集团的营业利润是多少百万美元？",
+      "kind": "quarter",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，公司整体  Operating income（实际）为 3,418 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Operating income  3,418  3,483  7,189  6,795"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B05",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元？请保留小数。",
+      "kind": "quarter",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "2026 财年第3季度，公司整体  Net income applicable to common stockholders per diluted common share（实际）为 3.61 美元/股。原表第 5 页。",
+      "answer": "2026 财年第3季度，公司整体  Net income applicable to common stockholders per diluted common share（实际）为 3.61 美元/股。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Net income applicable to common stockholders per diluted common share $ 3.61 $ 3.38 $ 7.45 $ 4.86"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B06",
+      "question": "2026 年第三季度商户模式的营收（Merchant revenues）是多少百万美元？请按收入类型查。",
+      "kind": "business",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，所问业务  Merchant revenues（实际）为 6,998 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Merchant revenues $ 6,998 $ 6,131 $ 15,823 $ 13,506"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B07",
+      "question": "2026 年第三季度代理模式的营收（Agency revenues）是多少百万美元？只查该项。",
+      "kind": "business",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，所问业务  Agency revenues（实际）为 2,463 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Agency revenues  2,463  2,569  5,894  6,177"
+        },
+        {
+          "page": 5,
+          "quote": "Three Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026 2025 2026 2025"
+        },
+        {
+          "page": 5,
+          "quote": "(In millions, except per share data)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B08",
+      "question": "2026 年第三季度售出的间夜数（Room Nights）是多少百万间夜？",
+      "kind": "operating_kpi",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，公司整体  Room Nights（实际）为 345 百万间夜。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Room Nights 345M 7%"
+        },
+        {
+          "page": 1,
+          "quote": "NORWALK, CT - November 3, 2026…Booking Holdings Inc. (NASDAQ: BKNG) (the \"Company,\" \"we,\" \"our,\" or \"us\")\ntoday reported its third quarter 2026 financial results.\n● Room nights grew 7% compared to the third quarter of 2025.\n● Gross bookings grew 10% compared to the third quarter of 2025, or approximately 11% on a constant\ncurrency basis.\n● Revenue declined 1% compared to the third quarter of 2025, while Adjusted Revenue grew 9%, or\napproximately 10% on a constant currency basis.\n● Net income declined 1% compared to the third quarter of 2025, while Adjusted Net income and Adjusted\nEBITDA grew 8% and 9%, respectively.\n● GAAP EPS and Adjusted EPS grew 7% and 17%, respectively, compared to the third quarter of 2025.\nQ3 2026\n(#) (Δ Y/Y)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B09",
+      "question": "2026 年第三季度集团总预订额（Gross Bookings）是多少十亿美元？",
+      "kind": "operating_kpi",
+      "passed": true,
+      "reason": "Metric, source row, physical page, period, column and unit checked",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "2026 财年第3季度，公司整体  Gross Bookings（实际）为 54.5 十亿美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Gross Bookings $54.5B 10%"
+        },
+        {
+          "page": 1,
+          "quote": "NORWALK, CT - November 3, 2026…Booking Holdings Inc. (NASDAQ: BKNG) (the \"Company,\" \"we,\" \"our,\" or \"us\")\ntoday reported its third quarter 2026 financial results.\n● Room nights grew 7% compared to the third quarter of 2025.\n● Gross bookings grew 10% compared to the third quarter of 2025, or approximately 11% on a constant\ncurrency basis.\n● Revenue declined 1% compared to the third quarter of 2025, while Adjusted Revenue grew 9%, or\napproximately 10% on a constant currency basis.\n● Net income declined 1% compared to the third quarter of 2025, while Adjusted Net income and Adjusted\nEBITDA grew 8% and 9%, respectively.\n● GAAP EPS and Adjusted EPS grew 7% and 17%, respectively, compared to the third quarter of 2025.\nQ3 2026\n(#) (Δ Y/Y)"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ]
+    },
+    {
+      "id": "B10",
+      "question": "2026 年第三季度集团人员费用（Personnel）合计多少百万美元？请含股权激励，引用人员总费用。",
+      "kind": "expense",
+      "passed": true,
+      "reason": "Personnel total and included share-based cost",
+      "first_answer": "2026年第三季度集团人员费用（Personnel）合计为944百万美元，含股权激励。（原文第 5 页）",
+      "answer": "2026年第三季度集团人员费用（Personnel）合计为944百万美元，含股权激励。（原文第 5 页）",
+      "verification": "cited_draft",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Personnel, including stock-based compensation of $145, $150, $426, and $446, respectively  944  945  2,737  2,534"
+        }
+      ],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\n  \"answer\": \"2026年第三季度集团人员费用（Personnel）合计为944百万美元，含股权激励。\",\n  \"evidence\": [\n    {\n      \"page\": 5,\n      \"quote\": \"Personnel, including stock-based compensation of $145, $150, $426, and $446, respectively  944  945  2,737  2,534\"\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "id": "B11",
+      "question": "2026 年第三季度单季自由现金流是多少百万美元？请给出精确金额。",
+      "kind": "cash",
+      "passed": false,
+      "reason": "Insufficient evidence returned for answerable task",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\n  \"answer\": \"2026年第三季度单季自由现金流是11亿美元。\",\n  \"evidence\": [\n    {\n      \"page\": 1,\n      \"quote\": \"Free Cash Flow (1) $1.1B (22%)\"\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "id": "B12",
+      "question": "2026 年第三季度集团调整后 EBITDA 是多少百万美元？请给出调节表中的精确金额。",
+      "kind": "adjusted",
+      "passed": false,
+      "reason": "Insufficient evidence returned for answerable task",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "model_trace": []
+    },
+    {
+      "id": "B13",
+      "question": "2026 年第四季度公司预计间夜数同比增长的指引区间是多少？请用百分比给出两个端点。",
+      "kind": "guidance",
+      "passed": false,
+      "reason": "Insufficient evidence returned for answerable task",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\n  \"answer\": \"问题中询问的‘2026年第四季度公司预计间夜数同比增长的指引区间’在提供的文件中未明确提及。文件中仅提及2026年第三季度的间夜数同比增长为7%，且在2026年全年指引中提到‘Room Nights Growth 1% - 3%’，但该指引为全年而非第四季度，且未明确说明是针对2026年第四季度的间夜数增长。因此，无法根据现有信息准确回答该问题。\",\n  \"evidence\": []\n}"
+        }
+      ]
+    },
+    {
+      "id": "B14",
+      "question": "2026 年第四季度管理层给出的固定汇率总预订额同比增长指引区间是多少？请用百分比保留两个端点。",
+      "kind": "guidance",
+      "passed": false,
+      "reason": "Insufficient evidence returned for answerable task",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\n  \"answer\": \"问题中询问的是‘2026年第四季度管理层给出的固定汇率总预订额同比增长指引区间’，但原文中并未提及‘固定汇率总预订额’或‘总预订额’的同比增长指引。原文中提到的‘Gross Bookings Growth’为‘2% - 4% High Single Digits’，且该数据为‘Gross Bookings Growth’，并非‘固定汇率总预订额’，且未明确说明该数据是否为‘固定汇率’（constant currency）。\\n\\n此外，原文中‘Constant Currency Gross Bookings Growth’为‘4% - 6% High Single Digits’，这属于‘固定汇率’下的数据，但该数据是‘常数汇率下的总预订额增长’，而非‘总预订额同比增长指引’，且该数据是‘常数汇率’下的，而非‘固定汇率’的直接对应。\\n\\n因此，无法从原文中准确提取‘2026年第四季度固定汇率总预订额同比增长指引区间’这一具体指标的数值，且原文未明确说明‘总预订额’与‘Gross Bookings’的对应关系，也未明确‘固定汇率’与‘常数汇率’的定义是否等同，且未提供‘总预订额’的定义。\\n\\n结论：无法找到符合问题要求的连续原文证据，且无法确认该指标的实际数值。\\n\\n故回答为：无法确定。\",\n  \"evidence\": []\n}"
+        }
+      ]
+    },
+    {
+      "id": "B15",
+      "question": "截至研究日，期间结束日 2026-12-31 的完整季度实际营收是多少？",
+      "kind": "future",
+      "passed": true,
+      "reason": "Quarter-end disclosure gate",
+      "first_answer": "截至 2026-11-07，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "answer": "截至 2026-11-07，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "model_trace": []
+    },
+    {
+      "id": "B16",
+      "question": "期间结束日 2026-12-31 的完整季度已经实现的摊薄每股收益是多少美元？",
+      "kind": "future",
+      "passed": true,
+      "reason": "Quarter-end disclosure gate",
+      "first_answer": "截至 2026-11-07，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "answer": "截至 2026-11-07，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "model_trace": []
+    },
+    {
+      "id": "B17",
+      "question": "2026 年第三季度单独来自悉尼市某大学天文社的机票佣金营收是多少百万美元？只查这份公告。",
+      "kind": "missing",
+      "passed": true,
+      "reason": "Unsupported scope",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "model_trace": []
+    },
+    {
+      "id": "B18",
+      "question": "2026 年第三季度专门分配给墨尔本某个单一公寓读书会的市场营销费用是多少美元？只查本资料。",
+      "kind": "missing",
+      "passed": true,
+      "reason": "Unsupported scope",
+      "first_answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "model_trace": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\n  \"answer\": \"无法回答。资料中未提及与‘墨尔本某个单一公寓读书会’相关的市场营销费用，也未涉及2026年第三季度针对特定地点或活动的市场营销费用分配。\",\n  \"evidence\": []\n}"
+        }
+      ]
+    }
+  ]
+}

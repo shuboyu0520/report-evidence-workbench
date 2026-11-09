@@ -1,0 +1,68 @@
+{
+  "source_snapshot_sha256": "ec9f23a5f749e08da23383312b3968d493154fcdc262d67b1f39abad22d4799a",
+  "model_digests": {
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d"
+  },
+  "config": {
+    "model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "booking": {
+    "lookup_guidance": [
+      14,
+      14
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "expedia": {
+    "lookup_guidance": [
+      2,
+      14
+    ],
+    "lookup_only": [
+      2,
+      12
+    ],
+    "guidance_only": [
+      0,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "expedia_failures": {
+    "no_eligible_cell": 11,
+    "retrieved_correct_draft_but_final_refused": 1
+  },
+  "expedia_pdf_sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+  "expedia_fixture_sha256": "c881521b0f01e2d61c8f32d6aebdf13d6fce4a423e771526b8572ed5cf6e81e7",
+  "first_response_file_sha256": "2735ff96f810b0b1acc6e1b855cf8eacd6cf661f5f65ab3896fda36f0bb43b63",
+  "historical_exact_replay": [
+    58,
+    58
+  ],
+  "application_tests": {
+    "total": 207,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "metamorphic_checks": {
+    "cash_value_follows_source": true,
+    "ebitda_follows_continuation_unit": true,
+    "nights_range_follows_source": true,
+    "cc_scope_does_not_fall_back_to_nominal": true
+  }
+}

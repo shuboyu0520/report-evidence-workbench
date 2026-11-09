@@ -20,6 +20,7 @@ from .agent import analyze
 from .comparison import summarize
 from .db import Database
 from .finance import FACTORS, extract_metrics, numeric
+from .growth_guidance import GUIDANCE, PERIOD, YOY, growth_column_positions
 from .observatory import install_observatory
 from .reader import CASE_DIGESTS, CASE_TEXT, compare_reports, read_report
 from .table_headers import YEAR_GROUP, segment_headers, year_then_columns
@@ -57,6 +58,7 @@ class ConfirmedMetric(BaseModel):
 
 def parse_upload(content, filename):
     columns = {}
+    outlook_columns = {}
     suffix = Path(filename).suffix.lower()
     if suffix == ".txt":
         try:
@@ -74,6 +76,9 @@ def parse_upload(content, filename):
                 raise ValueError("最多支持 500 页")
             texts = [page.extract_text() or "" for page in reader.pages]
             for i, text in enumerate(texts):
+                if GUIDANCE.search(text) and any(YOY.search(s) and len(PERIOD.findall(s))>1 for s in text.splitlines()):
+                    layout = reader.pages[i].extract_text(extraction_mode="layout", layout_mode_space_vertically=False)
+                    outlook_columns[i+1] = growth_column_positions(layout)
                 if re.search(r"reportable segments?|segment reporting|(?:our|company's|operating) segments\b|\beach division\b", text, re.I) and any(
                     YEAR_GROUP.fullmatch(s.strip()) for s in text.splitlines()
                 ):
@@ -93,6 +98,8 @@ def parse_upload(content, filename):
         raise ValueError("未提取到文字；扫描件请先进行 OCR")
     pages = [{"number": i, "text": text} for i, text in enumerate(texts, 1)]
     for page in pages:
+        if outlook_columns.get(page["number"]):
+            page["growth_columns"] = outlook_columns[page["number"]]
         if page["number"] in columns:
             page["segment_columns"] = columns[page["number"]]
     return pages

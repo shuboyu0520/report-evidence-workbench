@@ -189,7 +189,10 @@ async def from_cards(question, config, tools, calls):
 async def from_document(db, report, pages, question, config, tools, calls, events):
     request = lookup_request(question)
     rows = source_rows(pages) if request else []
-    if rows:
+    if request and request.metric=="free_cash_flow" and not any(r.reconciliation_total and re.search(request.pattern,r.label,re.I) for r in rows):
+        # Other FCF layouts (including TTM grids) retain source-bounded retrieval.
+        rows = []
+    if rows or (request and request.growth_basis):
         candidates = resolve_sources(pages, request, rows)
         tools.append(
             {
@@ -251,8 +254,8 @@ async def from_document(db, report, pages, question, config, tools, calls, event
         classification = "指引" if request.guidance else "实际"
         answer = f"{request.year} 财年{period}，{scope} {basis} {cell['label']}（{classification}）为 {amount} {cell['unit']}。原表第 {cell['page']} 页。"
         refs = [
-            {"page": cell["page"], "quote": cell[k]}
-            for k in ("quote", "header", "context_quote")
+            {"page": cell.get("unit_page",cell["page"]) if k=="unit_quote" else cell["page"], "quote": cell[k]}
+            for k in ("quote", "header", "context_quote", "unit_quote")
             if cell.get(k)
         ]
         return (

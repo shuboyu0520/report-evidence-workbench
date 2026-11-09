@@ -1,37 +1,45 @@
-# 财报复核工作台
+# 财报复核工作台 · Report Evidence Workbench
 
-一款面向财报初读者和投资者的中文阅读工具。选一个研究日期，从财务原表、同行披露、行业统计和政策出处核对自己的判断。
+用中文查询英文财报，核对回答中的金额、期间、单位和出处。工作台会展示原始答复、PDF 物理页码与引文，方便检查某个数字取自哪一行。
 
-[直接体验台积电案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录和一页案例](https://shuboyu0520.github.io/report-evidence-workbench/) · [Airbnb 原表演示、40 题回归与 Booking 首测](https://shuboyu0520.github.io/report-evidence-workbench/quarterly-precision.html)
+Ask questions in Chinese against an English earnings release. Inspect a recorded answer and its source row offline, or upload your own report and run the reader locally with Ollama.
 
-![台积电财报联读](docs/reader-preview.png)
+## 先看一道题 / Quick start
 
-## 案例与验收
+在包含本页的仓库目录中，可用浏览器直接打开 [离线评测查看器](docs/evidence-review.html)。也可用 Python 3.10 或更高版本运行以下命令。查看存档只用 Python 标准库。
 
-Airbnb 股东信的查数与指引从首测 3/14 提升至原题复测 14/14，披露判断仍为 4/4。模型从经校验的候选中选证据，程序按年份、季度、单位与费用类别读原表。第 22 页产品开发总费用为 664 百万美元，278 百万美元是其中的股权激励。第 21 页精确平均预订价格为 178.83 美元。Uber、高通和台积电共 40 道既有题的答复、引文全文、页码及状态与上版逐题一致。
-
-版本冻结后，首次用 Booking Holdings 11 月 3 日发布的季度业绩公告评测。查数与指引 **2/14**，披露判断 **4/4**。通过的两题是摊薄每股收益和人员总费用。其余 12 题中，7 题没有合格原行，4 题召回证据页后拒答，1 题把本季摘要约数错配给上年。逐题记录分别保留了同题复测和跨公司首轮的原答、引文与判分依据。
-
-[交互案例与 76 条回答](docs/quarterly-precision.html) · [本轮逐题证据 JSON](docs/quarterly-precision-audit.json) · [Booking 首测题目、原件摘要与判分规则](evaluation/booking-reader-blind.json) · [Booking 官方业绩公告](https://www.bookingholdings.com/wp-content/uploads/2026/11/Q3-26-BKNG-Earnings-Release-Final.pdf) · [分组分析 SQL](evaluation/earnings_outcomes.sql)
-
-如需复现，用下文的环境启动 Ollama，将官方公告保存为 `booking-q3.pdf`，在一个新的输出目录运行以下命令。脚本先核验 PDF 的 SHA-256，再走工作台的上传和提问接口，并保存逐题原答与工具轨迹。重跑属于复测，第一次作答的原始成绩保留在上方的逐题记录中。
-
-```powershell
-uv run python -m scripts.evaluate_reader --fixture evaluation/booking-reader-blind.json --file booking-q3.pdf --out replay-booking
+```shell
+python scripts/inspect_eval.py --cohort booking --case B14
 ```
 
-### 上一轮记录
+B14 问的是 Booking 对第四季度**固定汇率口径总预订额同比增幅**的指引。原表第 3 页给出的区间是 **4% 至 6%**。打开这条记录，可以对照问题、作答和引文，检查系统是否选中了正确的指引行。
 
-Uber 查数及指引的独立首轮为 3/14，两次同题复测分别为 8/14、14/14。最新版本按指标表头区分同名业务行，并从管理层指引原句读取两个端点。高通 18/18、台积电 4/4 原答、引文和判断与上版逐题一致。Uber 的 4 道披露状态题也全部通过。
+[![逐题查看 Booking B14 的上版答复、复测答复与 PDF 第 3 页的引文](docs/evidence-review-preview.png)](docs/evidence-review.html#cohort=booking&case=B14)
 
-随后以全新公司 Airbnb 的第三季度股东信做独立首轮。冻结引擎、登记题目和原页后，14 道查数及指引通过 3 道，4 道披露状态全部通过。9 道有答案却拒答，2 道给出了错误精度或费用分项。通过的单季自由现金流题还附带一条滚动期间引文。页面保留失败原答、原件链接、工具轨迹和分组 SQL。GitHub Pages 提供免安装演示，本机工作台支持自由上传及提问。
+```shell
+python scripts/inspect_eval.py
+python scripts/inspect_eval.py --cohort expedia --failed
+```
 
-[本轮逐题记录](docs/offering-audit.json) · [Airbnb 预登记题集](evaluation/airbnb-reader-blind.json) · [SQL 归因](evaluation/earnings_outcomes.sql) · [上一轮高通、Uber 首测与回归](docs/earnings-evaluation.html) · [历史盲测及四源联读](docs/reader-evaluation.html) · [SplitAgent 的公开案例](docs/splitagent.html)
+第一条显示评测概况，第二条列出新公司首测的失败样例。[逐题存档 JSON](evaluation/showcase.json) · [已上线的台积电联读案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录](https://shuboyu0520.github.io/report-evidence-workbench/)
+
+## 冻结评测 / Evaluation results
+
+| 场景 | 查数与指引 | 披露状态 |
+| --- | ---: | ---: |
+| Booking，原题修复后复测 | 14/14 | 4/4 |
+| Expedia，新公司首次作答 | 2/14 | 4/4 |
+
+Booking 同一组 14 道查数与指引题依次通过 2、10、14 道。最后一次修复涉及单季自由现金流、调整后 EBITDA、报告口径间夜增幅和固定汇率总预订额增幅。
+
+代码冻结后，对同业新公司 Expedia 只做一次首测。12 道查数通过 2 道，2 道指引均未通过。12 道有答案却拒答的题中，11 道未选出符合条件的原表单元格，1 道检索到了正确的自由现金流原页并生成了正确草稿，最终仍返回证据不足。[Booking 官方公告](https://www.bookingholdings.com/wp-content/uploads/2026/11/Q3-26-BKNG-Earnings-Release-Final.pdf) · [Expedia 官方公告](https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf) · [早期评测及逐题记录](EVALUATION_HISTORY.md)
+
+*Booking was a replay of known questions. Expedia was evaluated once with the frozen engine. Lookup and guidance, and disclosure status, have separate denominators.*
 
 <a id="run-reader"></a>
-## 在本机上传报告并提问
+## 上传自己的报告 / Run the reader
 
-安装 Python 3.12+、uv 与 Ollama。在两个终端分别启动 Ollama 与工作台。Ollama 安装所需模型后，PowerShell 可运行：
+安装 Python 3.12–3.14、uv 和 Ollama。启动 Ollama 服务后，在仓库根目录打开 PowerShell。
 
 ```powershell
 ollama pull qwen3:4b-instruct
@@ -42,109 +50,21 @@ uv sync --frozen
 uv run uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
 ```
 
-打开 <http://127.0.0.1:8000/reader>。单文档可导入文本型 PDF 或 UTF-8 TXT；跨资料联读需要给各来源填写发布日期。接口保留引文位置、查证状态与调用轨迹。默认 Ollama 端口为 11434，可通过 `OLLAMA_URL` 修改。GitHub Pages 提供免安装示例、指标搜索、原题回放和归因报告；自由提问使用本机模型。
+打开[本机阅读器](http://127.0.0.1:8000/reader)，在「用自己的资料提问」中上传带文本层的 PDF 或 UTF-8 TXT，填写发布日期。选择主资料与研究截止日，提问后可查看原页引文、回答状态，并下载该次分析的输入与调用记录。
 
-从题集中的发行人链接下载原件后，使用新输出目录运行 `uv run python -m scripts.evaluate_reader --fixture evaluation/qcom-reader-blind.json --file data/qcom.pdf --out data/run-qcom`。公开案例页面可用 `uv run python -m scripts.build_reader_site` 重建。二次上传相同原件保留其既有元数据。原第三方台积电研究报告未分发，公开示例使用自行核对的台积电资料卡。
+## 复现模型评测 / Reproduce a run
 
-## 2026 年 11 月 6 日实测
+在本轮版本中运行 `git rev-parse HEAD:app` 会得到 `b1a1a10002c4be77f7a7b6948206d53995309fda`。这个 Git 对象可用于核对应用源码版本。模型摘要、推理参数和历史回放数量见[冻结记录](evaluation/frozen-release-20261110.json)。
 
-AMD 季报查数通过 0/14，Apple 业绩报表通过 4/14。两份新披露的 8 道缺数题均按要求拒答。AMD 年报作为年度对照，查数通过 0/14，缺数拒答通过 0/4。 季报和业绩报表要求写明期间或期末日期。AMD 季报首次检索命中 6/14，Apple 命中 14/14。每份均为 14 道查数和 4 道缺数，分别计分。
+将上面两份官方 PDF 分别保存到仓库根目录的 `booking.pdf` 和 `expedia.pdf`，保持 Ollama 运行，从新的输出目录开始。
 
-[54 道题的逐题原答](docs/largecap-audit.json) · [SQL 首个失败环节](docs/largecap-failures.json) · [评测 SQL](evaluation/period_failures.sql)
-
-从对应题集的 `source` 下载原始 PDF。以 AMD 季报为例，运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/amd-q3-26.json --pdf data/amd-q3-26.pdf --out data/new-amd-q3-run`。同样方式可运行 `apple-q4-26` 和 `amd-fy25`。默认使用本机 Ollama 11434 端口，可用 `--url` 指定。
-
-## 一个例子
-
-用中文询问苹果 2025 财年的研发费用。等权融合的前五个检索结果漏掉了目标证据，模型答复证据不足。改用真实嵌入模型进行语义检索后，第一条证据来自第 32 个物理页，包含 “Research and development  34,550  31,370  29,915”。核对列名和单位后，2025 财年的数值为 34,550 百万美元。[Apple 原始报告](https://s2.q4cdn.com/470004039/files/doc_financials/2025/ar/_10-K-2025-As-Filed.pdf)
-
-## 检索与生成如何配合
-
-- **直接查表**。财务表格检索对齐指标名称和数值行。在两份 Apple 年报的 20 道英文题上命中 20 道，在 Meta 年报的 10 道英文题上命中 9 道。
-- **语义检索**。按 PDF 物理页切分带重叠的片段，保留原文和字符位置。SQLite 以文件摘要、模型摘要和分块版本缓存完整向量索引。中文查询英文报告优先使用余弦相似度，其他问题在 RAG 模式下使用 BM25 与向量的 RRF 融合。
-- **计算与追溯**。Ollama 驱动 Qwen3 工具调用，服务端保留检索片段、计算输入和历史版本。读取财务比率时使用已确认的数值，Decimal 工具负责运算，缺数时说明原因。
-
-| 前五条命中完整证据行 | 表格行检索 | BM25 | 纯向量 | 等权 RRF |
-|---|---:|---:|---:|---:|
-| Apple 英文，20 题 | 20 | 12 | 15 | 12 |
-| Meta 英文，10 题 | 9 | 2 | 7 | 8 |
-| 中文改写，6 题 | 0 | 0 | 4 | 1 |
-
-中文改写沿用六条已有标注。三种通用方案（BM25、纯向量、RRF）使用相同的块，表格行检索使用专门的行窗口。模型 A/B 在一份年报、15 条预先确认的指标和 20 道固定开发题上运行三轮，末轮 A 通过 5 题，B2 通过 20 题。结果页面按轮列出失败原因。项目尚待目标用户试用。
-
-## 本地运行
-
-安装 Python 3.12 和 uv，在仓库根目录运行下列命令。在浏览器打开终端显示的地址，上传 `examples/demo-report.txt` 即可使用表格检索和计算。若只想浏览作品，直接打开 `docs/index.html`。
-
-```console
-uv sync --frozen
-uv run uvicorn --factory app.main:create_app --host 127.0.0.1 --port 8146
+```shell
+uv run python -m scripts.evaluate_reader --fixture evaluation/booking-reader-blind.json --file booking.pdf --out replay-booking
+uv run python -m scripts.evaluate_reader --fixture evaluation/expedia-reader-blind.json --file expedia.pdf --out replay-expedia
 ```
 
-要启用 Agent 和 RAG，启动 Ollama，依次准备两个模型，然后使用内置的 B2 提示词入口。
+脚本核验 PDF 哈希，逐题调用上传与问答接口，把本次结果保存在各目录的 `results.json`。从存档查看器可以查阅原先冻结的首答和独立判分。要核验一次新运行，需按各题集的原页、金额、单位、期间及披露规则重新评分。[Booking 题集](evaluation/booking-reader-blind.json) · [Expedia 题集](evaluation/expedia-reader-blind.json)
 
-```console
-ollama pull qwen3:4b-instruct
-ollama pull qwen3-embedding:0.6b
-uv run python -m scripts.serve_model_demo --url http://127.0.0.1:11434
-```
+## 贡献失败样例 / Contribute a case
 
-## 复现评测
-
-在仓库根目录运行。检索评测会从两个标注清单读取三份 PDF 的相对路径，并核对 SHA-256。先按 [Apple 清单](evaluation/retrieval_gold.json) 和 [Meta 清单](evaluation/retrieval_holdout_meta.json) 的 `source` 下载文件到对应的 `file` 路径。模型评测使用 Apple 2025 年报和仓库内的标注。真实模型运行时间取决于硬件，后续运行的回答可能有变化。
-
-```console
-uv run pytest -q
-uv run python -m scripts.evaluate_hybrid --url http://127.0.0.1:11434 --out data/retrieval-run
-uv run python -m scripts.evaluate_model_ab --url http://127.0.0.1:11434 --out data/model-run
-```
-
-从 [分块、向量和融合排序](app/retrieval.py)、[Agent 工具调用及回答检查](app/agent.py)、[财务口径和确定性计算](app/finance.py) 或 [逐题评测脚本](scripts/evaluate_hybrid.py) 阅读核心实现。
-
-## Amazon 旧版盲测记录
-
-首次通过 5/18，候选复测通过 5/18，当时版本的回归通过 5/18。14 道查数题和 4 道报告期间之外的缺数题采用预先冻结的原表物理页标注。候选检索策略没有通过比较，发布版保留原策略及新增的三类异常保护。9 项新增 API 故障注入测试计入全量 85 项。
-
-[逐题对照与 SQL 复盘](https://shuboyu0520.github.io/report-evidence-workbench/holdout.html) · [冻结题集](evaluation/amazon_holdout.json) · [SQL](evaluation/failure_analysis.sql)
-
-运行 `uv run python -m scripts.analyze_failures` 即可从公开数据重建 SQL 汇总。从标注的 source 下载年报，再运行 `uv run python -m scripts.evaluate_holdout --pdf data/amazon-2024.pdf --url http://127.0.0.1:11434 --out data/amazon-new-run`。输出目录必须为新目录，便于保留每次结果。
-
-## 从原表定位金额
-
-亚马逊原题的查数通过数从 1/14 提升到 14/14。Alphabet 首测 2/14，兼容不同表头后复测 11/14。最终冻结的问答逻辑在 Netflix 首次盲测中通过 10/14。三组的 4 道缺数题均满足拒答判据。模型只选择候选行，金额来自实际表头和原始单元格。Netflix 有 3 道地区收入附注题和 1 道合计题未通过。
-
-[逐题记录](docs/table-audit.json) · [读取器](app/table_lookup.py) · [Alphabet 预标注](evaluation/alphabet_holdout.json) · [Netflix 预标注](evaluation/netflix_holdout.json)
-
-下载对应标注的原件，可用 `uv run python -m scripts.evaluate_holdout --fixture evaluation/netflix_holdout.json --pdf data/netflix-2024.pdf --out data/netflix-new-run` 复测。96 项本地自动化回归通过。早期评测中的“发布版”指对应阶段的历史版本。
-
-运行 `uv run python -m scripts.analyze_table_runs` 可从公开逐题数据重建六轮 [SQL 失败归因](docs/table-failures.json)。旧版 Amazon 有 10 题漏掉原行，3 题命中原行但金额错误。
-
-## 地区收入与合计行
-
-冻结读取器后，Netflix 原题 14/14（前次 10/14），Amazon 14/14（持平），Alphabet 12/14（前次 11/14）。对上一版已通过的每道题做配对检查，零退步。随后用微软 FY2024 年报首次盲测，查数严格通过 4/14，缺数拒答 4/4。其主表日期与多个年份同栏，18 题均回退至向量检索。99 项自动化回归通过。运行口径、证据与剩余失败可在[逐题页面](docs/regional.html)查看。
-
-使用 [微软标注](evaluation/microsoft_holdout.json) 的 PDF 和 SHA-256，可运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/microsoft_holdout.json --pdf data/microsoft-2024.pdf --out data/microsoft-new-run`。运行 `uv run python -m scripts.analyze_table_runs --audit docs/regional-audit.json` 可复算本轮 SQL 归因。
-
-## 历史评测：日期表头与跨行业验证
-
-微软原题查数从 4/14 提高到 14/14。英伟达首测 1/14，补充逐列完整日期后同题复测 12/14。最终冻结版在 Costco 首次盲测通过 2/14。 Netflix 与 Amazon 维持 14/14，Alphabet 维持 12/14。六家在最终版的缺数拒答各为 4/4，既往逐题无退步。Costco 的日期、年度跨行，该轮版本在其独立 10-K 上仍存在金额配错年度、漏原行与引错页的问题。
-
-[11 轮逐题数据](docs/dated-audit.json) · [SQL 归因](docs/dated-failures.json) · [英伟达标注](evaluation/nvidia_holdout.json) · [Costco 标注](evaluation/costco_holdout.json)
-
-下载对应标注的 PDF 后，运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/costco_holdout.json --pdf data/costco-fy24-10k.pdf --out data/costco-fresh-run`。用 `uv run python -m scripts.analyze_table_runs --audit docs/dated-audit.json` 复算归因。最终版 109 项 pytest 回归通过。
-
-## 跨行日期与地区列
-
-Costco 原题查数从 2/14 提高到 14/14。前五家公司重跑 90 题，此前通过的 86 题全部保住。沃尔玛首次盲测通过 1/14 道查数题、3/4 道缺数拒答题。 116 项自动化回归通过。
-
-[逐题判定和版本指纹](docs/wrapped-audit.json) · [SQL 归因](docs/wrapped-failures.json) · [冻结的沃尔玛题集与来源](evaluation/walmart_holdout.json)
-
-用题集中的 PDF 原件运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/walmart_holdout.json --pdf data/walmart-2024.pdf --out data/walmart-fresh-run`。使用 `uv run python -m scripts.analyze_table_runs --audit docs/wrapped-audit.json` 可复算各轮归因。
-
-## 美元口径与独立验证
-
-沃尔玛原题查数由 1/14 提至 14/14，缺数拒答由 3/4 提至 4/4。前六家公司 108 道旧题全部通过。百事首次查数 10/14，修复后同题 14/14。最终冻结版在宝洁首次盲测中查数 0/14、缺数拒答 4/4。 127 项自动化测试通过。
-
-[17 轮逐题记录](docs/currency-audit.json) · [SQL 失败归因](docs/currency-failures.json) · [百事预标注](evaluation/pepsico_holdout.json) · [宝洁预标注](evaluation/pg_holdout.json)
-
-使用对应题集中的原件运行 `uv run python -m scripts.evaluate_holdout --fixture evaluation/pg_holdout.json --pdf data/pg-2024.pdf --out data/pg-fresh-run`。使用 `uv run python -m scripts.analyze_table_runs --audit docs/currency-audit.json` 复算失败归因。
+欢迎提交可以复查的错答或漏答。请带上原始问题、研究截止日、发行人公开 PDF、物理页码和原答，说明判分依据。代码调整可附最小复现以及同题修复前后的结果。[贡献指南](CONTRIBUTING.md)

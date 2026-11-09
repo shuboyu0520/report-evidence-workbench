@@ -10,6 +10,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
+import app.main as application
 from app.main import create_app
 
 
@@ -48,8 +49,13 @@ def main():
         )
         resp.raise_for_status()
         rid = resp.json()["id"]
+        module_dir = Path(application.__file__).resolve().parent
+        revision = subprocess.run(["git","-C",str(module_dir),"rev-parse","HEAD"],capture_output=True,text=True)
+        source_hashes = {p.relative_to(module_dir.parent).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                         for p in sorted(module_dir.rglob("*.py"))}
         runs = {
-            "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+            "commit": revision.stdout.strip() if revision.returncode==0 else None,
+            "source_sha256": source_hashes,
             "start_utc": datetime.now(timezone.utc).isoformat(),
             "file_sha256": digest,
             "fixture_sha256": hashlib.sha256(args.fixture.read_bytes()).hexdigest(),

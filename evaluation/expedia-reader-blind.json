@@ -1,0 +1,295 @@
+{
+  "company": "Expedia Group, Inc. (EXPE)",
+  "published_on": "2026-11-04",
+  "as_of": "2026-11-10",
+  "calendar_year": true,
+  "source": "https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf",
+  "source_event": "https://ir.expediagroup.com/news-and-events/investor-events/event-details/2026/Expedia-Group-Q3-2026-Earnings-Call/default.aspx",
+  "sec_release": "https://www.sec.gov/Archives/edgar/data/1324424/000132442426000059/earningsrelease-q32026.htm",
+  "sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+  "physical_pages": 14,
+  "selection": "Latest issuer earnings release at the study cutoff. Same online-travel sector as Booking. No issuer/performance evidence or ticker match in existing local daily app/evaluation/tests/scripts/data, release checkout or tested report fixtures. Searched 45 commits reachable from local references in the public workbench at 967d26f96e43a848d247ddad1ba5a020bb300558 for Expedia/acronym in source/tests/evaluations/docs. Prior suite includes Booking, Airbnb, Uber, Qualcomm, TSMC and other issuers; a zero-match claims only this project history.",
+  "protocol": "First run only, no training, gold retrieval, prompt tuning, retries or exclusion of technical failures. A clean dedicated DB and public upload/reader endpoints receive the PDF, source metadata and question texts only. Use the production-code freeze and same Qwen model and generation options as Booking. Retain raw answer, verification, citations and trace for each ordered question. Score 12 actuals plus 2 guidance as 14 total; score 2 future actuals and 2 PDF-evidence absences separately as 4 total.",
+  "rubric": {
+    "technical": "A missing result or non-200 status fails, stays in the denominator; always record technical cause separately.",
+    "quantity": "Both exact target aggregate/category and period must be unambiguous under the question, answer and original table. A useful substantive answer matches sign, GAAP vs adjusted, actual vs expected, group vs segment, measurement and units. Accept only a numerically equivalent exact unit conversion, fractions or trailing zeros. No rounding of the requested precision. For ranges require both endpoints with correct unit/basis. Parenthesized cash-flow numbers are negative.",
+    "evidence": "Require at least one native evidence row or source quote on a preregistered physical page showing the target value (or endpoints) in the right row/column/scope. Can combine multiple verbatim snippets on that page. All citations must be traceable to PDF text modulo whitespace. Inspect the row in context even if excerpt starts mid-row. A copied caption/page alone or a matching number on a different metric is insufficient. Reject ancillary claims or citations presented as support if materially wrong about year, scale, scope, actual/guidance or incompatible range. Neutral nearby lines or headings may be flagged as extra without failing. Trace data verifies the binding and cannot repair a wrong answer or missing user-visible evidence.",
+    "status": "For future actuals require not_yet_disclosed, correct fiscal period end, research date and absence of invented amount or guidance-as-actual. For material absent from this PDF require insufficient_evidence in this PDF, no invented amount, and no assertion of company-wide nondisclosure. Neither status may be accompanied by misleading citations.",
+    "review": "An evaluator who did not modify the code scores the saved first answers against these frozen labels and the official PDF. Inspect every case for numeric, unit, reporting, period and attribution errors. Classify the first observable failure stage and retain the answer and citation. No re-run or post-hoc rewording of failed questions."
+  },
+  "cases": [
+    {
+      "question": "2026 年第三季度，集团总营收是多少百万美元？请给出表中的精确值。",
+      "kind": "lookup",
+      "metric_and_scope": "consolidated Revenue",
+      "expected_values": [
+        "4938"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "example_page": 1,
+      "example_source_quote": "Revenue $4,938 $4,412 12%",
+      "id": "E01"
+    },
+    {
+      "question": "上年同期，即 2025 年第三季度，Expedia 集团营收是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "prior-year same-quarter consolidated Revenue",
+      "expected_values": [
+        "4412"
+      ],
+      "unit": "百万美元",
+      "period": "2025 Q3",
+      "accepted_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "example_page": 1,
+      "example_source_quote": "Revenue $4,938 $4,412 12%",
+      "id": "E02"
+    },
+    {
+      "question": "公司 2026 年第三季度的营业利润是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "consolidated operating income",
+      "expected_values": [
+        "1326"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        5,
+        12
+      ],
+      "example_page": 1,
+      "example_source_quote": "Operating income $1,326 $1,036 28%",
+      "id": "E03"
+    },
+    {
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元/股？",
+      "kind": "lookup",
+      "metric_and_scope": "GAAP diluted EPS",
+      "expected_values": [
+        "8.42"
+      ],
+      "unit": "美元/股",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        5,
+        13
+      ],
+      "example_page": 1,
+      "example_source_quote": "Diluted Earnings Per Share $8.42 $7.33 15%",
+      "id": "E04"
+    },
+    {
+      "question": "2026 年第三季度的预订间夜数是多少百万间夜？",
+      "kind": "lookup",
+      "metric_and_scope": "booked room nights",
+      "expected_values": [
+        "115.7"
+      ],
+      "unit": "百万间夜",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        3
+      ],
+      "example_page": 1,
+      "example_source_quote": "Booked Room Nights 115.7 108.2 7%",
+      "id": "E05"
+    },
+    {
+      "question": "Expedia 2026 年第三季度全部业务的总预订额是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "consolidated gross bookings",
+      "expected_values": [
+        "34008"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        3,
+        4
+      ],
+      "example_page": 1,
+      "example_source_quote": "Gross Bookings $34,008 $30,727 11%",
+      "id": "E06"
+    },
+    {
+      "question": "2026 年第三季度的 B2B 业务收入是多少百万美元？请只查 B2B 分部。",
+      "kind": "lookup",
+      "metric_and_scope": "B2B segment Revenue, not bookings or EBITDA",
+      "expected_values": [
+        "1708"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        4
+      ],
+      "example_page": 4,
+      "example_source_quote": "B2B $947 $1,209 $1,392 $1,294 $1,183 $1,493 $1,708 23%",
+      "id": "E07"
+    },
+    {
+      "question": "按产品拆分，2026 年第三季度住宿（Lodging）产品的营收是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "lodging product Revenue, not lodging Gross Bookings",
+      "expected_values": [
+        "3991"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        3
+      ],
+      "example_page": 3,
+      "example_source_quote": "Lodging $2,289 $3,040 $3,604 $2,819 $2,610 $3,429 $3,991 11%",
+      "id": "E08"
+    },
+    {
+      "question": "公司 2026 年第三季度单季自由现金流是多少百万美元？请保留正负号。",
+      "kind": "lookup",
+      "metric_and_scope": "non-GAAP single-quarter Free Cash Flow",
+      "expected_values": [
+        "-1399"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        14
+      ],
+      "example_page": 1,
+      "example_source_quote": "Free Cash Flow* $(1,399) $(686) 104%",
+      "id": "E09"
+    },
+    {
+      "question": "2026 年第三季度全集团调整后 EBITDA 的实际金额是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "consolidated adjusted EBITDA (not segment adjusted EBITDA)",
+      "expected_values": [
+        "1689"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        4,
+        12
+      ],
+      "example_page": 1,
+      "example_source_quote": "Adjusted EBITDA* $1,689 $1,449 17%",
+      "id": "E10"
+    },
+    {
+      "question": "2026 年第三季度归属于 Expedia Group, Inc. 的净利润是多少百万美元？仅查归属于母公司的 GAAP 口径。",
+      "kind": "lookup",
+      "metric_and_scope": "net income attributable to Expedia Group, Inc., not total net income before minority interest",
+      "expected_values": [
+        "1030"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        5,
+        12,
+        13
+      ],
+      "example_page": 1,
+      "example_source_quote": "Net income attributable to Expedia Group, Inc. $1,030 $959 7%",
+      "id": "E11"
+    },
+    {
+      "question": "2025 年第三季度 B2B 分部的总预订额是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "prior-year Q3 B2B Gross Bookings",
+      "expected_values": [
+        "9384"
+      ],
+      "unit": "百万美元",
+      "period": "2025 Q3",
+      "accepted_pages": [
+        4
+      ],
+      "example_page": 4,
+      "example_source_quote": "B2B $8,836 $8,844 $9,384 $8,659 $10,746 $10,742 $11,146 19%",
+      "id": "E12"
+    },
+    {
+      "question": "管理层对 2026 年第四季度营收同比增长给出的指引区间是多少？请给出百分比上下限。",
+      "kind": "guidance",
+      "metric_and_scope": "Q4 2026 guided year-over-year Revenue growth, not full-year outlook or absolute projected revenue",
+      "expected_values": [
+        "4.0",
+        "5.7"
+      ],
+      "unit": "%",
+      "period": "2026 Q4",
+      "accepted_pages": [
+        2
+      ],
+      "example_page": 2,
+      "example_source_quote": "Revenue $3.69 - $3.75B +4.0-5.7%",
+      "id": "E13"
+    },
+    {
+      "question": "管理层预计 2026 年第四季度调整后 EBITDA 为多少百万美元？请给出金额指引区间。",
+      "kind": "guidance",
+      "metric_and_scope": "Q4 guided adjusted EBITDA absolute amount",
+      "expected_values": [
+        "830",
+        "880"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q4",
+      "accepted_pages": [
+        2
+      ],
+      "example_page": 2,
+      "example_source_quote": "Adjusted EBITDA** $830 - $880M",
+      "id": "E14"
+    },
+    {
+      "question": "截至研究日，请查 2026 年第四季度实际营收，单位为百万美元。",
+      "kind": "future",
+      "period": "2026 Q4",
+      "period_end": "2026-12-31",
+      "id": "E15"
+    },
+    {
+      "question": "截至研究日，2027 年第一季度集团实际营业利润是多少百万美元？",
+      "kind": "future",
+      "period": "2027 Q1",
+      "period_end": "2027-03-31",
+      "id": "E16"
+    },
+    {
+      "question": "只依这份季报，2026 年第三季度日本单一国家的营收是多少百万美元？",
+      "kind": "missing",
+      "period": "2026 Q3",
+      "source_check": "Geography table reports U.S. and Non-U.S. points of sale. No standalone Japan sales amount. A broader geography is not a valid substitute.",
+      "id": "E17"
+    },
+    {
+      "question": "只根据这份季报，2026 年第三季度 Vrbo 单一品牌的预订间夜数是多少百万间夜？",
+      "kind": "missing",
+      "period": "2026 Q3",
+      "source_check": "Vrbo is named as a brand. The numeric booked-room-night table is consolidated; no Vrbo-only count is given.",
+      "id": "E18"
+    }
+  ]
+}

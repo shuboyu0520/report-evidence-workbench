@@ -1,0 +1,327 @@
+{
+  "same": 58,
+  "total": 58,
+  "checked_fields": [
+    "answer",
+    "verification",
+    "citations (full content and physical page)"
+  ],
+  "cohorts": {
+    "airbnb": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "0e1961322eb56569a764997fbf51117ed7a3245d184bb14e8a935ebdbdbb213a",
+      "pdf_sha256": "9824f9818c184057138fc8ff1ce16d6f7ae3995cc2eb1a64bf8d204134c9e112",
+      "prior_run_sha256": "126fbc5326787d2ae74215b2f98182f5e977716a548ce12bcadb6b9a1f661ba8",
+      "replay_sha256": "50bbfc4fcad754af281b2ba9adac85de5f328e7abf48f979107ee66a6d4a04a0",
+      "replay_start_utc": "2026-11-09T17:45:30.099070+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "A01",
+          "changed": []
+        },
+        {
+          "id": "A02",
+          "changed": []
+        },
+        {
+          "id": "A03",
+          "changed": []
+        },
+        {
+          "id": "A04",
+          "changed": []
+        },
+        {
+          "id": "A05",
+          "changed": []
+        },
+        {
+          "id": "A06",
+          "changed": []
+        },
+        {
+          "id": "A07",
+          "changed": []
+        },
+        {
+          "id": "A08",
+          "changed": []
+        },
+        {
+          "id": "A09",
+          "changed": []
+        },
+        {
+          "id": "A10",
+          "changed": []
+        },
+        {
+          "id": "A11",
+          "changed": []
+        },
+        {
+          "id": "A12",
+          "changed": []
+        },
+        {
+          "id": "A13",
+          "changed": []
+        },
+        {
+          "id": "A14",
+          "changed": []
+        },
+        {
+          "id": "A15",
+          "changed": []
+        },
+        {
+          "id": "A16",
+          "changed": []
+        },
+        {
+          "id": "A17",
+          "changed": []
+        },
+        {
+          "id": "A18",
+          "changed": []
+        }
+      ]
+    },
+    "uber": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "11386f7fc21d648332bf421c83c755355cbd0c962ba5a240d980c988af9d889b",
+      "pdf_sha256": "771658eae3b120b31a2eea00345c363bd54f88be8db6a2a8139b9a09fe7ac97f",
+      "prior_run_sha256": "91903e75949862b9b3b7d89669fda90a0d21ddb1bad80be3477b2514fd15258c",
+      "replay_sha256": "3201894b7b20b900c2716b9f2867ef25a5967165dc4fd95fa60cbaac9e2b0dff",
+      "replay_start_utc": "2026-11-09T17:45:47.813936+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "U01",
+          "changed": []
+        },
+        {
+          "id": "U02",
+          "changed": []
+        },
+        {
+          "id": "U03",
+          "changed": []
+        },
+        {
+          "id": "U04",
+          "changed": []
+        },
+        {
+          "id": "U05",
+          "changed": []
+        },
+        {
+          "id": "U06",
+          "changed": []
+        },
+        {
+          "id": "U07",
+          "changed": []
+        },
+        {
+          "id": "U08",
+          "changed": []
+        },
+        {
+          "id": "U09",
+          "changed": []
+        },
+        {
+          "id": "U10",
+          "changed": []
+        },
+        {
+          "id": "U11",
+          "changed": []
+        },
+        {
+          "id": "U12",
+          "changed": []
+        },
+        {
+          "id": "U13",
+          "changed": []
+        },
+        {
+          "id": "U14",
+          "changed": []
+        },
+        {
+          "id": "U15",
+          "changed": []
+        },
+        {
+          "id": "U16",
+          "changed": []
+        },
+        {
+          "id": "U17",
+          "changed": []
+        },
+        {
+          "id": "U18",
+          "changed": []
+        }
+      ]
+    },
+    "qcom": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "6509f78b833eaf193bbe01f3909fe4df57aae016447be7b0df77074aca5e4a6b",
+      "pdf_sha256": "6aa674a7f42a75aae351ccce55ae33ac2da34774827fdec43297f9ae6e12c4c6",
+      "prior_run_sha256": "3df017393d6730a4590003c1ccd062ea41237bcdf372ef35cbbb82217ec66618",
+      "replay_sha256": "3e2d1dd47cef40dc74f87da49c5fac3d7c19bab26caf48ba76ee3c5cde04b75c",
+      "replay_start_utc": "2026-11-09T17:45:58.840358+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "Q01",
+          "changed": []
+        },
+        {
+          "id": "Q02",
+          "changed": []
+        },
+        {
+          "id": "Q03",
+          "changed": []
+        },
+        {
+          "id": "Q04",
+          "changed": []
+        },
+        {
+          "id": "Q05",
+          "changed": []
+        },
+        {
+          "id": "Q06",
+          "changed": []
+        },
+        {
+          "id": "Q07",
+          "changed": []
+        },
+        {
+          "id": "Q08",
+          "changed": []
+        },
+        {
+          "id": "Q09",
+          "changed": []
+        },
+        {
+          "id": "Q10",
+          "changed": []
+        },
+        {
+          "id": "Q11",
+          "changed": []
+        },
+        {
+          "id": "Q12",
+          "changed": []
+        },
+        {
+          "id": "Q13",
+          "changed": []
+        },
+        {
+          "id": "Q14",
+          "changed": []
+        },
+        {
+          "id": "Q15",
+          "changed": []
+        },
+        {
+          "id": "Q16",
+          "changed": []
+        },
+        {
+          "id": "Q17",
+          "changed": []
+        },
+        {
+          "id": "Q18",
+          "changed": []
+        }
+      ]
+    },
+    "tsmc": {
+      "same": 4,
+      "total": 4,
+      "fixture_sha256": "668b055040d7507db708a15971ec4ca6b49e36fcb558b5f988c81b8e0973652b",
+      "pdf_sha256": "d905217f428d807ccac6662ed984e988c90e4812bb3b6138a3ea0bf84a279393",
+      "prior_run_sha256": "9bea2b3ddaa78027d68d0247c5d41301ebe380e3f4609c2e8ccc67e84d7ec19e",
+      "replay_sha256": "d9bd67233a5ea0d905fa0456604ea72f3a1fff705cc52416376040591b391a25",
+      "replay_start_utc": "2026-11-09T17:46:08.319962+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "cash",
+          "changed": []
+        },
+        {
+          "id": "platform",
+          "changed": []
+        },
+        {
+          "id": "guidance",
+          "changed": []
+        },
+        {
+          "id": "missing",
+          "changed": []
+        }
+      ]
+    }
+  }
+}

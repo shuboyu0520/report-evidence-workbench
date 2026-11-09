@@ -30,6 +30,11 @@ class Database:
                     PRIMARY KEY(report_id, number),
                     FOREIGN KEY(report_id, number) REFERENCES pages(report_id, number) ON DELETE CASCADE
                 );
+                CREATE TABLE IF NOT EXISTS page_growth_columns (
+                    report_id TEXT NOT NULL, number INTEGER NOT NULL, positions TEXT NOT NULL,
+                    PRIMARY KEY(report_id, number),
+                    FOREIGN KEY(report_id, number) REFERENCES pages(report_id, number) ON DELETE CASCADE
+                );
                 CREATE TABLE IF NOT EXISTS rag_indexes (
                     report_id TEXT REFERENCES reports(id) ON DELETE CASCADE,
                     cache_key TEXT NOT NULL, dim INTEGER NOT NULL, vectors BLOB NOT NULL,
@@ -91,6 +96,10 @@ class Database:
             "INSERT OR REPLACE INTO page_column_headers VALUES(?,?,?)",
             [(report_id, p["number"], json.dumps(p["segment_columns"])) for p in pages if p.get("segment_columns")],
         )
+        conn.executemany(
+            "INSERT OR REPLACE INTO page_growth_columns VALUES(?,?,?)",
+            [(report_id,p["number"],json.dumps(p["growth_columns"])) for p in pages if p.get("growth_columns")],
+        )
 
     def pages(self, report_id):
         self.report(report_id)
@@ -130,7 +139,10 @@ class Database:
                 "SELECT number,text FROM pages WHERE report_id=? ORDER BY number", (report_id,)
             )]
             headers = dict(conn.execute("SELECT number,labels FROM page_column_headers WHERE report_id=?", (report_id,)))
+            outlook = dict(conn.execute("SELECT number,positions FROM page_growth_columns WHERE report_id=?", (report_id,)))
             for page in pages:
+                if page["number"] in outlook:
+                    page["growth_columns"] = json.loads(outlook[page["number"]])
                 if page["number"] in headers:
                     page["segment_columns"] = json.loads(headers[page["number"]])
             metrics = [dict(r) for r in conn.execute(

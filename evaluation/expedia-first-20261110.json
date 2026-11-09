@@ -1,0 +1,688 @@
+{
+  "company": "Expedia Group, Inc. (EXPE)",
+  "source": "https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf",
+  "as_of": "2026-11-10",
+  "cohort": "First run, previously untested issuer in same sector. Each prompt submitted once. No feedback to the application or question selection.",
+  "raw_sha256": "2735ff96f810b0b1acc6e1b855cf8eacd6cf661f5f65ab3896fda36f0bb43b63",
+  "pdf_sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+  "fixture_sha256": "c881521b0f01e2d61c8f32d6aebdf13d6fce4a423e771526b8572ed5cf6e81e7",
+  "sealed_utc": "2026-11-09T18:01:15.229276+00:00",
+  "start_utc": "2026-11-09T18:08:57.667189+00:00",
+  "end_utc": "2026-11-09T18:09:02.930005+00:00",
+  "config": {
+    "model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "cases": [
+    {
+      "id": "E01",
+      "kind": "lookup",
+      "question": "2026 年第三季度，集团总营收是多少百万美元？请给出表中的精确值。",
+      "gold": [
+        "4938"
+      ],
+      "scope": "consolidated Revenue",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "gold_example": "Revenue $4,938 $4,412 12%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "当季集团营收在第1页为4,938百万美元，第5页主表也有精确值。原表工具没有合格候选，最后拒答。"
+    },
+    {
+      "id": "E02",
+      "kind": "lookup",
+      "question": "上年同期，即 2025 年第三季度，Expedia 集团营收是多少百万美元？",
+      "gold": [
+        "4412"
+      ],
+      "scope": "prior-year same-quarter consolidated Revenue",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "gold_example": "Revenue $4,938 $4,412 12%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "2025年同期集团营收为4,412百万美元。第1、5页给出了对应列，轨迹中的合格单元格为零，拒答。"
+    },
+    {
+      "id": "E03",
+      "kind": "lookup",
+      "question": "公司 2026 年第三季度的营业利润是多少百万美元？",
+      "gold": [
+        "1326"
+      ],
+      "scope": "consolidated operating income",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        5,
+        12
+      ],
+      "gold_example": "Operating income $1,326 $1,036 28%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第1页和第5页可核对本季营业利润1,326百万美元。没有生成合格候选，未给出答案。"
+    },
+    {
+      "id": "E04",
+      "kind": "lookup",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元/股？",
+      "gold": [
+        "8.42"
+      ],
+      "scope": "GAAP diluted EPS",
+      "expected_unit": "美元/股",
+      "accepted_pages": [
+        1,
+        5,
+        13
+      ],
+      "gold_example": "Diluted Earnings Per Share $8.42 $7.33 15%",
+      "http": 200,
+      "answer": "2026 财年第3季度，公司整体  GAAP diluted earnings per share（实际）为 8.42 美元/股。原表第 13 页。",
+      "verification": "source_earnings_cell",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [
+        13,
+        13
+      ],
+      "citations": [
+        {
+          "page": 13,
+          "quote": "GAAP diluted earnings per share $ 8.42 $ 7.33 $ 15.43 $ 8.18"
+        },
+        {
+          "page": 13,
+          "quote": "Adjusted Net Income (Loss) & Adjusted EPS\nThree months ended\nSeptember 30,\nNine months ended\nSeptember 30,\n2026 2025 2026 2025\n(In millions, except share and per share data)"
+        }
+      ],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 1
+        },
+        {
+          "tool": "read_earnings_cell",
+          "page": 13,
+          "column": 1,
+          "label": "GAAP diluted earnings per share",
+          "raw_cell": [
+            "$ 8.42"
+          ],
+          "amounts": [
+            "8.42"
+          ],
+          "unit": "美元/股",
+          "quarter": 3,
+          "year": 2026
+        }
+      ],
+      "model_steps": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ],
+      "runtime_events": [],
+      "passed": true,
+      "stage": "pass",
+      "assessment": "第13页把GAAP diluted earnings per share单独列为8.42。该页调节表标题包含Adjusted EPS，但实际引用行明确为GAAP，第二条引文给出三个月、2026年与每股例外。原回答的期间、币种、每股口径均吻合。没有相冲突的额外引文。"
+    },
+    {
+      "id": "E05",
+      "kind": "lookup",
+      "question": "2026 年第三季度的预订间夜数是多少百万间夜？",
+      "gold": [
+        "115.7"
+      ],
+      "scope": "booked room nights",
+      "expected_unit": "百万间夜",
+      "accepted_pages": [
+        1,
+        3
+      ],
+      "gold_example": "Booked Room Nights 115.7 108.2 7%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第1页显示115.7百万预订间夜，第3页亦可核验。没有合格单元格，答复称证据不足。"
+    },
+    {
+      "id": "E06",
+      "kind": "lookup",
+      "question": "Expedia 2026 年第三季度全部业务的总预订额是多少百万美元？",
+      "gold": [
+        "34008"
+      ],
+      "scope": "consolidated gross bookings",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        3,
+        4
+      ],
+      "gold_example": "Gross Bookings $34,008 $30,727 11%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "原材料给出当季总预订额34,008百万美元。没有生成合格候选，最终无原页或数值。"
+    },
+    {
+      "id": "E07",
+      "kind": "lookup",
+      "question": "2026 年第三季度的 B2B 业务收入是多少百万美元？请只查 B2B 分部。",
+      "gold": [
+        "1708"
+      ],
+      "scope": "B2B segment Revenue, not bookings or EBITDA",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        4
+      ],
+      "gold_example": "B2B $947 $1,209 $1,392 $1,294 $1,183 $1,493 $1,708 23%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第4页Revenue区域的B2B行列明本季1,708百万美元。工具未形成该部分类别的合格单元格。"
+    },
+    {
+      "id": "E08",
+      "kind": "lookup",
+      "question": "按产品拆分，2026 年第三季度住宿（Lodging）产品的营收是多少百万美元？",
+      "gold": [
+        "3991"
+      ],
+      "scope": "lodging product Revenue, not lodging Gross Bookings",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        3
+      ],
+      "gold_example": "Lodging $2,289 $3,040 $3,604 $2,819 $2,610 $3,429 $3,991 11%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第3页Revenue by product下Lodging行为3,991百万美元。候选为空，返回证据不足。"
+    },
+    {
+      "id": "E09",
+      "kind": "lookup",
+      "question": "公司 2026 年第三季度单季自由现金流是多少百万美元？请保留正负号。",
+      "gold": [
+        "-1399"
+      ],
+      "scope": "non-GAAP single-quarter Free Cash Flow",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        14
+      ],
+      "gold_example": "Free Cash Flow* $(1,399) $(686) 104%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_report",
+          "retrieved_pages": [
+            14,
+            2,
+            7,
+            2,
+            13
+          ]
+        }
+      ],
+      "model_steps": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\n  \"answer\": \"公司 2026 年第三季度单季自由现金流是 -1,399 百万美元。\",\n  \"evidence\": [\n    {\n      \"page\": 14,\n      \"quote\": \"Free Cash Flow\\n \\nThree months ended \\nSeptember 30,\\nNine months ended\\nSeptember 30,\\n 2026 2025 2026 2025\\n (In millions)\\nNet cash provided by (used in) operating activities $ (1,157) $ (497) $ 4,252 $ 3,576 \\nLess: Total capital expenditures  (242)  (189)  (625)  (585) \\nFree cash flow $ (1,399) $ (686) $ 3,627 $ 2,991\"\n    }\n  ]\n}"
+        }
+      ],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "retrieved_correct_draft_but_final_refused",
+      "assessment": "检索首条返回第14页。模型原始草稿写出负1,399百万美元并引用单季原表，用户实际收到的答复却是证据不足、无引文。按封存规则计失败。轨迹能定位为取回原页/生成草稿之后的拒答，单次轨迹未标注具体哪条校验造成拒绝。"
+    },
+    {
+      "id": "E10",
+      "kind": "lookup",
+      "question": "2026 年第三季度全集团调整后 EBITDA 的实际金额是多少百万美元？",
+      "gold": [
+        "1689"
+      ],
+      "scope": "consolidated adjusted EBITDA (not segment adjusted EBITDA)",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        4,
+        12
+      ],
+      "gold_example": "Adjusted EBITDA* $1,689 $1,449 17%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第1、4、12页可查到本季集团调整后EBITDA 1,689百万美元。没有形成合格候选，拒答。"
+    },
+    {
+      "id": "E11",
+      "kind": "lookup",
+      "question": "2026 年第三季度归属于 Expedia Group, Inc. 的净利润是多少百万美元？仅查归属于母公司的 GAAP 口径。",
+      "gold": [
+        "1030"
+      ],
+      "scope": "net income attributable to Expedia Group, Inc., not total net income before minority interest",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        1,
+        5,
+        12,
+        13
+      ],
+      "gold_example": "Net income attributable to Expedia Group, Inc. $1,030 $959 7%",
+      "http": 200,
+      "answer": "2026 财年第3季度，公司整体  Net income attributable to Expedia Group, Inc.（实际）为 1,030 百万美元。原表第 13 页。",
+      "verification": "source_earnings_cell",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [
+        13,
+        13
+      ],
+      "citations": [
+        {
+          "page": 13,
+          "quote": "Net income attributable to Expedia Group, Inc. $ 1,030 $ 959 $ 1,902 $ 1,089"
+        },
+        {
+          "page": 13,
+          "quote": "Adjusted Net Income (Loss) & Adjusted EPS\nThree months ended\nSeptember 30,\nNine months ended\nSeptember 30,\n2026 2025 2026 2025\n(In millions, except share and per share data)"
+        }
+      ],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 1
+        },
+        {
+          "tool": "read_earnings_cell",
+          "page": 13,
+          "column": 1,
+          "label": "Net income attributable to Expedia Group, Inc.",
+          "raw_cell": [
+            "$ 1,030"
+          ],
+          "amounts": [
+            "1,030"
+          ],
+          "unit": "百万美元",
+          "quarter": 3,
+          "year": 2026
+        }
+      ],
+      "model_steps": [
+        {
+          "tool": "select_evidence",
+          "model": "qwen3:4b-instruct",
+          "http_status": 200,
+          "response": "{\"id\": 1}"
+        }
+      ],
+      "runtime_events": [],
+      "passed": true,
+      "stage": "pass",
+      "assessment": "回答为2026年第三季度归母净利润1,030百万美元。第13页原行明确归属于Expedia Group，第二条引文含该页正确期间与单位。调节表的标题没有改变该GAAP起始行口径。没有误导性额外引用。"
+    },
+    {
+      "id": "E12",
+      "kind": "lookup",
+      "question": "2025 年第三季度 B2B 分部的总预订额是多少百万美元？",
+      "gold": [
+        "9384"
+      ],
+      "scope": "prior-year Q3 B2B Gross Bookings",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        4
+      ],
+      "gold_example": "B2B $8,836 $8,844 $9,384 $8,659 $10,746 $10,742 $11,146 19%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第4页Gross Bookings区域的B2B行及Q3-25列给出9,384百万美元。工具没有合格单元格，拒答。"
+    },
+    {
+      "id": "E13",
+      "kind": "guidance",
+      "question": "管理层对 2026 年第四季度营收同比增长给出的指引区间是多少？请给出百分比上下限。",
+      "gold": [
+        "4.0",
+        "5.7"
+      ],
+      "scope": "Q4 2026 guided year-over-year Revenue growth, not full-year outlook or absolute projected revenue",
+      "expected_unit": "%",
+      "accepted_pages": [
+        2
+      ],
+      "gold_example": "Revenue $3.69 - $3.75B +4.0-5.7%",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第2页Q4 2026收入行下方为同比增长4.0%至5.7%。没有合格候选，未给出指引上下限。"
+    },
+    {
+      "id": "E14",
+      "kind": "guidance",
+      "question": "管理层预计 2026 年第四季度调整后 EBITDA 为多少百万美元？请给出金额指引区间。",
+      "gold": [
+        "830",
+        "880"
+      ],
+      "scope": "Q4 guided adjusted EBITDA absolute amount",
+      "expected_unit": "百万美元",
+      "accepted_pages": [
+        2
+      ],
+      "gold_example": "Adjusted EBITDA** $830 - $880M",
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": false,
+      "stage": "no_eligible_cell",
+      "assessment": "第2页Business Outlook列明Q4调整后EBITDA金额指引830至880百万美元。没有合格候选，拒答。"
+    },
+    {
+      "id": "E15",
+      "kind": "future",
+      "question": "截至研究日，请查 2026 年第四季度实际营收，单位为百万美元。",
+      "gold": "2026-12-31",
+      "scope": null,
+      "expected_unit": null,
+      "accepted_pages": [],
+      "gold_example": null,
+      "http": 200,
+      "answer": "截至 2026-11-10，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "check_reporting_period"
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": true,
+      "stage": "pass",
+      "assessment": "研究日2026-11-10与截至2026-12-31的季度明确，给出尚未披露的状态，没有把营收指引当成实际业绩，也未附无关引文。"
+    },
+    {
+      "id": "E16",
+      "kind": "future",
+      "question": "截至研究日，2027 年第一季度集团实际营业利润是多少百万美元？",
+      "gold": "2027-03-31",
+      "scope": null,
+      "expected_unit": null,
+      "accepted_pages": [],
+      "gold_example": null,
+      "http": 200,
+      "answer": "截至 2026-11-10，所问报告期（截至 2027-03-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "check_reporting_period"
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": true,
+      "stage": "pass",
+      "assessment": "正确按2026-11-10研究日和2027-03-31季度结束日标为未来实际未披露，没有给出假定金额或引文。"
+    },
+    {
+      "id": "E17",
+      "kind": "missing",
+      "question": "只依这份季报，2026 年第三季度日本单一国家的营收是多少百万美元？",
+      "gold": "Geography table reports U.S. and Non-U.S. points of sale. No standalone Japan sales amount. A broader geography is not a valid substitute.",
+      "scope": null,
+      "expected_unit": null,
+      "accepted_pages": [],
+      "gold_example": null,
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": true,
+      "stage": "pass",
+      "assessment": "上传PDF地理表只列美国与非美国销售点，无法据此单独给出日本营收。回答明确限定所选资料的证据不足，没有错误推断公司全球披露状态。"
+    },
+    {
+      "id": "E18",
+      "kind": "missing",
+      "question": "只根据这份季报，2026 年第三季度 Vrbo 单一品牌的预订间夜数是多少百万间夜？",
+      "gold": "Vrbo is named as a brand. The numeric booked-room-night table is consolidated; no Vrbo-only count is given.",
+      "scope": null,
+      "expected_unit": null,
+      "accepted_pages": [],
+      "gold_example": null,
+      "http": 200,
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "all_quotes_verbatim_on_claimed_pages": true,
+      "verbatim_quotes_on_eligible_pages": [],
+      "citations": [],
+      "tools": [
+        {
+          "tool": "search_earnings_rows",
+          "eligible_cells": 0
+        }
+      ],
+      "model_steps": [],
+      "runtime_events": [],
+      "passed": true,
+      "stage": "pass",
+      "assessment": "这份PDF提及Vrbo品牌，但预订间夜表是集团口径。回答仅说明所选资料证据不足，没有给出集团数字替代品牌数值。"
+    }
+  ],
+  "scores": {
+    "lookup_guidance": [
+      2,
+      14
+    ],
+    "lookup_only": [
+      2,
+      12
+    ],
+    "guidance_only": [
+      0,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "failure_stages": {
+    "no_eligible_cell": 11,
+    "retrieved_correct_draft_but_final_refused": 1
+  }
+}

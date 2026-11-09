@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 
 from .finance import numeric
+from .growth_guidance import growth_guidance_cells
 from .table_lookup import SCALE, YEAR
 
 ORDINAL = {"first": 1, "second": 2, "third": 3, "fourth": 4}
@@ -56,9 +57,13 @@ OUTPUT_UNITS = {
     "美元": Decimal(1),
     "百万个": Decimal(1000000),
     "个": Decimal(1),
+    "百万间夜": Decimal(1000000),
+    "间夜": Decimal(1),
 }
 # These aliases translate questions to common financial row titles, independent of the issuer.
 METRICS = [
+    ("free_cash_flow", r"自由现金流|free cash flow", r"^free cash flow(?: \(\d+\))?$"),
+    ("room_nights", r"间夜数|room nights", r"^room nights$"),
     (
         "adr",
         r"\bADR\b|平均(?:每日房价|预订价格)|average daily rate",
@@ -165,6 +170,9 @@ class Lookup:
     groups: tuple
     products: tuple
     qualified: bool
+    exact_amount: bool = False
+    diluted_eps: bool = False
+    growth_basis: str = ""
 
 
 def lookup_request(question):
@@ -175,11 +183,14 @@ def lookup_request(question):
     ):
         return None
     years = set(YEAR.findall(question))
-    if len(years) != 1 or re.search(
+    guidance = bool(re.search(r"指引|展望|预测|guidance|outlook", question, re.I))
+    growth_range = bool(guidance and re.search(r"同比增长|year.over.year growth|yoy growth",question,re.I)
+                        and re.search(r"区间|端点|range",question,re.I))
+    if len(years) != 1 or (not growth_range and re.search(
         r"同比|增长率|环比|占比|多少倍|毛利率|原因|解释|比较|趋势|compare|growth rate",
         question,
         re.I,
-    ):
+    )):
         return None
     match = next(
         ((name, row) for name, asked, row in METRICS if re.search(asked, question, re.I)), None
@@ -198,22 +209,31 @@ def lookup_request(question):
     ):
         return None
     metric, pattern = match
-    guidance = bool(re.search(r"指引|展望|预测|guidance|outlook", question, re.I))
+    if metric=="free_cash_flow" and re.search(r"TTM|滚动|trailing|转换率|margin|率",question,re.I):
+        return None
     unit = next((u for u in OUTPUT_UNITS if u in question), None)
     if metric == "eps":
         unit = "美元/股"
     elif metric == "adr":
         unit = "美元"
-    elif metric == "booked_count":
+    elif metric in {"booked_count", "room_nights"}:
         if any(symbol in question for symbol in ("美元", "$", "USD")):
             return None
-        unit = "百万个" if "百万" in question else "个"
+        count_unit = "间夜" if metric == "room_nights" else "个"
+        unit = ("百万" if "百万" in question else "") + count_unit
     groups = tuple(
         t
         for t in ACRONYM.findall(question)
         if t not in RESERVED and not re.fullmatch(r"Q[1-4]|FY\d+", t)
     )
     products = [pattern for asked, pattern in PRODUCTS if re.search(asked, question, re.I)]
+    # A parenthesized source row is a request for that revenue category.
+    # Only accept its exact printed label, never the group total.
+    if metric == "revenue":
+        row_names = re.findall(
+            r"[(（]([A-Za-z][A-Za-z &/-]{0,60}\s+(?:revenues?|sales))[)）]", question, re.I
+        )
+        products.extend(r"^" + re.escape(compact(name)) + r"$" for name in row_names)
     # A bilingual question can supply an arbitrary printed offering name. It still
     # has to match a business row AND the metric caption in the uploaded report.
     for m in NAMED_SCOPE.finditer(question):
@@ -233,7 +253,7 @@ def lookup_request(question):
         )
     )
     if not (groups or products) and re.search(
-        r"分部|部门|板块|事业部|业务线|业务的|\b(?:division|segment)\b", question, re.I
+        r"分部|部门|板块|事业部|业务线|业务的|收入类型|模式的(?:营收|收入)|\b(?:division|segment)\b", question, re.I
     ):
         qualified = True
     if metric == "development_expense" and re.search(
@@ -251,6 +271,10 @@ def lookup_request(question):
         groups,
         tuple(products),
         qualified,
+        bool(re.search(r"精确|准确金额|exact amount", question, re.I)),
+        metric == "eps" and bool(re.search(r"摊薄|稀释|\bdiluted\b", question, re.I)),
+        ("constant" if re.search(r"固定汇率|恒定汇率|不变汇率|constant.currency",question,re.I) else "reported")
+        if growth_range else "",
     )
 
 
@@ -301,6 +325,9 @@ class TableRow:
     expense_heading: str = ""
     per_share_heading: str = ""
     forecast_period: tuple | None = None
+    unit_quote: str = ""
+    unit_page: int | None = None
+    reconciliation_total: bool = False
 
 
 YEAR_BAND = re.compile(r"(?:\d{4}\s+)*\d{4}")
@@ -470,10 +497,125 @@ def measure_caption(row):
     return ""
 
 
+def trailing_statement_unit(page):
+    """PDF text order can put a single statement's title and units after its printed page number."""
+    lines = [line.strip() for line in page["text"].splitlines() if line.strip()]
+    if len(lines) < 4:
+        return ""
+    unit = lines[-1]
+    if not re.fullmatch(
+        r"\((?:amounts |dollars )?in (?:millions|billions|thousands)(?:,? except (?:for )?per share (?:data|amounts))?\)",
+        unit, re.I,
+    ):
+        return ""
+    for count in (1, 2, 3):
+        if len(lines) < count + 3 or not lines[-count-2].isdigit():
+            continue
+        title = " ".join(lines[-count-1:-1])
+        if re.fullmatch(
+            r"(?:unaudited )?(?:consolidated |combined )?(?:statements? of (?:operations|income|earnings|cash flows)|balance sheets?)",
+            title, re.I,
+        ):
+            body = lines[:-count-2]
+            # A shared page can contain multiple, independently scaled tables.
+            if sum(bool(YEAR_BAND.fullmatch(compact(line)) and len(line.split()) > 1) for line in body) != 1:
+                return ""
+            if any(SCALE.search(line) for line in body):
+                return ""
+            return unit
+    return ""
+
+
+RECON_HEADING = re.compile(r"^RECONCILIATION OF\b", re.I)
+RECON_UNIT = re.compile(
+    r"\((?:amounts |dollars )?in (?:millions|billions|thousands)(?:,? except (?:for )?per share (?:data|amounts))?\)(?:\(\d+\))*", re.I
+)
+FOREIGN_UNIT = re.compile(r"(?<![A-Za-z])(?:C|CA|A|HK|NT|S)\$|\b(?:CAD|AUD|HKD|TWD|SGD|EUR)\b")
+
+
+@dataclass
+class ReconciliationBlock:
+    title: str
+    header: str
+    rows: dict
+
+
+def reconciliation_blocks(lines):
+    """Bind each bridge to the dated header that starts it, not wrapped adjustment names."""
+    starts = [i for i,line in enumerate(lines) if RECON_HEADING.search(line)]
+    blocks = []
+    for start,end in zip(starts,[*starts[1:],len(lines)]):
+        entries = lines[start:end]
+        year_band = next((i for i,s in enumerate(entries[:11]) if YEAR_BAND.fullmatch(compact(s)) and len(s.split())>1),None)
+        if year_band is None:
+            continue
+        period_start = next((i for i,s in enumerate(entries[:year_band]) if re.search(r"\bmonths? ended|fiscal year ended|years? ended",s,re.I)),None)
+        if period_start is None:
+            continue
+        rows = {}
+        for line in entries[year_band+1:]:
+            if (re.match(r"^(?:notes?:|\(\d+\)\s+[A-Za-z]|(?:actual|financial) results\b|consolidated statements? of\b|(?:three|six|nine|twelve) months? ended\b)",line,re.I)
+                    or line.isdigit() or YEAR_BAND.fullmatch(compact(line))):
+                break
+            parsed = data_line(line)
+            if parsed and not parsed[2] and len(parsed[1]) == len(entries[year_band].split()):
+                rows[line] = parsed
+        blocks.append(ReconciliationBlock("\n".join(entries[:period_start]), "\n".join(entries[period_start:year_band+1]),rows))
+    return blocks
+
+
+def reconciliation_totals(pages):
+    """Recover the scale of a continued non-GAAP reconciliation, with a cited prior page."""
+    prior_page = None
+    prior_blocks = []
+    previous_unit = ""
+    for page in pages:
+        lines = [s.strip() for s in page["text"].splitlines() if s.strip()]
+        blocks = reconciliation_blocks(lines)
+        explicit_units = [s for s in lines if RECON_UNIT.fullmatch(s)]
+        # The scale belongs to the reconciliation schedule as a whole only when
+        # the document prints it under that schedule's title adjacent to the unit.
+        schedule_unit = next((s for i,s in enumerate(lines) if s in explicit_units and re.search(
+            r"reconciliation of (?:gaap to non.gaap|non.gaap) financial (?:information|measures)$",
+            compact(" ".join(lines[max(0,i-2):i])),re.I)), "")
+        scales = {match[1].lower() for match in SCALE.finditer(page["text"])}
+        clean = bool(blocks and lines and RECON_HEADING.search(lines[0])
+                     and not FOREIGN_UNIT.search(page["text"]) and len(scales)<=1)
+        applicable = ""
+        unit_page = page["number"]
+        if clean and schedule_unit and len(set(explicit_units)) == 1:
+            applicable = schedule_unit
+        elif clean and prior_page is not None and prior_page+1 == unit_page and previous_unit and not any(SCALE.search(s) for s in lines):
+            # A matching fiscal header and the same multi-period, dollar-valued GAAP
+            # anchor prevent carrying a scale from a neighbouring, unrelated table.
+            anchor_headers = {
+                b.header for b in blocks for prior in prior_blocks if b.header==prior.header
+                and any(line in prior.rows and "$" in line and re.fullmatch(
+                    r"(?:net income|net loss|total revenues?|income before taxes|net (?:income|cash) provided by operating activities)",
+                    parsed[0],re.I) for line,parsed in b.rows.items())
+            }
+            if anchor_headers and all(b.header in anchor_headers for b in blocks):
+                applicable,unit_page = previous_unit,prior_page
+        if applicable:
+            for block in blocks:
+                for line,(label,cells,_) in block.rows.items():
+                    if not re.fullmatch(r"adjusted EBITDA|free cash flow", label,re.I):
+                        continue
+                    if not re.search(r"\bTO "+re.escape(label)+r"$",compact(block.title),re.I):
+                        continue
+                    yield TableRow(page["number"],label,line,block.header,block.title,cells,False,
+                                   dollars="$" in line,unit_quote=applicable,unit_page=unit_page,
+                                   reconciliation_total=True)
+        prior_page = page["number"]
+        prior_blocks = blocks
+        previous_unit = schedule_unit if clean and len(set(explicit_units))==1 else ""
+
+
 def source_rows(pages):
     """Keep a table's local header until another printed header starts a new table."""
     result = []
     for page in pages:
+        unit_quote = trailing_statement_unit(page)
         result.extend(prose_outlook_rows(page))
         result.extend(quarterly_grid_rows(page))
         pending = []
@@ -563,6 +705,7 @@ def source_rows(pages):
                 ranged,
                 expense_heading=expense_heading,
                 per_share_heading=per_share_heading,
+                unit_quote=unit_quote,
             )
             if grid_columns(header):
                 continue  # This table was already parsed with its multiline labels intact.
@@ -573,6 +716,7 @@ def source_rows(pages):
                 for r in block:
                     r.dollars = True
             item.dollars = dollar_block
+    result.extend(reconciliation_totals(pages))
     return result
 
 
@@ -586,6 +730,16 @@ def column_labels(row, release_q):
     grid = grid_columns(header)
     if grid:
         return grid if len(grid) == w else []
+    # Summary tables with one amount and a variance column often follow narrative
+    # text that mentions earlier fiscal years. Those years are not column labels.
+    lines = header.splitlines()
+    if lines and re.fullmatch(
+        r"\s*\(#\)\s*\(\s*(?:Δ|change)\s*(?:Y/Y|YoY)\s*\)\s*", lines[-1], re.I
+    ):
+        period = re.fullmatch(r"Q([1-4])\s+(20\d{2})", lines[-2].strip(), re.I) if len(lines) > 1 else None
+        if not period or w != 2:
+            return []
+        return [(int(period[2]), int(period[1]), None, False), (None, None, None, True)]
     # Only the last full column cycle belongs to this table.
     slots = list(SLOTS.finditer(header))
     last_line = header.rsplit("\n", 1)[-1]
@@ -704,6 +858,8 @@ def resolve_sources(pages, req, rows=None):
     """Produce eligible original cells. A model can select an ID, never supply an amount."""
     if req.qualified:
         return []
+    if req.growth_basis:
+        return growth_guidance_cells(pages, req)
     release_q = qnum(compact(pages[0]["text"][:400])) if pages else None
     if not release_q:
         for page in pages[:3]:
@@ -716,6 +872,8 @@ def resolve_sources(pages, req, rows=None):
                 break
     result = []
     for row in source_rows(pages) if rows is None else rows:
+        if req.metric=="free_cash_flow" and not row.reconciliation_total:
+            continue
         if req.guidance != row.ranged:
             continue
         caption = (
@@ -747,7 +905,9 @@ def resolve_sources(pages, req, rows=None):
                 continue
         if req.metric == "development_expense" and not row.expense_heading:
             continue
-        if req.metric != "eps" and "per share" in row.label.lower():
+        if req.metric != "eps" and re.search(
+            r"\bper(?: basic| diluted| common| ordinary)* share\b", row.label, re.I
+        ):
             continue
         if (
             req.metric == "bookings"
@@ -794,13 +954,14 @@ def resolve_sources(pages, req, rows=None):
                 and not all(g in ACRONYM.findall(row.label) for g in req.groups)
             ):
                 continue
-            scale = SCALE.search(compact(row.header))
-            if (not row.dollars and req.metric != "booked_count") or re.search(
+            scale = SCALE.search(compact(row.header)) or SCALE.search(row.unit_quote)
+            count_metric = req.metric in {"booked_count", "room_nights"}
+            if (not row.dollars and not count_metric) or re.search(
                 r"(?<![A-Za-z])(?:C|CA|A|HK|NT|S)\$|\b(?:CAD|AUD|HKD|TWD|SGD|EUR)\b",
                 row.header + " " + row.line,
             ):
                 continue
-            if req.metric == "booked_count" and any("$" in value for value in raw):
+            if count_metric and any("$" in value for value in raw):
                 continue
             amounts = []
             bound_units = [
@@ -827,12 +988,16 @@ def resolve_sources(pages, req, rows=None):
                     factor = Decimal(1)
                 elif scale:
                     factor = SCALE_FACTORS[scale[1].lower()]
-                elif req.metric == "booked_count":
+                elif count_metric:
                     factor = Decimal(1)
                 else:
                     break
                 try:
-                    amount = numeric(token) * factor / OUTPUT_UNITS.get(req.unit, Decimal(1))
+                    printed = numeric(token)
+                    target_unit = OUTPUT_UNITS.get(req.unit, Decimal(1))
+                    if req.exact_amount and factor * Decimal(10) ** printed.as_tuple().exponent > target_unit:
+                        break
+                    amount = printed * factor / target_unit
                 except ValueError:
                     break
                 amounts.append(f"{amount:,f}")
@@ -866,7 +1031,15 @@ def resolve_sources(pages, req, rows=None):
                     "quote": row.line,
                     "header": row.header,
                     "priority": score,
+                    **({"unit_quote": row.unit_quote} if row.unit_quote else {}),
+                    **({"unit_page": row.unit_page} if row.unit_page is not None else {}),
+                    **({"context_quote": row.section} if row.reconciliation_total else {}),
                     **({"context_quote": evidence_context} if evidence_context else {}),
                 }
             )
+    if req.diluted_eps:
+        # When both captions exist, select the original explicitly diluted measure.
+        diluted = [item for item in result if re.search(r"\bdiluted\b", item["label"], re.I)]
+        if diluted:
+            result = diluted
     return sorted(result, key=lambda c: (-c["priority"], c["page"], c["column"]))
