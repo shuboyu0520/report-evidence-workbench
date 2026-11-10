@@ -10,6 +10,7 @@ from decimal import Decimal
 
 from .finance import numeric
 from .growth_guidance import growth_guidance_cells
+from .lodging_metrics import HOTEL_METRIC, HOTEL_METRICS, low_high_outlook, operating_cells, operating_request
 from .metric_grids import metric_grid_rows, metric_outlook_rows, supported_growth
 from .table_lookup import SCALE, YEAR
 
@@ -41,7 +42,7 @@ FORECAST_VERB = re.compile(
 BOUND = r"\$?\s*-?\d[\d,]*(?:\.\d+)?(?:\s*(?:billion|million|thousand)\b|[BMK]\b)?"
 PROSE_RANGE = re.compile(
     rf"^[•◦▪●*\-]?\s*(?P<label>[A-Za-z][A-Za-z0-9 &()/.'’\-]{{0,85}}?)\s+"
-    rf"(?:of|from|between|in (?:the |a )?range of|is expected to (?:be(?: between)?|range from))\s+"
+    rf"(?:of|from|between|in (?:the |a )?range of|is (?:expected|projected) to (?:be(?: between)?|range from))\s+"
     rf"(?P<lo>{BOUND})\s*(?:\bto\b|\band\b|[–—-])\s*(?P<hi>{BOUND})"
     r"(?=[,.;:]|\s*(?:$|per (?:diluted )?share\b))",
     re.I,
@@ -62,6 +63,16 @@ OUTPUT_UNITS = {
     "间夜": Decimal(1),
 }
 # These aliases translate questions to common financial row titles, independent of the issuer.
+COMPANY_EXPENSES_ZH = (
+    r"(?:^|[，,。?？：:\s]|季度|财季|全年|集团|公司|合并利润表|合并损益表)(?:的)?"
+    r"(?:总费用|费用(?:合计|总额))"
+)
+EXPENSE_QUESTION_WORDS = set(
+    "what was were is are how much the did company group s its report reported consolidated "
+    "total expenses for in of during as at and from please show give exact amount quarter "
+    "first second third fourth fiscal year ended q fy us usd dollars million millions "
+    "billion billions income statement statements operations gaap".split()
+)
 METRICS = [
     ("free_cash_flow", r"自由现金流|free cash flow", r"^free cash flow(?: \(\d+\))?$"),
     ("room_nights", r"间夜数|room nights", r"^(?:booked )?room nights$"),
@@ -86,6 +97,12 @@ METRICS = [
         r"^adjusted EBITDA(?: \(\d+\)|\*+)?$",
     ),
     ("bookings", r"总预[订定]额|总预订金额|gross bookings?", r"\bgross bookings?\b"),
+    ("interest_expense", r"利息(?:费用?|支出|开支)|\binterest expense\b", r"^interest expense(?:,? net)?$"),
+    (
+        "total_expenses",
+        COMPANY_EXPENSES_ZH + r"|\btotal expenses\b",
+        r"^total (?:costs and )?expenses$",
+    ),
     (
         "eps",
         r"每股(?:摊薄|稀释)?(?:收益|盈利|利润)|(?:摊薄|稀释)每股|每股盈余|\bEPS\b|earnings per share",
@@ -146,6 +163,16 @@ RESERVED = {
     "ADR",
     "GBV",
 }
+INCOME_STATEMENT = re.compile(
+    r"^(?:(?:condensed|consolidated|combined|unaudited|interim)\s+)*"
+    r"(?:statements? of (?:operations|income|earnings|profit (?:and|or) loss)|income statements?)$",
+    re.I,
+)
+REVENUE_HEADING = re.compile(r"(?:revenues?|net sales|sales)\s*:?", re.I)
+BEFORE_NCI = re.compile(
+    r"(?:分配给|归属(?:于)?)\s*(?:非控股|少数股东)(?:权益|损益|股东)?(?:之?前|前)|"
+    r"before (?:allocation|attribution) to (?:non[- ]?controlling|minority) interests?", re.I
+)
 
 
 def compact(text):
@@ -175,6 +202,8 @@ class Lookup:
     diluted_eps: bool = False
     growth_basis: str = ""
     parent_income: bool = False
+    revenue_line: str = ""
+    income_before_nci: bool = False
 
 
 def lookup_request(question):
@@ -185,7 +214,15 @@ def lookup_request(question):
     ):
         return None
     years = set(YEAR.findall(question))
-    guidance = bool(re.search(r"指引|展望|预测|guidance|outlook", question, re.I))
+    guidance = bool(re.search(r"指引|展望|预测|预计|guidance|outlook", question, re.I))
+    hotel = HOTEL_METRIC.search(question)
+    if hotel and len(years) == 1:
+        found = CN_Q.search(question)
+        quarter = qnum(question)
+        if found:
+            digit = found[1] or found[2]
+            quarter = "一二三四".index(digit) + 1 if digit in "一二三四" else int(digit)
+        return operating_request(question, int(years.pop()), quarter, guidance, Lookup)
     growth_range = bool(guidance and re.search(r"同比增长|year.over.year growth|yoy growth",question,re.I)
                         and re.search(r"区间|端点|range",question,re.I))
     if len(years) != 1 or (not growth_range and re.search(
@@ -231,7 +268,23 @@ def lookup_request(question):
     products = [pattern for asked, pattern in PRODUCTS if re.search(asked, question, re.I)]
     # A parenthesized source row is a request for that revenue category.
     # Only accept its exact printed label, never the group total.
+    revenue_line = ""
     if metric == "revenue":
+        # The source row name can be paired with a locally printed category, e.g.
+        # “Maintenance fees” in the revenues section. Never resolve it to a total.
+        for named in re.finditer(r"[(（]([A-Za-z][A-Za-z0-9 &/'-]{0,70})[)）]", question):
+            if re.search(r"\b(?:sales|revenues?)$", named[1], re.I):
+                continue
+            if re.match(r"\s*(?:的|列在|计入|属于)?\s*(?:营收|收入|销售额)", question[named.end():]) or re.search(
+                r"(?:收入项下|收入分项|营收分项|服务费|授权费|许可费|自有酒店|自营酒店)[^，。；！？,;?]{0,16}$",
+                question[:named.start()],
+            ):
+                revenue_line = compact(named[1])
+                break
+        if not revenue_line and re.search(r"特许(?:经营)?(?:及|和|与)(?:授权|许可)费", question):
+            revenue_line = "Franchise and licensing fees"
+        elif not revenue_line and re.search(r"自有酒店(?:业务)?(?:的)?(?:营收|收入|销售额)", question):
+            revenue_line = "Ownership"
         row_names = re.findall(
             r"[(（]([A-Za-z][A-Za-z &/-]{0,60}\s+(?:revenues?|sales))[)）]", question, re.I
         )
@@ -249,15 +302,17 @@ def lookup_request(question):
         ):
             products.append(r"\b" + re.escape(name) + r"\b")
     # A city, customer or other unresolved slice must never be silently dropped.
+    income_before_nci = metric == "income" and bool(BEFORE_NCI.search(question))
+    qualifiers = BEFORE_NCI.sub("", question) if income_before_nci else question
     qualified = bool(
         re.search(
             r"来自|城市|市的|地区|客户|分配给|地域|仅限|品牌|单一国家|\b(?:city of|customer-specific)\b",
-            question,
+            qualifiers,
             re.I,
         )
     )
-    if not (groups or products) and re.search(
-        r"分部|部门|板块|事业部|业务线|业务的|收入类型|产品(?:的|拆分)|模式的(?:营收|收入)|\b(?:division|segment)\b",
+    if not (groups or products or revenue_line) and re.search(
+        r"分部|部门|板块|事业部|业务线|业务(?:的|收入|营收)|收入(?:项下|类型|分项)|费(?:的)?(?:营收|收入)|产品(?:的|拆分)|模式的(?:营收|收入)|\b(?:division|segment)\b",
         re.sub(r"(?:全部|所有|整体)业务的?", "", question), re.I
     ):
         qualified = True
@@ -265,6 +320,20 @@ def lookup_request(question):
         r"股权|股份|薪酬|stock.based|share.based", question, re.I
     ):
         qualified = True
+    if metric in {"interest_expense", "total_expenses"}:
+        requested_basis = re.sub(r"(?:不要|别用|不用|排除|而非|而不是|不取|不采用)[^，。！？；,;?]*", "", question)
+        if re.search(r"加回|调节表|调整表|add.back|reconciliation", requested_basis, re.I):
+            qualified = True
+    if metric == "total_expenses":
+        # A printed total label can be a subtotal for a narrower scope. Accept
+        # the group reading only if the question has no unexplained qualifier.
+        if re.search(r"只看|只计|只含|仅看|仅计|仅含|限于|分项|费用类别", question):
+            qualified = True
+        if re.search(r"总费用|费用(?:合计|总额)", question) and not re.search(COMPANY_EXPENSES_ZH, question):
+            qualified = True
+        english_terms = re.findall(r"[a-z]+", question.casefold())
+        if set(english_terms) - EXPENSE_QUESTION_WORDS:
+            qualified = True
     return Lookup(
         metric,
         pattern,
@@ -281,6 +350,8 @@ def lookup_request(question):
         ("constant" if re.search(r"固定汇率|恒定汇率|不变汇率|constant.currency",question,re.I) else "reported")
         if growth_range else "",
         metric == "income" and bool(re.search(r"归母|归属(?:于)?母公司|attributable to (?:the )?parent",question,re.I)),
+        revenue_line,
+        income_before_nci,
     )
 
 
@@ -337,6 +408,8 @@ class TableRow:
     period_columns: tuple = ()
     scope_quote: str = ""
     growth_line: str = ""
+    revenue_heading: str = ""
+    statement_title: str = ""
 
 
 YEAR_BAND = re.compile(r"(?:\d{4}\s+)*\d{4}")
@@ -441,7 +514,7 @@ def prose_outlook_rows(page):
         ):
             in_outlook, heading, subperiod = False, "", None
             continue
-        if in_outlook and re.fullmatch(r"(?:Q[1-4]|full[- ]year|FY)\s+20\d{2}", line, re.I):
+        if in_outlook and re.fullmatch(r"(?:Q[1-4]|(?:first|second|third|fourth) quarter|full[- ]year|FY)\s+20\d{2}", line, re.I):
             heading, subperiod = line, (int(line[-4:]), qnum(line))
             continue
         if (
@@ -622,7 +695,7 @@ def reconciliation_totals(pages):
         previous_unit = schedule_unit if clean and len(set(explicit_units))==1 else ""
 
 
-def source_rows(pages):
+def source_rows(pages, *, calendar_year=False):
     """Keep a table's local header until another printed header starts a new table."""
     result = []
     for page in pages:
@@ -631,12 +704,14 @@ def source_rows(pages):
         result.extend(quarterly_grid_rows(page))
         result.extend(metric_grid_rows(page, data_line, TableRow))
         result.extend(metric_outlook_rows(page, TableRow))
+        if calendar_year:
+            result.extend(low_high_outlook(page, data_line, TableRow))
         pending = []
         header = ""
         section = ""
         block = []
         dollar_block = False
-        expense_heading = per_share_heading = ""
+        expense_heading = per_share_heading = revenue_heading = statement_title = ""
         for raw in page["text"].splitlines():
             s = raw.strip()
             if not s:
@@ -673,7 +748,7 @@ def source_rows(pages):
                         ):
                             section = h
                     block = []
-                    expense_heading = per_share_heading = ""
+                    expense_heading = per_share_heading = revenue_heading = ""
                     dollar_block = bool(re.search(r"\b(?:USD|U\.?S\.? dollars)\b", header, re.I))
                 elif len(pending) <= 2 and (
                     label.startswith("(") or label.lower() in {"diluted", "basic"}
@@ -684,12 +759,23 @@ def source_rows(pages):
                 ):
                     section = gap
                 for h in pending:
+                    if INCOME_STATEMENT.fullmatch(h):
+                        statement_title = h
+                    elif re.search(
+                        r"reconciliation|statements? of|balance sheets?|cash flow statements?|"
+                        r"financial highlights|operating statistics", h, re.I,
+                    ):
+                        statement_title = revenue_heading = ""
+                    if REVENUE_HEADING.fullmatch(h):
+                        revenue_heading = h
+                        expense_heading = ""
                     if re.fullmatch(
                         r"(?:operating |total )?(?:costs and expenses|operating expenses|expenses)\s*:?",
                         h,
                         re.I,
                     ):
                         expense_heading = h
+                        revenue_heading = ""
                 if label.split()[-1].casefold() in {"basic", "diluted"}:
                     per_share_heading = (
                         gap
@@ -719,6 +805,8 @@ def source_rows(pages):
                 expense_heading=expense_heading,
                 per_share_heading=per_share_heading,
                 unit_quote=unit_quote,
+                revenue_heading=revenue_heading,
+                statement_title=statement_title,
             )
             if grid_columns(header):
                 continue  # This table was already parsed with its multiline labels intact.
@@ -729,6 +817,8 @@ def source_rows(pages):
                 for r in block:
                     r.dollars = True
             item.dollars = dollar_block
+            if re.fullmatch(r"total (?:revenues?|net sales|sales)", label, re.I):
+                revenue_heading = ""
     result.extend(reconciliation_totals(pages))
     return result
 
@@ -781,7 +871,7 @@ def column_labels(row, release_q):
         tags = line.split()
         if (
             len(tags) >= 2
-            and not re.search(r"\bstatements? of\b", line, re.I)
+            and not re.search(r"\b(?:statements? of|reconciliations? of|net income|adjusted EBITDA)\b", line, re.I)
             and all(re.fullmatch(r"(?:[A-Z][A-Z0-9&-]{1,12}|Non-GAAP|non-GAAP)", t) for t in tags)
             and len(set(tags)) == len(tags)
         ):
@@ -874,10 +964,12 @@ def column_labels(row, release_q):
     return cols
 
 
-def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False):
+def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False, calendar_year=False):
     """Produce eligible original cells. A model can select an ID, never supply an amount."""
     if req.qualified:
         return []
+    if req.metric in HOTEL_METRICS:
+        return operating_cells(pages, req, calendar_year)
     if req.growth_basis:
         found = growth_guidance_cells(pages, req)
         if found or req.growth_basis != "reported" or req.groups or req.products:
@@ -900,7 +992,7 @@ def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False):
                 release_q = int(title[1][1])
                 break
     result = []
-    for row in source_rows(pages) if rows is None else rows:
+    for row in source_rows(pages, calendar_year=calendar_year) if rows is None else rows:
         if req.metric=="free_cash_flow" and not (row.reconciliation_total or cited_cash_flow):
             continue
         if req.guidance != row.ranged:
@@ -911,6 +1003,20 @@ def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False):
             or any(re.search(r"\b" + re.escape(g) + r"\b", row.label, re.I) for g in req.groups)
             else ""
         )
+        statement = row.statement_title
+        if req.revenue_line:
+            if (not statement or not row.revenue_heading
+                    or compact(row.label).casefold() != req.revenue_line.casefold()):
+                continue
+            caption = row.revenue_heading
+        if req.metric in {"interest_expense", "total_expenses"} and not statement:
+            continue
+        if req.income_before_nci and (not statement or not re.fullmatch(
+            r"(?:consolidated )?net (?:income|earnings|profit|loss)(?: \(loss\))?", row.label, re.I
+        )):
+            continue
+        if req.metric == "operating" and re.search(r"\bnon[- ]?operating\b", row.label, re.I):
+            continue
         if not re.search(req.pattern, row.label, re.I) and not (
             caption and re.search(req.pattern, caption, re.I)
         ):
@@ -972,7 +1078,7 @@ def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False):
             if not (req.groups or req.products) and (SEGMENT.search(section) or seg_group):
                 continue
             if (
-                not (req.groups or req.products)
+                not (req.groups or req.products or req.revenue_line)
                 and req.metric == "revenue"
                 and not re.fullmatch(
                     r"(?:GAAP |Non-GAAP |Adjusted |Consolidated |Total |Net |Operating )*(?:Revenues?|Net Sales|Sales|Turnover)(?:\d{1,2}| \(\d+\))?",
@@ -1047,6 +1153,10 @@ def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False):
             evidence_context = ""
             if req.metric == "development_expense":
                 evidence_context = row.expense_heading
+            elif req.revenue_line:
+                evidence_context = row.revenue_heading
+            elif req.metric in {"interest_expense", "total_expenses"} or req.income_before_nci:
+                evidence_context = row.statement_title if row.statement_title not in row.header else ""
             elif req.metric == "eps" and row.label.casefold() == "diluted":
                 evidence_context = row.per_share_heading
             result.append(

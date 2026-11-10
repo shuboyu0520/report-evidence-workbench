@@ -43,6 +43,9 @@ button:not(:disabled):hover { border-color: #245342; }
 #answers.comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .answer-block { border-top: 2px solid #71867b; background: #f4f6f3; padding: 11px 15px; }
 .answer-block.current { border-color: #41745e; }
+.answer-sources { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 12px; font-size: 14px; }
+.previous-grade { margin-top: 10px; font-size: 14px; }
+.previous-grade summary { cursor: pointer; color: #245342; }
 #case-detail h3 { font-size: 17px; margin: 21px 0 8px; }
 #case-detail .answer-block h3 { margin: 0 0 7px; }
 .answer-block p, #grade, .citation blockquote {

@@ -1,0 +1,23 @@
+{
+  "sealed_utc": "2026-11-10T13:46:50.714793+00:00",
+  "fixture_sha256": "708fdbeb149dbf2a469a462c182e9341a73c9a24bd09a5319aa942ed88910fa5",
+  "pdf_sha256": "27abdc1506ed45cb12f73f0c967f07ee309d9af3deb8596557d0cbf3c615a78a",
+  "source": "https://d1io3yog0oux5.cloudfront.net/_c5bec3ae4d0d5e93de1ce3fda8af9248/wyndhamhotels/news/2026-10-21_WYNDHAM_HOTELS_RESORTS_REPORTS_STRONG_THIRD_432.pdf",
+  "source_event": "https://investor.wyndhamhotels.com/news-events/press-releases/detail/432/wyndham-hotels-resorts-reports-strong-third-quarter",
+  "sec_release": "https://investor.wyndhamhotels.com/financial-information/all-sec-filings/content/0001722684-26-000081/exhibit9912026930.htm",
+  "physical_pages": 18,
+  "set_sizes": {
+    "actuals": 12,
+    "guidance": 2,
+    "disclosure_status": 4
+  },
+  "selection_history": {
+    "release_checkout": "0a48b52593bb6ef5a839fed75af9739acae22ac0",
+    "history_commits_checked": 47,
+    "database_count": 2128,
+    "report_count": 1795,
+    "prior_run_json_files_checked": 110,
+    "application_and_release_files_checked": 240
+  },
+  "gold_generation": "All labels were read on the official PDF; the quoted examples were checked on the stated physical pages before the first reader request."
+}

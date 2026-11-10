@@ -1,0 +1,85 @@
+{
+  "frozen_utc": "2026-11-10T13:56:17.579436+00:00",
+  "app_snapshot_sha256": "84adaf78732e4ba539ec89ef2b3a27a99b4fd33d77320c81ede4a5f79cbb76a2",
+  "app_git_tree": "f9d618a4f8043560f4d93237bd6272937a2d482e",
+  "model_digests": {
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d"
+  },
+  "settings": {
+    "model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "hilton_previous": {
+    "lookup_guidance": [
+      3,
+      14
+    ],
+    "lookup_only": [
+      3,
+      12
+    ],
+    "guidance_only": [
+      0,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "hilton_replay": {
+    "lookup_guidance": [
+      14,
+      14
+    ],
+    "lookup_only": [
+      12,
+      12
+    ],
+    "guidance_only": [
+      2,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "wyndham_first_run": {
+    "lookup_guidance": [
+      3,
+      14
+    ],
+    "lookup_only": [
+      3,
+      12
+    ],
+    "guidance_only": [
+      0,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "wyndham_failure_stages": {
+    "no_eligible_cell": 11
+  },
+  "preregistered_utc": "2026-11-10T13:46:50.714793+00:00",
+  "first_run_start_utc": "2026-11-10T13:57:55.125400+00:00",
+  "first_run_end_utc": "2026-11-10T13:58:01.030605+00:00",
+  "raw_first_response_sha256": "0d316eba2aecf7256a7d37f6bc0b379afb62b4d3253e45ba1e0a1c3b5a147e26",
+  "historical": {
+    "same": 94,
+    "total": 94
+  },
+  "local_release_tests_passed": 251
+}

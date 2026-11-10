@@ -122,8 +122,8 @@ def grade(case, response, pages, cutoff):
     return True, "已核对原页引文、指标范围、季度、单位及最终数值"
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+def main(grade_case=grade, description=__doc__):
+    parser = argparse.ArgumentParser(description=description)
     for field in ("fixture", "pdf", "raw", "output"):
         parser.add_argument("--" + field, type=Path, required=True)
     args = parser.parse_args()
@@ -139,7 +139,7 @@ def main():
     for case, row in zip(fixture["cases"], run["cases"], strict=True):
         if (case["id"], case["question"]) != (row["id"], row["question"]):
             raise ValueError("Question or ordering differs from the registered set")
-        passed, grade_note = grade(case, row, pages, fixture["as_of"])
+        passed, grade_note = grade_case(case, row, pages, fixture["as_of"])
         records.append(
             {
                 "id": case["id"],

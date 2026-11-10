@@ -1,0 +1,514 @@
+{
+  "cohorts": {
+    "airbnb": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "0e1961322eb56569a764997fbf51117ed7a3245d184bb14e8a935ebdbdbb213a",
+      "pdf_sha256": "9824f9818c184057138fc8ff1ce16d6f7ae3995cc2eb1a64bf8d204134c9e112",
+      "prior_run_sha256": "ef196eea6560580ad559e25edc0c2faf61e4679420a6a40c9b948b191e27682d",
+      "replay_sha256": "a4122abae9b5e7c9d216a5ce583857b28d9d17a77ce3c22c09697f2a478b1bed",
+      "replay_start_utc": "2026-11-10T13:56:38.279254+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "A01",
+          "changed": []
+        },
+        {
+          "id": "A02",
+          "changed": []
+        },
+        {
+          "id": "A03",
+          "changed": []
+        },
+        {
+          "id": "A04",
+          "changed": []
+        },
+        {
+          "id": "A05",
+          "changed": []
+        },
+        {
+          "id": "A06",
+          "changed": []
+        },
+        {
+          "id": "A07",
+          "changed": []
+        },
+        {
+          "id": "A08",
+          "changed": []
+        },
+        {
+          "id": "A09",
+          "changed": []
+        },
+        {
+          "id": "A10",
+          "changed": []
+        },
+        {
+          "id": "A11",
+          "changed": []
+        },
+        {
+          "id": "A12",
+          "changed": []
+        },
+        {
+          "id": "A13",
+          "changed": []
+        },
+        {
+          "id": "A14",
+          "changed": []
+        },
+        {
+          "id": "A15",
+          "changed": []
+        },
+        {
+          "id": "A16",
+          "changed": []
+        },
+        {
+          "id": "A17",
+          "changed": []
+        },
+        {
+          "id": "A18",
+          "changed": []
+        }
+      ]
+    },
+    "uber": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "11386f7fc21d648332bf421c83c755355cbd0c962ba5a240d980c988af9d889b",
+      "pdf_sha256": "771658eae3b120b31a2eea00345c363bd54f88be8db6a2a8139b9a09fe7ac97f",
+      "prior_run_sha256": "91e60856eb9c309217d9516aca87589953482b34b5e7cf0775cc0c6dac15d290",
+      "replay_sha256": "16f22c7873832a707c682bf77fcc0aa3022b002c64ebca424e31bf65d4aeb5eb",
+      "replay_start_utc": "2026-11-10T13:56:52.333426+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "U01",
+          "changed": []
+        },
+        {
+          "id": "U02",
+          "changed": []
+        },
+        {
+          "id": "U03",
+          "changed": []
+        },
+        {
+          "id": "U04",
+          "changed": []
+        },
+        {
+          "id": "U05",
+          "changed": []
+        },
+        {
+          "id": "U06",
+          "changed": []
+        },
+        {
+          "id": "U07",
+          "changed": []
+        },
+        {
+          "id": "U08",
+          "changed": []
+        },
+        {
+          "id": "U09",
+          "changed": []
+        },
+        {
+          "id": "U10",
+          "changed": []
+        },
+        {
+          "id": "U11",
+          "changed": []
+        },
+        {
+          "id": "U12",
+          "changed": []
+        },
+        {
+          "id": "U13",
+          "changed": []
+        },
+        {
+          "id": "U14",
+          "changed": []
+        },
+        {
+          "id": "U15",
+          "changed": []
+        },
+        {
+          "id": "U16",
+          "changed": []
+        },
+        {
+          "id": "U17",
+          "changed": []
+        },
+        {
+          "id": "U18",
+          "changed": []
+        }
+      ]
+    },
+    "qcom": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "6509f78b833eaf193bbe01f3909fe4df57aae016447be7b0df77074aca5e4a6b",
+      "pdf_sha256": "6aa674a7f42a75aae351ccce55ae33ac2da34774827fdec43297f9ae6e12c4c6",
+      "prior_run_sha256": "65765a673a4dfcd6a246c9e9840c696d71df39d54068d8bfda18707f3eef97d3",
+      "replay_sha256": "3236145e8d570d31151e557430c49e8f605594bc51e861b4617ec74639f2e635",
+      "replay_start_utc": "2026-11-10T13:57:01.409258+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "Q01",
+          "changed": []
+        },
+        {
+          "id": "Q02",
+          "changed": []
+        },
+        {
+          "id": "Q03",
+          "changed": []
+        },
+        {
+          "id": "Q04",
+          "changed": []
+        },
+        {
+          "id": "Q05",
+          "changed": []
+        },
+        {
+          "id": "Q06",
+          "changed": []
+        },
+        {
+          "id": "Q07",
+          "changed": []
+        },
+        {
+          "id": "Q08",
+          "changed": []
+        },
+        {
+          "id": "Q09",
+          "changed": []
+        },
+        {
+          "id": "Q10",
+          "changed": []
+        },
+        {
+          "id": "Q11",
+          "changed": []
+        },
+        {
+          "id": "Q12",
+          "changed": []
+        },
+        {
+          "id": "Q13",
+          "changed": []
+        },
+        {
+          "id": "Q14",
+          "changed": []
+        },
+        {
+          "id": "Q15",
+          "changed": []
+        },
+        {
+          "id": "Q16",
+          "changed": []
+        },
+        {
+          "id": "Q17",
+          "changed": []
+        },
+        {
+          "id": "Q18",
+          "changed": []
+        }
+      ]
+    },
+    "tsmc": {
+      "same": 4,
+      "total": 4,
+      "fixture_sha256": "668b055040d7507db708a15971ec4ca6b49e36fcb558b5f988c81b8e0973652b",
+      "pdf_sha256": "d905217f428d807ccac6662ed984e988c90e4812bb3b6138a3ea0bf84a279393",
+      "prior_run_sha256": "af87921d4fb6b41e394317fe294b1875292964cc8c190bcbdb2c9c115ca232c3",
+      "replay_sha256": "ae2b18925a22899df6c530d9e634b342ee0070e667ac0bcbaa52ec9328ea0dd8",
+      "replay_start_utc": "2026-11-10T13:57:07.935451+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "cash",
+          "changed": []
+        },
+        {
+          "id": "platform",
+          "changed": []
+        },
+        {
+          "id": "guidance",
+          "changed": []
+        },
+        {
+          "id": "missing",
+          "changed": []
+        }
+      ]
+    },
+    "booking": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "761ccac985ae4f444ca41fa0c0687b467eba6bf930d535d99127060551e081d6",
+      "pdf_sha256": "ee8d404ee88b884d9ebb06b34930c8c90872c5319f182eb44a765c42bdb6efbe",
+      "prior_run_sha256": "d6457096fe7b263f73b8dcc8392d0fd68fd009e19f0c785c46c2d49add46215e",
+      "replay_sha256": "99ab6d0dc7bc4dc39893fea527faa5c1454bcc89e06d82effb5ecd263d7f1525",
+      "replay_start_utc": "2026-11-10T13:57:12.270145+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "B01",
+          "changed": []
+        },
+        {
+          "id": "B02",
+          "changed": []
+        },
+        {
+          "id": "B03",
+          "changed": []
+        },
+        {
+          "id": "B04",
+          "changed": []
+        },
+        {
+          "id": "B05",
+          "changed": []
+        },
+        {
+          "id": "B06",
+          "changed": []
+        },
+        {
+          "id": "B07",
+          "changed": []
+        },
+        {
+          "id": "B08",
+          "changed": []
+        },
+        {
+          "id": "B09",
+          "changed": []
+        },
+        {
+          "id": "B10",
+          "changed": []
+        },
+        {
+          "id": "B11",
+          "changed": []
+        },
+        {
+          "id": "B12",
+          "changed": []
+        },
+        {
+          "id": "B13",
+          "changed": []
+        },
+        {
+          "id": "B14",
+          "changed": []
+        },
+        {
+          "id": "B15",
+          "changed": []
+        },
+        {
+          "id": "B16",
+          "changed": []
+        },
+        {
+          "id": "B17",
+          "changed": []
+        },
+        {
+          "id": "B18",
+          "changed": []
+        }
+      ]
+    },
+    "expedia": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "c881521b0f01e2d61c8f32d6aebdf13d6fce4a423e771526b8572ed5cf6e81e7",
+      "pdf_sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+      "prior_run_sha256": "d032562356a66c089394b2c5fba38105bb039d6bf97f66c357929755fe18f7d5",
+      "replay_sha256": "fbac3bf7130bb72e7f55584353e7e95e5e71d7d25d42db74c104d5508771bb51",
+      "replay_start_utc": "2026-11-10T13:57:20.717651+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "E01",
+          "changed": []
+        },
+        {
+          "id": "E02",
+          "changed": []
+        },
+        {
+          "id": "E03",
+          "changed": []
+        },
+        {
+          "id": "E04",
+          "changed": []
+        },
+        {
+          "id": "E05",
+          "changed": []
+        },
+        {
+          "id": "E06",
+          "changed": []
+        },
+        {
+          "id": "E07",
+          "changed": []
+        },
+        {
+          "id": "E08",
+          "changed": []
+        },
+        {
+          "id": "E09",
+          "changed": []
+        },
+        {
+          "id": "E10",
+          "changed": []
+        },
+        {
+          "id": "E11",
+          "changed": []
+        },
+        {
+          "id": "E12",
+          "changed": []
+        },
+        {
+          "id": "E13",
+          "changed": []
+        },
+        {
+          "id": "E14",
+          "changed": []
+        },
+        {
+          "id": "E15",
+          "changed": []
+        },
+        {
+          "id": "E16",
+          "changed": []
+        },
+        {
+          "id": "E17",
+          "changed": []
+        },
+        {
+          "id": "E18",
+          "changed": []
+        }
+      ]
+    }
+  },
+  "fields": [
+    "answer",
+    "verification",
+    "citations"
+  ],
+  "same": 94,
+  "total": 94,
+  "app_sha256": "84adaf78732e4ba539ec89ef2b3a27a99b4fd33d77320c81ede4a5f79cbb76a2"
+}

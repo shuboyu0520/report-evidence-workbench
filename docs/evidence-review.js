@@ -85,10 +85,20 @@
     return subset.filter((row) => row.passed).length + ' / ' + subset.length;
   }
 
-  function answerBlock(label, answer, isCurrent) {
+  function answerBlock(label, answer, isCurrent, source, citations) {
     const section = node('section');
     section.className = 'answer-block' + (isCurrent ? ' current' : '');
     section.append(node('h3', label), node('p', answer));
+    if (citations?.length) {
+      const links = node('div');
+      links.className = 'answer-sources';
+      links.append('该答复所引原页');
+      for (const page of new Set(citations.map(c => c.page))) {
+        const link = pageLink(source, page);
+        if (link) links.append(link);
+      }
+      section.append(links);
+    }
     return section;
   }
 
@@ -103,8 +113,17 @@
     const comparison = isReplay && typeof row.previous_answer === 'string';
     answers.classList.toggle('comparison', comparison);
     answers.replaceChildren();
-    if (comparison) answers.append(answerBlock('修复前原答', row.previous_answer, false));
-    answers.append(answerBlock(isReplay ? '修复后原答' : '首次运行原答', row.answer, true));
+    if (comparison) {
+      const before = answerBlock('修复前原答', row.previous_answer, false, cohort.source, row.previous_citations);
+      if (row.previous_grade && changed(row)) {
+        const why = node('details');
+        why.className = 'previous-grade';
+        why.append(node('summary', '查看首测判定'), node('p', row.previous_grade));
+        before.append(why);
+      }
+      answers.append(before);
+    }
+    answers.append(answerBlock(isReplay ? '修复后原答' : '首次运行原答', row.answer, true, cohort.source, row.citations));
     byId('grade').textContent = row.grade || states[row.verification] || '';
     const gold = byId('gold-pages');
     const goldLinks = [...new Set(Array.isArray(row.gold_pages) ? row.gold_pages : [])]

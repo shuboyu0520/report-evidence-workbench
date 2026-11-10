@@ -1,0 +1,436 @@
+{
+  "company": "Hilton Worldwide Holdings Inc. (HLT)",
+  "source": "https://ir.hilton.com/_assets/_0dae474c42299bf06914d109d97c2a81/hilton/news/2026-10-27_Hilton_Reports_Third_Quarter_419.pdf",
+  "as_of": "2026-11-10",
+  "fixture_sha256": "251ea0be9c4b484baf28c517903b2e809c9fa36fb0590230280ef70f65bf04aa",
+  "pdf_sha256": "438f0b1e6b0881980cd0b89c176153b6bcc90f8d5839403e19cf4ac9a685fcb4",
+  "raw_sha256": "b79baddcf1cfbea7c472e9ba4ca9ee8814c5643f43212909c656bfb247d47378",
+  "scores": {
+    "lookup_guidance": [
+      14,
+      14
+    ],
+    "lookup_only": [
+      12,
+      12
+    ],
+    "guidance_only": [
+      2,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "cases": [
+    {
+      "id": "H01",
+      "kind": "lookup",
+      "question": "2026 年第三季度，集团报告的总营收是多少百万美元？请给出合并利润表的精确值。",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Total revenues（实际）为 3,325 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Total revenues  3,325  3,120  9,603  8,952"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        }
+      ],
+      "accepted_pages": [
+        6,
+        12
+      ],
+      "gold_example": "Total revenues 3,325 3,120 9,603 8,952"
+    },
+    {
+      "id": "H02",
+      "kind": "lookup",
+      "question": "上年同期，即 2025 年第三季度，集团报告的总营收是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2025 财年第3季度，公司整体  Total revenues（实际）为 3,120 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Total revenues  3,325  3,120  9,603  8,952"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        }
+      ],
+      "accepted_pages": [
+        6,
+        12
+      ],
+      "gold_example": "Total revenues 3,325 3,120 9,603 8,952"
+    },
+    {
+      "id": "H03",
+      "kind": "lookup",
+      "question": "2026 年第三季度集团营业利润是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Operating income（实际）为 909 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Operating income  909  777  2,445  2,091"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        }
+      ],
+      "accepted_pages": [
+        6
+      ],
+      "gold_example": "Operating income 909 777 2,445 2,091"
+    },
+    {
+      "id": "H04",
+      "kind": "lookup",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元/股？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Diluted（实际）为 2.37 美元/股。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Diluted $ 2.37 $ 1.78 $ 6.13 $ 4.84"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        },
+        {
+          "page": 6,
+          "quote": "Earnings per share:"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        2,
+        6,
+        11
+      ],
+      "gold_example": "Diluted EPS, as reported $ 2.37 $ 1.78 $ 6.13 $ 4.84"
+    },
+    {
+      "id": "H05",
+      "kind": "lookup",
+      "question": "2026 年第三季度全集团调整后 EBITDA 的实际金额是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体 非 GAAP Adjusted EBITDA（实际）为 1,058 百万美元。原表第 12 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 12,
+          "quote": "Adjusted EBITDA $ 1,058 $ 976 $ 3,013 $ 2,779"
+        },
+        {
+          "page": 12,
+          "quote": "RECONCILIATIONS OF NON-GAAP FINANCIAL MEASURES\nNET INCOME MARGIN AND\nADJUSTED EBITDA AND ADJUSTED EBITDA MARGIN\n(dollars in millions)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        2,
+        12
+      ],
+      "gold_example": "Adjusted EBITDA $ 1,058 $ 976 $ 3,013 $ 2,779"
+    },
+    {
+      "id": "H06",
+      "kind": "lookup",
+      "question": "2025 年第三季度全集团的 GAAP 净利润是多少百万美元？请按分配给非控股权益前的合并口径回答。",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2025 财年第3季度，公司整体  Net income（实际）为 421 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Net income  536  421  1,401  1,163"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        }
+      ],
+      "accepted_pages": [
+        2,
+        6,
+        12
+      ],
+      "gold_example": "Net income 536 421 1,401 1,163"
+    },
+    {
+      "id": "H07",
+      "kind": "lookup",
+      "question": "2026 年第三季度特许经营与授权费（Franchise and licensing fees）收入是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Franchise and licensing fees Revenues（实际）为 815 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Franchise and licensing fees $ 815 $ 739 $ 2,319 $ 2,109"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        },
+        {
+          "page": 6,
+          "quote": "Revenues"
+        }
+      ],
+      "accepted_pages": [
+        6
+      ],
+      "gold_example": "Franchise and licensing fees $ 815 $ 739 $ 2,319 $ 2,109"
+    },
+    {
+      "id": "H08",
+      "kind": "lookup",
+      "question": "2026 年第三季度自有酒店业务（Ownership）列在收入项下的金额是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Ownership Revenues（实际）为 304 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Ownership  304  322  864  888"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        },
+        {
+          "page": 6,
+          "quote": "Revenues"
+        }
+      ],
+      "accepted_pages": [
+        6
+      ],
+      "gold_example": "Ownership 304 322 864 888"
+    },
+    {
+      "id": "H09",
+      "kind": "lookup",
+      "question": "2026 年第三季度合并利润表的利息费用是多少百万美元？请按利润表的列示符号回答，保留对利润的正负影响。",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Interest expense（实际）为 -184 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Interest expense  (184)  (159)  (529)  (455)"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        }
+      ],
+      "accepted_pages": [
+        6
+      ],
+      "gold_example": "Interest expense (184) (159) (529) (455)"
+    },
+    {
+      "id": "H10",
+      "kind": "lookup",
+      "question": "2026 年第三季度集团总费用（Total expenses）是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Total expenses（实际）为 2,416 百万美元。原表第 6 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 6,
+          "quote": "Total expenses  2,416  2,343  7,158  6,861"
+        },
+        {
+          "page": 6,
+          "quote": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS\n(in millions, except per share amounts)\n(unaudited)\nThree Months Ended Nine Months Ended\nSeptember 30, September 30,\n2026 2025 2026 2025\nRevenues"
+        }
+      ],
+      "accepted_pages": [
+        6
+      ],
+      "gold_example": "Total expenses 2,416 2,343 7,158 6,861"
+    },
+    {
+      "id": "H11",
+      "kind": "lookup",
+      "question": "2026 年第三季度，全系统可比酒店的入住率是多少？请给入住率的百分比水平。",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，System-wide 可比酒店 Occupancy（实际）为 75.8 %。原表第 7 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 7,
+          "quote": "System-wide  75.8 %  1.4 % pts. $ 164.57  3.9 % $ 124.70  5.8 %"
+        },
+        {
+          "page": 7,
+          "quote": "Three Months Ended September 30,\nOccupancy ADR RevPAR\n2026 vs. 2025 2026 vs. 2025 2026 vs. 2025"
+        },
+        {
+          "page": 7,
+          "quote": "COMPARABLE AND CURRENCY NEUTRAL SYSTEM-WIDE HOTEL OPERATING STATISTICS"
+        }
+      ],
+      "accepted_pages": [
+        7
+      ],
+      "gold_example": "System-wide 75.8 % 1.4 % pts. $ 164.57 3.9 % $ 124.70 5.8 %"
+    },
+    {
+      "id": "H12",
+      "kind": "lookup",
+      "question": "按可比酒店的地区统计，2026 年第三季度亚太区（Asia Pacific）每间可售客房收入（RevPAR）是多少美元？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Asia Pacific 可比酒店 RevPAR（实际）为 71.78 美元/可售客房。原表第 7 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 7,
+          "quote": "Asia Pacific  71.9  (0.7)  99.87  0.5  71.78  (0.5)"
+        },
+        {
+          "page": 7,
+          "quote": "Three Months Ended September 30,\nOccupancy ADR RevPAR\n2026 vs. 2025 2026 vs. 2025 2026 vs. 2025"
+        },
+        {
+          "page": 7,
+          "quote": "COMPARABLE AND CURRENCY NEUTRAL SYSTEM-WIDE HOTEL OPERATING STATISTICS"
+        },
+        {
+          "page": 7,
+          "quote": "U.S.  76.7 %  2.1 % pts. $ 176.71  4.1 % $ 135.53  7.0 %"
+        },
+        {
+          "page": 7,
+          "quote": "Region"
+        }
+      ],
+      "accepted_pages": [
+        7
+      ],
+      "gold_example": "Asia Pacific 71.9 (0.7) 99.87 0.5 71.78 (0.5)"
+    },
+    {
+      "id": "H13",
+      "kind": "guidance",
+      "question": "管理层对 2026 年第四季度全系统可比酒店 RevPAR 固定汇率同比增幅给出的指引区间是多少？",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第4季度，System-wide 可比酒店固定汇率同比 RevPAR（指引）为 3.0 至 3.5 %。原表第 3 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 3,
+          "quote": "• System-wide comparable RevPAR, on a currency neutral basis, is projected to increase between 3.0 percent and 3.5\npercent compared to the fourth quarter of 2025."
+        },
+        {
+          "page": 3,
+          "quote": "Fourth Quarter 2026"
+        }
+      ],
+      "accepted_pages": [
+        3
+      ],
+      "gold_example": "is projected to increase between 3.0 percent and 3.5 percent compared to the fourth quarter of 2025."
+    },
+    {
+      "id": "H14",
+      "kind": "guidance",
+      "question": "管理层预计 2026 年第四季度的调整后 EBITDA 为多少百万美元？请给出金额区间。",
+      "passed": true,
+      "assessment": "所问口径、季度、原值及物理页引文相符。",
+      "answer": "2026 财年第4季度，公司整体 非 GAAP Adjusted EBITDA（指引）为 1,047 至 1,067 百万美元。原表第 3 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 3,
+          "quote": "• Adjusted EBITDA is projected to be between $1,047 million and $1,067 million."
+        },
+        {
+          "page": 3,
+          "quote": "Fourth Quarter 2026"
+        }
+      ],
+      "accepted_pages": [
+        3,
+        15
+      ],
+      "gold_example": "Adjusted EBITDA $ 1,047 $ 1,067"
+    },
+    {
+      "id": "H15",
+      "kind": "future",
+      "question": "截至研究日，2026 年第四季度集团实际总营收是多少百万美元？",
+      "passed": true,
+      "assessment": "研究截止日早于所问报告期的结束日。",
+      "answer": "截至 2026-11-10，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "H16",
+      "kind": "future",
+      "question": "截至研究日，2027 年第一季度集团实际营业利润是多少百万美元？",
+      "passed": true,
+      "assessment": "研究截止日早于所问报告期的结束日。",
+      "answer": "截至 2026-11-10，所问报告期（截至 2027-03-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "H17",
+      "kind": "missing",
+      "question": "仅根据这份季度公告，2026 年第三季度日本单一国家的酒店业务总营收是多少百万美元？",
+      "passed": true,
+      "assessment": "原公告未披露指定国家或品牌的营收。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "H18",
+      "kind": "missing",
+      "question": "只依这份公告，2026 年第三季度康莱德（Conrad Hotels & Resorts）这一品牌的总营收是多少百万美元？",
+      "passed": true,
+      "assessment": "原公告未披露指定国家或品牌的营收。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    }
+  ]
+}

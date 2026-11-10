@@ -13,6 +13,7 @@ from uuid import uuid4
 import httpx
 
 from .earnings_tables import lookup_request, resolve_sources, source_rows
+from .lodging_metrics import HOTEL_METRICS
 from .finance import numeric
 from .retrieval import MODEL, embed, retrieve
 from .runtime import run_search
@@ -25,7 +26,7 @@ CASE_TEXT = "\n\n".join(
 CASE_DIGESTS = {CASE["reference_digest"], hashlib.sha256(CASE_TEXT.encode()).hexdigest()}
 MISSING = "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。"
 QUARTER = re.compile(r"第?([一二三四1-4])(?:个)?(?:财季|季度)|Q([1-4])|([1-4])Q", re.I)
-AMOUNT = re.compile(r"(?<![\d.])[-−]?\d[\d,]*(?:\.\d+)?%?")
+AMOUNT = re.compile(r"(?<![\d.])[-−]?\d[\d,]*(?:\.\d+)?(?:%|pp)?")
 PARENTHESIZED_CASH_FLOW = re.compile(
     r"^[ \t]*free cash flow\*?[ \t]+(?=[$€£(\d−-])[^\n]*\([ \t]*[$€£]?[ \t]*\d[\d,.]*[ \t]*\)",
     re.I | re.M,
@@ -75,6 +76,10 @@ def future_end(question, cutoff, calendar_year):
 
 
 def amount_tokens(text):
+    # A printed English percent and a Chinese '%' are the same unit. Percentage
+    # points remain a separate unit and must not validate a percentage level.
+    text = re.sub(r"(?<=\d)\s*(?:%(?:\s*pts?|\s*points?)\b|percent(?:age)?\s+points?\b|个百分点)", "pp", text, flags=re.I)
+    text = re.sub(r"(?<=\d)\s*(?:percent\b|[%％])", "%", text, flags=re.I)
     return {s.replace(",", "").replace("−", "-") for s in AMOUNT.findall(text)}
 
 
@@ -228,15 +233,17 @@ async def from_cards(question, config, tools, calls):
     return answer, "reviewed_evidence", refs
 
 
-async def from_document(db, report, pages, question, config, tools, calls, events):
+async def from_document(db, report, pages, question, config, tools, calls, events, *, calendar_year=False):
     request = lookup_request(question)
-    source_table_rows = source_rows(pages) if request else []
+    source_table_rows = source_rows(pages, calendar_year=calendar_year) if request else []
     rows = source_table_rows
     if request and request.metric=="free_cash_flow" and not any(r.reconciliation_total and re.search(request.pattern,r.label,re.I) for r in rows):
         # Other FCF layouts (including TTM grids) retain source-bounded retrieval.
         rows = []
-    if rows or (request and request.growth_basis):
-        candidates = resolve_sources(pages, request, rows)
+    if rows or (request and (request.growth_basis or request.metric in HOTEL_METRICS
+                             or request.metric in {"interest_expense", "total_expenses"}
+                             or request.revenue_line or request.income_before_nci)):
+        candidates = resolve_sources(pages, request, rows, calendar_year=calendar_year)
         tools.append(
             {
                 "tool": "search_earnings_rows",
@@ -428,7 +435,8 @@ async def read_report(db, report_id, question, settings, as_of=None):
         answer, state, refs = await from_cards(question, settings, tools, calls)
     else:
         answer, state, refs = await from_document(
-            db, report, pages, question, settings, tools, calls, events
+            db, report, pages, question, settings, tools, calls, events,
+            calendar_year=bool(ctx.get("calendar_year")),
         )
     result = {
         "id": uuid4().hex,
