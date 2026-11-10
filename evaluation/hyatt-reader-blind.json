@@ -1,0 +1,287 @@
+{
+  "company": "Hyatt Hotels Corporation (H)",
+  "published_on": "2026-10-29",
+  "as_of": "2026-11-11",
+  "calendar_year": true,
+  "source": "https://newsroom.hyatt.com/Q3-2026-Earnings-Results?asPDF=1",
+  "source_event": "https://newsroom.hyatt.com/Q3-2026-Earnings-Results",
+  "sec_release": "https://www.sec.gov/Archives/edgar/data/1468174/000146817426000029/q32026earningsrelease.htm",
+  "sha256": "814aa76bd37a46f4ea4e430f31c67c38274b8ffa06bedc0cedb8c0a37958ae96",
+  "physical_pages": 8,
+  "selection": "Previously unused hotel issuer with accessible official quarterly release and fiscal-year guidance. This is the newsroom's eight-page release, including narrative disclosures and an outlook table. The separately filed detailed financial schedules are outside the input.",
+  "history_check": {
+    "release_checkout": "b7becc12a1e6a484e1a7125e916334c565602372",
+    "history_commits_checked": 48,
+    "database_count": 2257,
+    "report_count": 1908,
+    "prior_run_json_files_checked": 131,
+    "application_and_release_files_checked": 264
+  },
+  "protocol": "A new empty database; public upload and reader endpoints receive the official PDF, issuer metadata, date, and each question text once. No answer keys are supplied to the engine. Preserve original ordered outputs including errors and refusals. Freeze the application before this issuer is first run. No retries or result-driven question substitutions.",
+  "rubric": {
+    "technical": "A missing result, an HTTP failure, or a technical refusal fails and remains in its denominator. No run or case may be reselected.",
+    "quantity": "For each substantive answer require correct metric, scope, sign, period, basis, unit and exact value or range endpoints under its question. Accept exact unit conversions and equivalent decimal representations. Mixed-scale, prior-period, standalone segment, nine-month, opposite-sign and forward/actual substitutions fail.",
+    "evidence": "Require at least one user-visible verbatim quote on an accepted physical PDF page tied to the target row or textual assertion. Multiple exact snippets may supply context; use row heading and surrounding column headers in the original PDF. When two different rows carry the same number inspect the actual row. All provided quotes must be traceable on their stated page modulo whitespace. A neutral extra header is acceptable, but material conflicting citations or unsupported extra claims fail. A correct internal draft is not sufficient.",
+    "status": "Future actuals require not_yet_disclosed plus the requested period end and research cutoff, with no numeric forecast presented as an actual. Absent-material cases require insufficient_evidence in the supplied PDF, no unsupported amount, and no claim of global nondisclosure.",
+    "review": "Require a correct metric, scope, unit and quarter or as-of date, and verbatim source citation on an eligible physical PDF page. An explicit signed decrease may be verbal or numeric. A range must preserve both endpoints and the year. Missing or future questions must refuse on the registered basis. Manually inspect all first responses, including any extra claims."
+  },
+  "cases": [
+    {
+      "question": "2026 年第三季度凯悦披露的毛费用收入（Gross fees）金额是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Quarterly gross fees, not total revenue, fee growth, or a forecast",
+      "expected_values": [
+        "327"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Gross fees were $327 million, an increase of 15.2%",
+      "id": "Y01"
+    },
+    {
+      "question": "2026 年第三季度，归属于 Hyatt Hotels Corporation 的 GAAP 净利润是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Reported quarter net income attributable to the parent, not adjusted net income",
+      "expected_values": [
+        "58"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Net income attributable to Hyatt Hotels Corporation was $58 million and Adjusted Net Income was $122 million",
+      "id": "Y02"
+    },
+    {
+      "question": "2026 年第三季度集团披露的调整后净利润（Adjusted Net Income）是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Quarterly adjusted net income, distinct from GAAP net income attributable to the parent",
+      "expected_values": [
+        "122"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Adjusted Net Income was $122 million",
+      "id": "Y03"
+    },
+    {
+      "question": "2026 年第三季度集团报告的 GAAP 摊薄每股收益是多少美元/股？",
+      "kind": "lookup",
+      "metric_and_scope": "Reported diluted EPS; adjusted diluted EPS on the same line is a distractor",
+      "expected_values": [
+        "0.60"
+      ],
+      "unit": "美元/股",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Diluted EPS was $0.60 and Adjusted Diluted EPS was $1.27",
+      "id": "Y04"
+    },
+    {
+      "question": "集团 2026 年第三季度调整后 EBITDA 的实际金额是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Total-company quarterly adjusted EBITDA level; no FY forecast or growth rate",
+      "expected_values": [
+        "295"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Adjusted EBITDA was $295 million, an increase of 6.2%",
+      "id": "Y05"
+    },
+    {
+      "question": "2026 年第三季度集团可比系统酒店的 RevPAR 同比增长了百分之几？",
+      "kind": "lookup",
+      "metric_and_scope": "Comparable system-wide hotels RevPAR change versus third quarter of 2025, not U.S. only or all-inclusive resorts",
+      "expected_values": [
+        "7.2"
+      ],
+      "unit": "%",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Comparable system-wide hotels RevPAR increased 7.2%, compared to the third quarter of 2025",
+      "id": "Y06"
+    },
+    {
+      "question": "2026 年第三季度，可比全包度假村的 Net Package RevPAR 同比变化是多少？请写出上升或下降方向和百分比。",
+      "kind": "lookup",
+      "metric_and_scope": "Comparable system-wide all-inclusive resorts net package RevPAR change; a stated decrease of 2.5% or -2.5%",
+      "expected_values": [
+        "-2.5"
+      ],
+      "unit": "%",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Comparable system-wide all-inclusive resorts Net Package RevPAR decreased 2.5%, compared to the third quarter of 2025",
+      "id": "Y07"
+    },
+    {
+      "question": "2026 年第三季度，奖励管理费（Incentive management fees）的同比增幅为多少？请给百分比。",
+      "kind": "lookup",
+      "metric_and_scope": "Year-on-year quarterly incentive management fee growth, not base management fee or franchise fee growth",
+      "expected_values": [
+        "21.9"
+      ],
+      "unit": "%",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1
+      ],
+      "example_page": 1,
+      "example_source_quote": "Incentive management fees increased 21.9%",
+      "id": "Y08"
+    },
+    {
+      "question": "2026 年第三季度集团新开了多少间客房？请给当季实际开业客房数。",
+      "kind": "lookup",
+      "metric_and_scope": "Rooms opened during the quarter; distinguish rooms from hotel counts, pipeline and trailing net rooms growth",
+      "expected_values": [
+        "3808"
+      ],
+      "unit": "间客房",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        2
+      ],
+      "example_page": 2,
+      "example_source_quote": "Opened 3,808 rooms.",
+      "id": "Y09"
+    },
+    {
+      "question": "2026 年第三季度，集团实际回购 A 类普通股的总价是多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Quarterly repurchase purchase price distinct from YTD capital returns and remaining authorization",
+      "expected_values": [
+        "147"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        1,
+        2
+      ],
+      "example_page": 2,
+      "example_source_quote": "The Company repurchased $147 million of Class A common stock during the third quarter.",
+      "id": "Y10"
+    },
+    {
+      "question": "截至 2026 年 9 月 30 日，集团现金及现金等价物和短期投资合计为多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Cash and cash equivalents plus short-term investments at September 30; not all liquidity",
+      "expected_values": [
+        "495"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        2
+      ],
+      "example_page": 2,
+      "example_source_quote": "$495 million of cash and cash equivalents and short-term investments",
+      "id": "Y11"
+    },
+    {
+      "question": "截至 2026 年 9 月 30 日，扣除未结信用证后，循环信贷额度的可借金额为多少百万美元？",
+      "kind": "lookup",
+      "metric_and_scope": "Unused revolver borrowing capacity net of outstanding letters of credit at quarter end; not gross liquidity",
+      "expected_values": [
+        "1347"
+      ],
+      "unit": "百万美元",
+      "period": "2026 Q3",
+      "accepted_pages": [
+        2
+      ],
+      "example_page": 2,
+      "example_source_quote": "$1,347 million of available borrowing capacity under Hyatt's revolving credit facility, net of letters of credit outstanding.",
+      "id": "Y12"
+    },
+    {
+      "question": "本次公告预计 2026 全年可比系统酒店 RevPAR 相较 2025 全年的增长区间是多少？请给全球口径的百分比上下限。",
+      "kind": "guidance",
+      "metric_and_scope": "Full-year 2026 comparable system-wide hotel RevPAR growth vs full-year 2025; not United States outlook",
+      "expected_values": [
+        "5.0",
+        "5.5"
+      ],
+      "unit": "%",
+      "period": "2026 FY",
+      "accepted_pages": [
+        1,
+        2
+      ],
+      "example_page": 1,
+      "example_source_quote": "Comparable system-wide hotels RevPAR growth is projected to be between 5.0% and 5.5%, compared to the full year 2025",
+      "id": "Y13"
+    },
+    {
+      "question": "管理层在本次业绩公告中预计 2026 全年集团调整后 EBITDA 为多少百万美元？请给金额区间。",
+      "kind": "guidance",
+      "metric_and_scope": "Full-year 2026 group adjusted EBITDA forecast endpoints in USD millions; not forecast growth or FY 2025 actual",
+      "expected_values": [
+        "1170",
+        "1200"
+      ],
+      "unit": "百万美元",
+      "period": "2026 FY",
+      "accepted_pages": [
+        1,
+        2
+      ],
+      "example_page": 1,
+      "example_source_quote": "Adjusted EBITDA is projected to be between $1,170 million and $1,200 million",
+      "id": "Y14"
+    },
+    {
+      "kind": "future",
+      "question": "截至研究日，2026 年第四季度集团已实现的归母净利润是多少百万美元？",
+      "period": "2026 Q4",
+      "period_end": "2026-12-31",
+      "id": "Y15"
+    },
+    {
+      "kind": "future",
+      "question": "截至研究日，2027 年第一季度集团已经实现的 GAAP 摊薄每股收益是多少美元/股？",
+      "period": "2027 Q1",
+      "period_end": "2027-03-31",
+      "id": "Y16"
+    },
+    {
+      "kind": "missing",
+      "question": "仅依这份季度公告，2026 年第三季度日本单一国家贡献的奖励管理费收入是多少百万美元？",
+      "period": "2026 Q3",
+      "source_check": "The PDF provides total fee/growth and management fee commentary, including regional trends. No Japan-only incentive management fee dollar amount is disclosed.",
+      "id": "Y17"
+    },
+    {
+      "kind": "missing",
+      "question": "只按这份公告，2026 年第三季度 Park Hyatt 单一品牌的调整后 EBITDA 是多少百万美元？",
+      "period": "2026 Q3",
+      "source_check": "The release lists brands, consolidated adjusted EBITDA and selected segment commentary, without a Park Hyatt brand adjusted EBITDA amount.",
+      "id": "Y18"
+    }
+  ]
+}

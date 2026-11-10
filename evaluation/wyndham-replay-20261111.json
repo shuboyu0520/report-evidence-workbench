@@ -1,0 +1,501 @@
+{
+  "company": "Wyndham Hotels & Resorts, Inc. (WH)",
+  "source": "https://d1io3yog0oux5.cloudfront.net/_c5bec3ae4d0d5e93de1ce3fda8af9248/wyndhamhotels/news/2026-10-21_WYNDHAM_HOTELS_RESORTS_REPORTS_STRONG_THIRD_432.pdf",
+  "as_of": "2026-11-11",
+  "fixture_sha256": "708fdbeb149dbf2a469a462c182e9341a73c9a24bd09a5319aa942ed88910fa5",
+  "pdf_sha256": "27abdc1506ed45cb12f73f0c967f07ee309d9af3deb8596557d0cbf3c615a78a",
+  "raw_sha256": "bf9c30c9c8b9486dec263cabea25497a2718208864ad81325bbf8ff1140e48ac",
+  "scores": {
+    "lookup_guidance": [
+      14,
+      14
+    ],
+    "lookup_only": [
+      12,
+      12
+    ],
+    "guidance_only": [
+      2,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "cases": [
+    {
+      "id": "W01",
+      "kind": "lookup",
+      "question": "2026 年第三季度，温德姆集团报告的净营收（Net revenues）是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Net revenues（实际）为 410 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Net revenues  410    382    1,112    1,095"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        }
+      ],
+      "accepted_pages": [
+        2,
+        8,
+        9
+      ],
+      "gold_example": "Net revenues 410 382 1,112 1,095"
+    },
+    {
+      "id": "W02",
+      "kind": "lookup",
+      "question": "上年同期，即 2025 年第三季度，集团报告的净营收是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2025 财年第3季度，公司整体  Net revenues（实际）为 382 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Net revenues  410    382    1,112    1,095"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        }
+      ],
+      "accepted_pages": [
+        2,
+        8,
+        9
+      ],
+      "gold_example": "Net revenues 410 382 1,112 1,095"
+    },
+    {
+      "id": "W03",
+      "kind": "lookup",
+      "question": "2026 年第三季度集团营业利润（Operating income）是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Operating income（实际）为 172 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Operating income  172    178    460    438"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        }
+      ],
+      "accepted_pages": [
+        8
+      ],
+      "gold_example": "Operating income 172 178 460 438"
+    },
+    {
+      "id": "W04",
+      "kind": "lookup",
+      "question": "2026 年第三季度集团 GAAP 摊薄每股收益是多少美元/股？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Diluted（实际）为 1.33 美元/股。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Diluted  1.33    1.36    3.49    3.26"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        },
+        {
+          "page": 8,
+          "quote": "Earnings per share"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        2,
+        8,
+        16
+      ],
+      "gold_example": "Diluted EPS $ 1.33 $ 1.36 $ 3.49 $ 3.26"
+    },
+    {
+      "id": "W05",
+      "kind": "lookup",
+      "question": "集团 2026 年第三季度实际调整后 EBITDA 是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，非 GAAP Adjusted EBITDA Total Company（实际）为 207 百万美元。原表第 9 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 9,
+          "quote": "2026 $ 156   $ 212   $ 207   n/a  n/a"
+        },
+        {
+          "page": 9,
+          "quote": "First\nQuarter\nSecond\nQuarter\nThird\nQuarter\nFourth\nQuarter  Full Year"
+        },
+        {
+          "page": 9,
+          "quote": "Total Company"
+        },
+        {
+          "page": 15,
+          "quote": "(In millions)"
+        },
+        {
+          "page": 9,
+          "quote": "Adjusted EBITDA"
+        },
+        {
+          "page": 9,
+          "quote": "See Table 7 for reconciliations of Total Company"
+        },
+        {
+          "page": 15,
+          "quote": "Adjusted EBITDA $ 156   $ 212   $ 207"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        2,
+        9,
+        15
+      ],
+      "gold_example": "Adjusted EBITDA $ 156 $ 212 $ 207"
+    },
+    {
+      "id": "W06",
+      "kind": "lookup",
+      "question": "2026 年第三季度，集团 GAAP 净利润是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Net income（实际）为 99 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Net income $ 99   $ 105   $ 262   $ 253"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        2,
+        8,
+        9,
+        15,
+        16
+      ],
+      "gold_example": "Net income $ 99 $ 105 $ 262 $ 253"
+    },
+    {
+      "id": "W07",
+      "kind": "lookup",
+      "question": "2026 年第三季度集团的特许权使用费及加盟费（Royalties and franchise fees）收入是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Royalties and franchise fees Net revenues（实际）为 156 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Royalties and franchise fees $ 156   $ 147   $ 409   $ 420"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        },
+        {
+          "page": 8,
+          "quote": "Net revenues"
+        }
+      ],
+      "accepted_pages": [
+        8
+      ],
+      "gold_example": "Royalties and franchise fees $ 156 $ 147 $ 409 $ 420"
+    },
+    {
+      "id": "W08",
+      "kind": "lookup",
+      "question": "2026 年第三季度，营销、预订及会员忠诚计划（Marketing, reservation and loyalty）列在收入项下的是多少百万美元？",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Marketing, reservation and loyalty Net revenues（实际）为 158 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Marketing, reservation and loyalty  158    149    426    431"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        },
+        {
+          "page": 8,
+          "quote": "Net revenues"
+        }
+      ],
+      "accepted_pages": [
+        8
+      ],
+      "gold_example": "Marketing, reservation and loyalty 158 149 426 431"
+    },
+    {
+      "id": "W09",
+      "kind": "lookup",
+      "question": "2026 年第三季度，利润表的净利息费用（Interest expense, net）列示为多少百万美元？请保留该表印出的符号。",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，公司整体  Interest expense, net（实际）为 37 百万美元。原表第 8 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 8,
+          "quote": "Interest expense, net  37    36    108    103"
+        },
+        {
+          "page": 8,
+          "quote": "Table 1\nWYNDHAM HOTELS & RESORTS\nINCOME STATEMENT\n(In millions, except per share data)\n(Unaudited)\nThree Months Ended\nSeptember 30,\nNine Months Ended\nSeptember 30,\n2026  2025  2026  2025\nNet revenues"
+        }
+      ],
+      "accepted_pages": [
+        8
+      ],
+      "gold_example": "Interest expense, net 37 36 108 103"
+    },
+    {
+      "id": "W10",
+      "kind": "lookup",
+      "question": "2026 年第三季度，Corporate 分部单独列示的调整后 EBITDA 是多少百万美元？请保留正负号。",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，非 GAAP Adjusted EBITDA Corporate（实际）为 -22 百万美元。原表第 9 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 9,
+          "quote": "2026 $ (18)  $ (13)  $ (22)  n/a  n/a"
+        },
+        {
+          "page": 9,
+          "quote": "First\nQuarter\nSecond\nQuarter\nThird\nQuarter\nFourth\nQuarter  Full Year"
+        },
+        {
+          "page": 9,
+          "quote": "Corporate"
+        },
+        {
+          "page": 15,
+          "quote": "(In millions)"
+        },
+        {
+          "page": 9,
+          "quote": "Adjusted EBITDA"
+        },
+        {
+          "page": 9,
+          "quote": "See Table 7 for reconciliations of Total Company"
+        },
+        {
+          "page": 9,
+          "quote": "2026 $ 156   $ 212   $ 207   n/a  n/a"
+        },
+        {
+          "page": 15,
+          "quote": "Adjusted EBITDA $ 156   $ 212   $ 207"
+        }
+      ],
+      "accepted_pages": [
+        9
+      ],
+      "gold_example": "2026 $ (18) $ (13) $ (22) n/a n/a"
+    },
+    {
+      "id": "W11",
+      "kind": "lookup",
+      "question": "2026 年第三季度单季自由现金流（Free cash flow）是多少百万美元？请按公司定义取数。",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026年第三季度单季自由现金流（Free cash flow）是100百万美元。（原文第 4、10 页）",
+      "verification": "cited_draft",
+      "citations": [
+        {
+          "page": 4,
+          "quote": "The Company generated $93 million of net cash provided by operating activities and $100 million of free cash flow in the third quarter 2026."
+        },
+        {
+          "page": 10,
+          "quote": "Free cash flow  100    97    269    258"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        4,
+        10
+      ],
+      "gold_example": "Free cash flow 100 97 269 258"
+    },
+    {
+      "id": "W12",
+      "kind": "lookup",
+      "question": "2026 年第三季度大中华区（Greater China）的每间可售客房收入（RevPAR）是多少美元？请给当季水平。",
+      "passed": true,
+      "assessment": "所问口径、报告期间、原值及物理页引文相符。",
+      "answer": "2026 财年第3季度，Greater China  RevPAR（实际）为 17.59 美元/可售客房。原表第 13 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 13,
+          "quote": "Greater China (a) $ 17.59   (10%)"
+        },
+        {
+          "page": 13,
+          "quote": "Three Months \nEnded  \nSeptember 30, \n  \n Constant Currency  \n% Change (b)   \nRegional RevPAR Growth"
+        },
+        {
+          "page": 1,
+          "quote": "results for \nthe three months ended September 30, 2026"
+        },
+        {
+          "page": 13,
+          "quote": "Nine Months  \nEnded  \nSeptember 30, 2026"
+        }
+      ],
+      "accepted_pages": [
+        13
+      ],
+      "gold_example": "Greater China (a) $ 17.59 (10%)"
+    },
+    {
+      "id": "W13",
+      "kind": "guidance",
+      "question": "本次更新后，管理层预计 2026 全年全球 RevPAR 按固定汇率计算的同比增幅区间是多少？",
+      "passed": true,
+      "assessment": "第 5 页将全年全球 RevPAR 固定汇率同比增幅的下限由 0.0% 调至 0.5%，上限保持 1.0%。答复与更新栏相符。",
+      "answer": "2026 财年全年，Global 更新后固定汇率同比 RevPAR（指引）为 0.5 至 1.0 %。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Year-over-year global RevPAR growth (b)  0.5% - 1.0%  0.0% - 1.0%"
+        },
+        {
+          "page": 5,
+          "quote": "Updated Outlook  Prior Outlook"
+        },
+        {
+          "page": 5,
+          "quote": "The Company is updating its full-year outlook as follows:"
+        },
+        {
+          "page": 1,
+          "quote": "Full-Year 2026 RevPAR, Adjusted EBITDA and EPS Outlook"
+        },
+        {
+          "page": 5,
+          "quote": "(b) Represents constant currency basis"
+        }
+      ],
+      "accepted_pages": [
+        5,
+        17
+      ],
+      "gold_example": "Global RevPAR (e) 0.5% – 1.0%"
+    },
+    {
+      "id": "W14",
+      "kind": "guidance",
+      "question": "截至这次公告，管理层把 2026 全年的调整后 EBITDA 指引更新为多少百万美元？请给上下限。",
+      "passed": true,
+      "assessment": "第 5 页全年调整后 EBITDA 的旧区间为 735–745 百万美元，更新栏为 740–745 百万美元。答复的两个端点均与更新栏相符。",
+      "answer": "2026 财年全年，公司整体 更新后非 GAAP Adjusted EBITDA（指引）为 740 至 745 百万美元。原表第 5 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 5,
+          "quote": "Adjusted EBITDA (c)  $740 - $745 million  $735 - $745 million"
+        },
+        {
+          "page": 5,
+          "quote": "Updated Outlook  Prior Outlook"
+        },
+        {
+          "page": 5,
+          "quote": "The Company is updating its full-year outlook as follows:"
+        },
+        {
+          "page": 1,
+          "quote": "Full-Year 2026 RevPAR, Adjusted EBITDA and EPS Outlook"
+        }
+      ],
+      "accepted_pages": [
+        5,
+        17
+      ],
+      "gold_example": "Adjusted EBITDA (a) 740 – 745"
+    },
+    {
+      "id": "W15",
+      "kind": "future",
+      "question": "截至研究日，2026 年第四季度集团实际净营收是多少百万美元？",
+      "passed": true,
+      "assessment": "研究截止日早于所问报告期的结束日。",
+      "answer": "截至 2026-11-11，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "W16",
+      "kind": "future",
+      "question": "截至研究日，2027 年第一季度集团实际 GAAP 摊薄每股收益是多少美元/股？",
+      "passed": true,
+      "assessment": "研究截止日早于所问报告期的结束日。",
+      "answer": "截至 2026-11-11，所问报告期（截至 2027-03-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "W17",
+      "kind": "missing",
+      "question": "仅依这份季报，2026 年第三季度日本单一国家的加盟费收入是多少百万美元？",
+      "passed": true,
+      "assessment": "按题目指定的国家、品牌和指标核验披露范围。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "W18",
+      "kind": "missing",
+      "question": "仅根据本公告，2026 年第三季度 Days Inn 单一品牌的调整后 EBITDA 是多少百万美元？",
+      "passed": true,
+      "assessment": "按题目指定的国家、品牌和指标核验披露范围。",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    }
+  ]
+}

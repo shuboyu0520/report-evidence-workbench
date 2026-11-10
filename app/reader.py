@@ -307,6 +307,8 @@ async def from_document(db, report, pages, question, config, tools, calls, event
             # In a hierarchical table the row may say only "B2B". Name its
             # parent measure alongside the segment to distinguish identical labels.
             display = " ".join(part for part in (basis, cell["label"], cell["measure_caption"]) if part)
+        elif scope.casefold() == cell["label"].casefold():
+            display = " ".join(part for part in (basis, cell["label"]) if part)
         answer = f"{request.year} 财年{period}，{display}（{classification}）为 {amount} {cell['unit']}。原表第 {cell['page']} 页。"
         refs = [
             {"page": cell.get("unit_page",cell["page"]) if k=="unit_quote" else cell["page"], "quote": cell[k]}

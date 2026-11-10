@@ -24,7 +24,7 @@ LABELS = {
 }
 
 
-def grade(case, result, pages, cutoff):
+def grade(case, result, pages, cutoff, *, labels=LABELS):
     answer = result.get("answer") or ""
     state = result.get("verification")
     refs = result.get("citations") or []
@@ -43,7 +43,7 @@ def grade(case, result, pages, cutoff):
     if case["kind"] == "missing":
         return (
             state == "insufficient_evidence" and not refs and "没找到足够证据" in answer,
-            "原公告未披露指定国家或品牌的营收。",
+            "按题目指定的国家、品牌和指标核验披露范围。",
         )
     if case["kind"] == "future":
         return (
@@ -56,19 +56,21 @@ def grade(case, result, pages, cutoff):
         )
     if not refs or state == "insufficient_evidence":
         return False, "原公告披露了所问指标，系统未给出有据答复。"
-    year, quarter = case["period"].split(" Q")
-    period = (
-        rf"{year}\s*(?:财年|年)\s*第?\s*(?:{quarter}|{CHINESE_Q[int(quarter) - 1]})\s*(?:财季|季度)"
-    )
+    year, term = case["period"].split()
+    quarter = None if term == "FY" else int(term.removeprefix("Q"))
+    if quarter is None:
+        period = rf"{year}\s*(?:财年|年)?\s*全年"
+    else:
+        period = rf"{year}\s*(?:财年|年)\s*第?\s*(?:{quarter}|{CHINESE_Q[quarter - 1]})\s*(?:财季|季度)"
     if not re.search(period, answer):
-        return False, "答复中的年份或季度不符。"
+        return False, "答复中的报告期间不符。"
     unit = case["unit"]
     if unit not in answer and not (
         unit == "美元/可售客房" and ("美元" in answer and "revpar" in answer.lower())
     ):
         return False, "答复中的单位不符。"
     selected = " ".join(compact(r["quote"]) for r in refs if r["page"] in case["accepted_pages"])
-    if not all(re.search(label, selected) for label in LABELS[case["id"]]):
+    if not all(re.search(label, selected) for label in labels[case["id"]]):
         return False, "指定原表或业务分项未经对应引文支持。"
     expected = [Decimal(x) for x in case["expected_values"]]
     answer_body = re.split(r"原表第|[（(]原文第", re.sub(period, "", answer), maxsplit=1)[0]
@@ -80,12 +82,12 @@ def grade(case, result, pages, cutoff):
     cell = next((t for t in result.get("trace", []) if t["tool"] == "read_earnings_cell"), None)
     if cell and (
         cell["year"] != int(year)
-        or cell["quarter"] != int(quarter)
+        or cell["quarter"] != quarter
         or [Decimal(v.replace(",", "")) for v in cell["amounts"]] != expected
         or cell["page"] not in case["accepted_pages"]
     ):
         return False, "选中的原表单元格与所问期间或金额不符。"
-    return True, "所问口径、季度、原值及物理页引文相符。"
+    return True, "所问口径、报告期间、原值及物理页引文相符。"
 
 
 if __name__ == "__main__":

@@ -6,19 +6,19 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 ## 先看一道题 / Quick start
 
-打开[在线逐题查看器](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=hilton-replay&case=H09)，可以对照同一道题的两次答复，分别打开当时引用的公告页。下载仓库后，也可直接打开[离线查看器](docs/evidence-review.html)，或用 Python 3.10 以上版本在仓库目录运行以下命令。
+打开[在线逐题查看器](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)，可以对照同一道题的两次答复，再到公告原页检查金额、期间和指引版本。下载仓库后，也可打开[离线查看器](docs/evidence-review.html)，或用 Python 3.10 以上版本在仓库目录运行以下命令。
 
 ```shell
-python scripts/inspect_eval.py --cohort hilton-replay --case H09
+python scripts/inspect_eval.py --cohort wyndham-replay --case W14
 ```
 
-希尔顿当季的利息费用是多少？旧版引用第 12 页 EBITDA 调节表的正向加回 184。用户问的是对利润的影响，答案应取第 6 页合并利润表的 **−184 百万美元**。打开原页即可复核符号和表的用途。[查看希尔顿原表第 6 页](https://ir.hilton.com/_assets/_0dae474c42299bf06914d109d97c2a81/hilton/news/2026-10-27_Hilton_Reports_Third_Quarter_419.pdf#page=6)
+温德姆把 2026 年全年调整后 EBITDA 的指引下限提高了多少？公告第 5 页并排印着两组区间，旧版未能选出单元格。按更新栏读取，全年指引为 **740–745 百万美元**，此前为 **735–745 百万美元**。这两组数值共用上限，只检查上限无法识别取错栏。[温德姆原始公告](https://investor.wyndhamhotels.com/news-events/press-releases/detail/432/wyndham-hotels-resorts-reports-strong-third-quarter)
 
-[![希尔顿利息费用修复前后的答复和两次引用的报表页码](docs/evidence-review-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=hilton-replay&case=H09)
+[![温德姆全年调整后 EBITDA 指引的首次拒答、复测答案与原表](docs/evidence-review-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)
 
 ```shell
 python scripts/inspect_eval.py
-python scripts/inspect_eval.py --cohort wyndham --failed
+python scripts/inspect_eval.py --cohort hyatt --failed
 ```
 
 第一条显示评测概况，第二条列出新公司首测的失败样例。[逐题存档 JSON](evaluation/showcase.json) · [已上线的台积电联读案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录](https://shuboyu0520.github.io/report-evidence-workbench/)
@@ -32,7 +32,9 @@ python scripts/inspect_eval.py --cohort wyndham --failed
 | Expedia，同一 PDF 与题目修复后复测 | 14/14 | 4/4 |
 | Hilton，上一轮冻结后首次作答 | 3/14 | 4/4 |
 | Hilton，同一 PDF 与题目修复后复测 | 14/14 | 4/4 |
-| Wyndham，本轮冻结后首次作答 | 3/14 | 4/4 |
+| Wyndham，上一轮冻结后首次作答 | 3/14 | 4/4 |
+| Wyndham，同一 PDF 与题目修复后复测 | 14/14 | 4/4 |
+| Hyatt，本轮冻结后首次作答 | 3/14 | 4/4 |
 
 Booking 同一组 14 道查数与指引题依次通过 2、10、14 道。最后一次修复涉及单季自由现金流、调整后 EBITDA、报告口径间夜增幅和固定汇率总预订额增幅。
 
@@ -42,7 +44,11 @@ Expedia 首测的 12 道漏答中，11 道未选出合格原表单元格，1 道
 
 温德姆首测通过 **3/12 道实际值**，分别为 GAAP 摊薄每股收益 1.33 美元、集团净利润 99 百万美元、单季自由现金流 100 百万美元。**两道全年指引均未通过**。其余 11 道有原表答案的问题都停在原表取数阶段，系统没有选出符合条件的单元格，最终拒答。披露判断通过 4/4。[温德姆原始公告](https://investor.wyndhamhotels.com/news-events/press-releases/detail/432/wyndham-hotels-resorts-reports-strong-third-quarter) · [11 道拒答与原表](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham&filter=failed)
 
-*Hilton is a same-question repair replay. Wyndham was evaluated once on preregistered questions with the frozen reader. Disclosure status is scored separately.*
+温德姆的 11 道漏答经原题复测全部通过，覆盖合并利润表、分部表、地区运营表及全年更新指引。另回放 7 家公司的 112 道历史题，答案、引文、页码及验证状态逐题一致。[逐题根因与结果](evaluation/wyndham-failure-review.md) · [112 道历史回归](evaluation/wyndham-repair-regression.json)
+
+新公司首测只上传凯悦新闻室的 8 页官方公告。实际值答对 2/12，分别是新开客房 3,808 间和 A 类普通股回购 147 百万美元。全年指引答对 1/2，正确读出调整后 EBITDA 为 1,170–1,200 百万美元。披露判断通过 4/4。其余 11 道均拒答，其中 7 道未选出合格单元格，1 道未识别正文的同比期间，2 道将截至日期的月日当作待校验的数字，1 道因附加引文不连续而丢弃了正确的 RevPAR 区间。[凯悦原公告](https://newsroom.hyatt.com/Q3-2026-Earnings-Results) · [11 道拒答及原文](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=hyatt&filter=failed)
+
+*Wyndham is a replay of the same questions. Hyatt was evaluated once on preregistered questions with the frozen reader and the eight-page newsroom release. Disclosure questions are scored separately.*
 
 <a id="run-reader"></a>
 ## 上传自己的报告 / Run the reader
@@ -62,17 +68,17 @@ uv run uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
 
 ## 复现模型评测 / Reproduce a run
 
-运行 `git rev-parse HEAD:app` 可查看应用目录的 Git 对象。模型摘要、推理参数、运行时间与历史回放数量见[本轮冻结记录](evaluation/hilton-wyndham-release.json)。[上一轮冻结记录](evaluation/expedia-hilton-release.json)保留了希尔顿首测时的环境。
+运行 `git rev-parse HEAD:app` 可查看应用目录的 Git 对象。模型摘要、推理参数、运行时间与历史回放数量见[本轮冻结记录](evaluation/wyndham-repair-release.json)。[上一轮冻结记录](evaluation/hilton-wyndham-release.json)保留了温德姆首测时的环境。
 
-将[希尔顿季报](https://ir.hilton.com/_assets/_0dae474c42299bf06914d109d97c2a81/hilton/news/2026-10-27_Hilton_Reports_Third_Quarter_419.pdf)和[温德姆季度公告所附 PDF](https://investor.wyndhamhotels.com/news-events/press-releases/detail/432/wyndham-hotels-resorts-reports-strong-third-quarter)分别保存为 `hilton.pdf` 和 `wyndham.pdf`，保持 Ollama 运行，选择尚未存在的输出目录。
+将[温德姆季度公告所附 PDF](https://investor.wyndhamhotels.com/news-events/press-releases/detail/432/wyndham-hotels-resorts-reports-strong-third-quarter)和[凯悦新闻室公告 PDF](https://newsroom.hyatt.com/Q3-2026-Earnings-Results?asPDF=1)分别保存为 `wyndham.pdf` 和 `hyatt.pdf`。保持 Ollama 运行，选择尚未存在的输出目录。
 
 ```shell
-uv run python -m scripts.evaluate_reader --fixture evaluation/hilton-reader-blind.json --file hilton.pdf --out replay-hilton
-uv run python -m scripts.grade_hilton_replay --fixture evaluation/hilton-reader-blind.json --pdf hilton.pdf --raw replay-hilton/results.json --output replay-hilton/graded.json
 uv run python -m scripts.evaluate_reader --fixture evaluation/wyndham-reader-blind.json --file wyndham.pdf --out replay-wyndham
+uv run python -m scripts.grade_wyndham_replay --fixture evaluation/wyndham-reader-blind.json --pdf wyndham.pdf --raw replay-wyndham/results.json --output replay-wyndham/graded.json
+uv run python -m scripts.evaluate_reader --fixture evaluation/hyatt-reader-blind.json --file hyatt.pdf --out replay-hyatt
 ```
 
-脚本核验 PDF 哈希，逐题调用上传与问答接口，并保存每题的首次响应。复核时检查原表行列、正负号、期间和单位。已有首测保留原始分数。[希尔顿题集](evaluation/hilton-reader-blind.json) · [温德姆题集](evaluation/wyndham-reader-blind.json) · [温德姆首测登记](evaluation/wyndham-preregistration.json)
+脚本核验 PDF 哈希，逐题调用上传与问答接口，并保存首次响应。复核时检查原表行列、符号、期间、单位和指引版本。[温德姆题集](evaluation/wyndham-reader-blind.json) · [凯悦题集](evaluation/hyatt-reader-blind.json) · [凯悦首测登记](evaluation/hyatt-preregistration.json)
 
 ## 贡献失败样例 / Contribute a case
 

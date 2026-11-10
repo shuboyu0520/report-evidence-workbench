@@ -1,0 +1,23 @@
+{
+  "sealed_utc": "2026-11-10T16:21:32.217684+00:00",
+  "fixture_sha256": "9c454d47df673044acc1d9e2d8106b9a8f21cd8e53895cfa83145170d35578fa",
+  "pdf_sha256": "814aa76bd37a46f4ea4e430f31c67c38274b8ffa06bedc0cedb8c0a37958ae96",
+  "source": "https://newsroom.hyatt.com/Q3-2026-Earnings-Results?asPDF=1",
+  "source_event": "https://newsroom.hyatt.com/Q3-2026-Earnings-Results",
+  "sec_release": "https://www.sec.gov/Archives/edgar/data/1468174/000146817426000029/q32026earningsrelease.htm",
+  "physical_pages": 8,
+  "set_sizes": {
+    "actuals": 12,
+    "guidance": 2,
+    "disclosure_status": 4
+  },
+  "selection_history": {
+    "release_checkout": "b7becc12a1e6a484e1a7125e916334c565602372",
+    "history_commits_checked": 48,
+    "database_count": 2257,
+    "report_count": 1908,
+    "prior_run_json_files_checked": 131,
+    "application_and_release_files_checked": 264
+  },
+  "gold_generation": "Read actual amounts, trend signs, fee scopes and annual outlook endpoints from the official PDF. All examples verified on their physical pages before the first application request."
+}

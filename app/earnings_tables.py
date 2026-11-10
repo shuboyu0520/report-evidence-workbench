@@ -12,6 +12,8 @@ from .finance import numeric
 from .growth_guidance import growth_guidance_cells
 from .lodging_metrics import HOTEL_METRIC, HOTEL_METRICS, low_high_outlook, operating_cells, operating_request
 from .metric_grids import metric_grid_rows, metric_outlook_rows, supported_growth
+from .revised_outlook import outlook_version, revised_annual_cells
+from .quarter_schedules import schedule_cells
 from .table_lookup import SCALE, YEAR
 
 ORDINAL = {"first": 1, "second": 2, "third": 3, "fourth": 4}
@@ -168,7 +170,7 @@ INCOME_STATEMENT = re.compile(
     r"(?:statements? of (?:operations|income|earnings|profit (?:and|or) loss)|income statements?)$",
     re.I,
 )
-REVENUE_HEADING = re.compile(r"(?:revenues?|net sales|sales)\s*:?", re.I)
+REVENUE_HEADING = re.compile(r"(?:(?:net )?revenues?|net sales|sales)\s*:?", re.I)
 BEFORE_NCI = re.compile(
     r"(?:分配给|归属(?:于)?)\s*(?:非控股|少数股东)(?:权益|损益|股东)?(?:之?前|前)|"
     r"before (?:allocation|attribution) to (?:non[- ]?controlling|minority) interests?", re.I
@@ -204,6 +206,8 @@ class Lookup:
     parent_income: bool = False
     revenue_line: str = ""
     income_before_nci: bool = False
+    outlook_version: str = ""
+    comparable_hotels: bool = False
 
 
 def lookup_request(question):
@@ -222,7 +226,8 @@ def lookup_request(question):
         if found:
             digit = found[1] or found[2]
             quarter = "一二三四".index(digit) + 1 if digit in "一二三四" else int(digit)
-        return operating_request(question, int(years.pop()), quarter, guidance, Lookup)
+        request = operating_request(question, int(years.pop()), quarter, guidance, Lookup)
+        return replace(request, outlook_version=outlook_version(question)) if guidance else request
     growth_range = bool(guidance and re.search(r"同比增长|year.over.year growth|yoy growth",question,re.I)
                         and re.search(r"区间|端点|range",question,re.I))
     if len(years) != 1 or (not growth_range and re.search(
@@ -272,7 +277,7 @@ def lookup_request(question):
     if metric == "revenue":
         # The source row name can be paired with a locally printed category, e.g.
         # “Maintenance fees” in the revenues section. Never resolve it to a total.
-        for named in re.finditer(r"[(（]([A-Za-z][A-Za-z0-9 &/'-]{0,70})[)）]", question):
+        for named in re.finditer(r"[(（]([A-Za-z][A-Za-z0-9 ,&/'-]{0,70})[)）]", question):
             if re.search(r"\b(?:sales|revenues?)$", named[1], re.I):
                 continue
             if re.match(r"\s*(?:的|列在|计入|属于)?\s*(?:营收|收入|销售额)", question[named.end():]) or re.search(
@@ -352,6 +357,7 @@ def lookup_request(question):
         metric == "income" and bool(re.search(r"归母|归属(?:于)?母公司|attributable to (?:the )?parent",question,re.I)),
         revenue_line,
         income_before_nci,
+        outlook_version(question) if guidance else "",
     )
 
 
@@ -817,7 +823,7 @@ def source_rows(pages, *, calendar_year=False):
                 for r in block:
                     r.dollars = True
             item.dollars = dollar_block
-            if re.fullmatch(r"total (?:revenues?|net sales|sales)", label, re.I):
+            if re.fullmatch(r"(?:total (?:revenues?|net sales|sales)|net revenues?)", label, re.I):
                 revenue_heading = ""
     result.extend(reconciliation_totals(pages))
     return result
@@ -868,6 +874,11 @@ def column_labels(row, release_q):
     lines = lead.splitlines()
     groups = []
     for line in lines:
+        if INCOME_STATEMENT.fullmatch(line.strip()):
+            # An uppercase company heading can precede the statement title.
+            # Only labels inside the table may name segment columns.
+            groups = []
+            continue
         tags = line.split()
         if (
             len(tags) >= 2
@@ -968,6 +979,10 @@ def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False, calendar_ye
     """Produce eligible original cells. A model can select an ID, never supply an amount."""
     if req.qualified:
         return []
+    if req.guidance and req.quarter is None and req.metric in {"revpar", "ebitda"}:
+        revised = revised_annual_cells(pages, req)
+        if revised or req.outlook_version == "prior":
+            return revised
     if req.metric in HOTEL_METRICS:
         return operating_cells(pages, req, calendar_year)
     if req.growth_basis:
@@ -991,7 +1006,7 @@ def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False, calendar_ye
             if title:
                 release_q = int(title[1][1])
                 break
-    result = []
+    result = schedule_cells(pages, req, SCALE_FACTORS, OUTPUT_UNITS)
     for row in source_rows(pages, calendar_year=calendar_year) if rows is None else rows:
         if req.metric=="free_cash_flow" and not (row.reconciliation_total or cited_cash_flow):
             continue

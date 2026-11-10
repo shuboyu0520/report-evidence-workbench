@@ -37,6 +37,8 @@ def operating_request(question, year, quarter, guidance, make_request):
     ]
     if re.search(r"全系统|system[- ]wide", question, re.I):
         groups.append("System-wide")
+    if re.search(r"全球|\bglobal\b", question, re.I):
+        groups.append("Global")
     if re.search(r"亚太|\basia pacific\b", question, re.I):
         groups.append("Asia Pacific")
     groups = tuple({name.casefold(): name for name in groups}.values())
@@ -56,22 +58,30 @@ def operating_request(question, year, quarter, guidance, make_request):
     )
     supported = (
         not unwanted_scope
-        and quarter
         and len(groups) == 1
         and len(sections) <= 1
         and (
-            (not growth and not guidance)
+            (quarter and not growth and not guidance)
             or (
                 guidance
                 and growth
                 and constant
                 and metric == "revpar"
-                and groups == ("System-wide",)
+                and (
+                    (quarter and groups == ("System-wide",))
+                    or (
+                        not quarter
+                        and groups == ("Global",)
+                        and re.search(r"全年|全财年|年度|full[- ]year|annual", question, re.I)
+                    )
+                )
             )
         )
     )
     unit = "%" if metric == "occupancy" or growth else "美元/可售客房"
     if metric == "occupancy" and re.search(r"美元|\bUSD\b|\$", question, re.I):
+        supported = False
+    if metric == "revpar" and not growth and re.search(r"百分比|%|percent", question, re.I):
         supported = False
     return make_request(
         metric=metric,
@@ -85,6 +95,7 @@ def operating_request(question, year, quarter, guidance, make_request):
         products=sections,
         qualified=not bool(supported),
         growth_basis="constant" if growth and constant else "",
+        comparable_hotels=bool(re.search(r"可比酒店|comparable hotels?", question, re.I)),
     )
 
 
@@ -246,6 +257,92 @@ def _forecast_cells(page, lines, request):
         }
 
 
+def _regional_levels(page, request, cover):
+    """Extract the level column of a regional RevPAR table alongside its change column."""
+    if (
+        request.metric != "revpar"
+        or request.comparable_hotels
+        or request.products not in ((), ("Region",))
+    ):
+        return
+    text = page["text"]
+    header = re.compile(
+        r"three\s+months\s+ended\s+([A-Za-z]+\s+\d{1,2}),\s*(20\d\d)?\s*"
+        r"(?:constant\s+currency\s+)?%\s*change(?:\s*\([a-z\d]+\))?\s*"
+        r"regional\s+RevPAR(?:\s+growth)?\b",
+        re.I,
+    )
+    for m in header.finditer(text):
+        date = " ".join(m[1].split())
+        year = m[2]
+        evidence = []
+        if not year:
+            # A quarter caption may omit the year. Verify both the results announcement
+            # and an independently dated table through the same day on this page.
+            yr_pattern = rf"{re.escape(date)}[,]?\s+(20\d\d)\b"
+            report = list(
+                re.finditer(
+                    r"results\s+for\s+the\s+three\s+months\s+ended\s+" + yr_pattern,
+                    cover["text"],
+                    re.I,
+                )
+            )
+            local = list(
+                re.finditer(r"(?:six|nine|twelve)\s+months\s+ended\s+" + yr_pattern, text, re.I)
+            )
+            if not report or not local or len({a[1] for a in report + local}) != 1:
+                continue
+            year = report[0][1]
+            evidence = [
+                {"page": cover["number"], "quote": report[0][0]},
+                {"page": page["number"], "quote": local[0][0]},
+            ]
+        if calendar_quarter(date + ", " + year) != (request.year, request.quarter):
+            continue
+        marker = ""
+        for line in text[m.end() :].splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            if re.match(r"(?:three|six|nine|twelve)\s+months|^(?:table|notes?)\b", line, re.I):
+                break
+            # A non-numeric region heading starts a fresh currency context.
+            if re.fullmatch(r"[a-z][a-z ,&-]+", line, re.I):
+                marker = ""
+                continue
+            row = re.fullmatch(
+                r"(?P<label>[a-z][a-z .,&'-]+?)(?:\s*\([a-z]\))?\s+"
+                r"(?P<value>\$?\s*\d[\d,]*(?:\.\d+)?)\s+"
+                r"(?P<change>\(?[-+]?\d+(?:\.\d+)?%?\)?|[—–]%?)",
+                line,
+                re.I,
+            )
+            if not row or FOREIGN_CURRENCY.search(line):
+                break
+            value = row["value"].strip()
+            if "$" in value:
+                marker = line
+            if marker and row["label"].strip().casefold() == request.groups[0].casefold():
+                yield {
+                    "page": page["number"],
+                    "year": request.year,
+                    "quarter": request.quarter,
+                    "column": 1,
+                    "raw_cell": [value],
+                    "amounts": [value.replace("$", "").strip()],
+                    "unit": "美元/可售客房",
+                    "label": "RevPAR",
+                    "scope": row["label"].strip(),
+                    "basis": "",
+                    "measure_caption": "",
+                    "quote": line,
+                    "header": m[0],
+                    "unit_quote": marker if marker != line else "",
+                    "basis_evidence": evidence,
+                    "priority": 0,
+                }
+
+
 def operating_cells(pages, request, calendar_year):
     result = []
     for page in pages:
@@ -254,6 +351,7 @@ def operating_cells(pages, request, calendar_year):
             result.extend(_forecast_cells(page["number"], lines, request))
         elif calendar_year:
             result.extend(_level_cells(page["number"], lines, request))
+            result.extend(_regional_levels(page, request, pages[0]))
     return result
 
 

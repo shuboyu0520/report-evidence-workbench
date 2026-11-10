@@ -1,0 +1,89 @@
+{
+  "engine_frozen_utc": "2026-11-10T16:26:33.157061+00:00",
+  "app_snapshot_sha256": "23b2c053b68b42c706db6f94cdb0208ff0573ba4bc7e80af4f2c718d4201fd62",
+  "app_git_tree": "cd699b6f3e056bdbcf941fa4c384f857b5bc59c4",
+  "models": {
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d"
+  },
+  "settings": {
+    "model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "wyndham_first": {
+    "lookup_guidance": [
+      3,
+      14
+    ],
+    "lookup_only": [
+      3,
+      12
+    ],
+    "guidance_only": [
+      0,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "wyndham_replay": {
+    "lookup_guidance": [
+      14,
+      14
+    ],
+    "lookup_only": [
+      12,
+      12
+    ],
+    "guidance_only": [
+      2,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "holdout_issuer": "Hyatt Hotels Corporation (H)",
+  "holdout_first": {
+    "lookup_guidance": [
+      3,
+      14
+    ],
+    "lookup_only": [
+      2,
+      12
+    ],
+    "guidance_only": [
+      1,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "holdout_failure_stages": {
+    "no_eligible_cell": 7,
+    "model_rejected_period_context": 1,
+    "asof_date_rejected": 2,
+    "draft_quote_not_contiguous": 1
+  },
+  "preregistered_utc": "2026-11-10T16:21:32.217684+00:00",
+  "first_started_utc": "2026-11-10T16:28:11.623091+00:00",
+  "first_finished_utc": "2026-11-10T16:28:25.445263+00:00",
+  "raw_first_response_sha256": "d595dee80a5a0394f70baf058c9785f7ccb6e2f9ffe43075c41601bfb7ecae6d",
+  "historical": {
+    "same": 112,
+    "total": 112
+  },
+  "local_release_tests_passed": 259
+}
