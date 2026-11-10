@@ -1,0 +1,127 @@
+{
+  "frozen_utc": "2026-11-10T03:00:11.854872+00:00",
+  "as_run_app_sha256": "77ea854d139d3adb2fe4acfdaad120de7a7abbd4b533d096273208ed64d48d48",
+  "app_git_tree": "0297b475478a05174cb4b7b1b2f834607dcba76f",
+  "model_digests": {
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d"
+  },
+  "configuration": {
+    "model": "qwen3:4b-instruct",
+    "embedding_model": "qwen3-embedding:0.6b",
+    "model_options": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 16384,
+      "num_predict": 1024
+    }
+  },
+  "expedia": {
+    "fixture_sha256": "c881521b0f01e2d61c8f32d6aebdf13d6fce4a423e771526b8572ed5cf6e81e7",
+    "pdf_sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+    "original_scores": {
+      "lookup_guidance": [
+        2,
+        14
+      ],
+      "lookup_only": [
+        2,
+        12
+      ],
+      "guidance_only": [
+        0,
+        2
+      ],
+      "disclosure_status": [
+        4,
+        4
+      ]
+    },
+    "reproduced_original_scores": {
+      "lookup_guidance": [
+        2,
+        14
+      ],
+      "lookup_only": [
+        2,
+        12
+      ],
+      "guidance_only": [
+        0,
+        2
+      ],
+      "disclosure_status": [
+        4,
+        4
+      ]
+    },
+    "replay_scores": {
+      "lookup_guidance": [
+        14,
+        14
+      ],
+      "lookup_only": [
+        12,
+        12
+      ],
+      "guidance_only": [
+        2,
+        2
+      ],
+      "disclosure_status": [
+        4,
+        4
+      ]
+    },
+    "raw_replay_sha256": "d032562356a66c089394b2c5fba38105bb039d6bf97f66c357929755fe18f7d5"
+  },
+  "hilton": {
+    "fixture_sha256": "251ea0be9c4b484baf28c517903b2e809c9fa36fb0590230280ef70f65bf04aa",
+    "pdf_sha256": "438f0b1e6b0881980cd0b89c176153b6bcc90f8d5839403e19cf4ac9a685fcb4",
+    "sealed_utc": "2026-11-10T02:54:03.852176+00:00",
+    "start_utc": "2026-11-10T03:00:54.071774+00:00",
+    "end_utc": "2026-11-10T03:01:06.005234+00:00",
+    "raw_first_run_sha256": "680aa6bb805c7dff029238e0b7ca2612b1a116bb82acce5f85fdce80a675f3a5",
+    "first_run_scores": {
+      "lookup_guidance": [
+        3,
+        14
+      ],
+      "lookup_only": [
+        3,
+        12
+      ],
+      "guidance_only": [
+        0,
+        2
+      ],
+      "disclosure_status": [
+        4,
+        4
+      ]
+    },
+    "failure_stages": {
+      "conflicting_metric_candidates": 1,
+      "no_eligible_cell": 4,
+      "wrong_revenue_scope": 2,
+      "wrong_statement_basis": 1,
+      "reference_page_not_retrieved": 1,
+      "draft_quote_not_contiguous": 1,
+      "equivalent_percent_rejected": 1
+    }
+  },
+  "historical_exact_replays": {
+    "same": 76,
+    "total": 76,
+    "fields": [
+      "answer",
+      "verification",
+      "citations"
+    ]
+  },
+  "local_release_tests": {
+    "passed": 228,
+    "failed": 0,
+    "skipped": 0
+  }
+}

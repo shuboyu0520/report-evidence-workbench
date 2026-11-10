@@ -1,0 +1,23 @@
+{
+  "sealed_utc": "2026-11-10T02:54:03.852176+00:00",
+  "fixture_sha256": "251ea0be9c4b484baf28c517903b2e809c9fa36fb0590230280ef70f65bf04aa",
+  "pdf_sha256": "438f0b1e6b0881980cd0b89c176153b6bcc90f8d5839403e19cf4ac9a685fcb4",
+  "source": "https://ir.hilton.com/_assets/_0dae474c42299bf06914d109d97c2a81/hilton/news/2026-10-27_Hilton_Reports_Third_Quarter_419.pdf",
+  "source_event": "https://ir.hilton.com/news-events/investor-news/detail/419/hilton-reports-third-quarter-results",
+  "sec_release": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000049/q32026earningsrelease.htm",
+  "physical_pages": 18,
+  "set_sizes": {
+    "actuals": 12,
+    "guidance": 2,
+    "disclosure_status": 4
+  },
+  "selection_history": {
+    "release_checkout": "0586124a29c9a4769b4111c4454ad3e0d97f2dfe",
+    "history_commits_checked": 46,
+    "database_count": 2007,
+    "report_count": 1692,
+    "prior_run_json_files_checked": 98,
+    "application_and_release_files_checked": 219
+  },
+  "gold_generation": "Source labels from the official PDF and independently checked against physical page text. The reader was not called."
+}

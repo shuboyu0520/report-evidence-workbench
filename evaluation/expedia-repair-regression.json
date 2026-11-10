@@ -1,0 +1,442 @@
+{
+  "cohorts": {
+    "airbnb": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "0e1961322eb56569a764997fbf51117ed7a3245d184bb14e8a935ebdbdbb213a",
+      "pdf_sha256": "9824f9818c184057138fc8ff1ce16d6f7ae3995cc2eb1a64bf8d204134c9e112",
+      "prior_run_sha256": "66195932f841e1101ec70ebe212ffe2e021fbd7c8f2480d20959a020cbc81d47",
+      "replay_sha256": "ef196eea6560580ad559e25edc0c2faf61e4679420a6a40c9b948b191e27682d",
+      "replay_start_utc": "2026-11-10T03:01:23.024751+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "A01",
+          "changed": []
+        },
+        {
+          "id": "A02",
+          "changed": []
+        },
+        {
+          "id": "A03",
+          "changed": []
+        },
+        {
+          "id": "A04",
+          "changed": []
+        },
+        {
+          "id": "A05",
+          "changed": []
+        },
+        {
+          "id": "A06",
+          "changed": []
+        },
+        {
+          "id": "A07",
+          "changed": []
+        },
+        {
+          "id": "A08",
+          "changed": []
+        },
+        {
+          "id": "A09",
+          "changed": []
+        },
+        {
+          "id": "A10",
+          "changed": []
+        },
+        {
+          "id": "A11",
+          "changed": []
+        },
+        {
+          "id": "A12",
+          "changed": []
+        },
+        {
+          "id": "A13",
+          "changed": []
+        },
+        {
+          "id": "A14",
+          "changed": []
+        },
+        {
+          "id": "A15",
+          "changed": []
+        },
+        {
+          "id": "A16",
+          "changed": []
+        },
+        {
+          "id": "A17",
+          "changed": []
+        },
+        {
+          "id": "A18",
+          "changed": []
+        }
+      ]
+    },
+    "uber": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "11386f7fc21d648332bf421c83c755355cbd0c962ba5a240d980c988af9d889b",
+      "pdf_sha256": "771658eae3b120b31a2eea00345c363bd54f88be8db6a2a8139b9a09fe7ac97f",
+      "prior_run_sha256": "ddf6729fe14c860aa0e5390688a15755579d6afca351bd645c03a235924394f3",
+      "replay_sha256": "91e60856eb9c309217d9516aca87589953482b34b5e7cf0775cc0c6dac15d290",
+      "replay_start_utc": "2026-11-10T03:01:39.511142+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "U01",
+          "changed": []
+        },
+        {
+          "id": "U02",
+          "changed": []
+        },
+        {
+          "id": "U03",
+          "changed": []
+        },
+        {
+          "id": "U04",
+          "changed": []
+        },
+        {
+          "id": "U05",
+          "changed": []
+        },
+        {
+          "id": "U06",
+          "changed": []
+        },
+        {
+          "id": "U07",
+          "changed": []
+        },
+        {
+          "id": "U08",
+          "changed": []
+        },
+        {
+          "id": "U09",
+          "changed": []
+        },
+        {
+          "id": "U10",
+          "changed": []
+        },
+        {
+          "id": "U11",
+          "changed": []
+        },
+        {
+          "id": "U12",
+          "changed": []
+        },
+        {
+          "id": "U13",
+          "changed": []
+        },
+        {
+          "id": "U14",
+          "changed": []
+        },
+        {
+          "id": "U15",
+          "changed": []
+        },
+        {
+          "id": "U16",
+          "changed": []
+        },
+        {
+          "id": "U17",
+          "changed": []
+        },
+        {
+          "id": "U18",
+          "changed": []
+        }
+      ]
+    },
+    "qcom": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "6509f78b833eaf193bbe01f3909fe4df57aae016447be7b0df77074aca5e4a6b",
+      "pdf_sha256": "6aa674a7f42a75aae351ccce55ae33ac2da34774827fdec43297f9ae6e12c4c6",
+      "prior_run_sha256": "590b603c8aa01ec9f2328a55cde2ca1fbca4d799a9c19a1a2da05fc4b0a53468",
+      "replay_sha256": "65765a673a4dfcd6a246c9e9840c696d71df39d54068d8bfda18707f3eef97d3",
+      "replay_start_utc": "2026-11-10T03:01:49.909245+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "Q01",
+          "changed": []
+        },
+        {
+          "id": "Q02",
+          "changed": []
+        },
+        {
+          "id": "Q03",
+          "changed": []
+        },
+        {
+          "id": "Q04",
+          "changed": []
+        },
+        {
+          "id": "Q05",
+          "changed": []
+        },
+        {
+          "id": "Q06",
+          "changed": []
+        },
+        {
+          "id": "Q07",
+          "changed": []
+        },
+        {
+          "id": "Q08",
+          "changed": []
+        },
+        {
+          "id": "Q09",
+          "changed": []
+        },
+        {
+          "id": "Q10",
+          "changed": []
+        },
+        {
+          "id": "Q11",
+          "changed": []
+        },
+        {
+          "id": "Q12",
+          "changed": []
+        },
+        {
+          "id": "Q13",
+          "changed": []
+        },
+        {
+          "id": "Q14",
+          "changed": []
+        },
+        {
+          "id": "Q15",
+          "changed": []
+        },
+        {
+          "id": "Q16",
+          "changed": []
+        },
+        {
+          "id": "Q17",
+          "changed": []
+        },
+        {
+          "id": "Q18",
+          "changed": []
+        }
+      ]
+    },
+    "tsmc": {
+      "same": 4,
+      "total": 4,
+      "fixture_sha256": "668b055040d7507db708a15971ec4ca6b49e36fcb558b5f988c81b8e0973652b",
+      "pdf_sha256": "d905217f428d807ccac6662ed984e988c90e4812bb3b6138a3ea0bf84a279393",
+      "prior_run_sha256": "09b80f8f96bf8671166780feb426bb6200b3ff79932721a6ba83fbca4abeb4e3",
+      "replay_sha256": "af87921d4fb6b41e394317fe294b1875292964cc8c190bcbdb2c9c115ca232c3",
+      "replay_start_utc": "2026-11-10T03:01:57.805783+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "cash",
+          "changed": []
+        },
+        {
+          "id": "platform",
+          "changed": []
+        },
+        {
+          "id": "guidance",
+          "changed": []
+        },
+        {
+          "id": "missing",
+          "changed": []
+        }
+      ]
+    },
+    "booking": {
+      "same": 18,
+      "total": 18,
+      "fixture_sha256": "761ccac985ae4f444ca41fa0c0687b467eba6bf930d535d99127060551e081d6",
+      "pdf_sha256": "ee8d404ee88b884d9ebb06b34930c8c90872c5319f182eb44a765c42bdb6efbe",
+      "prior_run_sha256": "a417bd53ddc2a6422c2f20250c72d796dbc1d6b569e9fff06a98db25f52605e4",
+      "replay_sha256": "d6457096fe7b263f73b8dcc8392d0fd68fd009e19f0c785c46c2d49add46215e",
+      "replay_start_utc": "2026-11-10T03:02:02.186911+00:00",
+      "config": {
+        "model": "qwen3:4b-instruct",
+        "embedding_model": "qwen3-embedding:0.6b",
+        "model_options": {
+          "temperature": 0,
+          "seed": 42,
+          "num_ctx": 16384,
+          "num_predict": 1024
+        }
+      },
+      "cases": [
+        {
+          "id": "B01",
+          "changed": []
+        },
+        {
+          "id": "B02",
+          "changed": []
+        },
+        {
+          "id": "B03",
+          "changed": []
+        },
+        {
+          "id": "B04",
+          "changed": []
+        },
+        {
+          "id": "B05",
+          "changed": []
+        },
+        {
+          "id": "B06",
+          "changed": []
+        },
+        {
+          "id": "B07",
+          "changed": []
+        },
+        {
+          "id": "B08",
+          "changed": []
+        },
+        {
+          "id": "B09",
+          "changed": []
+        },
+        {
+          "id": "B10",
+          "changed": []
+        },
+        {
+          "id": "B11",
+          "changed": []
+        },
+        {
+          "id": "B12",
+          "changed": []
+        },
+        {
+          "id": "B13",
+          "changed": []
+        },
+        {
+          "id": "B14",
+          "changed": []
+        },
+        {
+          "id": "B15",
+          "changed": []
+        },
+        {
+          "id": "B16",
+          "changed": []
+        },
+        {
+          "id": "B17",
+          "changed": []
+        },
+        {
+          "id": "B18",
+          "changed": []
+        }
+      ]
+    }
+  },
+  "source_py": {
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/agent.py": "c85417c7c1f7f8125f175caede5f377e4bffac6f462f1705102ede9992d34723",
+    "app/comparison.py": "aa040810cd1546a05f5886f23c765fe0a155667f5c51df97bbac6b79c1021eb7",
+    "app/db.py": "2eeeef2834a7c863f05944b85c97812372932d035de4067e20ac3b5daf068fe4",
+    "app/earnings_tables.py": "cf3c852090a839ea84808536aef5917484de6129cbc028e882e5df0daf27f232",
+    "app/finance.py": "b71fa9e7880f65138219ce9a534ea2c8de9af6e4fb2d1ae1a47eef3c282ff31b",
+    "app/growth_guidance.py": "bb90d8465f978cd0508769a0981cc5d7a17b4e3f885fe260912f72516a0c4012",
+    "app/main.py": "17df7056154b1141b5bcab3d8fed1544bc7d47c49e10ae36cab7a799bce35313",
+    "app/metric_grids.py": "32a53b29af2e4d6f0a44e66872744cbf8c3b96eb84173fb4d970d370afae43ae",
+    "app/observatory.py": "2c0e6e64cf7e41c12ad210a2de0936f723eb929b565da1a13beb0f08c40df0eb",
+    "app/reader.py": "322ee4aea5fc231f621e8db1560ad9a4c4f1bd21b6160be0f4f17e4e04f445ad",
+    "app/reader_view.py": "2e88b2731d552c6de3feb6331e4a61b3f6e84a4e332f35f398d66c018a26f142",
+    "app/retrieval.py": "72f64e14836a01a1719501ab37ade8bc0afd1b275216839be8dd50d32f8b6dcc",
+    "app/runtime.py": "d802bdbf75bbcd92ec092701c48d33ca3e46fd510e5752f834b7d8d6a71a145f",
+    "app/table_headers.py": "6d3a4082a7440827c598f8e6b8439e944a0294e4deb3653dc845d7cf4c13e460",
+    "app/table_lookup.py": "9b19b024df4dd844a7cc94670aab67bad258fd65903f14a4b64ba4e04db4512b"
+  },
+  "model_digests": {
+    "qwen3:4b-instruct": "0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "qwen3-embedding:0.6b": "ac6da0dfba84a81fdbfbaf330198c33cd77c4cdfc53e8bc50eb581914a15621d"
+  },
+  "same": 76,
+  "total": 76,
+  "fields": [
+    "answer",
+    "verification",
+    "citations"
+  ]
+}

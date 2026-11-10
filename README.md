@@ -6,19 +6,19 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 ## 先看一道题 / Quick start
 
-在包含本页的仓库目录中，可用浏览器直接打开 [离线评测查看器](docs/evidence-review.html)。也可用 Python 3.10 或更高版本运行以下命令。查看存档只用 Python 标准库。
+打开[在线逐题查看器](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=expedia-replay&case=E09)，可以看到模型答了什么，以及引文位于原表的哪一页。下载仓库后，也可直接打开[离线查看器](docs/evidence-review.html)，或用 Python 3.10 以上版本在仓库目录运行以下命令。
 
 ```shell
-python scripts/inspect_eval.py --cohort booking --case B14
+python scripts/inspect_eval.py --cohort expedia-replay --case E09
 ```
 
-B14 问的是 Booking 对第四季度**固定汇率口径总预订额同比增幅**的指引。原表第 3 页给出的区间是 **4% 至 6%**。打开这条记录，可以对照问题、作答和引文，检查系统是否选中了正确的指引行。
+Expedia 当季的自由现金流是多少？模型首次读到原表的 `$ (1,399)`，给出了正确的负数，旧版却在最终校验时丢掉了答复。E09 展示这次拒答和修复后的答案 **−1,399 百万美元**，可直接对照[原表第 14 页](https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf#page=14)。
 
-[![逐题查看 Booking B14 的上版答复、复测答复与 PDF 第 3 页的引文](docs/evidence-review-preview.png)](docs/evidence-review.html#cohort=booking&case=B14)
+[![Expedia 自由现金流的原答、复测答复和第 14 页引文](docs/evidence-review-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=expedia-replay&case=E09)
 
 ```shell
 python scripts/inspect_eval.py
-python scripts/inspect_eval.py --cohort expedia --failed
+python scripts/inspect_eval.py --cohort hilton --failed
 ```
 
 第一条显示评测概况，第二条列出新公司首测的失败样例。[逐题存档 JSON](evaluation/showcase.json) · [已上线的台积电联读案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录](https://shuboyu0520.github.io/report-evidence-workbench/)
@@ -29,12 +29,16 @@ python scripts/inspect_eval.py --cohort expedia --failed
 | --- | ---: | ---: |
 | Booking，原题修复后复测 | 14/14 | 4/4 |
 | Expedia，新公司首次作答 | 2/14 | 4/4 |
+| Expedia，同一 PDF 与题目修复后复测 | 14/14 | 4/4 |
+| Hilton，本轮冻结后首次作答 | 3/14 | 4/4 |
 
 Booking 同一组 14 道查数与指引题依次通过 2、10、14 道。最后一次修复涉及单季自由现金流、调整后 EBITDA、报告口径间夜增幅和固定汇率总预订额增幅。
 
-代码冻结后，对同业新公司 Expedia 只做一次首测。12 道查数通过 2 道，2 道指引均未通过。12 道有答案却拒答的题中，11 道未选出符合条件的原表单元格，1 道检索到了正确的自由现金流原页并生成了正确草稿，最终仍返回证据不足。[Booking 官方公告](https://www.bookingholdings.com/wp-content/uploads/2026/11/Q3-26-BKNG-Earnings-Release-Final.pdf) · [Expedia 官方公告](https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf) · [早期评测及逐题记录](EVALUATION_HISTORY.md)
+Expedia 首测的 12 道漏答中，11 道未选出合格原表单元格，1 道在最终校验时把会计括号负数读成正数。修复后复测通过 12/12 道实际值和 2/2 道指引。另以原 PDF 回放 Booking、Airbnb、Uber、高通、台积电的 76 道既有题，答复、引文和状态逐题一致。[12 道漏答的原因与原表](evaluation/expedia-failure-review.md) · [76 道回放记录](evaluation/expedia-repair-regression.json)
 
-*Booking was a replay of known questions. Expedia was evaluated once with the frozen engine. Lookup and guidance, and disclosure status, have separate denominators.*
+冻结版本后，希尔顿 18 道题各运行一次。查数通过 3/12，指引通过 0/2，披露状态通过 4/4。11 道失败中有 8 道拒答、3 道错答：特许经营及授权费、酒店自营业务收入都被替换为集团总营收；利润表利息费用被替换为 EBITDA 调节表的正向加回。[希尔顿原始公告](https://ir.hilton.com/news-events/investor-news/detail/419/hilton-reports-third-quarter-results) · [希尔顿逐题评分](evaluation/hilton-first-20261110.json) · [早期评测](EVALUATION_HISTORY.md)
+
+*Expedia is a repair replay. Hilton was run once on a previously untested issuer using preregistered questions. Lookup and guidance are scored separately from disclosure status.*
 
 <a id="run-reader"></a>
 ## 上传自己的报告 / Run the reader
@@ -54,16 +58,17 @@ uv run uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
 
 ## 复现模型评测 / Reproduce a run
 
-在本轮版本中运行 `git rev-parse HEAD:app` 会得到 `b1a1a10002c4be77f7a7b6948206d53995309fda`。这个 Git 对象可用于核对应用源码版本。模型摘要、推理参数和历史回放数量见[冻结记录](evaluation/frozen-release-20261110.json)。
+运行 `git rev-parse HEAD:app` 可查看应用目录的 Git 对象。模型摘要、推理参数、运行时间、题集指纹与历史回放数量见[本轮冻结记录](evaluation/expedia-hilton-release.json)。[前一轮冻结记录](evaluation/frozen-release-20261110.json)留存了 Expedia 首测的环境。
 
-将上面两份官方 PDF 分别保存到仓库根目录的 `booking.pdf` 和 `expedia.pdf`，保持 Ollama 运行，从新的输出目录开始。
+将 [Expedia 季报](https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf)和[希尔顿季报](https://ir.hilton.com/_assets/_0dae474c42299bf06914d109d97c2a81/hilton/news/2026-10-27_Hilton_Reports_Third_Quarter_419.pdf)分别保存为 `expedia.pdf` 和 `hilton.pdf`，保持 Ollama 运行，选择尚未存在的输出目录。
 
 ```shell
-uv run python -m scripts.evaluate_reader --fixture evaluation/booking-reader-blind.json --file booking.pdf --out replay-booking
 uv run python -m scripts.evaluate_reader --fixture evaluation/expedia-reader-blind.json --file expedia.pdf --out replay-expedia
+uv run python -m scripts.grade_expedia_replay --fixture evaluation/expedia-reader-blind.json --pdf expedia.pdf --raw replay-expedia/results.json --output replay-expedia/graded.json
+uv run python -m scripts.evaluate_reader --fixture evaluation/hilton-reader-blind.json --file hilton.pdf --out replay-hilton
 ```
 
-脚本核验 PDF 哈希，逐题调用上传与问答接口，把本次结果保存在各目录的 `results.json`。从存档查看器可以查阅原先冻结的首答和独立判分。要核验一次新运行，需按各题集的原页、金额、单位、期间及披露规则重新评分。[Booking 题集](evaluation/booking-reader-blind.json) · [Expedia 题集](evaluation/expedia-reader-blind.json)
+脚本核验 PDF 哈希，逐题调用上传与问答接口，并保存每题的首次响应。复核时检查原表行列、正负号、期间和单位。可以用预登记的范围核验一次新运行；已有首测记录会保留。[Expedia 题集](evaluation/expedia-reader-blind.json) · [希尔顿题集](evaluation/hilton-reader-blind.json) · [希尔顿首测登记](evaluation/hilton-preregistration.json)
 
 ## 贡献失败样例 / Contribute a case
 

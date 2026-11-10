@@ -1,3 +1,4 @@
 # Keep the preregistered question-set hashes reproducible on Windows and Linux.
 evaluation/booking-reader-blind.json text eol=lf
 evaluation/expedia-reader-blind.json text eol=lf
+evaluation/hilton-reader-blind.json text eol=lf

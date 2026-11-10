@@ -23,7 +23,8 @@
 
   function validArchive() {
     if (!data || data.schema_version !== 1) return false;
-    return ['booking', 'expedia'].every((key) => {
+    if (!data.cohorts || !Object.keys(data.cohorts).length) return false;
+    return Object.keys(data.cohorts).every((key) => {
       const cohort = data.cohorts?.[key];
       if (!cohort || !Array.isArray(cohort.cases) || !cohort.cases.length) return false;
       const ids = new Set();
@@ -97,7 +98,7 @@
     byId('case-verdict').textContent = row.passed ? '通过' : '未通过';
     byId('case-verdict').dataset.passed = String(row.passed);
     byId('question').textContent = row.question;
-    const isReplay = current.cohort === 'booking';
+    const isReplay = cohort.kind === 'same_set_replay';
     const answers = byId('answers');
     const comparison = isReplay && typeof row.previous_answer === 'string';
     answers.classList.toggle('comparison', comparison);
@@ -139,10 +140,12 @@
 
   function render() {
     const params = new URLSearchParams(location.hash.slice(1));
-    const key = params.get('cohort') === 'expedia' ? 'expedia' : 'booking';
-    const filter = ['all', 'failed', ...(key === 'booking' ? ['changed'] : [])]
-      .includes(params.get('filter')) ? params.get('filter') : 'all';
+    const requested = params.get('cohort');
+    const key = Object.hasOwn(data.cohorts, requested) ? requested : Object.keys(data.cohorts)[0];
     const cohort = data.cohorts[key];
+    const isReplay = cohort.kind === 'same_set_replay';
+    const filter = ['all', 'failed', ...(isReplay ? ['changed'] : [])]
+      .includes(params.get('filter')) ? params.get('filter') : 'all';
     visibleRows = rowsFor(key, filter);
     const id = params.get('case');
     const selected = visibleRows.find(row => row.id === id) || visibleRows[0];
@@ -154,7 +157,7 @@
     byId('lookup-score').textContent = score(cohort.cases, ['actual', 'guidance']);
     byId('status-score').textContent = score(cohort.cases, ['future', 'missing']);
     const changedOption = byId('result-filter').querySelector('[value="changed"]');
-    changedOption.hidden = changedOption.disabled = key !== 'booking';
+    changedOption.hidden = changedOption.disabled = !isReplay;
     byId('result-filter').value = filter;
     const select = byId('case-select');
     select.replaceChildren();
@@ -183,8 +186,13 @@
   }
   byId('load-status').hidden = true;
   byId('review').hidden = false;
-  for (const button of document.querySelectorAll('[data-cohort]')) {
-    button.addEventListener('click', () => change(button.dataset.cohort, 'all'));
+  for (const [key, cohort] of Object.entries(data.cohorts)) {
+    const phase = cohort.kind === 'same_set_replay' ? '同题复测' : '新公司首测';
+    const button = node('button', cohort.title + ' · ' + phase);
+    button.type = 'button';
+    button.dataset.cohort = key;
+    button.addEventListener('click', () => change(key, 'all'));
+    byId('cohort-buttons').append(button);
   }
   byId('result-filter').addEventListener('change', e => {
     const filter = e.target.value;

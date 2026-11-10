@@ -1,0 +1,294 @@
+{
+  "company": "Hilton Worldwide Holdings Inc. (HLT)",
+  "published_on": "2026-10-27",
+  "as_of": "2026-11-10",
+  "calendar_year": true,
+  "source": "https://ir.hilton.com/_assets/_0dae474c42299bf06914d109d97c2a81/hilton/news/2026-10-27_Hilton_Reports_Third_Quarter_419.pdf",
+  "source_event": "https://ir.hilton.com/news-events/investor-news/detail/419/hilton-reports-third-quarter-results",
+  "sec_release": "https://www.sec.gov/Archives/edgar/data/1585689/000158568926000049/q32026earningsrelease.htm",
+  "sha256": "438f0b1e6b0881980cd0b89c176153b6bcc90f8d5839403e19cf4ac9a685fcb4",
+  "physical_pages": 18,
+  "selection": "Hotel operator adjacent to Expedia in travel. Latest Hilton earnings release as of cutoff. No prior issuer, ticker or PDF matched the scanned project reports, reachable release history or evaluation files. This is a claim about available project history only.",
+  "history_check": {
+    "release_checkout": "0586124a29c9a4769b4111c4454ad3e0d97f2dfe",
+    "history_commits_checked": 46,
+    "database_count": 2007,
+    "report_count": 1692,
+    "prior_run_json_files_checked": 98,
+    "application_and_release_files_checked": 219
+  },
+  "protocol": "A new empty database; public upload and reader endpoints receive the official PDF, issuer metadata, date, and each question text once. No answer keys are supplied to the engine. Preserve original ordered outputs including errors and refusals. Freeze the application before this issuer is first run. No retries or result-driven question substitutions.",
+  "rubric": {
+    "technical": "A missing result, an HTTP failure, or a technical refusal fails and remains in its denominator. No run or case may be reselected.",
+    "quantity": "For each substantive answer require correct metric, scope, sign, period, basis, unit and exact value or range endpoints under its question. Accept exact unit conversions and equivalent decimal representations. Mixed-scale, prior-period, standalone segment, nine-month, opposite-sign and forward/actual substitutions fail.",
+    "evidence": "Require at least one user-visible verbatim quote on an accepted physical PDF page tied to the target row or textual assertion. Multiple exact snippets may supply context; use row heading and surrounding column headers in the original PDF. When two different rows carry the same number inspect the actual row. All provided quotes must be traceable on their stated page modulo whitespace. A neutral extra header is acceptable, but material conflicting citations or unsupported extra claims fail. A correct internal draft is not sufficient.",
+    "status": "Future actuals require not_yet_disclosed plus the requested period end and research cutoff, with no numeric forecast presented as an actual. Absent-material cases require insufficient_evidence in the supplied PDF, no unsupported amount, and no claim of global nondisclosure.",
+    "review": "Independent reviewer compares every saved response, citations and period binding with the locked original. Record actuals (12), next-quarter guidance (2), combined substantive (14) and disclosure status (4) separately. Classify the observable failure stage after first run; never change a case due to its outcome."
+  },
+  "cases": [
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度，集团报告的总营收是多少百万美元？请给出合并利润表的精确值。",
+      "metric_and_scope": "reported consolidated total revenues, not adjusted revenue",
+      "period": "2026 Q3",
+      "expected_values": [
+        "3325"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6,
+        12
+      ],
+      "example_page": 6,
+      "example_source_quote": "Total revenues 3,325 3,120 9,603 8,952",
+      "id": "H01"
+    },
+    {
+      "kind": "lookup",
+      "question": "上年同期，即 2025 年第三季度，集团报告的总营收是多少百万美元？",
+      "metric_and_scope": "prior year, reported consolidated total revenues",
+      "period": "2025 Q3",
+      "expected_values": [
+        "3120"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6,
+        12
+      ],
+      "example_page": 6,
+      "example_source_quote": "Total revenues 3,325 3,120 9,603 8,952",
+      "id": "H02"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度集团营业利润是多少百万美元？",
+      "metric_and_scope": "consolidated operating income",
+      "period": "2026 Q3",
+      "expected_values": [
+        "909"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6
+      ],
+      "example_page": 6,
+      "example_source_quote": "Operating income 909 777 2,445 2,091",
+      "id": "H03"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元/股？",
+      "metric_and_scope": "reported diluted EPS before special item adjustments",
+      "period": "2026 Q3",
+      "expected_values": [
+        "2.37"
+      ],
+      "unit": "美元/股",
+      "accepted_pages": [
+        1,
+        2,
+        6,
+        11
+      ],
+      "example_page": 11,
+      "example_source_quote": "Diluted EPS, as reported $ 2.37 $ 1.78 $ 6.13 $ 4.84",
+      "id": "H04"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度全集团调整后 EBITDA 的实际金额是多少百万美元？",
+      "metric_and_scope": "consolidated quarterly adjusted EBITDA",
+      "period": "2026 Q3",
+      "expected_values": [
+        "1058"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        1,
+        2,
+        12
+      ],
+      "example_page": 12,
+      "example_source_quote": "Adjusted EBITDA $ 1,058 $ 976 $ 3,013 $ 2,779",
+      "id": "H05"
+    },
+    {
+      "kind": "lookup",
+      "question": "2025 年第三季度全集团的 GAAP 净利润是多少百万美元？请按分配给非控股权益前的合并口径回答。",
+      "metric_and_scope": "prior-year consolidated net income before allocation to non-controlling interests",
+      "period": "2025 Q3",
+      "expected_values": [
+        "421"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        2,
+        6,
+        12
+      ],
+      "example_page": 6,
+      "example_source_quote": "Net income 536 421 1,401 1,163",
+      "id": "H06"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度特许经营与授权费（Franchise and licensing fees）收入是多少百万美元？",
+      "metric_and_scope": "franchise and licensing fee revenue only",
+      "period": "2026 Q3",
+      "expected_values": [
+        "815"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6
+      ],
+      "example_page": 6,
+      "example_source_quote": "Franchise and licensing fees $ 815 $ 739 $ 2,319 $ 2,109",
+      "id": "H07"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度自有酒店业务（Ownership）列在收入项下的金额是多少百万美元？",
+      "metric_and_scope": "Ownership line under Revenues, not under Expenses",
+      "period": "2026 Q3",
+      "expected_values": [
+        "304"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6
+      ],
+      "example_page": 6,
+      "example_source_quote": "Ownership 304 322 864 888",
+      "id": "H08"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度合并利润表的利息费用是多少百万美元？请按利润表的列示符号回答，保留对利润的正负影响。",
+      "metric_and_scope": "Interest expense with its as-presented negative P&L sign, not the positive EBITDA add-back",
+      "period": "2026 Q3",
+      "expected_values": [
+        "-184"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6
+      ],
+      "example_page": 6,
+      "example_source_quote": "Interest expense (184) (159) (529) (455)",
+      "id": "H09"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度集团总费用（Total expenses）是多少百万美元？",
+      "metric_and_scope": "total consolidated expenses as reported",
+      "period": "2026 Q3",
+      "expected_values": [
+        "2416"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        6
+      ],
+      "example_page": 6,
+      "example_source_quote": "Total expenses 2,416 2,343 7,158 6,861",
+      "id": "H10"
+    },
+    {
+      "kind": "lookup",
+      "question": "2026 年第三季度，全系统可比酒店的入住率是多少？请给入住率的百分比水平。",
+      "metric_and_scope": "system-wide comparable hotel occupancy level, not percentage-point change",
+      "period": "2026 Q3",
+      "expected_values": [
+        "75.8"
+      ],
+      "unit": "%",
+      "accepted_pages": [
+        7
+      ],
+      "example_page": 7,
+      "example_source_quote": "System-wide 75.8 % 1.4 % pts. $ 164.57 3.9 % $ 124.70 5.8 %",
+      "id": "H11"
+    },
+    {
+      "kind": "lookup",
+      "question": "按可比酒店的地区统计，2026 年第三季度亚太区（Asia Pacific）每间可售客房收入（RevPAR）是多少美元？",
+      "metric_and_scope": "Asia Pacific comparable RevPAR level in US dollars per available room, not ADR or growth",
+      "period": "2026 Q3",
+      "expected_values": [
+        "71.78"
+      ],
+      "unit": "美元/可售客房",
+      "accepted_pages": [
+        7
+      ],
+      "example_page": 7,
+      "example_source_quote": "Asia Pacific 71.9 (0.7) 99.87 0.5 71.78 (0.5)",
+      "id": "H12"
+    },
+    {
+      "kind": "guidance",
+      "question": "管理层对 2026 年第四季度全系统可比酒店 RevPAR 固定汇率同比增幅给出的指引区间是多少？",
+      "metric_and_scope": "Q4 guidance, comparable system-wide RevPAR growth on a currency-neutral basis",
+      "period": "2026 Q4",
+      "expected_values": [
+        "3.0",
+        "3.5"
+      ],
+      "unit": "%",
+      "accepted_pages": [
+        3
+      ],
+      "example_page": 3,
+      "example_source_quote": "is projected to increase between 3.0 percent and 3.5 percent compared to the fourth quarter of 2025.",
+      "id": "H13"
+    },
+    {
+      "kind": "guidance",
+      "question": "管理层预计 2026 年第四季度的调整后 EBITDA 为多少百万美元？请给出金额区间。",
+      "metric_and_scope": "Q4 absolute guidance for adjusted EBITDA",
+      "period": "2026 Q4",
+      "expected_values": [
+        "1047",
+        "1067"
+      ],
+      "unit": "百万美元",
+      "accepted_pages": [
+        3,
+        15
+      ],
+      "example_page": 15,
+      "example_source_quote": "Adjusted EBITDA $ 1,047 $ 1,067",
+      "id": "H14"
+    },
+    {
+      "kind": "future",
+      "question": "截至研究日，2026 年第四季度集团实际总营收是多少百万美元？",
+      "period": "2026 Q4",
+      "period_end": "2026-12-31",
+      "id": "H15"
+    },
+    {
+      "kind": "future",
+      "question": "截至研究日，2027 年第一季度集团实际营业利润是多少百万美元？",
+      "period": "2027 Q1",
+      "period_end": "2027-03-31",
+      "id": "H16"
+    },
+    {
+      "kind": "missing",
+      "question": "仅根据这份季度公告，2026 年第三季度日本单一国家的酒店业务总营收是多少百万美元？",
+      "period": "2026 Q3",
+      "source_check": "Income statement gives consolidated and fee-category revenue. Geographic hotel statistics and property counts aggregate Japan within Asia Pacific; neither discloses standalone Japanese revenue.",
+      "id": "H17"
+    },
+    {
+      "kind": "missing",
+      "question": "只依这份公告，2026 年第三季度康莱德（Conrad Hotels & Resorts）这一品牌的总营收是多少百万美元？",
+      "period": "2026 Q3",
+      "source_check": "Conrad has entries for occupancy, ADR, RevPAR and property inventory; the report has no standalone consolidated brand-revenue total. These values cannot be substituted.",
+      "id": "H18"
+    }
+  ]
+}

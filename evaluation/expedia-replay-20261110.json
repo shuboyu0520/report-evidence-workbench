@@ -1,0 +1,485 @@
+{
+  "company": "Expedia Group, Inc. (EXPE)",
+  "source": "https://s202.q4cdn.com/757635260/files/content_files/Q3-2026-Earnings-Release-Final.pdf",
+  "as_of": "2026-11-10",
+  "fixture_sha256": "c881521b0f01e2d61c8f32d6aebdf13d6fce4a423e771526b8572ed5cf6e81e7",
+  "pdf_sha256": "0fb47da63dee6728f8187a66c4283955042645a74202aeac53f88e318b430e5b",
+  "raw_sha256": "d032562356a66c089394b2c5fba38105bb039d6bf97f66c357929755fe18f7d5",
+  "scores": {
+    "lookup_guidance": [
+      14,
+      14
+    ],
+    "lookup_only": [
+      12,
+      12
+    ],
+    "guidance_only": [
+      2,
+      2
+    ],
+    "disclosure_status": [
+      4,
+      4
+    ]
+  },
+  "cases": [
+    {
+      "id": "E01",
+      "kind": "lookup",
+      "question": "2026 年第三季度，集团总营收是多少百万美元？请给出表中的精确值。",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体  Revenue（实际）为 4,938 百万美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Revenue $4,938 $4,412 12%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "gold_example": "Revenue $4,938 $4,412 12%"
+    },
+    {
+      "id": "E02",
+      "kind": "lookup",
+      "question": "上年同期，即 2025 年第三季度，Expedia 集团营收是多少百万美元？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2025 财年第3季度，公司整体  Revenue（实际）为 4,412 百万美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Revenue $4,938 $4,412 12%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "gold_example": "Revenue $4,938 $4,412 12%"
+    },
+    {
+      "id": "E03",
+      "kind": "lookup",
+      "question": "公司 2026 年第三季度的营业利润是多少百万美元？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体  Operating income（实际）为 1,326 百万美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Operating income $1,326 $1,036 28%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        5,
+        12
+      ],
+      "gold_example": "Operating income $1,326 $1,036 28%"
+    },
+    {
+      "id": "E04",
+      "kind": "lookup",
+      "question": "2026 年第三季度 GAAP 摊薄每股收益是多少美元/股？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体  GAAP diluted earnings per share（实际）为 8.42 美元/股。原表第 13 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 13,
+          "quote": "GAAP diluted earnings per share $ 8.42 $ 7.33 $ 15.43 $ 8.18"
+        },
+        {
+          "page": 13,
+          "quote": "Adjusted Net Income (Loss) & Adjusted EPS\nThree months ended\nSeptember 30,\nNine months ended\nSeptember 30,\n2026 2025 2026 2025\n(In millions, except share and per share data)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        5,
+        13
+      ],
+      "gold_example": "Diluted Earnings Per Share $8.42 $7.33 15%"
+    },
+    {
+      "id": "E05",
+      "kind": "lookup",
+      "question": "2026 年第三季度的预订间夜数是多少百万间夜？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体  Booked Room Nights（实际）为 115.7 百万间夜。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Booked Room Nights 115.7 108.2 7%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        3
+      ],
+      "gold_example": "Booked Room Nights 115.7 108.2 7%"
+    },
+    {
+      "id": "E06",
+      "kind": "lookup",
+      "question": "Expedia 2026 年第三季度全部业务的总预订额是多少百万美元？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体  Gross Bookings（实际）为 34,008 百万美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Gross Bookings $34,008 $30,727 11%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        3,
+        4
+      ],
+      "gold_example": "Gross Bookings $34,008 $30,727 11%"
+    },
+    {
+      "id": "E07",
+      "kind": "lookup",
+      "question": "2026 年第三季度的 B2B 业务收入是多少百万美元？请只查 B2B 分部。",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，B2B Revenue（实际）为 1,708 百万美元。原表第 4 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 4,
+          "quote": "B2B           $947 $1,209 $1,392 $1,294 $1,183 $1,493 $1,708 23%"
+        },
+        {
+          "page": 4,
+          "quote": "y/y growth\nBy Segment Q1-25 Q2-25 Q3-25 Q4-25 Q1-26 Q2-26 Q3-26 Q3-26"
+        },
+        {
+          "page": 4,
+          "quote": "Revenue $2,988 $3,786 $4,412 $3,547 $3,426 $4,315 $4,938 12%"
+        },
+        {
+          "page": 4,
+          "quote": "(All figures in millions)"
+        }
+      ],
+      "accepted_pages": [
+        4
+      ],
+      "gold_example": "B2B $947 $1,209 $1,392 $1,294 $1,183 $1,493 $1,708 23%"
+    },
+    {
+      "id": "E08",
+      "kind": "lookup",
+      "question": "按产品拆分，2026 年第三季度住宿（Lodging）产品的营收是多少百万美元？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，Lodging Revenue by product（实际）为 3,991 百万美元。原表第 3 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 3,
+          "quote": "Lodging $2,289 $3,040 $3,604 $2,819 $2,610 $3,429 $3,991 11%"
+        },
+        {
+          "page": 3,
+          "quote": "2025 2026 Y/Y\nQ1 Q2 Q3 Q4 Q1 Q2 Q3 Growth"
+        },
+        {
+          "page": 3,
+          "quote": "Revenue by product"
+        },
+        {
+          "page": 3,
+          "quote": "(All figures in millions, except ADR booked)"
+        }
+      ],
+      "accepted_pages": [
+        3
+      ],
+      "gold_example": "Lodging $2,289 $3,040 $3,604 $2,819 $2,610 $3,429 $3,991 11%"
+    },
+    {
+      "id": "E09",
+      "kind": "lookup",
+      "question": "公司 2026 年第三季度单季自由现金流是多少百万美元？请保留正负号。",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "公司 2026 年第三季度单季自由现金流是 -1,399 百万美元。（原文第 14 页）",
+      "verification": "cited_draft",
+      "citations": [
+        {
+          "page": 14,
+          "quote": "Free Cash Flow\n \nThree months ended \nSeptember 30,\nNine months ended\nSeptember 30,\n 2026 2025 2026 2025\n (In millions)\nNet cash provided by (used in) operating activities $ (1,157) $ (497) $ 4,252 $ 3,576 \nLess: Total capital expenditures  (242)  (189)  (625)  (585) \nFree cash flow $ (1,399) $ (686) $ 3,627 $ 2,991"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        14
+      ],
+      "gold_example": "Free Cash Flow* $(1,399) $(686) 104%"
+    },
+    {
+      "id": "E10",
+      "kind": "lookup",
+      "question": "2026 年第三季度全集团调整后 EBITDA 的实际金额是多少百万美元？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体 非 GAAP Adjusted EBITDA*（实际）为 1,689 百万美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Adjusted EBITDA* $1,689 $1,449 17%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        4,
+        12
+      ],
+      "gold_example": "Adjusted EBITDA* $1,689 $1,449 17%"
+    },
+    {
+      "id": "E11",
+      "kind": "lookup",
+      "question": "2026 年第三季度归属于 Expedia Group, Inc. 的净利润是多少百万美元？仅查归属于母公司的 GAAP 口径。",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第3季度，公司整体  Net income attributable to Expedia Group, Inc.（实际）为 1,030 百万美元。原表第 1 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 1,
+          "quote": "Net income attributable to Expedia Group, Inc. $1,030 $959 7%"
+        },
+        {
+          "page": 1,
+          "quote": "Metric Q3 2026 Q3 2025 Δ Y/Y"
+        },
+        {
+          "page": 1,
+          "quote": "Financial Summary & Operating Metrics (In millions except per share amounts)"
+        }
+      ],
+      "accepted_pages": [
+        1,
+        5,
+        12,
+        13
+      ],
+      "gold_example": "Net income attributable to Expedia Group, Inc. $1,030 $959 7%"
+    },
+    {
+      "id": "E12",
+      "kind": "lookup",
+      "question": "2025 年第三季度 B2B 分部的总预订额是多少百万美元？",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2025 财年第3季度，B2B Gross Bookings（实际）为 9,384 百万美元。原表第 4 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 4,
+          "quote": "B2B $8,836 $8,844 $9,384 $8,659 $10,746 $10,742 $11,146 19%"
+        },
+        {
+          "page": 4,
+          "quote": "y/y growth\nBy Segment Q1-25 Q2-25 Q3-25 Q4-25 Q1-26 Q2-26 Q3-26 Q3-26"
+        },
+        {
+          "page": 4,
+          "quote": "Gross Bookings $31,451 $30,409 $30,727 $27,003 $35,530 $33,928 $34,008 11%"
+        },
+        {
+          "page": 4,
+          "quote": "(All figures in millions)"
+        }
+      ],
+      "accepted_pages": [
+        4
+      ],
+      "gold_example": "B2B $8,836 $8,844 $9,384 $8,659 $10,746 $10,742 $11,146 19%"
+    },
+    {
+      "id": "E13",
+      "kind": "guidance",
+      "question": "管理层对 2026 年第四季度营收同比增长给出的指引区间是多少？请给出百分比上下限。",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第4季度，公司整体 报告口径同比 Revenue（指引）为 4.0 至 5.7 %。原表第 2 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 2,
+          "quote": "Revenue $3.69 - $3.75B+4.0-5.7%"
+        },
+        {
+          "page": 2,
+          "quote": "Metric Q4 2026"
+        },
+        {
+          "page": 2,
+          "quote": "Business Outlook"
+        },
+        {
+          "page": 4,
+          "quote": "Revenue $2,988 $3,786 $4,412 $3,547 $3,426 $4,315 $4,938 12%"
+        },
+        {
+          "page": 4,
+          "quote": "y/y growth\nBy Segment Q1-25 Q2-25 Q3-25 Q4-25 Q1-26 Q2-26 Q3-26 Q3-26"
+        },
+        {
+          "page": 4,
+          "quote": "(All figures in millions)"
+        }
+      ],
+      "accepted_pages": [
+        2
+      ],
+      "gold_example": "Revenue $3.69 - $3.75B +4.0-5.7%"
+    },
+    {
+      "id": "E14",
+      "kind": "guidance",
+      "question": "管理层预计 2026 年第四季度调整后 EBITDA 为多少百万美元？请给出金额指引区间。",
+      "passed": true,
+      "assessment": "已核对原页引文、指标范围、季度、单位及最终数值",
+      "answer": "2026 财年第4季度，公司整体 非 GAAP Adjusted EBITDA（指引）为 830 至 880 百万美元。原表第 2 页。",
+      "verification": "source_earnings_cell",
+      "citations": [
+        {
+          "page": 2,
+          "quote": "Adjusted EBITDA** $830 - $880M"
+        },
+        {
+          "page": 2,
+          "quote": "Metric Q4 2026"
+        },
+        {
+          "page": 2,
+          "quote": "Business Outlook"
+        }
+      ],
+      "accepted_pages": [
+        2
+      ],
+      "gold_example": "Adjusted EBITDA** $830 - $880M"
+    },
+    {
+      "id": "E15",
+      "kind": "future",
+      "question": "截至研究日，请查 2026 年第四季度实际营收，单位为百万美元。",
+      "passed": true,
+      "assessment": "按研究截止日和完整报告期核验未来实际业绩",
+      "answer": "截至 2026-11-10，所问报告期（截至 2026-12-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "E16",
+      "kind": "future",
+      "question": "截至研究日，2027 年第一季度集团实际营业利润是多少百万美元？",
+      "passed": true,
+      "assessment": "按研究截止日和完整报告期核验未来实际业绩",
+      "answer": "截至 2026-11-10，所问报告期（截至 2027-03-31）尚未结束，该期完整实际业绩尚未披露。",
+      "verification": "not_yet_disclosed",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "E17",
+      "kind": "missing",
+      "question": "只依这份季报，2026 年第三季度日本单一国家的营收是多少百万美元？",
+      "passed": true,
+      "assessment": "按题目要求的地域或品牌核验资料披露范围",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    },
+    {
+      "id": "E18",
+      "kind": "missing",
+      "question": "只根据这份季报，2026 年第三季度 Vrbo 单一品牌的预订间夜数是多少百万间夜？",
+      "passed": true,
+      "assessment": "按题目要求的地域或品牌核验资料披露范围",
+      "answer": "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。",
+      "verification": "insufficient_evidence",
+      "citations": [],
+      "accepted_pages": [],
+      "gold_example": ""
+    }
+  ]
+}

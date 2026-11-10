@@ -5,11 +5,12 @@ the table retriever was added. It never consults an issuer-specific answer catal
 """
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from decimal import Decimal
 
 from .finance import numeric
 from .growth_guidance import growth_guidance_cells
+from .metric_grids import metric_grid_rows, metric_outlook_rows, supported_growth
 from .table_lookup import SCALE, YEAR
 
 ORDINAL = {"first": 1, "second": 2, "third": 3, "fourth": 4}
@@ -17,7 +18,7 @@ QUARTER = re.compile(
     r"\b(?:q([1-4])|([1-4])q)\b|\b(first|second|third|fourth)[ -](?:fiscal )?quarter\b", re.I
 )
 CN_Q = re.compile(r"第?\s*([一二三四1-4])\s*(?:财季|季度)|\bQ([1-4])\b", re.I)
-CELL = r"(?:\(?[+-]?\s*[$€£]?\s*\d[\d,]*(?:\.\d+)?\s*[%BMK]?(?:\)\s*%?)?|[$€£]?[—–]|N/?M)"
+CELL = r"(?:[$€£]\s*\(\s*\d[\d,]*(?:\.\d+)?\s*\)|\(?[+-]?\s*[$€£]?\s*\d[\d,]*(?:\.\d+)?\s*[%BMK]?(?:\)\s*%?)?|[$€£]?[—–]|N/?M)"
 TAIL = re.compile(rf"(?P<cells>(?:\s+{CELL}){{2,}})\s*$", re.I)
 ATOM = re.compile(CELL, re.I)
 RANGE = re.compile(
@@ -63,7 +64,7 @@ OUTPUT_UNITS = {
 # These aliases translate questions to common financial row titles, independent of the issuer.
 METRICS = [
     ("free_cash_flow", r"自由现金流|free cash flow", r"^free cash flow(?: \(\d+\))?$"),
-    ("room_nights", r"间夜数|room nights", r"^room nights$"),
+    ("room_nights", r"间夜数|room nights", r"^(?:booked )?room nights$"),
     (
         "adr",
         r"\bADR\b|平均(?:每日房价|预订价格)|average daily rate",
@@ -82,7 +83,7 @@ METRICS = [
     (
         "ebitda",
         r"(?:调整后|adjusted)\s*EBITDA(?!\s*(?:利润率|率|margin))",
-        r"^adjusted EBITDA(?: \(\d+\))?$",
+        r"^adjusted EBITDA(?: \(\d+\)|\*+)?$",
     ),
     ("bookings", r"总预[订定]额|总预订金额|gross bookings?", r"\bgross bookings?\b"),
     (
@@ -173,6 +174,7 @@ class Lookup:
     exact_amount: bool = False
     diluted_eps: bool = False
     growth_basis: str = ""
+    parent_income: bool = False
 
 
 def lookup_request(question):
@@ -221,11 +223,11 @@ def lookup_request(question):
             return None
         count_unit = "间夜" if metric == "room_nights" else "个"
         unit = ("百万" if "百万" in question else "") + count_unit
-    groups = tuple(
+    groups = tuple(dict.fromkeys(
         t
         for t in ACRONYM.findall(question)
         if t not in RESERVED and not re.fullmatch(r"Q[1-4]|FY\d+", t)
-    )
+    ))
     products = [pattern for asked, pattern in PRODUCTS if re.search(asked, question, re.I)]
     # A parenthesized source row is a request for that revenue category.
     # Only accept its exact printed label, never the group total.
@@ -234,6 +236,8 @@ def lookup_request(question):
             r"[(（]([A-Za-z][A-Za-z &/-]{0,60}\s+(?:revenues?|sales))[)）]", question, re.I
         )
         products.extend(r"^" + re.escape(compact(name)) + r"$" for name in row_names)
+        for name in re.findall(r"[(（]([A-Za-z][A-Za-z &/-]{0,60})[)）]\s*产品", question):
+            products.append(r"^" + re.escape(compact(name)) + r"$")
     # A bilingual question can supply an arbitrary printed offering name. It still
     # has to match a business row AND the metric caption in the uploaded report.
     for m in NAMED_SCOPE.finditer(question):
@@ -247,13 +251,14 @@ def lookup_request(question):
     # A city, customer or other unresolved slice must never be silently dropped.
     qualified = bool(
         re.search(
-            r"来自|城市|市的|地区|客户|分配给|地域|仅限|\b(?:city of|customer-specific)\b",
+            r"来自|城市|市的|地区|客户|分配给|地域|仅限|品牌|单一国家|\b(?:city of|customer-specific)\b",
             question,
             re.I,
         )
     )
     if not (groups or products) and re.search(
-        r"分部|部门|板块|事业部|业务线|业务的|收入类型|模式的(?:营收|收入)|\b(?:division|segment)\b", question, re.I
+        r"分部|部门|板块|事业部|业务线|业务的|收入类型|产品(?:的|拆分)|模式的(?:营收|收入)|\b(?:division|segment)\b",
+        re.sub(r"(?:全部|所有|整体)业务的?", "", question), re.I
     ):
         qualified = True
     if metric == "development_expense" and re.search(
@@ -275,6 +280,7 @@ def lookup_request(question):
         metric == "eps" and bool(re.search(r"摊薄|稀释|\bdiluted\b", question, re.I)),
         ("constant" if re.search(r"固定汇率|恒定汇率|不变汇率|constant.currency",question,re.I) else "reported")
         if growth_range else "",
+        metric == "income" and bool(re.search(r"归母|归属(?:于)?母公司|attributable to (?:the )?parent",question,re.I)),
     )
 
 
@@ -328,6 +334,9 @@ class TableRow:
     unit_quote: str = ""
     unit_page: int | None = None
     reconciliation_total: bool = False
+    period_columns: tuple = ()
+    scope_quote: str = ""
+    growth_line: str = ""
 
 
 YEAR_BAND = re.compile(r"(?:\d{4}\s+)*\d{4}")
@@ -486,6 +495,8 @@ def prose_outlook_rows(page):
 
 
 def measure_caption(row):
+    if row.scope_quote:
+        return row.section
     for line in reversed([row.section, *row.header.splitlines()]):
         title = line.strip().rstrip(":")
         if CAPTION.fullmatch(title):
@@ -618,6 +629,8 @@ def source_rows(pages):
         unit_quote = trailing_statement_unit(page)
         result.extend(prose_outlook_rows(page))
         result.extend(quarterly_grid_rows(page))
+        result.extend(metric_grid_rows(page, data_line, TableRow))
+        result.extend(metric_outlook_rows(page, TableRow))
         pending = []
         header = ""
         section = ""
@@ -727,6 +740,8 @@ def column_labels(row, release_q):
     if row.ranged:
         period = row.forecast_period or outlook_period(header)
         return [(*period, None, False)] if period else []
+    if row.period_columns:
+        return row.period_columns
     grid = grid_columns(header)
     if grid:
         return grid if len(grid) == w else []
@@ -743,6 +758,10 @@ def column_labels(row, release_q):
     # Only the last full column cycle belongs to this table.
     slots = list(SLOTS.finditer(header))
     last_line = header.rsplit("\n", 1)[-1]
+    if re.match(r"^(?:metric|measure|item)\s+Q[1-4]\b", last_line, re.I):
+        named = re.findall(r"\bQ[1-4]\s+20\d{2}\b", last_line, re.I)
+        if len(named) != len(set(s.upper() for s in named)):
+            return []
     horizontal = list(SLOTS.finditer(header, len(header) - len(last_line)))
     if sum(bool(YEAR.fullmatch(s.group())) for s in horizontal) >= 2:
         # A blank trailing variance column doesn't move the first year column.
@@ -762,6 +781,7 @@ def column_labels(row, release_q):
         tags = line.split()
         if (
             len(tags) >= 2
+            and not re.search(r"\bstatements? of\b", line, re.I)
             and all(re.fullmatch(r"(?:[A-Z][A-Z0-9&-]{1,12}|Non-GAAP|non-GAAP)", t) for t in tags)
             and len(set(tags)) == len(tags)
         ):
@@ -854,12 +874,21 @@ def column_labels(row, release_q):
     return cols
 
 
-def resolve_sources(pages, req, rows=None):
+def resolve_sources(pages, req, rows=None, *, cited_cash_flow=False):
     """Produce eligible original cells. A model can select an ID, never supply an amount."""
     if req.qualified:
         return []
     if req.growth_basis:
-        return growth_guidance_cells(pages, req)
+        found = growth_guidance_cells(pages, req)
+        if found or req.growth_basis != "reported" or req.groups or req.products:
+            return found
+        rows = source_rows(pages) if rows is None else rows
+        if not any(row.growth_line for row in rows):
+            return []
+        money = replace(req, guidance=True, growth_basis="", unit="百万美元")
+        outlook = resolve_sources(pages, money, rows)
+        prior = resolve_sources(pages, replace(money, guidance=False, year=req.year - 1), rows)
+        return supported_growth(outlook, prior)
     release_q = qnum(compact(pages[0]["text"][:400])) if pages else None
     if not release_q:
         for page in pages[:3]:
@@ -872,7 +901,7 @@ def resolve_sources(pages, req, rows=None):
                 break
     result = []
     for row in source_rows(pages) if rows is None else rows:
-        if req.metric=="free_cash_flow" and not row.reconciliation_total:
+        if req.metric=="free_cash_flow" and not (row.reconciliation_total or cited_cash_flow):
             continue
         if req.guidance != row.ranged:
             continue
@@ -896,6 +925,11 @@ def resolve_sources(pages, req, rows=None):
             r"\b(?:less|basic|dividend|adjustment|outstanding|weighted|denominator|attributable to (?!common))\b",
             row.label,
             re.I,
+        ):
+            continue
+        if req.parent_income and (
+            not re.search(r"\b(?:attributable|available) to\b", row.label, re.I)
+            or re.search(r"non[- ]?controlling|minority", row.label, re.I)
         ):
             continue
         if req.metric == "eps" and row.label.casefold() == "diluted":
@@ -958,7 +992,7 @@ def resolve_sources(pages, req, rows=None):
             count_metric = req.metric in {"booked_count", "room_nights"}
             if (not row.dollars and not count_metric) or re.search(
                 r"(?<![A-Za-z])(?:C|CA|A|HK|NT|S)\$|\b(?:CAD|AUD|HKD|TWD|SGD|EUR)\b",
-                row.header + " " + row.line,
+                " ".join((row.header, row.line, row.unit_quote)),
             ):
                 continue
             if count_metric and any("$" in value for value in raw):
@@ -1033,6 +1067,8 @@ def resolve_sources(pages, req, rows=None):
                     "priority": score,
                     **({"unit_quote": row.unit_quote} if row.unit_quote else {}),
                     **({"unit_page": row.unit_page} if row.unit_page is not None else {}),
+                    **({"context_quote": row.scope_quote} if row.scope_quote else {}),
+                    **({"growth_line": row.growth_line} if row.growth_line else {}),
                     **({"context_quote": row.section} if row.reconciliation_total else {}),
                     **({"context_quote": evidence_context} if evidence_context else {}),
                 }

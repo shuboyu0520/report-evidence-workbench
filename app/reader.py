@@ -13,6 +13,7 @@ from uuid import uuid4
 import httpx
 
 from .earnings_tables import lookup_request, resolve_sources, source_rows
+from .finance import numeric
 from .retrieval import MODEL, embed, retrieve
 from .runtime import run_search
 
@@ -25,6 +26,13 @@ CASE_DIGESTS = {CASE["reference_digest"], hashlib.sha256(CASE_TEXT.encode()).hex
 MISSING = "在所选资料中没找到足够证据。可补充含该指标的主表或附注后再查。"
 QUARTER = re.compile(r"第?([一二三四1-4])(?:个)?(?:财季|季度)|Q([1-4])|([1-4])Q", re.I)
 AMOUNT = re.compile(r"(?<![\d.])[-−]?\d[\d,]*(?:\.\d+)?%?")
+PARENTHESIZED_CASH_FLOW = re.compile(
+    r"^[ \t]*free cash flow\*?[ \t]+(?=[$€£(\d−-])[^\n]*\([ \t]*[$€£]?[ \t]*\d[\d,.]*[ \t]*\)",
+    re.I | re.M,
+)
+USD_AMOUNT = re.compile(
+    r"(?P<number>(?:[-−+负正]\s*)?\d[\d,]*(?:\.\d+)?)\s*(?P<unit>十亿美元|百万美元|亿美元|万美元|美元)"
+)
 ABSENT = re.compile(
     r"未披露|尚未公布|未提供|没有披露|无法(?:确认|回答|核实)|not (?:found|disclosed|available)",
     re.I,
@@ -81,6 +89,40 @@ def matching_cash_flow_period(quote, page, rolling):
         source_row = page[start : match.end()]
         periods.add(bool(re.search(r"\bTTM\b|trailing twelve", source_row, re.I)))
     return periods == {rolling}
+
+
+def cited_cash_flow_amount(pages, rows, request, answer, citations):
+    """Read the signed value from the cited row and fiscal column before accepting a draft."""
+    drafted = lookup_request(answer)
+    if not drafted or drafted.qualified or (
+        drafted.year, drafted.quarter, drafted.metric, drafted.guidance, drafted.groups, drafted.products
+    ) != (
+        request.year, request.quarter, request.metric, request.guidance, request.groups, request.products
+    ):
+        return None
+    amounts = list(USD_AMOUNT.finditer(answer))
+    if len(amounts) != 1 or amounts[0]["unit"] != request.unit:
+        return None
+    value = amounts[0]["number"]
+    by_page = {}
+    for citation in citations:
+        by_page.setdefault(citation["page"], []).append(" ".join(citation["quote"].split()))
+
+    def cited(page, text):
+        return bool(text) and any(" ".join(text.split()) in quote for quote in by_page.get(page, []))
+
+    eligible = [row for row in rows if cited(row.page, row.line)]
+    cells = resolve_sources(pages, request, eligible, cited_cash_flow=True)
+    values = {
+        Decimal(cell["amounts"][0].replace(",", "")) for cell in cells
+        if cell["header"] and all(cited(cell["page"], line) for line in cell["header"].splitlines())
+        and (not cell.get("unit_quote") or cited(cell.get("unit_page", cell["page"]), cell["unit_quote"]))
+    }
+    try:
+        signed = "".join(value.split()).replace("负", "-").lstrip("正+")
+        return value if values == {numeric(signed)} else None
+    except ValueError:
+        return None
 
 
 async def select_json(config, system, payload, events):
@@ -188,7 +230,8 @@ async def from_cards(question, config, tools, calls):
 
 async def from_document(db, report, pages, question, config, tools, calls, events):
     request = lookup_request(question)
-    rows = source_rows(pages) if request else []
+    source_table_rows = source_rows(pages) if request else []
+    rows = source_table_rows
     if request and request.metric=="free_cash_flow" and not any(r.reconciliation_total and re.search(request.pattern,r.label,re.I) for r in rows):
         # Other FCF layouts (including TTM grids) retain source-bounded retrieval.
         rows = []
@@ -252,12 +295,20 @@ async def from_document(db, report, pages, question, config, tools, calls, event
             scope = cell["measure_caption"].strip(":")
         amount = " 至 ".join(cell["amounts"])
         classification = "指引" if request.guidance else "实际"
-        answer = f"{request.year} 财年{period}，{scope} {basis} {cell['label']}（{classification}）为 {amount} {cell['unit']}。原表第 {cell['page']} 页。"
+        display = f"{scope} {basis} {cell['label']}"
+        if cell["measure_caption"] and cell.get("context_quote"):
+            # In a hierarchical table the row may say only "B2B". Name its
+            # parent measure alongside the segment to distinguish identical labels.
+            display = " ".join(part for part in (basis, cell["label"], cell["measure_caption"]) if part)
+        answer = f"{request.year} 财年{period}，{display}（{classification}）为 {amount} {cell['unit']}。原表第 {cell['page']} 页。"
         refs = [
             {"page": cell.get("unit_page",cell["page"]) if k=="unit_quote" else cell["page"], "quote": cell[k]}
             for k in ("quote", "header", "context_quote", "unit_quote")
             if cell.get(k)
         ]
+        for ref in cell.get("basis_evidence", []):
+            if ref not in refs:
+                refs.append(ref)
         return (
             answer,
             "source_earnings_cell",
@@ -328,6 +379,14 @@ async def from_document(db, report, pages, question, config, tools, calls, event
             return MISSING, "insufficient_evidence", []
     numbers = amount_tokens(answer)
     support = amount_tokens("\n".join(c["quote"] for c in checked))
+    if request and request.metric == "free_cash_flow" and any(
+        PARENTHESIZED_CASH_FLOW.search(source[p]) for p in {c["page"] for c in checked}
+    ):
+        value = cited_cash_flow_amount(pages, source_table_rows, request, answer, checked)
+        tools.append({"tool": "check_signed_cash_flow_cell", "matched": value is not None})
+        if value is None:
+            return MISSING, "insufficient_evidence", []
+        support.update(amount_tokens(value))
     # A question may supply the label of a fiscal year/quarter, never the answer amount.
     periods = set(re.findall(r"(?<!\d)20\d{2}(?!\d)", question))
     if not numbers <= support | periods:
