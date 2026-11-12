@@ -8,7 +8,7 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 [打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html)
 
-- **分账**　用中文描述或手动录入一笔费用，选择均分、指定金额、百分比或按份数。比如“小陈垫了 100 元买食材，小林、小周、小陈按 2:1:1 分摊”，草稿会列出 50、25、25 元。核对后确认入账，再查看各人净余额和结算建议。公开示例含三位虚构成员，新账单按设备保存，AUD、CNY、USD 分开统计。
+- **分账**　在「管理成员」里添加、改名、移出或恢复同行人。用中文记一笔费用，或手动选择均分、指定金额、百分比、按份数。可以先保存草稿，下次打开继续填。已入账的费用也能编辑，保存后会重新计算余额和结算建议。移出成员会保留对方参与过的账单和欠款。取消勾选「显示示例账单」即可只看自己的记录。AUD、CNY、USD 分币种统计。
 - **财报**　首页收录谷歌母公司 Alphabet、AMD、英伟达、Meta 和微软的季度公告。可查看集团与分部营收、现金流及官方原表。报告期按各公司财年标明。历史 Agent 评测可从同一菜单进入，保留冻结答复、判定和修复前后对照。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
 - **手机**　两个页面可分别添加到主屏幕。在支持 Service Worker 的浏览器联网打开一次并完成缓存后，可离线使用两个工作台、账本和本地文件检索。外部公告链接需要网络。
 
@@ -28,13 +28,17 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 | 操作 | API | 结果 |
 | --- | --- | --- |
 | 创建分账会话 | `POST /api/studio/session` | 客户端保存响应的会话 Cookie，各会话账本隔离 |
+| 查看和添加成员 | `GET /api/studio/members`、`POST /api/studio/members` | 新成员可作为付款人或分摊人 |
+| 改名、移出和恢复成员 | `PUT /api/studio/members/{id}` | 提交当前版本和更新字段，成员 ID 继续关联历史账单 |
 | 提取费用 | `POST /api/studio/drafts/parse` | 提交 `{"text":"小林付了 96 澳元买晚餐，三个人均摊。"}`。配置 Ollama 时返回模型字段和校验步骤 |
 | 预览分摊 | `POST /api/studio/drafts/quote` | 输入核对后的字段，返回每位组员的整数分值 |
+| 保存和继续草稿 | `GET /api/studio/draft`、`PUT /api/studio/draft`、`DELETE /api/studio/draft` | 每个会话保存一份待处理草稿，确认入账前不计入余额 |
 | 确认入账 | `POST /api/studio/entries` | 提交 `{id, data}`，一次草稿使用同一个 UUID。相同内容重试复用原记录，冲突返回 409 |
+| 编辑已有账单 | `PUT /api/studio/entries/{id}` | 提交 `{version, data}`，成功后返回更新记录，版本过期返回 409 |
 | 读取本会话的记录 | `GET /api/studio/entries` | 返回 SQLite 中持久化的账单。界面上的两笔固定示例不写入数据库 |
 | 上传财报、提问 | `POST /reports` → `POST /reports/{id}/questions` | 表单上传后提交 `mode=reader` 的问题，返回答复、核验状态、引用页和实际工具调用 |
 
-服务端分账面向这个三人示例小组。公开 Pages 使用设备规则提取自定义账单，固定评测输入可回放原模型输出。自托管服务将确认记录写入数据库；在财报面板显式提交时才向当前实例上传文件。原有独立分账项目用于账号、邀请和多人协作。
+公开 Pages 将成员、草稿和账单保存在当前浏览器，使用设备规则提取自定义账单。自托管服务将同一会话的成员、草稿和账单保存在 SQLite。原有独立分账项目提供账号、邀请和多人协作。财报面板在显式提交时才向当前实例上传文件。
 
 ## 先看一道题 / Quick start
 

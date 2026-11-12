@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="studio/split-ledger.css">
   <script defer src="studio/common.js"></script>
   <script defer src="studio/split-tools.js"></script>
+  <script defer src="studio/split-store.js"></script>
   <script defer src="studio/split.js"></script>
 </head>
 <body class="split">
@@ -33,9 +34,9 @@
       <div class="trip-cover">
         <img class="coast-photo" src="studio/weekend-coast.webp" alt="" fetchpriority="high">
         <div class="trip-copy">
-          <span class="book-location" id="storage-mode">此设备的示例账本</span>
+          <span class="book-location" id="storage-mode">此设备上的账本</span>
           <h1 id="wallet-title">周末旅行账本</h1>
-          <div class="crew"><span class="crew-faces" aria-hidden="true"><i>林</i><i>周</i><i>陈</i></span><span>小林、小周、小陈</span></div>
+          <div class="crew"><span class="crew-faces" id="crew-faces" aria-hidden="true"></span><span id="crew-names"></span></div>
         </div>
       </div>
       <div class="ticket-stub">
@@ -67,19 +68,19 @@
             <button type="button" id="manual">手动填写</button>
           </div>
         </form>
+        <div id="saved-strip" class="saved-strip" hidden><div><small>已保存草稿</small><strong id="saved-title"></strong></div><button type="button" id="restore-draft">继续编辑</button><button type="button" id="delete-draft">删除</button></div>
         <div id="split-status" class="notice" role="status"></div>
+        <div class="saved-strip" id="empty-roster" hidden><div><strong>账本里还没有在组成员</strong><small>先添加付款人和需要分摊的组员，也可以先保存费用草稿。</small></div><button type="button" id="add-first-member">添加成员</button></div>
         <form class="receipt" id="draft" hidden aria-labelledby="review-title">
           <div class="receipt-head"><h3 id="review-title">核对分账草稿</h3><span class="pill" id="draft-state"></span></div>
           <p id="draft-hint" class="hint"></p>
           <div class="field-grid">
             <label class="field">费用说明<input id="description" maxlength="100" required></label>
-            <label class="field">付款人<select id="payer" required><option value="">选择付款人</option><option value="11">小林</option><option value="12">小周</option><option value="13">小陈</option></select></label>
+            <label class="field">付款人<select id="payer" required></select></label>
             <label class="field">总金额<input id="amount" type="text" inputmode="decimal" autocomplete="off" required></label>
             <label class="field">币种<select id="currency" required><option value="">选择币种</option><option>AUD</option><option>CNY</option><option>USD</option></select></label>
           </div>
-          <fieldset class="checks"><legend>参与分摊的成员</legend>
-            <label><input type="checkbox" value="11">小林</label><label><input type="checkbox" value="12">小周</label><label><input type="checkbox" value="13">小陈</label>
-          </fieldset>
+          <fieldset class="checks" id="participants"><legend>参与分摊的成员</legend></fieldset>
           <label class="field split-picker">分摊方式<select id="split-mode" required><option value="">选择分摊方式</option><option value="equal">均分</option><option value="exact">指定金额</option><option value="percentage">按百分比</option><option value="ratio">按份数</option></select></label>
           <div id="split-values"></div>
           <p id="split-feedback" role="status"></p>
@@ -87,16 +88,16 @@
             <h4 id="share-title">每人应摊</h4><div id="allocation"></div>
           </section>
           <details class="trace"><summary>查看提取和校验步骤</summary><ol id="draft-trace"></ol></details>
-          <div class="entry-actions"><button id="confirm" class="primary" type="submit">确认入账</button><button type="button" id="discard">取消草稿</button></div>
+          <div class="entry-actions"><button id="confirm" class="primary" type="submit">确认入账</button><button type="button" id="save-draft">保存草稿</button><button type="button" id="discard">取消</button></div>
         </form>
       </section>
       <section class="workspace-card summary-card" aria-labelledby="balances-title">
-        <div class="section-head"><h2 id="balances-title">成员余额</h2><span class="member-count">3 人</span></div>
+        <div class="section-head"><h2 id="balances-title">成员余额 <span class="member-count" id="member-count"></span></h2><button type="button" class="manage-members" id="manage-members" disabled>管理成员</button></div>
         <div id="balances"></div>
         <div class="settlement-box"><h3>结算建议</h3><p id="settlement"></p></div>
       </section>
       <section class="workspace-card ledger-card" aria-labelledby="ledger-title">
-        <div class="section-head"><h2 id="ledger-title">账单明细</h2><span id="ledger-unit" class="currency-unit"></span></div>
+        <div class="section-head"><h2 id="ledger-title">账单明细</h2><div class="ledger-filters"><label><input id="show-samples" type="checkbox" checked>显示示例账单</label><span id="ledger-unit" class="currency-unit"></span></div></div>
         <div id="ledger" aria-live="polite"></div>
       </section>
     </div>
@@ -105,5 +106,10 @@
       <details><summary>添加到手机主屏幕</summary><p>iPhone 在 Safari 分享菜单选择「添加到主屏幕」。Android 在浏览器菜单选择「安装应用」或「添加到主屏幕」。</p></details>
     </footer>
   </main>
+  <dialog id="member-dialog" aria-labelledby="member-title"><div class="dialog-top"><h2 id="member-title">账本成员</h2><button type="button" id="close-members" aria-label="关闭成员管理">×</button></div>
+    <form id="member-form"><label class="field" for="member-name">成员姓名</label><div class="member-inputs"><input id="member-name" autocomplete="off" required placeholder="输入称呼或姓名"><button id="add-member" class="primary">添加成员</button></div></form>
+    <p id="member-feedback" role="status" class="hint"></p><div id="member-list"></div>
+    <p class="roster-help">移出的成员会保留在历史账单和待结清余额中，随时可以恢复。</p>
+  </dialog>
 </body>
 </html>

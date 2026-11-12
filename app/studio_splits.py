@@ -1,4 +1,4 @@
-"""Validated, integer-minor-unit allocation rules for the three-member demo."""
+"""Validated allocation and Chinese expense parsing for an account's member roster."""
 
 import re
 import unicodedata
@@ -16,9 +16,9 @@ class DraftFields(BaseModel):
     amount: str = Field(default="", max_length=14)
     currency: Literal["AUD", "CNY", "USD", ""] = ""
     payer: StrictInt | None = None
-    people: list[StrictInt] = Field(default_factory=list, max_length=3)
+    people: list[StrictInt] = Field(default_factory=list)
     split_mode: Mode = "equal"
-    split_values: dict[str, str] = Field(default_factory=dict, max_length=3)
+    split_values: dict[str, str] = Field(default_factory=dict)
 
 
 def hundredths(value):
@@ -28,11 +28,11 @@ def hundredths(value):
     return int(parts[1]) * 100 + int((parts[2] or "").ljust(2, "0"))
 
 
-def split_quote(data: DraftFields):
-    if not data.description.strip() or not data.currency or data.payer not in MEMBERS:
+def split_quote(data: DraftFields, members=MEMBERS):
+    if not data.description.strip() or not data.currency or data.payer not in members:
         raise HTTPException(422, "请核对费用说明、付款人和币种。")
     ids = sorted(data.people)
-    if not ids or len(set(ids)) != len(ids) or set(ids) - MEMBERS.keys():
+    if not ids or len(set(ids)) != len(ids) or set(ids) - members.keys():
         raise HTTPException(422, "请选择不同的小组成员参与分摊。")
     total = hundredths(data.amount)
     if not total:
@@ -70,7 +70,8 @@ def split_quote(data: DraftFields):
     }
 
 
-NAME = r"[小阿老][\u3400-\u9fff]"
+TOKEN = r"[\ue000-\uf8ff]"
+NAME = rf"(?:{TOKEN}|[小阿老][\u3400-\u9fff])"
 NUMBER = r"[0-9]+(?:\.[0-9]+)?"
 UNIT = r"元人民币|人民币|澳元|澳币|美元|美金|元|AUD|USD|CNY|RMB"
 ASSIGN = r"(?:各自|各)?\s*(?:承担|负担|分担|应付|分摊|占比?|算|为|出|付|分得)?\s*[:：]?\s*"
@@ -78,7 +79,6 @@ PAIR = re.compile(rf"({NAME}){ASSIGN}({NUMBER})\s*(%|份|{UNIT})?", re.I)
 UNEVEN = re.compile(
     r"不均[分摊]|不平[摊分均]|非均[分摊]|不一样|不[按是]均[分摊]|按(?:照)?比例|按份|份额|配比|[一二三四六七八九五]{2}开|按金额|按人数以外|指定金额|分别承担|百分[比率]|按占比|承担\s*\d|[0-9]\s*[%份]|[0-9]\s*:\s*[0-9]"
 )
-MEMBER_IDS = {name: uid for uid, name in MEMBERS.items()}
 PAYER = re.compile(
     rf"({NAME})\s*(?:先|已)?(?:垫付?|支付|付|买单|结账)(?:了|款)?\s*(?=(?:{NUMBER}|澳元|美元|人民币|AUD|USD|CNY|RMB|[¥$]))",
     re.I,
@@ -87,6 +87,105 @@ TOTAL = re.compile(
     rf"(?:总(?:额|共|计)|合计|共计|一共|共花|付款|支付|付了|垫付了?|垫了|花了)\s*(?:AUD|USD|CNY|RMB|A\$|US\$|¥|人民币|澳元|美元)?\s*({NUMBER})(?![\d.%份:])",
     re.I,
 )
+
+
+def _tag_members(raw, members):
+    """Remove names (including embedded prices/punctuation) from the money grammar."""
+    by_name, by_token = {}, {}
+    for uid, raw_name in members.items():
+        name = unicodedata.normalize("NFKC", raw_name).strip().lower()
+        if not name:
+            continue
+        if name in by_name:
+            by_name[name] = "�"
+            continue
+        token = chr(0xE000 + len(by_name)) if len(by_name) < 6400 else "�"
+        by_name[name] = token
+        if token != "�":
+            by_token[token] = uid
+    patterns = []
+    for name in sorted(by_name, key=len, reverse=True):
+        prefix = r"(?<![a-z0-9_])" if re.match(r"[a-z0-9_]", name) else ""
+        suffix = r"(?![a-z_])" if re.search(r"[a-z0-9_]$", name) else ""
+        patterns.append(prefix + re.escape(name) + suffix)
+    clean = re.sub(TOKEN, "�", unicodedata.normalize("NFKC", raw))
+    if patterns:
+        def replace(match):
+            name, left, right = match[0], clean[:match.start()], clean[match.end():]
+            if (re.match(r"[\u3400-\u9fff]", name) and re.search(r"[\u3400-\u9fff]$", left)
+                    and not re.search(r"[和与及跟给由为替帮仅让向是人有上加请找同的了]$", left)):
+                return "�"
+            if (re.search(r"[\u3400-\u9fff]$", name) and re.match(r"[\u3400-\u9fff]", right)
+                    and not re.match(r"(?:[和与及跟先来已替帮为把向给在共各按分付垫占出也应买结平均的不两二三四五六七八九十人]|支付|承担|负担|一起|一人|一份|参加|参与)", right)):
+                return "�"
+            return by_name.get(name.lower(), "�")
+        clean = re.sub("|".join(patterns), replace, clean, flags=re.I)
+    return clean, by_token
+
+
+def _mentioned(text, by_token):
+    return list(dict.fromkeys(by_token[token] for token in re.findall(TOKEN, text)))
+
+
+def grounded_people(text, members=MEMBERS):
+    tagged, by_token = _tag_members(text, members)
+    return _mentioned(tagged, by_token)
+
+
+WHOLE = re.compile(r"全组|全员|全部成员|所有人|所有成员|大家")
+COUNT = re.compile(r"([一二两三四五六七八九十]+|\d+)\s*个?人")
+
+
+def _count(text):
+    match = COUNT.search(text)
+    if not match:
+        return None
+    number = match[1].replace("两", "二")
+    if number.isdigit():
+        return int(number)
+    chars = "一二三四五六七八九"
+    parts = number.split("十")
+    if len(parts) == 1 and len(number) == 1:
+        return chars.index(number) + 1
+    if len(parts) == 2 and all(len(part) <= 1 for part in parts):
+        tens = chars.index(parts[0]) + 1 if parts[0] else 1
+        units = chars.index(parts[1]) + 1 if parts[1] else 0
+        return 10 * tens + units
+    return -1
+
+
+def group_people(text, members=MEMBERS):
+    tagged, _ = _tag_members(text, members)
+    if WHOLE.search(tagged) or _count(tagged) == len(members):
+        return list(members)
+    return []
+
+
+def _unsafe_list(text):
+    side = r"[\u3400-\u9fffA-Za-z�]+"
+    joiner = r"\s*(?:、|和|与|及|跟|\+)\s*"
+    return re.search(rf"{TOKEN}{joiner}{side}|{side}{joiner}{TOKEN}", text)
+
+
+def _share_clause(text, marker):
+    clauses = [s.strip() for s in re.split(r"[,。;!！]", text)]
+    end = next((i for i, clause in enumerate(clauses) if marker.search(clause)), None)
+    if end is None:
+        return ""
+    start = end
+    while start and re.fullmatch(rf"(?:{TOKEN}|[A-Za-z\u3400-\u9fff]{{1,10}})", clauses[start-1]):
+        start -= 1
+    return "、".join(clauses[start:end+1])
+
+
+def _valid_equal_names(scope):
+    group = re.split(r"均[分摊]|平[摊分]|各一半|一起分", scope, maxsplit=1)[0].strip()
+    group = re.sub(COUNT.pattern + r"\s*$", "", group)
+    group = re.sub(r"(?:一起|共同|各自|平均|两人各)?\s*$", "", group).strip()
+    return not group or bool(re.fullmatch(rf"{TOKEN}(?:\s*(?:、|,|和|与|及|跟|\+)\s*{TOKEN})*", group))
+
+
+PROXY = re.compile(rf"({NAME}|[A-Za-z]+|[\u3400-\u9fff]{{1,4}})\s*[替帮为](?={NAME}|[A-Za-z])")
 
 
 def normalize_bill(raw):
@@ -104,7 +203,8 @@ def normalize_bill(raw):
     return re.sub(r"\d+(?:,\d+)+(?:\.\d+)?", grouped, text)
 
 
-def clarification_reason(text):
+def clarification_reason(text, members=MEMBERS):
+    text, by_token = _tag_members(text, members)
     if len(TOTAL.findall(text)) > 1:
         return "识别到多个支付金额，请每次只描述一笔支出。"
     if re.search(r"\d\s*[,，]\s*\d|\d\s*(?:[十百千万亿]|[kKmM](?![a-zA-Z]))", text):
@@ -123,14 +223,18 @@ def clarification_reason(text):
         ):
             names = re.findall(NAME, clause)
             if any(
-                n not in MEMBER_IDS and n not in {"小组", "小计", "小数", "小票", "小吃"}
+                n not in by_token and n not in {"小组", "小计", "小数", "小票", "小吃"}
                 for n in names
             ):
+                return "分摊名单包含暂未识别的成员，请核对实际参与人。"
+            if ("�" in clause or
+                    re.search(r"均[摊分]|平[摊分]|各一半|\d+\s*:\s*\d+", clause) and _unsafe_list(clause)):
                 return "分摊名单包含暂未识别的成员，请核对实际参与人。"
     return ""
 
 
-def extract_bill_fields(text):
+def extract_bill_fields(text, members=MEMBERS):
+    text, by_token = _tag_members(text, members)
     clauses = re.split(r"[,。;!]", text)
     total_clause = next((s for s in clauses if TOTAL.search(s)), "")
     totals = [m[1] for s in clauses for m in TOTAL.finditer(s)]
@@ -154,7 +258,7 @@ def extract_bill_fields(text):
     if re.search(r"港[币元]|日[币元]|欧元|英镑|加元|新加坡元|韩元", text):
         currencies.clear()
     payers = {m[1] for m in PAYER.finditer(text)}
-    proxy = re.search(rf"({NAME})\s*[替帮为]", text)
+    proxy = PROXY.search(text)
     if proxy:
         payers = {proxy[1]}
     if not payers:
@@ -163,24 +267,37 @@ def extract_bill_fields(text):
         r"晚[餐饭]|午[餐饭]|早[餐饭]|打车|车费|超市|食材|咖啡|住宿|房租|门票|电影|停车|奶茶|酒店|民宿|水电[费]?|聚餐|机票|水果|披萨",
         text,
     )
-    group = re.search(r"全[组员部]|所有人|三个人|三人", text)
-    equal = re.search(r"均[分摊]|平[摊分]|各一半", text)
+    equal = re.compile(r"均[分摊]|平[摊分]|各一半|一起分")
     people = []
-    if equal:
-        equal_clause = next(s for s in clauses if equal[0] in s)
-        people = list(MEMBERS) if group else [i for i, n in MEMBERS.items() if n in equal_clause]
+    if equal.search(text):
+        equal_clause = _share_clause(text, equal)
+        target = re.search(r"(?:只给|仅给|给|仅由|由|仅|替)(.+?)(?:均[摊分]|平[摊分]|各一半)", equal_clause)
+        scope = target[1] if target else equal_clause
+        count = _count(equal_clause)
+        ids = _mentioned(scope, by_token)
+        if not ids and proxy and count is not None:
+            ids = _mentioned(text[proxy.end():], by_token)
+        if not ids and re.fullmatch(r"\s*均[摊分]\s*", equal_clause):
+            mentions = _mentioned(text, by_token)
+            if len(mentions) == len(members):
+                ids = mentions
+        if not _unsafe_list(scope):
+            if WHOLE.search(scope) or not ids and count == len(members) and _valid_equal_names(scope):
+                people = list(members)
+            elif (count is None or count == len(ids)) and _valid_equal_names(scope):
+                people = ids
     return DraftFields(
         description=label[0] if label else "",
         people=people,
         amount=totals[0] if len(totals) == 1 else "",
         currency=currencies.pop() if len(currencies) == 1 else "",
-        payer=MEMBER_IDS.get(payers.pop()) if len(payers) == 1 else None,
+        payer=by_token.get(payers.pop()) if len(payers) == 1 else None,
     )
 
 
-def source_split(text):
+def source_split(text, members=MEMBERS):
     """Read explicitly assigned amounts, percentages or parts. Never invent missing values."""
-    text = unicodedata.normalize("NFKC", text)
+    text, by_token = _tag_members(text, members)
     # A payer prefix gives the transaction total, not an amount assigned to that person.
     spoken = re.sub(
         rf"({NAME})\s*(?:先|已)?(?:垫付?|支付|付)了?\s*(?=(?:{NUMBER}|AUD|USD|CNY))", "付款 ", text
@@ -210,7 +327,7 @@ def source_split(text):
     ids, values = [], {}
     # Look for any unrecognised names explicitly associated with a value.
     for item in pairs:
-        uid = MEMBER_IDS.get(item[1])
+        uid = by_token.get(item[1])
         if not uid or uid in ids or not expected.fullmatch(item[3] or ""):
             return mode, [], {}
         ids.append(uid)
@@ -227,18 +344,27 @@ def source_split(text):
         )
         match = before or after
         ordered = re.findall(NAME, match[1]) if match else []
-        if all(n in MEMBER_IDS for n in ordered) and len(set(ordered)) == len(ordered):
-            ids = [MEMBER_IDS[n] for n in ordered]
+        vector_clause = _share_clause(text, re.compile(r"\d+(?:\s*:\s*\d+)+"))
+        if not _unsafe_list(vector_clause) and all(n in by_token for n in ordered) and len(set(ordered)) == len(ordered):
+            ids = [by_token[n] for n in ordered]
             parts = re.split(r"\s*:\s*", vector[1])
             if len(ids) == len(parts):
                 values = {str(uid): part for uid, part in zip(ids, parts, strict=True)}
     split_clauses = [s for s in re.split(r"[,。;!]", spoken) if s and not TOTAL.search(s)]
-    beneficiaries = {m for s in split_clauses for m in re.findall(NAME, s) if m in MEMBER_IDS}
-    if re.search(r"(?:三[个]?人|全组|所有人)", spoken):
-        beneficiaries.update(MEMBER_IDS)
-    missing = {MEMBER_IDS[name] for name in beneficiaries} - set(ids)
+    beneficiaries = {uid for s in split_clauses for uid in _mentioned(s, by_token)}
+    count = _count(spoken)
+    if WHOLE.search(spoken) or count == len(members):
+        beneficiaries.update(members)
+    missing = beneficiaries - set(ids)
     if missing:
         ids.extend(sorted(missing))
-    if re.search(r"待定|不清楚|没说|不确定|未确定|没确定|组外|剩[下余]", spoken):
+    residue = PAIR.sub(" ", spoken)
+    unassigned_amount = any(
+        re.fullmatch(rf"\s*[\u3400-\u9fffA-Za-z�]+\s*{NUMBER}\s*(?:{UNIT})\s*", clause, re.I)
+        for clause in re.split(r"[,、。;]", residue)[1:]
+    )
+    if re.search(r"\d\s*(?:%|份)|(?:承担|负担|应[付出]|占比?)\s*\d", residue) or pairs and unassigned_amount:
+        return "", [], {}
+    if count is not None and count != len(ids) or re.search(r"待定|不清楚|没说|不确定|未确定|没确定|组外|剩[下余]", spoken):
         values = {}
     return mode, ids, values
