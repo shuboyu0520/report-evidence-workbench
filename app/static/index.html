@@ -7,7 +7,7 @@ input,select,button{box-sizing:border-box;max-width:100%}#metric-list button{whi
 @media(max-width:600px){main{margin:24px auto;padding:0 16px}section{padding:18px}h1{font-size:28px}}
 </style><main>
 <small>AI APPLICATION × FINANCIAL RESEARCH</small><h1>财报分析工作台</h1>
-<p class="hint"><a href="/reader">打开财报解读 Agent</a> · 联读公司、同行、市场与政策，或上传报告查原文。</p>
+<p class="hint"><a href="/studio/evidence-review.html">财报证据工作台</a> · <a href="/studio/splitagent.html">SplitAgent 分账</a> · <a href="/reader">财报联读 Agent</a></p>
 <section><h2>1. 导入报告</h2><form id="upload"><label>公司名称 <input id="company" type="text" required maxlength="100" placeholder="如：星河制造（演示）"></label><label>报告文件 <input id="file" type="file" accept=".pdf,.txt" required></label><button>上传并解析</button></form><p class="hint">支持文本型 PDF、UTF-8 TXT。复杂表格可在下方对照原文确认指标。</p></section>
 <section><h2>2. 核对财报指标</h2><label>选择报告 <select id="reports" aria-label="报告"></select></label>
 <p class="hint">先选择报告。文本复杂时可对照原文确认指标，再进行计算。金额单位“元”表示所选币种的基本单位，不进行换汇。</p>

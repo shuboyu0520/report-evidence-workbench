@@ -1,78 +1,27 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>财报问答逐题复核 · 财报复核工作台</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="evidence-review.css">
-  <script defer src="evidence-review-data.js"></script>
-  <script defer src="evidence-review.js"></script>
-</head>
-<body>
-  <header>
-    <nav aria-label="主导航">
-      <a href="index.html">财报复核工作台</a>
-      <a href="reader.html">财报阅读演示</a>
-    </nav>
-  </header>
-  <main>
-    <h1>财报问答逐题复核</h1>
-    <p class="intro">对照评测时保存的答复和原文，打开官方 PDF 可直接核对引用所在页。</p>
-    <p id="load-status" role="status">正在载入评测记录…</p>
-    <noscript><p>请启用 JavaScript 以切换题目和查看引文。</p></noscript>
-    <div id="review" hidden>
-      <fieldset class="cohort-picker">
-        <legend>评测批次</legend>
-        <div class="cohort-buttons" id="cohort-buttons"></div>
-      </fieldset>
-      <div class="summary">
-        <div><span>查数与指引通过数</span><strong id="lookup-score"></strong></div>
-        <div><span>披露判断通过数</span><strong id="status-score"></strong></div>
-      </div>
-      <div class="controls">
-        <label>筛选题目
-          <select id="result-filter">
-            <option value="all">全部题目</option>
-            <option value="failed">只看未通过</option>
-            <option value="changed">只看前后答案有变化</option>
-          </select>
-        </label>
-        <label>按题号查看
-          <select id="case-select"></select>
-        </label>
-        <div class="step-buttons" aria-label="顺序浏览">
-          <button type="button" id="previous-case">上一题</button>
-          <button type="button" id="next-case">下一题</button>
-        </div>
-      </div>
-      <p id="navigation-status" role="status" aria-live="polite"></p>
-      <article id="case-detail" aria-labelledby="question" hidden>
-        <div class="case-meta">
-          <div><span id="case-number"></span> · <span id="case-kind"></span> · <strong id="case-verdict"></strong></div>
-          <div class="link-tools">
-            <a id="permalink">本题固定链接</a>
-            <button type="button" id="copy-link">复制链接</button>
-          </div>
-        </div>
-        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
-        <h2 id="question"></h2>
-        <div id="answers"></div>
-        <section aria-labelledby="grade-label" id="grade-section">
-          <h3 id="grade-label">评分依据</h3>
-          <p id="grade"></p>
-          <p id="gold-pages" hidden></p>
-          <details id="gold-excerpt" hidden>
-            <summary>查看评分参考原文</summary>
-            <blockquote id="gold-quote"></blockquote>
-          </details>
-        </section>
-        <section aria-labelledby="sources-label">
-          <h3 id="sources-label">答复附带的原文</h3>
-          <div id="citations"></div>
-        </section>
-      </article>
-    </div>
-  </main>
-</body>
-</html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="studio-runtime" content="device"><meta name="theme-color" content="#1a304c">
+<meta name="apple-mobile-web-app-capable" content="yes"><title>财报复核 · 证据工作台</title>
+<link rel="manifest" href="studio/reports.webmanifest"><link rel="apple-touch-icon" href="studio/reports-180.png"><link rel="icon" href="studio/reports-192.png">
+<link rel="stylesheet" href="studio/ui.css"><script defer src="studio/common.js"></script><script defer src="evidence-review-data.js"></script><script defer src="evidence-review.js"></script><script defer src="studio/documents.js"></script></head><body class="reports"><header class="top"><div class="top-in">
+<a class="brand" href="evidence-review.html"><span class="mark" aria-hidden="true"></span>Evidence Desk</a>
+<nav class="app-nav" aria-label="切换工作台"><a href="splitagent.html" >分账账本</a><a href="evidence-review.html" aria-current="page">财报复核</a></nav>
+<a class="source-link" href="https://github.com/shuboyu0520/report-evidence-workbench">GitHub ↗</a></div></header>
+<main class="wrap"><section class="hero"><div><p class="kicker">EVIDENCE DESK / 财报复核</p><h1 id="issuer-title">财报证据工作台</h1><p class="sub" id="issuer-meta">核对财报问题、答复与原页引文</p></div>
+<div class="hero-metrics"><div><span class="metric-label">查数与指引通过数</span><strong class="metric-num" id="lookup-score">—</strong><div class="segbar" id="score-bars" aria-hidden="true"></div></div><div><span class="metric-label">披露判断通过数</span><span class="metric-mini" id="status-score">—</span></div></div></section>
+<noscript><p>请启用 JavaScript 以搜索案例或核对原文。</p></noscript><p id="load-status" role="status">正在读取评测档案…</p>
+<div id="review" hidden><section class="strip" aria-label="选择报告"><label class="field">公司与评测批次<select id="cohort-select"></select></label><label class="field">结果筛选<select id="result-filter"><option value="all">全部问题</option><option value="failed">只看未通过</option><option value="changed">修复前后有变化</option></select></label><button id="find-case">检索问题</button><button id="open-doc" class="secondary">＋ 打开自己的财报</button></section>
+<section class="panel" id="personal" hidden><div class="panel-head"><h2>我的财报</h2><button type="button" id="close-doc">收起</button></div><label class="dropzone">选择带文字的 PDF 或 UTF-8 TXT（最多 15 MiB）<input id="report-file" type="file" accept=".pdf,.txt,application/pdf,text/plain"></label>
+<p id="doc-mode" class="hint">文件在此设备解析。按关键词查找原页，可打开 PDF 对照。</p><p id="report-file-name" class="num"></p>
+<form id="doc-search" class="search-line"><input id="doc-query" aria-label="文档关键词" placeholder="输入指标或原文，例如 Revenue" maxlength="200" required><button class="primary">查原文</button></form>
+<div id="doc-status" class="notice" role="status"></div><div id="doc-hits"></div>
+<details id="live-model" hidden><summary>用后端阅读 Agent 提问</summary><p class="hint">提交后，文件会发送到当前 FastAPI 实例。</p><form id="model-form"><div class="field-grid"><label class="field">公司<input id="live-company" maxlength="100" required></label><label class="field">公告发布日期<input type="date" id="published" required></label></div><label class="field">财报问题<input id="live-question" maxlength="800" required></label><button class="primary" id="ask-live">提交给阅读 Agent</button></form><div id="live-result" class="notice" role="status"></div></details></section>
+<div class="cols"><div class="stack"><section class="panel" id="case-detail" aria-labelledby="question" hidden><div class="case-meta"><span class="num" id="case-number"></span><span class="pill" id="case-kind"></span><span class="pill" id="case-verdict"></span><button id="jump-source" class="text-action mobile-only">看引文 ↓</button></div>
+<h2 id="question" class="question"></h2><div id="answers"></div>
+<div class="grade-box"><h3>评分依据</h3><p id="grade"></p><p id="gold-pages"></p><details id="gold-excerpt" hidden><summary>展开评分参考原文</summary><blockquote id="gold-quote"></blockquote></details></div>
+<div class="link-tools"><a id="permalink">本题固定链接</a><button class="text-action" id="copy-link">复制链接</button><span id="copy-status" role="status"></span></div></section>
+<section class="panel"><div class="panel-head"><div class="flex"><span class="icon-box" aria-hidden="true">⌕</span><h2>搜索财报问题</h2></div><span class="pill">已归档答复</span></div>
+<form id="archive-search" class="search-line"><input id="archive-query" aria-label="搜索当前批次的问题或原文" maxlength="200" placeholder="输入问题、指标、英文原表行或题号"><button type="submit" class="primary">检索</button></form><div id="search-status" class="hint" role="status"></div><div id="search-results" class="results"></div>
+<label class="field">按题浏览<select id="case-select"></select></label><div class="case-step"><span id="navigation-status" class="hint" role="status"></span><div class="flex"><button id="previous-case" aria-label="上一题">←</button><button id="next-case" aria-label="下一题">→</button></div></div></section></div>
+<aside class="stack"><section class="panel" id="evidence-panel" tabindex="-1"><div class="panel-head"><div class="flex"><span class="icon-box" aria-hidden="true">≡</span><h2>原表证据</h2></div><span id="citation-count" class="num"></span></div><div id="citations"></div></section></aside></div></div><footer class="tools-footer"><div><a href="reader.html">台积电联读案例</a><a href="library.html">项目资料</a><a href="https://github.com/shuboyu0520/report-evidence-workbench#app-api">后端与 API</a></div>
+<details><summary>添加到手机主屏幕</summary><p>iPhone 在 Safari 分享菜单选择「添加到主屏幕」。Android 在浏览器菜单选择「安装应用」或「添加到主屏幕」。</p></details></footer></main></body></html>

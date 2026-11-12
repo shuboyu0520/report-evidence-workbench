@@ -23,6 +23,7 @@ from .finance import FACTORS, extract_metrics, numeric
 from .growth_guidance import GUIDANCE, PERIOD, YOY, growth_column_positions
 from .observatory import install_observatory
 from .reader import CASE_DIGESTS, CASE_TEXT, compare_reports, read_report
+from .studio import install_studio
 from .table_headers import YEAR_GROUP, segment_headers, year_then_columns
 
 MAX_BYTES = 15 * 1024 * 1024
@@ -394,4 +395,5 @@ def create_app(db_path=None, settings=None):
             headers={"Content-Disposition": 'attachment; filename="analysis-evidence.json"'},
         )
 
+    install_studio(api, db, config)
     return api

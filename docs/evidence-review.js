@@ -12,8 +12,14 @@
     reviewed_evidence: '已核对证据卡'
   };
   const data = window.EVIDENCE_REVIEW;
+  const issuers = {
+    wyndham: ['温德姆酒店集团', 'WH'], hyatt: ['凯悦酒店集团', 'H'],
+    hilton: ['希尔顿集团', 'HLT'], expedia: ['Expedia Group', 'EXPE'],
+    booking: ['Booking Holdings', 'BKNG']
+  };
   let visibleRows = [];
   let current = null;
+  let searchText = '';
 
   function node(tag, value) {
     const item = document.createElement(tag);
@@ -107,12 +113,14 @@
     byId('case-kind').textContent = kinds[row.kind];
     byId('case-verdict').textContent = row.passed ? '通过' : '未通过';
     byId('case-verdict').dataset.passed = String(row.passed);
+    byId('case-verdict').classList.toggle('warn', !row.passed);
     byId('question').textContent = row.question;
     const isReplay = cohort.kind === 'same_set_replay';
     const answers = byId('answers');
     const comparison = isReplay && typeof row.previous_answer === 'string';
     answers.classList.toggle('comparison', comparison);
     answers.replaceChildren();
+    answers.append(answerBlock(isReplay ? '同题复测答复' : '冻结版本首次答复', row.answer, true, cohort.source, row.citations));
     if (comparison) {
       const before = answerBlock('修复前原答', row.previous_answer, false, cohort.source, row.previous_citations);
       if (row.previous_grade && changed(row)) {
@@ -121,9 +129,10 @@
         why.append(node('summary', '查看首测判定'), node('p', row.previous_grade));
         before.append(why);
       }
-      answers.append(before);
+      const previous = node('details');
+      previous.append(node('summary', '对照修复前的原答'), before);
+      answers.append(previous);
     }
-    answers.append(answerBlock(isReplay ? '修复后原答' : '首次运行原答', row.answer, true, cohort.source, row.citations));
     byId('grade').textContent = row.grade || states[row.verification] || '';
     const gold = byId('gold-pages');
     const goldLinks = [...new Set(Array.isArray(row.gold_pages) ? row.gold_pages : [])]
@@ -137,6 +146,7 @@
     byId('gold-quote').textContent = hasGoldQuote ? row.gold_quote : '';
     const citations = byId('citations');
     citations.replaceChildren();
+    byId('citation-count').textContent = row.citations.length + ' 处引文';
     for (const citation of row.citations) {
       if (!citation || typeof citation.quote !== 'string' || !citation.quote.trim()) continue;
       const item = node('div');
@@ -157,6 +167,31 @@
     byId('permalink').href = hashFor(current.cohort, 'all', row.id);
   }
 
+  function showSearch() {
+    const list = byId('search-results');
+    list.replaceChildren();
+    byId('search-status').textContent = '';
+    if (!searchText) return;
+    const terms = Studio.tokens(searchText);
+    const ranked = visibleRows.map(row => ({
+      row, score: row.id.toLowerCase() === searchText.toLowerCase() ? 1000 :
+        2 * Studio.searchScore(searchText, row.question, terms) +
+        Studio.searchScore(searchText, row.citations.map(c => c.quote).join(' '), terms)
+    })).filter(hit => hit.score > 0).sort((a,b) => b.score-a.score);
+    byId('search-status').textContent = ranked.length ? '找到 ' + ranked.length + ' 条相关记录，选择问题可核对答复与原页。' : '此批次和筛选下没有匹配记录。可换个指标或打开自己的财报。';
+    for (const {row} of ranked.slice(0, 6)) {
+      const button = node('button');
+      button.type = 'button';
+      button.className = 'result-button';
+      button.append(node('small', row.id + '　'),document.createTextNode(row.question));
+      button.onclick = () => {
+        change(current.cohort, current.filter, row.id);
+        byId('case-detail').scrollIntoView({block:'nearest'});
+      };
+      list.append(button);
+    }
+  }
+
   function render() {
     const params = new URLSearchParams(location.hash.slice(1));
     const requested = params.get('cohort');
@@ -167,21 +202,29 @@
       .includes(params.get('filter')) ? params.get('filter') : 'all';
     visibleRows = rowsFor(key, filter);
     const id = params.get('case');
-    const selected = visibleRows.find(row => row.id === id) || visibleRows[0];
+    const selected = visibleRows.find(row => row.id === id) ||
+      (!requested && !id && visibleRows.find(row => row.id === 'W14')) || visibleRows[0];
+    if (current && current.cohort !== key) {
+      searchText = ''; byId('archive-query').value = '';
+    }
     current = {cohort: key, filter, id: selected?.id};
     byId('copy-status').textContent = '';
-    for (const button of document.querySelectorAll('[data-cohort]')) {
-      button.setAttribute('aria-pressed', String(button.dataset.cohort === key));
-    }
+    const [issuer, ticker] = issuers[key.split('-')[0]] || [cohort.title,''];
+    byId('issuer-title').textContent = issuer;
+    byId('issuer-meta').textContent = ticker + '　/　2026 Q3 业绩公告　·　' + (isReplay ? '同题复测' : '新公司首次盲测');
+    byId('cohort-select').value = key;
     byId('lookup-score').textContent = score(cohort.cases, ['actual', 'guidance']);
     byId('status-score').textContent = score(cohort.cases, ['future', 'missing']);
+    byId('score-bars').replaceChildren(...cohort.cases.filter(r=>['actual','guidance'].includes(r.kind)).map(row=>{
+      const bar=node('i'); if(row.passed) bar.className='pass'; return bar;
+    }));
     const changedOption = byId('result-filter').querySelector('[value="changed"]');
     changedOption.hidden = changedOption.disabled = !isReplay;
     byId('result-filter').value = filter;
     const select = byId('case-select');
     select.replaceChildren();
     for (const row of visibleRows) {
-      select.add(new Option(row.id + ' · ' + kinds[row.kind] + ' · ' + (row.passed ? '通过' : '未通过'), row.id));
+      select.add(new Option(row.id + ' · ' + row.question, row.id));
     }
     if (selected) select.value = selected.id;
     select.disabled = !selected;
@@ -190,8 +233,11 @@
     byId('next-case').disabled = index < 0 || index >= visibleRows.length - 1;
     byId('case-detail').hidden = !selected;
     const status = byId('navigation-status');
+    showSearch();
     if (!selected) {
       status.textContent = filter === 'failed' ? '此批次没有未通过的题目。' : '当前筛选没有匹配的题目。';
+      byId('citations').replaceChildren(node('p','选择其他批次或筛选条件可查看原页引文。'));
+      byId('citation-count').textContent = '';
       return;
     }
     const prefix = id && !cohort.cases.some(row => row.id === id) ? '档案中未找到该题号。' : '';
@@ -207,12 +253,20 @@
   byId('review').hidden = false;
   for (const [key, cohort] of Object.entries(data.cohorts)) {
     const phase = cohort.kind === 'same_set_replay' ? '同题复测' : '新公司首测';
-    const button = node('button', cohort.title + ' · ' + phase);
-    button.type = 'button';
-    button.dataset.cohort = key;
-    button.addEventListener('click', () => change(key, 'all'));
-    byId('cohort-buttons').append(button);
+    const issuer = issuers[key.split('-')[0]]?.[0] || cohort.title;
+    byId('cohort-select').add(new Option(issuer + ' · ' + phase,key));
   }
+  byId('cohort-select').onchange = e=>change(e.target.value,'all');
+  byId('find-case').onclick = () => {
+    byId('archive-query').scrollIntoView({block:'center'});
+    byId('archive-query').focus({preventScroll:true});
+  };
+  byId('archive-search').onsubmit = e=>{
+    e.preventDefault(); searchText=byId('archive-query').value.trim(); showSearch();
+  };
+  byId('archive-query').addEventListener('input',e=>{
+    if (!e.target.value.trim()) {searchText='';showSearch();}
+  });
   byId('result-filter').addEventListener('change', e => {
     const filter = e.target.value;
     const rows = rowsFor(current.cohort, filter);
@@ -226,6 +280,10 @@
   }
   byId('previous-case').addEventListener('click', () => step(-1));
   byId('next-case').addEventListener('click', () => step(1));
+  byId('jump-source').addEventListener('click', () => {
+    byId('evidence-panel').scrollIntoView({block:'start'});
+    byId('evidence-panel').focus({preventScroll:true});
+  });
   byId('copy-link').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(byId('permalink').href);

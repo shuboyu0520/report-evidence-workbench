@@ -4,9 +4,37 @@
 
 Ask questions in Chinese against an English earnings release. Inspect a recorded answer and its source row offline, or upload your own report and run the reader locally with Ollama.
 
+## 在手机或电脑上使用
+
+[打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)
+
+- **分账**　输入一笔中文费用，检查付款人和参与人，预览每人的金额，确认后查看明细、成员余额和结算建议。公开示例包含三位虚构成员，两笔预置账单标有「示例」。新账单按设备保存，AUD、CNY、USD 分开统计。
+- **财报**　按公司、指标或英文表行检索评测问题，对照冻结答复、引文和官方 PDF 页码。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
+- **手机**　两个页面可分别添加到主屏幕。在支持 Service Worker 的浏览器联网打开一次并完成缓存后，可离线使用两个工作台、账本和本地文件检索。外部公告链接需要网络。
+
+[![SplitAgent 分账账本，含中文记账、成员余额和结算建议](docs/studio/split-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html)
+
+分账交互参考 [Spliit](https://github.com/spliit-app/spliit) 的费用与余额视图，财报交互参考 [RAGFlow](https://github.com/infiniflow/ragflow) 的引用溯源方式。设备上的 PDF 文本提取使用 [Mozilla PDF.js](https://github.com/mozilla/pdf.js)，随附 [Apache-2.0 许可证](docs/studio/vendor/PDFJS-LICENSE.txt)。
+
+<a id="app-api"></a>
+## 运行 Agent 后端
+
+按下文安装 Python 依赖并配置 Ollama，运行 `uv run uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000`。从 [分账工作台](http://127.0.0.1:8000/studio/splitagent.html) 或 [财报工作台](http://127.0.0.1:8000/studio/evidence-review.html) 打开同一套界面。Web、原生客户端或脚本可以使用 [OpenAPI 文档](http://127.0.0.1:8000/docs) 中的 JSON 和上传接口。
+
+| 操作 | API | 结果 |
+| --- | --- | --- |
+| 创建分账会话 | `POST /api/studio/session` | 客户端保存响应的会话 Cookie，各会话账本隔离 |
+| 提取费用 | `POST /api/studio/drafts/parse` | 提交 `{"text":"小林付了 96 澳元买晚餐，三个人均摊。"}`。配置 Ollama 时返回模型字段和校验步骤 |
+| 预览分摊 | `POST /api/studio/drafts/quote` | 输入核对后的字段，返回每位组员的整数分值 |
+| 确认入账 | `POST /api/studio/entries` | 提交 `{id, data}`，一次草稿使用同一个 UUID。相同内容重试复用原记录，冲突返回 409 |
+| 读取本会话的记录 | `GET /api/studio/entries` | 返回 SQLite 中持久化的账单。界面上的两笔固定示例不写入数据库 |
+| 上传财报、提问 | `POST /reports` → `POST /reports/{id}/questions` | 表单上传后提交 `mode=reader` 的问题，返回答复、核验状态、引用页和实际工具调用 |
+
+服务端分账面向这个三人示例小组。公开 Pages 使用设备规则提取自定义账单，固定评测输入可回放原模型输出。自托管服务将确认记录写入数据库；在财报面板显式提交时才向当前实例上传文件。原有独立分账项目用于账号、邀请和多人协作。
+
 ## 先看一道题 / Quick start
 
-打开[在线逐题查看器](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)，可以对照同一道题的两次答复，再到公告原页检查金额、期间和指引版本。下载仓库后，也可打开[离线查看器](docs/evidence-review.html)，或用 Python 3.10 以上版本在仓库目录运行以下命令。
+打开[温德姆案例](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)，可以对照同一道题的两次答复，再到公告原页检查金额、期间和指引版本。下载仓库后，可用 `python -m http.server --directory docs 8080` 启动本地网页，或用 Python 3.10 以上版本在仓库目录运行以下命令。
 
 ```shell
 python scripts/inspect_eval.py --cohort wyndham-replay --case W14
@@ -14,14 +42,14 @@ python scripts/inspect_eval.py --cohort wyndham-replay --case W14
 
 温德姆把 2026 年全年调整后 EBITDA 的指引下限提高了多少？公告第 5 页并排印着两组区间，旧版未能选出单元格。按更新栏读取，全年指引为 **740–745 百万美元**，此前为 **735–745 百万美元**。这两组数值共用上限，只检查上限无法识别取错栏。[温德姆原始公告](https://investor.wyndhamhotels.com/news-events/press-releases/detail/432/wyndham-hotels-resorts-reports-strong-third-quarter)
 
-[![温德姆全年调整后 EBITDA 指引的首次拒答、复测答案与原表](docs/evidence-review-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)
+[![财报工作台内并排显示温德姆全年调整后 EBITDA 的复测答复、指引原行与页码](docs/evidence-review-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)
 
 ```shell
 python scripts/inspect_eval.py
 python scripts/inspect_eval.py --cohort hyatt --failed
 ```
 
-第一条显示评测概况，第二条列出新公司首测的失败样例。[逐题存档 JSON](evaluation/showcase.json) · [已上线的台积电联读案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录](https://shuboyu0520.github.io/report-evidence-workbench/)
+第一条显示评测概况，第二条列出新公司首测的失败样例。[逐题存档 JSON](evaluation/showcase.json) · [已上线的台积电联读案例](https://shuboyu0520.github.io/report-evidence-workbench/reader.html) · [三分钟实录](https://shuboyu0520.github.io/report-evidence-workbench/library.html#demo)
 
 ## 冻结评测 / Evaluation results
 

@@ -10,6 +10,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check expense parsing and minor-unit splits
+        run: node --test tests/studio_rules.cjs
       - name: Inspect archived evaluations with the Python standard library
         run: |
           python -I -S scripts/inspect_eval.py

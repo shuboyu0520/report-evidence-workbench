@@ -1,0 +1,35 @@
+{
+  "id": "../splitagent.html",
+  "name": "SplitAgent 分账",
+  "short_name": "SplitAgent",
+  "lang": "zh-CN",
+  "start_url": "../splitagent.html",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#f2f5f2",
+  "theme_color": "#103c35",
+  "icons": [
+    {
+      "src": "split-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "split-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "小组账本",
+      "url": "../splitagent.html"
+    },
+    {
+      "name": "财报复核",
+      "url": "../evidence-review.html"
+    }
+  ]
+}
