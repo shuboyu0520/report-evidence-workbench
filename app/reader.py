@@ -12,9 +12,16 @@ from uuid import uuid4
 
 import httpx
 
-from .earnings_tables import lookup_request, resolve_sources, source_rows
-from .lodging_metrics import HOTEL_METRICS
+from .earnings_tables import (
+    OUTPUT_UNITS,
+    SCALE_FACTORS,
+    lookup_request,
+    resolve_sources,
+    source_rows,
+)
 from .finance import numeric
+from .lodging_metrics import HOTEL_METRICS
+from .quarterly_statements import statement_cells
 from .retrieval import MODEL, embed, retrieve
 from .runtime import run_search
 
@@ -234,16 +241,23 @@ async def from_cards(question, config, tools, calls):
 
 
 async def from_document(db, report, pages, question, config, tools, calls, events, *, calendar_year=False):
-    request = lookup_request(question)
+    request = lookup_request(question, issuer=report.get("company", ""))
     source_table_rows = source_rows(pages, calendar_year=calendar_year) if request else []
     rows = source_table_rows
     if request and request.metric=="free_cash_flow" and not any(r.reconciliation_total and re.search(request.pattern,r.label,re.I) for r in rows):
         # Other FCF layouts (including TTM grids) retain source-bounded retrieval.
         rows = []
-    if rows or (request and (request.growth_basis or request.metric in HOTEL_METRICS
+    table_lookup = bool(rows or (request and (request.growth_basis or request.metric in HOTEL_METRICS
                              or request.metric in {"interest_expense", "total_expenses"}
-                             or request.revenue_line or request.income_before_nci)):
-        candidates = resolve_sources(pages, request, rows, calendar_year=calendar_year)
+                             or request.revenue_line or request.income_before_nci)))
+    candidates = resolve_sources(pages, request, rows, calendar_year=calendar_year) if table_lookup else []
+    if request and not candidates:
+        candidates = statement_cells(pages, request, calendar_year, SCALE_FACTORS, OUTPUT_UNITS)
+    # Do not let a prose amount or a chart satisfy an explicit quarterly revenue
+    # request after failing to establish its business scope and monetary column.
+    strict_revenue = request and request.quarter and request.metric == "revenue" and re.search(
+        r"集团|合并营收|分部|单项|company.wide|consolidated revenue", question, re.I)
+    if candidates or table_lookup or strict_revenue:
         tools.append(
             {
                 "tool": "search_earnings_rows",
@@ -386,6 +400,8 @@ async def from_document(db, report, pages, question, config, tools, calls, event
         ]
         if not checked:
             return MISSING, "insufficient_evidence", []
+    if re.search(r"\d[\d,.]*\s*(?:[BMK]|billion|million|thousand)\s*(?:十亿|百万|亿|万|billion|million|thousand)", answer, re.I):
+        return MISSING, "insufficient_evidence", []
     numbers = amount_tokens(answer)
     support = amount_tokens("\n".join(c["quote"] for c in checked))
     if request and request.metric == "free_cash_flow" and any(

@@ -10,10 +10,16 @@ from decimal import Decimal
 
 from .finance import numeric
 from .growth_guidance import growth_guidance_cells
-from .lodging_metrics import HOTEL_METRIC, HOTEL_METRICS, low_high_outlook, operating_cells, operating_request
+from .lodging_metrics import (
+    HOTEL_METRIC,
+    HOTEL_METRICS,
+    low_high_outlook,
+    operating_cells,
+    operating_request,
+)
 from .metric_grids import metric_grid_rows, metric_outlook_rows, supported_growth
-from .revised_outlook import outlook_version, revised_annual_cells
 from .quarter_schedules import schedule_cells
+from .revised_outlook import outlook_version, revised_annual_cells
 from .table_lookup import SCALE, YEAR
 
 ORDINAL = {"first": 1, "second": 2, "third": 3, "fourth": 4}
@@ -210,14 +216,18 @@ class Lookup:
     comparable_hotels: bool = False
 
 
-def lookup_request(question):
+def lookup_request(question, *, issuer=""):
+    # Only a declared issuer preceding the period is metadata. An acronym later
+    # in the question may name a business segment and must remain a qualifier.
+    if issuer:
+        question = re.sub(r"^\s*" + re.escape(issuer) + r"\s*(?=20\d{2})", "", question, flags=re.I)
     if re.search(
         r"新台币|港元|加元|澳元|人民币|欧元|日元|\b(?:CAD|TWD|EUR|HKD|AUD|JPY|CNY)\b",
         question,
         re.I,
     ):
         return None
-    years = set(YEAR.findall(question))
+    years = set(re.findall(r"(?<![A-Za-z0-9])(?:19|20)\d{2}(?![A-Za-z0-9])", question))
     guidance = bool(re.search(r"指引|展望|预测|预计|guidance|outlook", question, re.I))
     hotel = HOTEL_METRIC.search(question)
     if hotel and len(years) == 1:
@@ -275,6 +285,9 @@ def lookup_request(question):
     # Only accept its exact printed label, never the group total.
     revenue_line = ""
     if metric == "revenue":
+        item = re.search(r"([A-Za-z][\w&/-]*(?:[ \t]+[A-Za-z][\w&/-]*){0,3})\s*单项(?:营业收入|营收|收入)", question, re.ASCII)
+        if item:
+            products = ["^" + re.escape(compact(item[1])) + "$"]
         # The source row name can be paired with a locally printed category, e.g.
         # “Maintenance fees” in the revenues section. Never resolve it to a total.
         for named in re.finditer(r"[(（]([A-Za-z][A-Za-z0-9 ,&/'-]{0,70})[)）]", question):
