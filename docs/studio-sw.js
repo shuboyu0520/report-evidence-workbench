@@ -1,10 +1,10 @@
 'use strict';
 // Only the public application shell is cached. Original user files and API responses are excluded.
 const prefix='agent-studio:'+self.registration.scope+':';
-const cacheName=prefix+'2026-11-12.1';
+const cacheName=prefix+'2026-11-12.2';
 const paths=['index.html','splitagent.html','evidence-review.html','evidence-review.js','evidence-review-data.js',
   'splitagent-evaluation.json','studio/ui.css','studio/common.js','studio/split-tools.js','studio/split.js',
-  'studio/documents.js','studio/reports.webmanifest','studio/split.webmanifest',
+  'studio/documents.js','studio/company-reports.js','studio/company-reader-runs.js','studio/reports.webmanifest','studio/split.webmanifest',
   ...['split','reports'].flatMap(key=>[180,192,512].map(size=>'studio/'+key+'-'+size+'.png')),
   'studio/vendor/pdf.min.mjs','studio/vendor/pdf.worker.min.mjs'];
 const urls=new Set(paths.map(path=>new URL(path,self.registration.scope).href));

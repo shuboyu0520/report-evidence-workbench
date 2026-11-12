@@ -6,11 +6,13 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 ## 在手机或电脑上使用
 
-[打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=wyndham-replay&case=W14)
+[打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html)
 
 - **分账**　输入一笔中文费用，检查付款人和参与人，预览每人的金额，确认后查看明细、成员余额和结算建议。公开示例包含三位虚构成员，两笔预置账单标有「示例」。新账单按设备保存，AUD、CNY、USD 分开统计。
-- **财报**　按公司、指标或英文表行检索评测问题，对照冻结答复、引文和官方 PDF 页码。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
+- **财报**　首页收录谷歌母公司 Alphabet、AMD、英伟达、Meta 和微软的季度公告。可查看集团与分部营收、现金流及官方原表。报告期按各公司财年标明。历史 Agent 评测可从同一菜单进入，保留冻结答复、判定和修复前后对照。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
 - **手机**　两个页面可分别添加到主屏幕。在支持 Service Worker 的浏览器联网打开一次并完成缓存后，可离线使用两个工作台、账本和本地文件检索。外部公告链接需要网络。
+
+科技公司各选两项指标，从官方原表核对数值，再用本机阅读 Agent（Qwen3 4B）实际提问。2026 年 11 月 12 日这十题的数值核对结果为 **4 题相符、1 题答错、5 题拒答**。AMD 的集团营收题错引了第 14 页，并混用了金额单位；可在题目下展开实际提问与原答。微软使用官方网页转写的文本，其余四家使用官方 PDF。这十题是定向示例。
 
 [![SplitAgent 分账账本，含中文记账、成员余额和结算建议](docs/studio/split-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html)
 
