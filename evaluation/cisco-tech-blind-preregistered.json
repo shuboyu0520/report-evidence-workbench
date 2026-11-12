@@ -1,0 +1,137 @@
+{
+  "title": "思科（Cisco Systems）",
+  "ticker": "CSCO",
+  "company": "Cisco Systems",
+  "period": "2026 财年第四季度",
+  "ended": "2026-07-25",
+  "published_on": "2026-08-12",
+  "as_of": "2026-08-12",
+  "calendar_year": false,
+  "source_url": "https://s21.q4cdn.com/812015656/files/doc_news/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS-2026.pdf",
+  "issuer_page": "https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-FOURTH-QUARTER-AND-FISCAL-YEAR-2026-EARNINGS/default.aspx",
+  "document_sha256": "6edea35ffff138918bed8899a513c84a26389fe6e4313a86781d74bfdbbb8b02",
+  "pages": 13,
+  "grading": {
+    "actual": "按原文指定单位与符号比较，接受等值且清楚的单位换算。数值题须正确识别指标和本期，并附能支持正确数值和语境的引文。四舍五入的概数不能代替表内百万美元精确值。",
+    "guidance": "两个端点、单位、期间和指引口径须正确，并引用原公告。",
+    "missing": "应明确材料未提供所问口径，允许说明已披露的更粗粒度；不得猜测国家级数字。",
+    "future": "答复须识别提问日期尚无下一季度实际业绩，不得把指引当作实际值。",
+    "recording": "普通上传完整PDF和reader接口。题目不含标准答案、提示与页码。冻结后只取每题首次响应；记录答案、状态、引文和失败。另报查数、指引、披露判断小计。"
+  },
+  "previous_use_screening": "工作区及历史评测清单、评测夹路径、临时历史运行结果没有 Cisco/CSCO/思科 作为被测公司记录；本项目首次使用此公司。",
+  "cases": [
+    {
+      "id": "C01",
+      "kind": "actual",
+      "question": "思科 2026 财年第四季度的集团总营收是多少百万美元？",
+      "gold": "集团营收为 17,252 百万美元。",
+      "expected": [
+        17252
+      ],
+      "gold_pages": [
+        4,
+        5,
+        6
+      ],
+      "locator": "Total 17,252",
+      "rationale": "查当季，避免取全年 63,325；精确值来自合并列。"
+    },
+    {
+      "id": "C02",
+      "kind": "actual",
+      "question": "思科 2026 财年第四季度的 Networking 产品收入是多少百万美元？",
+      "gold": "Networking 产品收入为 9,791 百万美元。",
+      "expected": [
+        9791
+      ],
+      "gold_pages": [
+        6
+      ],
+      "locator": "Networking 9,791",
+      "rationale": "这是产品类别；年度金额 34,668 为另一期间。"
+    },
+    {
+      "id": "C03",
+      "kind": "actual",
+      "question": "思科 2026 财年第四季度美洲地区（Americas）的营收是多少百万美元？",
+      "gold": "美洲地区收入为 10,396 百万美元。",
+      "expected": [
+        10396
+      ],
+      "gold_pages": [
+        5
+      ],
+      "locator": "Americas 10,396",
+      "rationale": "依地区分部表中的三个月金额作答。"
+    },
+    {
+      "id": "C04",
+      "kind": "actual",
+      "question": "思科 2026 财年第四季度经营活动产生的现金净额是多少百万美元？",
+      "gold": "经营活动现金净流入为 5,386 百万美元。",
+      "expected": [
+        5386
+      ],
+      "gold_pages": [
+        7
+      ],
+      "locator": "operating activities 5,386",
+      "rationale": "按当季精确值取数，整年 14,177。"
+    },
+    {
+      "id": "C05",
+      "kind": "actual",
+      "question": "思科 2026 财年第四季度投资活动现金流量净额是多少百万美元？请写明流入或流出。",
+      "gold": "投资活动现金净流出 264 百万美元，即 −264 百万美元。",
+      "expected": [
+        -264
+      ],
+      "gold_pages": [
+        7
+      ],
+      "locator": "investing activities (264)",
+      "rationale": "现金流对账表用括号表示净流出。"
+    },
+    {
+      "id": "C06",
+      "kind": "guidance",
+      "question": "这份公告给出的 2027 财年第一季度集团收入指引是多少？请按百万美元写出上下限。",
+      "gold": "下一财季的集团收入指引为 18,000 至 18,200 百万美元。",
+      "expected": [
+        18000,
+        18200
+      ],
+      "gold_pages": [
+        1,
+        4
+      ],
+      "locator": "$18.0 billion - $18.2 billion",
+      "rationale": "本题要求下季度指引，收入单位需从十亿美元折成百万美元。"
+    },
+    {
+      "id": "C07",
+      "kind": "missing",
+      "question": "这份公告是否单独披露思科本季在加拿大的营收金额？",
+      "gold": "未单独披露加拿大营收，公告按美洲、EMEA、APJC 列示地理分部。",
+      "expected": [],
+      "gold_pages": [
+        5
+      ],
+      "locator": "Americas / EMEA / APJC",
+      "rationale": "加拿大归属美洲，不能用美洲分部总数代替加拿大。"
+    },
+    {
+      "id": "C08",
+      "kind": "future",
+      "question": "截至这份财报发布日期，思科 2027 财年第一季度的实际集团营收是多少？",
+      "gold": "该季实际营收尚未披露，公告仅给出收入指引。",
+      "expected": [],
+      "gold_pages": [
+        1,
+        4
+      ],
+      "locator": "Q1 FY 2027 Guidance",
+      "rationale": "以 2026-08-12 为信息截止日，下季度指引不可填入实际值。"
+    }
+  ]
+}

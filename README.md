@@ -12,7 +12,9 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 - **财报**　首页收录谷歌母公司 Alphabet、AMD、英伟达、Meta 和微软的季度公告。可查看集团与分部营收、现金流及官方原表。报告期按各公司财年标明。历史 Agent 评测可从同一菜单进入，保留冻结答复、判定和修复前后对照。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
 - **手机**　两个页面可分别添加到主屏幕。在支持 Service Worker 的浏览器联网打开一次并完成缓存后，可离线使用两个工作台、账本和本地文件检索。外部公告链接需要网络。
 
-科技公司各选两项指标，从官方原表核对数值，再用本机阅读 Agent（Qwen3 4B）实际提问。2026 年 11 月 12 日这十题的数值核对结果为 **4 题相符、1 题答错、5 题拒答**。AMD 的集团营收题错引了第 14 页，并混用了金额单位；可在题目下展开实际提问与原答。微软使用官方网页转写的文本，其余四家使用官方 PDF。这十题是定向示例。
+五家公司的十道查数原题从 **4/10 提升至 10/10**。修复前为 4 对、1 错、5 拒答。复测使用相同文件与问题，逐题核对原始表行、期间、正负号和金额单位。[AMD 修复前后](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=amd&case=AMD01) · [六道失例分析及复现方法](evaluation/tech-reader-repair.md)
+
+冻结后首次读取思科 FY2026 Q4 公告。**首测 1/8**，其中实际数值 0/5、下一季指引 0/1、披露判断 1/2。八道均返回证据不足，正确的一题是拒绝填报未单独披露的加拿大收入。该结果衡量对新公司表格的首次适应能力。[思科逐题盲测](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=cisco-first&case=C01) · [盲测前封存的八道题及评分标准](evaluation/cisco-tech-blind-preregistered.json)
 
 [![SplitAgent 分账账本，含中文记账、成员余额和结算建议](docs/studio/split-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html)
 

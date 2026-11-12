@@ -1,0 +1,169 @@
+{
+  "C01": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_earnings_rows",
+        "pages_scanned": 13,
+        "eligible_cells": 0,
+        "requested_scope": [],
+        "requested_year": 2026,
+        "requested_quarter": 4,
+        "unresolved_qualifier": false,
+        "returned_pages": []
+      }
+    ],
+    "cited_pages": [],
+    "model_http": []
+  },
+  "C02": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_earnings_rows",
+        "pages_scanned": 13,
+        "eligible_cells": 0,
+        "requested_scope": [],
+        "requested_year": 2026,
+        "requested_quarter": 4,
+        "unresolved_qualifier": false,
+        "returned_pages": []
+      }
+    ],
+    "cited_pages": [],
+    "model_http": []
+  },
+  "C03": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_earnings_rows",
+        "pages_scanned": 13,
+        "eligible_cells": 0,
+        "requested_scope": [],
+        "requested_year": 2026,
+        "requested_quarter": 4,
+        "unresolved_qualifier": true,
+        "returned_pages": []
+      }
+    ],
+    "cited_pages": [],
+    "model_http": []
+  },
+  "C04": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_report",
+        "returned_pages": [
+          1,
+          13,
+          2,
+          2,
+          3
+        ]
+      }
+    ],
+    "cited_pages": [],
+    "model_http": [
+      {
+        "tool": "select_evidence",
+        "status": 200
+      }
+    ]
+  },
+  "C05": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_report",
+        "returned_pages": [
+          13,
+          1,
+          2,
+          3,
+          2
+        ]
+      }
+    ],
+    "cited_pages": [],
+    "model_http": [
+      {
+        "tool": "select_evidence",
+        "status": 200
+      }
+    ]
+  },
+  "C06": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_earnings_rows",
+        "pages_scanned": 13,
+        "eligible_cells": 0,
+        "requested_scope": [],
+        "requested_year": 2027,
+        "requested_quarter": 1,
+        "unresolved_qualifier": false,
+        "returned_pages": []
+      }
+    ],
+    "cited_pages": [],
+    "model_http": []
+  },
+  "C07": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_report",
+        "returned_pages": [
+          13,
+          4,
+          2,
+          8,
+          8
+        ]
+      }
+    ],
+    "cited_pages": [],
+    "model_http": [
+      {
+        "tool": "select_evidence",
+        "status": 200
+      }
+    ]
+  },
+  "C08": {
+    "as_of": "2026-08-12",
+    "status": 200,
+    "verification": "insufficient_evidence",
+    "trace": [
+      {
+        "tool": "search_earnings_rows",
+        "pages_scanned": 13,
+        "eligible_cells": 0,
+        "requested_scope": [],
+        "requested_year": 2027,
+        "requested_quarter": 1,
+        "unresolved_qualifier": false,
+        "returned_pages": []
+      }
+    ],
+    "cited_pages": [],
+    "model_http": []
+  }
+}

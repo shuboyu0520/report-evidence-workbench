@@ -13,7 +13,8 @@
   };
   const archive = window.EVIDENCE_REVIEW;
   const reports = window.ISSUER_REPORTS || {};
-  const cohorts = {...reports, ...archive?.cohorts};
+  const validation = window.TECH_READER_VALIDATION;
+  const cohorts = {...reports, ...archive?.cohorts, ...(validation ? {[validation.blind.key]: validation.blind} : {})};
   const issuers = {
     wyndham: ['温德姆酒店集团', 'WH'], hyatt: ['凯悦酒店集团', 'H'],
     hilton: ['希尔顿集团', 'HLT'], expedia: ['Expedia Group', 'EXPE'],
@@ -130,10 +131,11 @@
     answers.replaceChildren();
     answers.append(answerBlock(reading ? '公告数值' : isReplay ? '同题复测答复' : '冻结版本首次答复', row.answer, true, cohort.source, row.citations));
     const run = window.COMPANY_READER_RUNS?.[row.id];
+    const latest = validation?.replays[row.id];
     if (reading && run) {
       const replay = node('details');
       const labels = {matched: '数值与原表相符', mismatch: '数值与原表不符', abstained: '证据不足，未作答'};
-      replay.append(node('summary', '阅读 Agent 实测 · ' + labels[run.outcome]),
+      replay.append(node('summary', (latest ? '修复前 · ' : '阅读 Agent 实测 · ') + labels[run.outcome]),
         node('p', '实际提问　' + run.question), node('p', '实际答复　' + run.answer));
       if (run.pages.length && cohort.source.toLowerCase().endsWith('.pdf')) {
         const pages = node('div');
@@ -145,6 +147,15 @@
         replay.append(node('p', '本题输入为官网财报转写的文本。答复中的页码是文本分页；官方网页可按右侧的表名定位。'));
       }
       answers.append(replay);
+      if (latest) {
+        replay.open = run.outcome !== 'matched';
+        const after = answerBlock('原题复测 · ' + labels[latest.outcome], latest.answer,
+          false, cohort.source, cohort.source.endsWith('.pdf') ? latest.citations : row.citations);
+        after.classList.add('replay-result');
+        if (latest.source_row) after.append(node('blockquote', latest.source_row));
+        answers.append(after);
+        if (latest.diagnosis) answers.append(node('p', latest.diagnosis));
+      }
     }
     if (comparison) {
       const before = answerBlock('修复前原答', row.previous_answer, false, cohort.source, row.previous_citations);
@@ -236,13 +247,14 @@
     byId('copy-status').textContent = '';
     const [issuer, ticker] = issuers[key.split('-')[0]] || [cohort.title,cohort.ticker];
     byId('issuer-title').textContent = issuer;
-    byId('issuer-meta').textContent = ticker + '　/　' + (reading ? cohort.period : '2026 Q3 业绩公告　·　' + (isReplay ? '同题复测' : '新公司首次盲测'));
+    byId('issuer-meta').textContent = ticker + '　/　' + (reading ? cohort.period : (cohort.period || '2026 Q3 业绩公告') + '　·　' + (isReplay ? '同题复测' : '新公司首次盲测'));
     byId('cohort-select').value = key;
     byId('lookup-label').textContent = reading ? '集团营收（百万美元）' : '查数与指引通过数';
     byId('status-label').textContent = reading ? '报告期截止日' : '披露判断通过数';
     byId('lookup-score').textContent = reading ? cohort.revenueMillions.toLocaleString('en-US') : score(cohort.cases, ['actual', 'guidance']);
     byId('status-score').textContent = reading ? cohort.ended : score(cohort.cases, ['future', 'missing']);
     byId('filter-field').hidden = reading;
+    byId('tech-score').hidden = !reading || !validation;
     byId('featured-reports').hidden = reading;
     byId('search-type').textContent = reading ? '公告选读' : '已归档答复';
     byId('score-bars').replaceChildren(...(reading ? [] : cohort.cases).filter(r=>['actual','guidance'].includes(r.kind)).map(row=>{
@@ -292,6 +304,20 @@
     archiveGroup.append(new Option(issuer + ' · ' + phase,key));
   }
   byId('cohort-select').append(companiesGroup, archiveGroup);
+  if (validation) {
+    const group = node('optgroup');
+    group.label = '科技公司 · 冻结后首测';
+    group.append(new Option(validation.blind.title + ' · 首次盲测', validation.blind.key));
+    byId('cohort-select').insertBefore(group, archiveGroup);
+    const blindLink = byId('tech-blind-link');
+    blindLink.textContent = validation.blind.title + '首次盲测';
+    blindLink.href = hashFor(validation.blind.key, 'all', validation.blind.cases[0].id);
+    blindLink.hidden = false;
+    const runs = Object.values(validation.replays);
+    const before = Object.values(window.COMPANY_READER_RUNS);
+    const correct = rows => rows.filter(row => row.outcome === 'matched').length;
+    byId('tech-score').textContent = '五家原题复测　' + correct(before) + '/' + before.length + ' → ' + correct(runs) + '/' + runs.length;
+  }
   byId('cohort-select').onchange = e=>change(e.target.value,'all');
   byId('find-case').onclick = () => {
     byId('archive-query').scrollIntoView({block:'center'});

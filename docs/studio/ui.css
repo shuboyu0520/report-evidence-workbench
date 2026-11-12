@@ -33,3 +33,5 @@ details>summary{color:var(--accent);font-weight:600;min-height:35px;padding:5px 
 .field{min-width:0;grid-template-columns:minmax(0,1fr)}.field>select,.field>input{width:100%;min-width:0;text-overflow:ellipsis}
 .case-step{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px}.case-step button{min-width:42px;padding:4px}.case-step .flex{gap:4px}.case-meta .mobile-only{margin-left:auto}
 @media(max-width:700px){.reports .strip .field{flex-basis:42%}.reports .strip button{flex:1 1 auto}}
+
+.reports .replay-result{border-left:3px solid var(--accent);padding:2px 0 2px 12px}
