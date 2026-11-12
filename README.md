@@ -8,7 +8,7 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 [打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html)
 
-- **分账**　输入一笔中文费用，检查付款人和参与人，预览每人的金额，确认后查看明细、成员余额和结算建议。公开示例包含三位虚构成员，两笔预置账单标有「示例」。新账单按设备保存，AUD、CNY、USD 分开统计。
+- **分账**　用中文描述或手动录入一笔费用，选择均分、指定金额、百分比或按份数。比如“小陈垫了 100 元买食材，小林、小周、小陈按 2:1:1 分摊”，草稿会列出 50、25、25 元。核对后确认入账，再查看各人净余额和结算建议。公开示例含三位虚构成员，新账单按设备保存，AUD、CNY、USD 分开统计。
 - **财报**　首页收录谷歌母公司 Alphabet、AMD、英伟达、Meta 和微软的季度公告。可查看集团与分部营收、现金流及官方原表。报告期按各公司财年标明。历史 Agent 评测可从同一菜单进入，保留冻结答复、判定和修复前后对照。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
 - **手机**　两个页面可分别添加到主屏幕。在支持 Service Worker 的浏览器联网打开一次并完成缓存后，可离线使用两个工作台、账本和本地文件检索。外部公告链接需要网络。
 
@@ -18,7 +18,7 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 [![SplitAgent 分账账本，含中文记账、成员余额和结算建议](docs/studio/split-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html)
 
-分账交互参考 [Spliit](https://github.com/spliit-app/spliit) 的费用与余额视图，财报交互参考 [RAGFlow](https://github.com/infiniflow/ragflow) 的引用溯源方式。设备上的 PDF 文本提取使用 [Mozilla PDF.js](https://github.com/mozilla/pdf.js)，随附 [Apache-2.0 许可证](docs/studio/vendor/PDFJS-LICENSE.txt)。
+分账交互参考 [Spliit](https://github.com/spliit-app/spliit) 与 [SplitPro](https://github.com/oss-apps/split-pro) 的分摊方式与余额展示。指定金额需凑齐总额，百分比需合计 100%。按权重分配时优先将尾分分给小数余数较大的成员，同余数按成员 ID 排序。财报交互参考 [RAGFlow](https://github.com/infiniflow/ragflow) 的引用溯源方式。设备上的 PDF 文本提取使用 [Mozilla PDF.js](https://github.com/mozilla/pdf.js)，随附 [Apache-2.0 许可证](docs/studio/vendor/PDFJS-LICENSE.txt)。
 
 <a id="app-api"></a>
 ## 运行 Agent 后端

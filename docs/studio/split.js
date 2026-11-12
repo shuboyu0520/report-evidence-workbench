@@ -1,11 +1,14 @@
 'use strict';
 (() => {
   const {byId:$, el, api, service} = Studio;
-  const {members, major, quote, parse, samples} = SplitTools;
+  const {members, labels, modeOf, major, problem, quote, parse, samples} = SplitTools;
   const names = Object.fromEntries(members.map(m=>[m.id,m.name]));
   const draftKey = 'split-studio-draft-v1-' + (service?'api':'device');
   const fallbackExamples = {
     dinner:'晚饭共 90.00 澳元，小林垫付，小林、小周和小陈三人均摊。',
+    exact:'晚餐共 96 澳元，小林垫付。小林承担 48 澳元、小周承担 30 澳元、小陈承担 18 澳元。',
+    percentage:'小周付了 120 澳元房租，小林占 50%、小周占 30%、小陈占 20%。',
+    shares:'小陈垫了 100 元买食材，小林、小周、小陈按 2:1:1 分摊。',
     no_payer:'三个人小林、小周、小陈一起吃饭，花了 66 澳元，均摊。',
     outside:'朋友小吴替小林和小周支付了 19.00 澳元车费，两人平摊。'
   };
@@ -38,12 +41,17 @@
       let mismatch=false;
       req.onsuccess=()=>{
         if (!req.result) store.add(entry);
-        else if (['amount','description','currency','payer','people'].some(k=>JSON.stringify(req.result[k])!==JSON.stringify(entry[k]))) {
+        else if (signature(req.result)!==signature(entry)) {
           mismatch=true; tx.abort();
         }
       };
       tx.oncomplete=resolve; tx.onabort=()=>reject(Error(mismatch?'相同草稿已经按其他内容入账。':'账本写入失败，请重试。'));
     });
+  }
+  function signature(entry) {
+    const people=[...entry.people].sort((a,b)=>a-b), mode=modeOf(entry);
+    return JSON.stringify([entry.description,entry.amount,entry.currency,entry.payer,mode,people,
+      mode==='equal'?[]:people.map(id=>Number(entry.split_values[id]))]);
   }
   const channel = 'BroadcastChannel' in window ? new BroadcastChannel('split-studio-'+(service?'api':'device')) : null;
   function status(message, error=false) {
@@ -67,9 +75,12 @@
       const q=quote(r); if (!q) continue;
       balances[r.payer]+=q.cents;total+=q.cents;
       q.shares.forEach(s=>balances[s.id]-=s.cents);
-      const line=el('div',null,'ledger-row'), copy=el('div',null,'row-copy');
-      copy.append(el('strong',r.description),el('small',names[r.payer]+'垫付 · '+r.people.map(i=>names[i]).join('、')+(r.sample?' · 示例':'')));
-      line.append(avatar(r.payer),copy,el('span',major(q.cents),'amt'));$('ledger').append(line);
+      const entry=el('details',null,'ledger-entry'), line=el('summary',null,'ledger-row'), copy=el('div',null,'row-copy');
+      copy.append(el('strong',r.description),el('small',names[r.payer]+'垫付 · '+labels[modeOf(r)]+' · '+r.people.length+'人'+(r.sample?' · 示例':'')));
+      line.append(avatar(r.payer),copy,el('span',major(q.cents),'amt'));
+      const detail=el('div',null,'entry-allocations');
+      for (const share of q.shares) detail.append(shareLine(share,r));
+      entry.append(line,detail);$('ledger').append(entry);
     }
     if (!rows.length) $('ledger').append(el('p','这个币种还没有账单。','hint'));
     $('total').replaceChildren(el('i',currency+' '),document.createTextNode(major(total)));
@@ -94,22 +105,57 @@
     $('settlement').replaceChildren(...(transfers.length?transfers:['当前币种已结清。']).map(t=>el('span',t,'transfer')));
   }
   function readForm() {
+    const people=[...document.querySelectorAll('#draft input[type=checkbox]:checked')].map(box=>Number(box.value));
+    const values=Object.fromEntries([...$('split-values').querySelectorAll('input[data-person]')]
+      .filter(input=>people.includes(Number(input.dataset.person)))
+      .map(input=>[input.dataset.person,input.value.trim()]));
     return {description:$('description').value.trim(),amount:$('amount').value.trim(),currency:$('currency').value,
-      payer:Number($('payer').value)||null,people:[...document.querySelectorAll('#draft input:checked')].map(i=>Number(i.value))};
+      payer:Number($('payer').value)||null,people,split_mode:$('split-mode').value,split_values:values};
+  }
+  function shareLine(share,d) {
+    const row=el('div',null,'quote-line'), mode=modeOf(d), value=d.split_values?.[share.id];
+    const suffix=mode==='ratio'?' · '+value+' 份':mode==='percentage'?' · '+value+'%':'';
+    row.append(el('span',names[share.id]+suffix),el('strong',d.currency+' '+major(share.cents)));
+    return row;
+  }
+  function renderValueFields(d) {
+    const box=$('split-values'), mode=modeOf(d);
+    box.replaceChildren();box.hidden=!d.people.length || !['percentage','exact','ratio'].includes(mode);
+    if(box.hidden) return;
+    const unit={exact:d.currency || '金额',percentage:'%',ratio:'份'}[mode];
+    for(const person of d.people) {
+      const row=el('label',null,'split-value-row'), name=el('span',names[person],'name'), input=el('input');
+      input.dataset.person=String(person);
+      input.type='text';input.inputMode=mode==='ratio'?'numeric':'decimal';input.autocomplete='off';
+      input.placeholder=mode==='exact'?'0.00':'—';
+      input.setAttribute('aria-label',names[person]+({exact:'分摊金额',percentage:'的百分比',ratio:'的份数'}[mode]));
+      input.value=d.split_values?.[person] ?? '';
+      row.append(name,input,el('span',unit,'value-unit'));box.append(row);
+    }
   }
   function remember() { try { if(draft) sessionStorage.setItem(draftKey,JSON.stringify(draft));else sessionStorage.removeItem(draftKey); }catch{} }
-  function updatePreview() {
+  function updatePreview(event) {
     if (!draft) return;
-    const d=readForm(); draft.data=d;remember();
-    const q=quote(d);$('allocation').replaceChildren();$('confirm').disabled=!ready||committing||!q;
+    let d=readForm();
+    const changedMode=event?.target.id==='split-mode';
+    if(changedMode || event?.target.id==='currency' || event?.target.type==='checkbox') {
+      if(changedMode) d.split_values={};
+      renderValueFields(d);d=readForm();
+    }
+    draft.data=d;remember();
+    const q=quote(d), issue=problem(d);
+    $('split-feedback').textContent=issue || '各成员分摊合计 '+d.currency+' '+major(q.cents);
+    $('split-feedback').classList.toggle('invalid',Boolean(issue));
+    $('allocation').replaceChildren();$('confirm').disabled=!ready||committing||!q;
     $('draft-state').textContent=q?'待确认':'待补充';
-    if (q) for(const s of q.shares) {const row=el('div',null,'quote-line');row.append(el('span',names[s.id]),el('strong',d.currency+' '+major(s.cents)));$('allocation').append(row);}
-    else $('allocation').append(el('p','补齐金额、币种、费用说明、付款人和参与人后即可预览。','hint'));
+    if (q) for(const s of q.shares) $('allocation').append(shareLine(s,d));
   }
   function showDraft(item) {
     draft=item;const d=item.data;
     $('expense-text').value=item.text;$('description').value=d.description||'';$('amount').value=d.amount||'';$('currency').value=d.currency||'';
-    $('payer').value=d.payer||'';document.querySelectorAll('#draft input[type=checkbox]').forEach(box=>box.checked=d.people.includes(Number(box.value)));
+    $('payer').value=d.payer||'';$('split-mode').value=modeOf(d);
+    document.querySelectorAll('#draft input[type=checkbox]').forEach(box=>box.checked=d.people.includes(Number(box.value)));
+    renderValueFields(d);
     $('draft-hint').textContent=item.note;$('draft-trace').replaceChildren(...item.trace.map(s=>el('li',s)));
     $('draft').hidden=false;updatePreview();
   }
@@ -120,7 +166,7 @@
     const a=c.replay;
     const d={description:a.description||'',amount:a.amount||'',currency:a.currency||'',payer:a.payer_user_id,people:a.participant_ids||[]};
     const blocked=!a.description&&!a.amount&&!a.currency;
-    return {data:d,blocked,note:blocked?'该样例包含多笔或不均摊费用，请按单笔均摊重写。':'这是 Qwen 对此固定样例的存档输出，请核对后入账。',trace:['匹配固定评测输入','读取 Qwen 复测字段','根据成员与金额校验草稿']};
+    return {data:d,blocked,note:blocked?'该样例需要补充，请核对原始账单。':'这是 Qwen 对此固定样例的存档输出，请核对后入账。',trace:['匹配固定评测输入','读取 Qwen 复测字段','根据成员与金额校验草稿']};
   }
   async function createDraft(e) {
     e.preventDefault();if(working||committing) return;
@@ -131,11 +177,12 @@
       if (!result.blocked) {
         if (service) {
           result=await api('drafts/parse',{text,proposal:result.data});
-        } else result=recorded(text)||result;
+        } else if(result.data.split_mode==='equal') result=recorded(text)||result;
       }
       clearDraft();
       if(result.blocked){status(result.note);return;}
-      showDraft({id:id(),text,...result});$('draft').scrollIntoView({block:'nearest'});
+      showDraft({id:id(),text,...result});
+      $('draft').tabIndex=-1;$('draft').focus({preventScroll:true});$('draft').scrollIntoView({block:'nearest'});
     } catch(err) {
       status(err.message,true);
       const manual=parse(text);
@@ -143,6 +190,13 @@
     } finally {working=false;$('parse').disabled=!ready;}
   }
   $('compose').addEventListener('submit',createDraft);
+  $('manual').addEventListener('click',()=>{
+    if(!ready || working || committing) return;
+    status('');
+    showDraft({id:id(),text:'',data:{description:'',amount:'',currency:$('currency-view').value,
+      payer:null,people:[],split_mode:'',split_values:{}},note:'填写支出并选择分摊方式。',trace:['手动录入','确认前逐人核对金额']});
+    $('description').focus();
+  });
   $('draft').addEventListener('input',updatePreview);
   $('discard').onclick=()=>{if(!committing){clearDraft();status('草稿已取消。');}};
   $('draft').addEventListener('submit',async e=>{

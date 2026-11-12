@@ -1,26 +1,109 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="studio-runtime" content="device"><meta name="theme-color" content="#103c35">
-<meta name="apple-mobile-web-app-capable" content="yes"><title>SplitAgent · 小组账本</title>
-<link rel="manifest" href="studio/split.webmanifest"><link rel="apple-touch-icon" href="studio/split-180.png"><link rel="icon" href="studio/split-192.png">
-<link rel="stylesheet" href="studio/ui.css"><script defer src="studio/common.js"></script><script defer src="studio/split-tools.js"></script><script defer src="studio/split.js"></script></head><body class="split"><header class="top"><div class="top-in">
-<a class="brand" href="splitagent.html"><span class="mark" aria-hidden="true"></span>SplitAgent</a>
-<nav class="app-nav" aria-label="切换工作台"><a href="splitagent.html" aria-current="page">分账账本</a><a href="evidence-review.html" >财报复核</a></nav>
-<a class="source-link" href="https://github.com/shuboyu0520/report-evidence-workbench">GitHub ↗</a></div></header>
-<main class="wrap"><section class="hero" aria-labelledby="wallet-title"><div><p class="kicker">SPLITAGENT / 共享支出</p><h1 id="wallet-title">周末旅行账本</h1><p class="sub">小林、小周、小陈 <span aria-hidden="true">·</span> <span id="storage-mode">此设备的示例账本</span></p></div>
-<div class="hero-metrics"><div><span class="metric-label">当前币种支出</span><strong class="metric-num" id="total">—</strong><span class="metric-note" id="entry-count"></span></div><div><label class="metric-label" for="currency-view">查看币种</label><select id="currency-view"><option>AUD</option><option>CNY</option><option>USD</option></select></div></div></section>
-<noscript><p>请启用 JavaScript 以创建草稿或查看账本。</p></noscript>
-<div class="cols"><div class="stack"><section class="panel"><div class="panel-head"><div class="flex"><span class="icon-box" aria-hidden="true">＋</span><h2>记一笔</h2></div><span class="flag" id="engine">设备规则提取</span></div>
-<form id="compose"><label class="field" for="expense-text">谁付了多少钱，哪些人分摊？</label><textarea id="expense-text" rows="2" maxlength="600" required placeholder="例如：小林付了 96 澳元买晚餐，三个人均摊。"></textarea>
-<div class="actions"><button type="submit" class="primary" id="parse">生成草稿 →</button><button type="button" class="chip" data-example="dinner">晚餐均摊</button><button type="button" class="chip" data-example="no_payer">缺少付款人</button><button type="button" class="chip" data-example="outside">组外垫付</button></div></form>
-<div id="split-status" class="notice" role="status"></div>
-<form class="receipt" id="draft" hidden><div class="panel-head"><h3>核对分账草稿</h3><span class="pill" id="draft-state"></span></div><p id="draft-hint" class="hint"></p>
-<div class="field-grid"><label class="field">费用说明<input id="description" maxlength="100" required></label><label class="field">付款人<select id="payer" required><option value="">选择付款人</option><option value="11">小林</option><option value="12">小周</option><option value="13">小陈</option></select></label>
-<label class="field">金额<input id="amount" type="text" inputmode="decimal" autocomplete="off" required></label><label class="field">币种<select id="currency" required><option value="">选择币种</option><option>AUD</option><option>CNY</option><option>USD</option></select></label></div>
-<fieldset class="checks"><legend>参与均摊的成员</legend><label><input type="checkbox" value="11">小林</label><label><input type="checkbox" value="12">小周</label><label><input type="checkbox" value="13">小陈</label></fieldset>
-<div id="allocation"></div><details class="trace"><summary>查看提取和校验步骤</summary><ol id="draft-trace"></ol></details>
-<div class="actions"><button id="confirm" class="primary" type="submit">确认入账</button><button type="button" id="discard">取消草稿</button></div></form></section>
-<section class="panel"><div class="panel-head"><h2>账单明细</h2><span id="ledger-unit" class="num"></span></div><div id="ledger" aria-live="polite"></div></section></div>
-<aside class="stack"><section class="panel"><div class="panel-head"><h2>成员余额</h2><span class="pill">均摊后</span></div><div id="balances"></div><hr class="hair"><h3>结算建议</h3><p class="hint" id="settlement"></p></section>
-<section class="panel"><div class="panel-head"><h2>这个 Agent 怎样记账</h2></div><p class="hint">先识别金额、币种和组员，缺失的信息会留在草稿中。你确认后，账单和每个人的余额才会更新。</p><a href="split-cases.html">查看 10 条模型测试及首轮错例 ↗</a></section></aside></div><footer class="tools-footer"><div><a href="split-cases.html">模型评测原始记录</a><a href="library.html">项目资料</a><a href="https://github.com/shuboyu0520/report-evidence-workbench#app-api">后端与 API</a></div>
-<details><summary>添加到手机主屏幕</summary><p>iPhone 在 Safari 分享菜单选择「添加到主屏幕」。Android 在浏览器菜单选择「安装应用」或「添加到主屏幕」。</p></details></footer></main></body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="studio-runtime" content="device">
+  <meta name="theme-color" content="#173d33">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>SplitAgent · 小组账本</title>
+  <link rel="manifest" href="studio/split.webmanifest">
+  <link rel="apple-touch-icon" href="studio/split-180.png">
+  <link rel="icon" href="studio/split-192.png">
+  <link rel="stylesheet" href="studio/ui.css">
+  <link rel="stylesheet" href="studio/split-ledger.css">
+  <script defer src="studio/common.js"></script>
+  <script defer src="studio/split-tools.js"></script>
+  <script defer src="studio/split.js"></script>
+</head>
+<body class="split">
+  <a class="skip-link" href="#compose">跳到记账</a>
+  <header class="mast">
+    <div class="mast-in">
+      <a class="wordmark" href="splitagent.html" aria-label="SplitAgent 小组账本首页"><span class="brand-stamp" aria-hidden="true"></span>SplitAgent</a>
+      <nav class="workspaces" aria-label="切换工作台">
+        <a href="splitagent.html" aria-current="page">分账账本</a>
+        <a href="evidence-review.html">财报复核</a>
+      </nav>
+      <a class="repo-link" href="https://github.com/shuboyu0520/report-evidence-workbench">GitHub <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main class="ledger-wrap">
+    <section class="group-ticket" aria-labelledby="wallet-title">
+      <div class="trip-cover">
+        <img class="coast-photo" src="studio/weekend-coast.webp" alt="" fetchpriority="high">
+        <div class="trip-copy">
+          <span class="book-location" id="storage-mode">此设备的示例账本</span>
+          <h1 id="wallet-title">周末旅行账本</h1>
+          <div class="crew"><span class="crew-faces" aria-hidden="true"><i>林</i><i>周</i><i>陈</i></span><span>小林、小周、小陈</span></div>
+        </div>
+      </div>
+      <div class="ticket-stub">
+        <div class="stub-head"><span>小组总支出</span>
+          <label class="currency-control"><span class="sr-only">查看币种</span><select id="currency-view" aria-label="查看币种"><option>AUD</option><option>CNY</option><option>USD</option></select></label>
+        </div>
+        <strong class="trip-total" id="total">—</strong>
+        <span class="entry-count" id="entry-count"></span>
+      </div>
+    </section>
+    <noscript><p>请启用 JavaScript 以创建草稿或查看账本。</p></noscript>
+    <div class="ledger-grid">
+      <section class="workspace-card composer" aria-labelledby="new-title">
+        <div class="section-head">
+          <h2 id="new-title"><span class="entry-glyph" aria-hidden="true">＋</span>记一笔</h2>
+          <span class="runtime" id="engine">设备规则提取</span>
+        </div>
+        <form id="compose">
+          <label class="field" for="expense-text">这笔钱怎么分？</label>
+          <textarea id="expense-text" rows="2" maxlength="600" required placeholder="例如：小林垫付房租 200 澳元，小林承担 60%，小周承担 40%。"></textarea>
+          <div class="example-list" aria-label="填入示例">
+            <span class="examples-label">填入示例</span>
+            <button type="button" class="example-option" data-example="dinner">均分</button>
+            <button type="button" class="example-option" data-example="exact">指定金额</button>
+            <button type="button" class="example-option" data-example="percentage">按百分比</button>
+            <button type="button" class="example-option" data-example="shares">按份数</button>
+          </div>
+          <div class="entry-actions"><button type="submit" class="primary" id="parse">生成草稿 <span aria-hidden="true">→</span></button>
+            <button type="button" id="manual">手动填写</button>
+          </div>
+        </form>
+        <div id="split-status" class="notice" role="status"></div>
+        <form class="receipt" id="draft" hidden aria-labelledby="review-title">
+          <div class="receipt-head"><h3 id="review-title">核对分账草稿</h3><span class="pill" id="draft-state"></span></div>
+          <p id="draft-hint" class="hint"></p>
+          <div class="field-grid">
+            <label class="field">费用说明<input id="description" maxlength="100" required></label>
+            <label class="field">付款人<select id="payer" required><option value="">选择付款人</option><option value="11">小林</option><option value="12">小周</option><option value="13">小陈</option></select></label>
+            <label class="field">总金额<input id="amount" type="text" inputmode="decimal" autocomplete="off" required></label>
+            <label class="field">币种<select id="currency" required><option value="">选择币种</option><option>AUD</option><option>CNY</option><option>USD</option></select></label>
+          </div>
+          <fieldset class="checks"><legend>参与分摊的成员</legend>
+            <label><input type="checkbox" value="11">小林</label><label><input type="checkbox" value="12">小周</label><label><input type="checkbox" value="13">小陈</label>
+          </fieldset>
+          <label class="field split-picker">分摊方式<select id="split-mode" required><option value="">选择分摊方式</option><option value="equal">均分</option><option value="exact">指定金额</option><option value="percentage">按百分比</option><option value="ratio">按份数</option></select></label>
+          <div id="split-values"></div>
+          <p id="split-feedback" role="status"></p>
+          <section class="receipt-summary" aria-labelledby="share-title">
+            <h4 id="share-title">每人应摊</h4><div id="allocation"></div>
+          </section>
+          <details class="trace"><summary>查看提取和校验步骤</summary><ol id="draft-trace"></ol></details>
+          <div class="entry-actions"><button id="confirm" class="primary" type="submit">确认入账</button><button type="button" id="discard">取消草稿</button></div>
+        </form>
+      </section>
+      <section class="workspace-card summary-card" aria-labelledby="balances-title">
+        <div class="section-head"><h2 id="balances-title">成员余额</h2><span class="member-count">3 人</span></div>
+        <div id="balances"></div>
+        <div class="settlement-box"><h3>结算建议</h3><p id="settlement"></p></div>
+      </section>
+      <section class="workspace-card ledger-card" aria-labelledby="ledger-title">
+        <div class="section-head"><h2 id="ledger-title">账单明细</h2><span id="ledger-unit" class="currency-unit"></span></div>
+        <div id="ledger" aria-live="polite"></div>
+      </section>
+    </div>
+    <footer class="ledger-footer">
+      <div><a href="split-cases.html">模型评测记录</a><a href="library.html">项目资料</a><a href="https://github.com/shuboyu0520/report-evidence-workbench#app-api">后端与 API</a></div>
+      <details><summary>添加到手机主屏幕</summary><p>iPhone 在 Safari 分享菜单选择「添加到主屏幕」。Android 在浏览器菜单选择「安装应用」或「添加到主屏幕」。</p></details>
+    </footer>
+  </main>
+</body>
+</html>
