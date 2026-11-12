@@ -1,0 +1,7 @@
+{
+  "protocol": "First ordinary reader response per question after the backend is frozen. Compare against the sealed independent gold and source pages; retain wrong answers and abstentions.",
+  "held_out_issuers": 1,
+  "questions": 8,
+  "gold_fixture_sha256": "eac1345214c0b422c4fc7d1092c95976a6a7dfc820cb840a4530f479866039ee",
+  "input_pdf_sha256": "6edea35ffff138918bed8899a513c84a26389fe6e4313a86781d74bfdbbb8b02"
+}
