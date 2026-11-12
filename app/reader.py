@@ -241,7 +241,7 @@ async def from_cards(question, config, tools, calls):
 
 
 async def from_document(db, report, pages, question, config, tools, calls, events, *, calendar_year=False):
-    request = lookup_request(question, issuer=report.get("company", ""))
+    request = lookup_request(question, issuer=(report or {}).get("company", ""))
     source_table_rows = source_rows(pages, calendar_year=calendar_year) if request else []
     rows = source_table_rows
     if request and request.metric=="free_cash_flow" and not any(r.reconciliation_total and re.search(request.pattern,r.label,re.I) for r in rows):
