@@ -13,7 +13,15 @@
           "question": "Alphabet 2026年第三季度的集团合并营收是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 127577
+        "expected_usd_millions": 127577,
+        "accepted_source_pages": [
+          1,
+          2,
+          5,
+          7,
+          9
+        ],
+        "source_row_label": "(?:total )?revenues?"
       },
       {
         "id": "GOOG02",
@@ -21,7 +29,12 @@
           "question": "Alphabet 2026年第三季度的Google Cloud 分部营收是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 30709
+        "expected_usd_millions": 30709,
+        "accepted_source_pages": [
+          2,
+          7
+        ],
+        "source_row_label": "google cloud"
       }
     ]
   },
@@ -39,7 +52,12 @@
           "question": "AMD 2026财年第三季度的集团营业收入是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 13377
+        "expected_usd_millions": 13377,
+        "accepted_source_pages": [
+          10,
+          11
+        ],
+        "source_row_label": "revenue"
       },
       {
         "id": "AMD02",
@@ -47,7 +65,11 @@
           "question": "AMD 2026财年第三季度的Data Center 数据中心分部净营收是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 8546
+        "expected_usd_millions": 8546,
+        "accepted_source_pages": [
+          12
+        ],
+        "source_row_label": "net revenue"
       }
     ]
   },
@@ -65,7 +87,15 @@
           "question": "NVIDIA 2027财年第二季度的集团营业收入是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 96221
+        "expected_usd_millions": 96221,
+        "accepted_source_pages": [
+          3,
+          23,
+          24,
+          27,
+          28
+        ],
+        "source_row_label": "(?:total(?: revenue)?|revenue)"
       },
       {
         "id": "NVDA02",
@@ -73,7 +103,12 @@
           "question": "NVIDIA 2027财年第二季度的Data Center 数据中心营收是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 89023
+        "expected_usd_millions": 89023,
+        "accepted_source_pages": [
+          24,
+          27
+        ],
+        "source_row_label": "data center"
       }
     ]
   },
@@ -91,7 +126,14 @@
           "question": "Meta Platforms 2026年第三季度的集团营业收入是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 64601
+        "expected_usd_millions": 64601,
+        "accepted_source_pages": [
+          1,
+          6,
+          9,
+          10
+        ],
+        "source_row_label": "(?:gaap |total )?revenue"
       },
       {
         "id": "META02",
@@ -99,7 +141,11 @@
           "question": "Meta Platforms 2026年第三季度的自由现金流（Free cash flow）是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": -2120
+        "expected_usd_millions": -2120,
+        "accepted_source_pages": [
+          10
+        ],
+        "source_row_label": "free cash flow"
       }
     ]
   },
@@ -117,7 +163,11 @@
           "question": "Microsoft 2027财年第一季度的集团营业收入是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 92279
+        "expected_usd_millions": 92279,
+        "accepted_source_pages": [
+          1
+        ],
+        "source_row_label": "total revenue"
       },
       {
         "id": "MSFT02",
@@ -125,7 +175,11 @@
           "question": "Microsoft 2027财年第一季度的Azure 单项营业收入是多少百万美元？",
           "mode": "reader"
         },
-        "expected_usd_millions": 33165
+        "expected_usd_millions": 33165,
+        "accepted_source_pages": [
+          1
+        ],
+        "source_row_label": "azure"
       }
     ]
   }
