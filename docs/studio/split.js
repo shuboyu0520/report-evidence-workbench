@@ -13,6 +13,7 @@
     outside:'朋友小吴替小林和小周支付了 19.00 澳元车费，两人平摊。'
   };
   let draft=null, shareInputs={}, archive=[], modelName=null, ready=false, working=false, committing=false, refreshSerial=0;
+  let ledgerAccessMessage='账本正在打开，请稍后再试。';
   function id() {
     if (crypto.randomUUID) return crypto.randomUUID();
     const bytes=crypto.getRandomValues(new Uint8Array(16)); bytes[6]=(bytes[6]&15)|64; bytes[8]=(bytes[8]&63)|128;
@@ -298,7 +299,7 @@
     $('receipt-evidence').hidden=!info.source;
     $('receipt-source').textContent=info.source;
     $('receipt-amount').textContent=info.amount ? [info.currency,info.amount].filter(Boolean).join(' ') : '';
-    $('receipt-issue').textContent=text ? info.issue : '';
+    $('receipt-issue').textContent=text ? [info.issue,ready?'':ledgerAccessMessage].filter(Boolean).join(' ') : '';
     $('receipt-to-draft').disabled=!ready||readingReceipt||!text;
     return info;
   }
@@ -400,6 +401,7 @@
     }
     if(!plan) plan=await devicePlan(question);
     const heading=plan.engine==='ollama'?'Ollama · '+modelName:plan.engine==='bge'?'设备端 AI · BGE':'账本工具';
+    if(!ready && ['draft','quote','settlement'].includes(plan.tool)) return {heading,text:ledgerAccessMessage};
     if(plan.tool==='price') {
       const price=estimate(question);
       return {heading,text:price?priceReply(price):'请给出原价、币种和要分的人数。可以加一项折扣和一项小费，例如「120 元打 8 折，加 10% 小费，3 人均分」。'};
@@ -438,7 +440,7 @@
   $('assistant-form').onsubmit=async event=>{
     event.preventDefault();
     const input=$('assistant-question'), question=input.value.trim();
-    if(assisting||!ready||question.length<2) return;
+    if(assisting||question.length<2) return;
     assisting=true;$('send-assistant').disabled=true;$('send-assistant').textContent='处理中';
     assistantMessage(question,'user');
     input.value='';
@@ -540,13 +542,13 @@
   window.addEventListener('split-storage-blocked',()=>status('请关闭仍开着的旧版账本窗口，随后会自动打开新账本。'));
   window.addEventListener('focus',()=>{if(ready)refresh().catch(err=>status(err.message,true));});
   function openShortcut() {
-    if(!ready) return;
     const target=location.hash==='#scan'?receiptDialog:location.hash==='#assistant'?assistantDialog:null;
     if(!target || target.open) return;
     document.querySelector('dialog[open]')?.close();
     target.showModal();
   }
   window.addEventListener('hashchange',openShortcut);
+  openShortcut();
   async function start() {
     $('parse').disabled=true;
     if(service){
@@ -560,7 +562,10 @@
     await refresh();ready=true;status('');$('parse').disabled=false;$('manage-members').disabled=false;
     if(!service)try {const old=JSON.parse(sessionStorage.getItem(draftKey));if(old?.id && Array.isArray(old.data?.people) && Array.isArray(old.trace))showDraft(old);}catch{}
     previewReceipt();
-    openShortcut();
   }
-  start().catch(err=>status('账本暂时无法打开：'+err.message,true));
+  start().catch(()=>{
+    ledgerAccessMessage=service?'无法打开账本会话，请重新连接后刷新。':'请允许浏览器保存此网站的数据，再刷新打开账本。';
+    status(ledgerAccessMessage,true);
+    previewReceipt();
+  });
 })();

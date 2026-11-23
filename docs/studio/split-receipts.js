@@ -78,6 +78,8 @@ const SplitReceipts = (() => {
         corePath:new URL('tesseract-core-lstm.wasm.js',base).href,
         langPath:base.href.slice(0,-1),
         workerBlobURL:false,
+        // The service worker already caches both language files for offline use.
+        cacheMethod:'none',
         logger:message=>onProgress(message.status==='recognizing text'?Math.round(message.progress*100):null),
         errorHandler:fail,
       });

@@ -1,7 +1,7 @@
 'use strict';
 // Only the public application shell is cached. Original user files and API responses are excluded.
 const prefix='agent-studio:'+self.registration.scope+':';
-const cacheName=prefix+'2026-11-24.2';
+const cacheName=prefix+'2026-11-24.3';
 const paths=['index.html','splitagent.html','evidence-review.html','evidence-review.js','evidence-review-data.js',
   'splitagent-evaluation.json','studio/ui.css','studio/split-ledger.css','studio/weekend-coast.webp','studio/common.js','studio/split-tools.js','studio/split-store.js','studio/split.js',
   'studio/split-receipts.js','studio/split-assistant.js','studio/split-language.mjs','studio/split-language-worker.mjs','studio/split-language-index.json',
