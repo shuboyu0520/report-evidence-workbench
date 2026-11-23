@@ -15,6 +15,8 @@
   <script defer src="studio/common.js"></script>
   <script defer src="studio/split-tools.js"></script>
   <script defer src="studio/split-store.js"></script>
+  <script defer src="studio/split-receipts.js"></script>
+  <script defer src="studio/split-assistant.js"></script>
   <script defer src="studio/split.js"></script>
 </head>
 <body class="split">
@@ -27,6 +29,7 @@
         <a href="evidence-review.html">财报复核</a>
       </nav>
       <a class="repo-link" href="https://github.com/shuboyu0520/report-evidence-workbench">GitHub <span aria-hidden="true">↗</span></a>
+      <button class="install-button" type="button" id="install-app" aria-haspopup="dialog">安装 App</button>
     </div>
   </header>
   <main class="ledger-wrap">
@@ -35,7 +38,7 @@
         <img class="coast-photo" src="studio/weekend-coast.webp" alt="" fetchpriority="high">
         <div class="trip-copy">
           <span class="book-location" id="storage-mode">此设备上的账本</span>
-          <h1 id="wallet-title">周末旅行账本</h1>
+          <h1 id="wallet-title">小组账本</h1>
           <div class="crew"><span class="crew-faces" id="crew-faces" aria-hidden="true"></span><span id="crew-names"></span></div>
         </div>
       </div>
@@ -53,6 +56,16 @@
         <div class="section-head">
           <h2 id="new-title"><span class="entry-glyph" aria-hidden="true">＋</span>记一笔</h2>
           <span class="runtime" id="engine">设备规则提取</span>
+        </div>
+        <div class="intake-actions">
+          <button type="button" id="open-receipt" aria-haspopup="dialog">
+            <span class="intake-icon camera-icon" aria-hidden="true"></span>
+            拍照读账单
+          </button>
+          <button type="button" id="open-assistant" aria-haspopup="dialog">
+            <span class="intake-icon assistant-icon" aria-hidden="true"></span>
+            AI 助手
+          </button>
         </div>
         <form id="compose">
           <label class="field" for="expense-text">这笔钱怎么分？</label>
@@ -101,11 +114,57 @@
         <div id="ledger" aria-live="polite"></div>
       </section>
     </div>
-    <footer class="ledger-footer">
-      <div><a href="split-cases.html">模型评测记录</a><a href="library.html">项目资料</a><a href="https://github.com/shuboyu0520/report-evidence-workbench#app-api">后端与 API</a></div>
-      <details><summary>添加到手机主屏幕</summary><p>iPhone 在 Safari 分享菜单选择「添加到主屏幕」。Android 在浏览器菜单选择「安装应用」或「添加到主屏幕」。</p></details>
-    </footer>
+    <footer class="ledger-footer"><div><a href="split-cases.html">模型评测记录</a><a href="evidence-review.html">财报复核</a><a href="https://github.com/shuboyu0520/report-evidence-workbench#app-api">后端与 API</a></div></footer>
   </main>
+  <nav class="app-bar" aria-label="分账快捷入口">
+    <a href="#new-title">记一笔</a>
+    <a href="#ledger-title">账单</a>
+    <button type="button" id="assistant-tab" aria-haspopup="dialog">AI 助手</button>
+  </nav>
+  <dialog class="tool-dialog" id="install-dialog" aria-labelledby="install-title">
+    <div class="dialog-top"><h2 id="install-title">安装 SplitAgent</h2><button class="dialog-close" type="button" id="close-install" aria-label="关闭安装说明">×</button></div>
+    <dl class="install-steps">
+      <dt>iPhone</dt><dd>打开 Safari 的分享菜单，选择「添加到主屏幕」。</dd>
+      <dt>Android</dt><dd>打开浏览器菜单，选择「安装应用」或「添加到主屏幕」。</dd>
+      <dt>电脑</dt><dd>在 Chrome 或 Edge 的地址栏或菜单里选择安装此网站。</dd>
+    </dl>
+  </dialog>
+  <dialog class="tool-dialog" id="receipt-dialog" aria-labelledby="receipt-title">
+    <div class="dialog-top"><h2 id="receipt-title">拍照读账单</h2><button class="dialog-close" type="button" id="close-receipt" aria-label="关闭账单识别">×</button></div>
+    <p class="hint">识别商户和票面合计。照片在此设备上处理。</p>
+    <div class="entry-actions receipt-actions">
+      <button type="button" class="primary" id="take-photo">打开相机</button>
+      <button type="button" id="choose-image">选择图片</button>
+      <input id="receipt-camera" type="file" accept="image/*" capture="environment" hidden>
+      <input id="receipt-image" type="file" accept="image/*" hidden>
+    </div>
+    <img id="receipt-preview" alt="待核对的账单照片" hidden>
+    <p class="notice" id="receipt-status" role="status"></p>
+    <label class="field" for="receipt-text">票面文字</label>
+    <textarea id="receipt-text" maxlength="6000" rows="4" placeholder="识别结果会显示在这里。也可以粘贴票面文字。"></textarea>
+    <div class="receipt-evidence" id="receipt-evidence" hidden>
+      <strong id="receipt-amount"></strong>
+      <small id="receipt-source"></small>
+    </div>
+    <p class="hint" id="receipt-issue"></p>
+    <div class="entry-actions"><button type="button" class="primary" id="receipt-to-draft" disabled>填入分账草稿</button></div>
+  </dialog>
+  <dialog class="tool-dialog assistant-dialog" id="assistant-dialog" aria-labelledby="assistant-title">
+    <div class="dialog-top"><div><h2 id="assistant-title">AI 分账助手</h2><span class="runtime" id="assistant-engine">设备端中文模型 · BGE</span></div><button class="dialog-close" type="button" id="close-assistant" aria-label="关闭分账助手">×</button></div>
+    <div class="assistant-shortcuts" aria-label="分账问题示例">
+      <button type="button" class="example-option" data-assistant="谁该付款？">看结算</button>
+      <button type="button" class="example-option" data-assistant="看看这笔草稿怎么分。">看草稿</button>
+      <button type="button" class="example-option" data-assistant="120 元打 8 折，加 10% 小费，3 人均分">试算价格</button>
+      <button type="button" class="example-option" data-assistant="有人中途搬进来，水电费怎么分才公平？">问分摊建议</button>
+    </div>
+    <div id="assistant-log" class="assistant-log" role="log" aria-label="助手对话" aria-live="polite"></div>
+    <div id="assistant-progress" class="hint" role="status"></div>
+    <form id="assistant-form" class="assistant-form">
+      <label for="assistant-question" class="sr-only">输入分账问题</label>
+      <textarea id="assistant-question" required minlength="2" maxlength="600" rows="2" placeholder="问分摊、折扣，或描述一笔费用"></textarea>
+      <button type="submit" class="primary" id="send-assistant">发送</button>
+    </form>
+  </dialog>
   <dialog id="member-dialog" aria-labelledby="member-title"><div class="dialog-top"><h2 id="member-title">账本成员</h2><button type="button" id="close-members" aria-label="关闭成员管理">×</button></div>
     <form id="member-form"><label class="field" for="member-name">成员姓名</label><div class="member-inputs"><input id="member-name" autocomplete="off" required placeholder="输入称呼或姓名"><button id="add-member" class="primary">添加成员</button></div></form>
     <p id="member-feedback" role="status" class="hint"></p><div id="member-list"></div>

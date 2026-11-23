@@ -24,12 +24,12 @@
   ],
   "shortcuts": [
     {
-      "name": "小组账本",
-      "url": "../splitagent.html"
+      "name": "拍照读账单",
+      "url": "../splitagent.html#scan"
     },
     {
-      "name": "财报复核",
-      "url": "../evidence-review.html"
+      "name": "AI 分账助手",
+      "url": "../splitagent.html#assistant"
     }
   ]
 }

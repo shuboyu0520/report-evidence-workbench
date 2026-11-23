@@ -4,3 +4,6 @@ evaluation/expedia-reader-blind.json text eol=lf
 evaluation/hilton-reader-blind.json text eol=lf
 evaluation/wyndham-reader-blind.json text eol=lf
 evaluation/hyatt-reader-blind.json text eol=lf
+# Preserve the exact bytes of the third-party mobile runtimes and models.
+docs/studio/vendor/bge/* -text
+docs/studio/vendor/ocr/* -text

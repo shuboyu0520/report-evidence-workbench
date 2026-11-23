@@ -6,11 +6,13 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 
 ## 在手机或电脑上使用
 
-[打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html)
+[打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [拍照读账单](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html#scan) · [问分账助手](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html#assistant) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html)
 
 - **分账**　在「管理成员」里添加、改名、移出或恢复同行人。用中文记一笔费用，或手动选择均分、指定金额、百分比、按份数。可以先保存草稿，下次打开继续填。已入账的费用也能编辑，保存后会重新计算余额和结算建议。移出成员会保留对方参与过的账单和欠款。取消勾选「显示示例账单」即可只看自己的记录。AUD、CNY、USD 分币种统计。
+- **拍小票**　用相机拍照或上传图片，浏览器识别中英文票面，预填商户、总额及能确认的币种，并展示对应文字。核对票面后选择谁付的钱、谁参与分摊，再确认入账。照片在设备上处理。首次识别会按需加载约 8.5 MB 的 OCR 组件。
+- **AI 分账助手**　可以问「有人住到一半才搬进来，水电费怎么摊？」。公开版在手机上运行 BGE 中文语义模型，匹配分摊建议或选择账本工具。首次询问这类问题会加载约 35 MB。记账、看结算和试算常见问题可直接使用。试算先打折再计小费，例如 120 元打 8 折、加 10% 小费、3 人均分，每人 35.20 元。自托管版还可连接 Ollama 生成回答。
 - **财报**　首页收录谷歌母公司 Alphabet、AMD、英伟达、Meta 和微软的季度公告。可查看集团与分部营收、现金流及官方原表。报告期按各公司财年标明。历史 Agent 评测可从同一菜单进入，保留冻结答复、判定和修复前后对照。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。
-- **手机**　两个页面可分别添加到主屏幕。在支持 Service Worker 的浏览器联网打开一次并完成缓存后，可离线使用两个工作台、账本和本地文件检索。外部公告链接需要网络。
+- **手机**　在 SplitAgent 点击「安装 App」。iPhone 可从 Safari 分享菜单选「添加到主屏幕」，Android 可从兼容浏览器安装。账本保存在当前设备的浏览器里。应用完成缓存后支持离线记账，识别和语义问答所需的文件会在各自首次使用时缓存。
 
 五家公司的十道查数原题从 **4/10 提升至 10/10**。修复前为 4 对、1 错、5 拒答。复测使用相同文件与问题，逐题核对原始表行、期间、正负号和金额单位。[AMD 修复前后](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html#cohort=amd&case=AMD01) · [六道失例分析及复现方法](evaluation/tech-reader-repair.md)
 
@@ -19,6 +21,10 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 [![SplitAgent 分账账本，含中文记账、成员余额和结算建议](docs/studio/split-preview.png)](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html)
 
 分账交互参考 [Spliit](https://github.com/spliit-app/spliit) 与 [SplitPro](https://github.com/oss-apps/split-pro) 的分摊方式与余额展示。指定金额需凑齐总额，百分比需合计 100%。按权重分配时优先将尾分分给小数余数较大的成员，同余数按成员 ID 排序。财报交互参考 [RAGFlow](https://github.com/infiniflow/ragflow) 的引用溯源方式。设备上的 PDF 文本提取使用 [Mozilla PDF.js](https://github.com/mozilla/pdf.js)，随附 [Apache-2.0 许可证](docs/studio/vendor/PDFJS-LICENSE.txt)。
+
+小票识别使用 [Tesseract.js 7.0.0](https://github.com/naptha/tesseract.js/releases/tag/v7.0.0)、同版本 WebAssembly 核心，以及 [Tesseract 语言数据](https://github.com/naptha/tessdata)的英文与简体中文权重。运行文件和许可证随项目放在 `docs/studio/vendor/ocr/`。
+
+公开助手按需运行 [BAAI/bge-small-zh-v1.5](https://huggingface.co/BAAI/bge-small-zh-v1.5) 的[固定版本 INT8 权重](https://huggingface.co/Xenova/bge-small-zh-v1.5/tree/75c43b069aac4d136ba6bc1122f995fedcfd2781/onnx)与 [ONNX Runtime Web 1.22.0](https://www.npmjs.com/package/onnxruntime-web/v/1.22.0)。问题在设备上编码，与预先编码的分账示例比较。匹配不明确时助手会追问。金额来自账本计算，写入前由用户确认。执行 `node scripts/build_split_language_index.mjs` 可用随附权重重新生成示例索引。
 
 <a id="app-api"></a>
 ## 运行 Agent 后端
@@ -31,6 +37,7 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 | 查看和添加成员 | `GET /api/studio/members`、`POST /api/studio/members` | 新成员可作为付款人或分摊人 |
 | 改名、移出和恢复成员 | `PUT /api/studio/members/{id}` | 提交当前版本和更新字段，成员 ID 继续关联历史账单 |
 | 提取费用 | `POST /api/studio/drafts/parse` | 提交 `{"text":"小林付了 96 澳元买晚餐，三个人均摊。"}`。配置 Ollama 时返回模型字段和校验步骤 |
+| 助手工具选择 | `POST /api/studio/assistant` | 提交 `{"question":"我想看看室友该把垫款还给谁","has_draft":false}`，返回受限工具名或使用说明。客户端执行只读计算或填入待确认草稿 |
 | 预览分摊 | `POST /api/studio/drafts/quote` | 输入核对后的字段，返回每位组员的整数分值 |
 | 保存和继续草稿 | `GET /api/studio/draft`、`PUT /api/studio/draft`、`DELETE /api/studio/draft` | 每个会话保存一份待处理草稿，确认入账前不计入余额 |
 | 确认入账 | `POST /api/studio/entries` | 提交 `{id, data}`，一次草稿使用同一个 UUID。相同内容重试复用原记录，冲突返回 409 |

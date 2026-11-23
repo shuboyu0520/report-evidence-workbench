@@ -1,0 +1,229 @@
+{
+  "model": "Xenova/bge-small-zh-v1.5@75c43b0/int8-cls-v1",
+  "topics": [
+    {
+      "tool": "guide",
+      "message": "先选这笔费用覆盖的日期，数出每个人实际住了几天。在草稿中选择「按份数」，把各自的天数填为份数。若房东另收固定费用，可把固定部分单独记一笔，按大家约好的比例分。",
+      "examples": [
+        {
+          "question": "室友月中才搬进来，水电费怎么算公平？",
+          "embedding": "8zD5GA/Z5Qn5ABuBF/Ud6fz8Awby/+b7+voF/OflFvr4DP73D/cR7QkBBhv38gkM/vTv/xH8Dtb0AvkeFRPy9gr8DhjmCdn63xYG/+sFCAz9GgQVCw7s8Afr3vYJEPUI8/Ty+wv79BD7Fv4MBvkA8g0TCBD9CvoJFBEU8eMMEgf+6A/6Afzj8wkC9vkW6+X9AfPx/Af4COkiCRTjCAwO9wcM/Pj57vsUFfH0//vyAvTz7gcDBP0fA/7wAPj+4iDu5PXxDgX94/DuAvH/EwkGEuwK+egI5dz19/IG9PwKJATj/hj+FPsE7v74EO770Az3AjLs6gsS6fcJ/PkPDQf6/gj59AMP4PLnFf8AGRYDAggJBwr2BPXs9vb+8hHnHOb5G/H+AQcK+QD+5xkHCvoM7N8AG/L2BvTmAvso9fYG/P75BwIC9/ULF+QREAn49+fu6ggeEwAJBSoGC/r/EQQH/gPsDPEn9fQJ7/vsBvz79/AFEhfwIAb0z+r75Q8BE+fbGA/6EfwiFAAD+hMG+gjzAu/y+hbuCQDo9fRh9AoLHgHvKNETBOD89wwA4wLkHxfpEPAH8ebr9AsR9/bz6S4MCwYn9RL1DfkNB//0+BL0+gX1/uzo/Ar3AQ4QGfwZEP3sBvoDCfIcAvEP5hP63/QAL/UHAOb1/xANBfH3Avf/B/o="
+        },
+        {
+          "question": "旅行中途加入的人房费按住宿天数怎么分？",
+          "embedding": "9BP2DQv98AgD/DCBBO4IBe336RcAGvcFAu8HCvriDPD6/gb4DATsBfkB/Rfk8/QVDQcFEBn/AtkhGf4VFP7m5AnzBxb6LvQO/h339/z/DesG6gzu/gkF/fnuAuMXBv8gA/Hn/gn+CxnwEgH2EgEB6wgLChAKCwYI3AL95eIA///+AgIaBQz4/fL87wwB+ejyEPQE9/P8GOYI+BPr8gDm+fALAgID5Rv4/vgMA+0E+wTr+AgDBgYFGA8EEv8M/hTz9gIADPsO7/UI5f4B7/wVFAz/He0N9vz17wf1AQ8BCAnrAST59/oX7/cMDePt6BER7Rz83wz07AIH/P0CEg/+C/rz8/X8BPsBEvkWCQbzAvX2CuAQ+Qbt6uj5BOrtAdjxDvUGEg0X9/UI9Af9DxDv8vzxEPXzLf3xIPga9Orl8PnsAvkPDwrzIggP6/MBB+vl5P4iCgsFABUVF+wFDPkA6g769Poh/vUP6xnvAgLl4wLyAvkDEtoL4uYE9Qvw+d7rLAzxFRAPGP0H+AP+BQwG+gHv6QgCA+3/++5e6g0F8/T7BuHvDej+9PUN6ejeBQfwGAkD6ej76QYBAP4H7xcQBhQD9CEAJgsHGA/v9B7+Bg30BP33+wz35xIVFvgGCAHu/QYE9e/x/wcF8Q/98PIEAPkGAvfy6xj56fr8HPb0G/E="
+        },
+        {
+          "question": "合租有人只住一周，电费要按实际住的天数摊吗？",
+          "embedding": "6Rb/DhDs4Qz0/ySBEOwb4+/5BR3nFAT//wUd9/neAe379QUC/gMM+/j+Bhvb9xYfHRf57g4M9cX/DPsRFOzx7Bv2ABP0GeP35wPvBwT8DgYI7w4L/Rfh8PH79fYn5vX89Ojx+/wC8hjvBAn3BRL65xL4GAQSGxAC8gQR5/j/GgkD+hQOBhXtC+/zAPL99+f+EuLxBfr6EuErCBz4/Qv/8gQJ9PMA6QEeDPIaCe/8CfT76AkHGwry+wr9A/wK7xj/3wUDE/YOBfPU8uwH7AcCBvwLCwQU6/T/CgLg3AQJIA7vBR0HDPoY/fr2Du3r6BYL8Crr+P7+4fkGBd0IHA/tCQsHBvEKCBIAEu0YDgDz+gz7AfcB+BD25Q4B9+wAHO31F+cMDBISAvkI+Q4EBgEBBvr+Auv9AwrfGvoU7OzpD/Lr9v73AAD7Iw0M/RD79Pfw8Psl//34ExMSC90AEfUS6wTV/gIa3/YI7PTv7vMJ8fv9CALsLfcO7fQl7/cS+NzoKv7nGAcXBQcDAQD+/Qf45gbq5xj9Gvjk/+JcAxICDPvoItsCB/P/9vju4/XuAf7yBe8Q6+H9+QYECfX39CoOCP8VASEEFQMID/X2Bwz3AA0HA+bk+O0C/hkQIdwVAPcJ8wAT9/gU/fEM/xv29+gYCvYU7/T1/u768e38C+v9/AQ="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "把共同消费和个人点单分开。大家一起吃的部分勾选参加的人均分，各自点的部分选「指定金额」，把每个人点的金额填进去。两笔加起来应当等于实付总额。",
+      "examples": [
+        {
+          "question": "聚餐有人单独点了酒，其他人没喝，怎么分才合适？",
+          "embedding": "////DfTz5gDx9h2BAu8VB/kXCfQB7PseGgER8+j6FOzwEhEJCf78DQcR5wX3AP8WCxcDAgkH9sMaFgAO6Pvy+//5BQ3sHOYL/xEI7wXpCQME/Pj49gXz+Rbr/+YKCfr78dvnCgDhABbpBgD+BwkD+/0ADgv8C/8c/AD1+PgJGv4GDvwNCuz4CQny7er5+fgH/fkH+P4DFfMI6BX8EAnw+Q7yAQH45g4jFN/2A/0DFev3+QcZ+Aj1/xX2AQcA/gzm+wP+9PoD3xDt4v/7DxX8AeUCAwjpBPkB5AQF/CQFGgQG+hIH9vER//8GJAH2/A30/jTy3/wB/g8F9QDf9gz/CAv+5/DwAQMND/4CGOr68wAEB/MCCPzx/+MZEvT49uzqCfj//gohCvkCAAL+Bu/n3wf2AvTmH/feDwoI5fH+8vANJQEL+ff/Af3/AvQA+f747AAf9/oOHgUQDgX78vsG3Qvd/Pkg5gcTEAT7CekF/fcBBA/+JOUV8fITDfD5FO31NPD9D/cBEOr77v/2DRcH7yDz9hzy9vL9AONc+AUl8AH6+cv6/9n79gL08//jCfsL+wT61+sDCf37BQP79QoG9f//8xPxIgsJBP79BBoPBP30CQH29RT18wH+9fQOFwv2BAX4AQ0OB/4Y7AsA4vfwEwYvBvvoBhX8+AIWC+v6/QA="
+        },
+        {
+          "question": "每个人点的餐价钱不一样，同桌怎么按各自消费付钱？",
+          "embedding": "AA4TCffx7P3u+iKBDfIY+vcF/woFBN8RCQEO7ObY/Pf3BRYACu74Cg719Q0G//wRAw8MDCEA2uEbAvURDuX++wP+/wz6Ee4D7RMP8fMBCggJ9gz05fjxBQ4K4fEJ//b68f3pB/zs/RTxCgEEEAUP+QcSDxcHBwIRAwj64/0MBOwDDgYRDQDxBv/8C/D95+4FHuYD7AAJGfYS+x//Dvze/wL48/bw/xwUFPj39AMMIAb04/4VCw7z/xcKA/YC9+/w9ePtAu0CBQH28gn9BQ/h8/cK/QD2AOT+9APz6g77AP4N+BD88gAL8wIcFAkX9BPx/yH45/f88wMVCej+Bg8MEgwEBPX29gQHEAcSFvoM+/kO+P4CAPQCCO37/vP/AwD/EfX8DO4OAf/87fn8Bvby5/zrHOzuC+7qEQgS+/kJ7ezk9/wG4fgDHwr5D/jzARHr3/wiEQAACR0ODvb+AOgK3g7e6QgM8gIN9f3y+uz09/QJ9h/9JPIUA/cGAfP9B/PyIgfvAw4RB/H16gULFAX7Ah/uBhsWDPn4/vRZ+foP/QL1E+kJB+H78OgE9OfdBf0JBAHv3QP99/7zFgMH6hQV7vgD+hzvGg0IFfHo9wXyBwbZ+gjlAwTx+wP9Dv0KIAru9/YDDPgEA+UI/A8L7AUACQYpFwnhCv8L8vj4B/kB+fk="
+        },
+        {
+          "question": "外卖有人点了额外的菜，共用和自用的东西如何拆开？",
+          "embedding": "AewOEQ7y6gQJCySBE/j59OgJAhrl+vIMKOn97+/r+PXp8gAg+OsGAwkG7Qr6CPoc/w4ND/oe9NYXBe0IEM3p9vzz6wUFBu8Y9QUD3iP6Eff3//oC+AHs9v/17wcDEwAG6/n6/OsF/iPhB/7uEAEb/RX89/cPD/oaEv4FAv4FA/cBEgIRDQDk8/P8Evj6/OsNDPv7+PjxF/wJ/hcDIA7b+RAB8e31BwUf+ucVAf/5Dg3w3eoPGSH4Ax4WBwLm/ubw+fz/CxMB/AXmDQH15AH48xMJ6fXw89EC9foI6AIICBoe9w7xAvMK7Q0WBw7z5xH+CCn/7/X/4wcOEvHsDwsPAAPnARb5AzQSBBED9/4UA+3x/xz2E/4Q8vX8Aeb+G/T3Jff3BfwO8evu/QD5DvDw8fvrIRHVEt3wBPMV7uT37voIBe4A4ur7CQ4M/AT2AhIG4vsTBO4ACxIXCv/m+wwX7/nZCvUD+vwHBPEFCwgC9vAEABr8IfgS9PEbCPcFGPsGPQb4ARUS8vz2/Pb+FQgE8v7o/BwIDvPuBAFn//cV7PvuJeT/+O8N7/ID6fLu++IG8fD08eEDGf/0AAsM9gkFAvUK8xvoCwIYHOwB+AXn+wDs/hX49hD37gID8Qf2FvYEAAD06Pv0EPkY2f3z+RIAFPIw9vPlDBD8+vD7Ee7w/A8="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "付款人选实际掏钱的那位。参与分摊只勾选真正消费的人，代付的人可以不参与。若对方还不在组里，先到「管理成员」添加，再核对草稿。",
+      "examples": [
+        {
+          "question": "有人帮忙付钱但是没有参加活动怎么办？",
+          "embedding": "8BULCAHtCRIABAyBB98F9uf59/8e7/AaEvYQ/PATAvUB7v4YFPnx+hT8ARMC9vcaAg7+DBIg89IQDgIO/fUEDAkJ+gPyEvIE8gQA//3+9wn4Bwb/+fTkFvv77P7+B/QHBPn1DwT8+P8BEPj2Cvr77QwEAfz7B/IaHgsU7/nqDPP3+w0OCf8A9gz/+uwg4PD0Cu/tBxH8B/v7BhoKCgcI+/4IFQPj7hUN//z46e78Bfz58g74ExgbBwj0ART+CfL9++n37uH98fcK8QD4BAbyAuv+9gP6AOH0/Of52Pn5AQz++wX27vQP9wfnCfbs8QDy9iLx8gAI/AATAwP2GAr89/n/Cwrt6fb1IPsCGOELCQTsGfMHDv3r+vT1DPnyEur0LALt6Rru8PHy+Ar6CgEH8wXhFvUGDvPiCPsA39vrAuHkBwAGCAQKGPUVCvUI9w7q9/UjDgX9ChIK/u/++AUL3vLw+gwT8QAG9/n6Bcv59QEN4hARGeT+BvsHEAr8+PvmJA30FxYOBAAFBAr5/Af9/A/6AyMFF+ne/xZd+/IUEfHvE/UBCvACAOYF9PgDBwMP/fQH2ugH9g8A9fbp7xj79Aj1/gv9HQEP8PoMCgwA/u/tC/f59Q798R/3/gf/GQb2CwoH/PcI/B8XCA0Z5gTjAv4eC/DX+yf++gX9EPwQDQ0="
+        },
+        {
+          "question": "组外朋友替我们先刷卡了，应该把谁记成付款人？",
+          "embedding": "BBkL/wvq5QMEGjKBBv0OCOAM/wsE8PcQE+De9Ovs8uv9/AETB+D4+fYLBfrr+uYL9w3uDhIO8t4NGggLEvwE6/b6Ax8bDfkM/AMB/vMCCP4S9Pz6AwHxEPL37/UEGdMf9A3/AADyFRzs+PcUCtz03P0RDfwJDAwPIg3/9ev4EPH2Cw4IA/396A31Bf8I8+34DPYKBfYD+9QK/BLnBQIABvbi/g7wCBgdBfcL2v4UAvX25gPnBgwC/R0MAv797/wBFxL5CdwM///w+fnuAQAI8foP7w79EvQO+OQQ3QgFCQAFGwoAAPXwCPX88Ovw9/rzFiH/+Rbu/hcp+PkADxb98gDi5QPq3/oDJg72FOACBfMD9/YJEfUE9PP+DPX4Eun3KekBARYP3vr/EAsDCPP49fb6Cvr5Ev/nBeoH9dDzAu/6DOwM5hMPFP4LD/Ts4gfyDPAW6xIQHxP6BfD6EAAG4Pnh9Q4dDw8GAAgLF+rj9gUH6RT89wYI9f4HCAjuBfv2IfQDBREkCAj9BxD8AQL/6gjl9vgACPL1BvVd6/cQ7/PoKAAI7u7/8fn++OzYCPQDBO/23gcEAgfyFgkGDgAI8AMG9/rvJQkTAP4T5wbx+g70+/EM9Qz49xf9BurnCPkF7BH19g/8CRgG5AwH6BEDFQAY+/X5FAH/CvfsFfcOABE="
+        },
+        {
+          "question": "付款的人不吃饭不参与均摊可以吗？",
+          "embedding": "9wYLFSLxBQjtFQ6BH/cD4QED/xQD/+cRDwMN7/D6/+QB+gwJDPf4/e0ABw79/QYiBjPv/REH7M4PHQIHE9756v7vDvr4/PEU2w3j5v4FBQ0A+wAF/gPkCPbx3vnz9uoDAfTuEur2Bgn1EwIJ9QsG6gb1DQABDvcXEwcT9ArxBNUFDv0SCfIK9/QECOIF3PMOA/f6/QIcD/kQCBb4/wLzAwP6BP7c+fwhEvUA7gjsDBEL9AoA/BUABAP6DwYA+d34+fjR9PP19//w9P/5DxDZD/AD5g39Aeb9++8Q3wsHCgD2+B7t4RAH/h7tDfn++xz3+jsA7voEAgUU9e31FQAR/vj9/fUH7RYNG/wJBv0V9gcLE+fvBPPl/P74/t4PEPIALPwRAxIQ3PX66goDGQTe3fffIff2C/X0/vL85+DfA+zeCBL9DPUACPcF7wf85RD74/gQAAP0FiD6C9j5Efsb4+/X7/wT9QznA/IHAdMC//sD6RT5AtoQ+/ETCuLzAu/iExH/HQIaH/kE8RbuDRD+7wbdFQzuH/v4AwRm+wUDDfbyFgAJAeMFCOsD7vnwGP8W5/AH6On4/xP5CQYMBCoBAwLuAiXrFw4NCfgCEhAV/P//B/Hp5hIA/hMUHAEPIxjp8QUT9/QCEAQf8wEL3/4FAxsrAvvQ8RL7Av4MAPQE9g0="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "账本精确到分。均分或按份数分出尾数时，先给每人分配整数分，再把剩余的一两分钱分配出去，让所有人的份额相加刚好等于总额。可以在草稿的「每人应摊」里看明细。",
+      "examples": [
+        {
+          "question": "除不尽的几分钱给谁？",
+          "embedding": "BQf2HPDo9RME/xSBBQIC9uUK9/sT8gkFCvwA9OrtB/YEBPX4EPXs/fT4CRH0/fUW/xHzCBwHCOwGAAT6CPfz8AUS+gwEDuX++QL93A8F+/UR/A4G/QPr+/f16OgNEQH05e0HAvcCDxPo+xP6/O8M/gEAGAcJD+0ZBv4E9/n1EALvAQEb+vL09f8J9ggL8OYUB+8A+fITEOQDAgv3DPLn9QIH+wXuBQb08f76AwAAFvbx+gQI/xAS/gL9AwP+Cv3uAw4A8/T2+BHxBAT2BhXr+/QD/wHt/Pv3//0N8hL0DfsBCAv//P8QBBLvAA378fr76Sj6Cvf16gYHBenvEAL+APv8A/z1BgQFCv4BCe31CAYWDAb08fH1+wb3CQf4FvMN//H4BwP7Avj1BAgM8/gE/fX3FPH9EgTpCwQZ/QME7NjtDPcOAPcEGOgPDg/4+gfiA+kQ+hEUDv0EAgD6APwI9gXm+PQY/g4L8fr2EfnyA/wA8BD2CvwD8/UBC/36APrwGwXjCQAZCe3x6Qv6FRYN8xEA+gH8AQDs/PpQDQ0M9gT1EvoK+fUJ5v3//PLY/voI9f8B3vIE9RP9/v/w7xcRDhES9B34/g4B/fUAGQAEARfz/e4GCRLrAO32FfoKBfv4+AYAAAIL/QYC8Q0U6AcFBBALFwX+Ef7f/QYLEvr5Bv4="
+        },
+        {
+          "question": "三个人均分为什么有人比别人多一分钱？",
+          "embedding": "9A3rIv/8/BH49yOBCeQOBOf6/gsBC/0G/P0G+AT5DPT8+wLz/vkD/w/++gcV998i8wLpBBgJ/OkEBfn//OPn8fUNERL8DODv6wL98vf//BId8wvpBv315Qj89OcMBwn86OzkEg3kFgUSCQv4BuUf+vkJFwAW/vEmBxH63+7vFRH6CvsU//nuAukL+vQa4fYRAAPqAPkCEPQO9yIB/gj0AAgK9/vxCgsADff89ggM+QX7/xIK+gUAHQP5D/0WFPn68wYFBvIE4hwG+Qfp9wXm/QcGAvv96+73+/wQ/fL+EBby/RjuEOj69QwHCfIL6wYE6zQG9gUJ8f7yBvELGwX0AxPu5Ant6AUBFvH1BOr7BQMM9vn+++nm/wMCCfj9Dunv+QME/QEV5Qb49Ab3/PTx9/XpFur6FwHhAxoS8e/y8O8TGe//BgL1JfQSEBX9+P7m9OUJCQYGIQgM9AwMCusT6gbuBgEh/gsN8Bn5DeLy+/799xL5Dvj4+/D/+vnl+vHtGynjEfsXDeIA6g7u/w8P9h75+RnyAfX1BetT//cN9PT1G+8F/fX5BfX49PLcDBYJA+0M3/kJDAkEBAv7+AoOFwoE9hHnEwgMFAj3/PwA+AHs/uUFBgfr+RHxCu/2CQgA9BX+/fgC7/4E7fsA8AP4CBEM/g3wDhP8BAMVGQn2Cfo="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "一笔费用只选一种币种。澳元、人民币和美元分别计算，切换账本右上角的币种可以看各自的欠款。如果大家决定换汇结清，先商定汇率和实际还款金额。",
+      "examples": [
+        {
+          "question": "旅途既花了美元又花澳元怎么办？",
+          "embedding": "+BsC+gPu8wn55y6B//cHCPAS5xES9+fpBuT+AQ/T0un34O7uAfvU8P4h7AP53e0YDQX/JRgP6swEE98pBAgN/QLzCx32I/8SDhz+1uAIDPT7AfoKEg4FA/Xl4tsWIgEXD+cQBgL/+gkAFw4JDf/8/PkWIAD+/fkR9AoW9vD2Df0FB/4LBusMBAkMFRj9+9jyBvP0Dgv7J+MECRTw+QoF/PMQCw/2+SUY7wYDCuv4EBPg/fv/AAf67gn6CxXSAQjZHvUKEPfr9eIOBAIO/e4TFPTvEe7+1dQPBfP2C+oFD/wPAA/s/vMR7unhFun83/YI+i778gUDDQweCAP4HAQE/QoMGAEL3wwD/+z1Adv4DQEI/dMdB/4L9fr18QzkCtsLA/EABR4G9ezqFhL7Agzx7ujh/vv2KuL2CegF6fLo9+PfHOAZ+ukED9YR6wUN+grn7e8ZGvb/AxEOBfb7Dvcq1Ovs9AYm/PAI0AfkGOX+8t32+wL+H94T8PoSDA3z9vzsGw3/GxUeDvv7AyPwCfQJ99z9/xICCQfz3wJuAPn/Af/5Jw0GFOX++fcJ5/H0Deb7/hEE7PMP7x3k/hIMAxsN8w3/AhTuGO8NGfvi/gDcDBT5+BLoAwnrFREdDBIMBu73EP72+xH5BPH+/v4A3/T3Fg8SEQT95CcG5uT78/YXEw0="
+        },
+        {
+          "question": "不同币种的开销能一起换汇算吗？",
+          "embedding": "AwgTEhHl2fPtDxKB+AEL9u0FAfv6//MABPLn/fDh2+cD8g0LE9MIBfr4//f/9fsW4RbyBioBDNT1FtIHGPcCAvjwCTEAA+AW6+oD9vj7ABAD+QUMDQHi/uv/7+0fAPQa+uopGQL6BvTrEhIED+cr+PoP/v0AFwENBw8TAO0A8enu/AYO/AHo+fwBG/fv8df+G/Tr6wHx6dkXABDvEhIdDgjv/gX3DA4Z9AgO5REEEwbm8/gZ+A8U+PkIIP3+/fkC9AXxBfr97vrc/hXvAvv2/wEa+w336eQD//oE//0JBvUEBgsM8gYO5hADGvT75QoJ9hwA4ucB+gkO+tX6F+cLAhUEBfn9+/HuEBUJGOgC9Oj//AAF9fUK8/nz9P3yFu0aFfHu+x8C7vDr9hb99hHs+Pjs7fAZIuja/gwH4+zs/M/3EO4O9+8FDuH5+wb27SvlFvUFAxAR/BHy+vAeJwj+5QTx+gMG/vj7/QMEDwv9DAEV/RPp/AcO/AACEfb79hMMMgf8KwIrCP/pDBECBAL6CgDjCBz/8eoN/R1aAujwCO3kFwgACAMX+QPv+/jYCBD+BNMG6O8SCg7z8w0GCxYCDRcQ/QbqBvgRJfLgBBAO+Bv97u/zFwftCQEfAfQAG+oQ+f/2AvkB//73AQQi7/UFEfsf9vn79x7o8gUGCPYJDec="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "点「拍照读账单」，把小票拍清楚或从相册选图。对照识别出的实付行，检查总额和币种，再选付款人和参与者。若看到几个不同的合计，可以按原票填入。",
+      "examples": [
+        {
+          "question": "怎么把收银条扫进账本？",
+          "embedding": "AxMfMAXm4AUOCy+B5wYDDtQTBf/58uUZ+PgAD/DwBvXo2vMFCdv46/PzABfi5vAB/AT3+Bj+/dfpIu0DCvAD7gzw/xUIFtX4/Q/z5QAODecN/e8E/voDASj62e8KHs8Z2vwW9AIa9AULDAgB8OEH3wAUKAMI+eUSGvMP9wULGNb28Q0CBPMDE+7/EwQO1f3x+u/e7//+AusV/wP9ESMDCQXv3gv7+A356/UU1wUa/SgI7Oz6AgYFG/oXEwoNCAfz8wzuDvkQ2eXuCCH77/QHCAH45fELDuvzAe8S5xv//QIIAur/8wke+wED++4E5wAFHzjsDPoF3/oV8+YQFgQB+/Dn0A8J+Rvp+RAgAfUgCOUBI/D0EP/68e723v7oFuoZOQsK+wsB9BInB/4JDvAX/wThC/71E/IA+Asv6+PwEun0H/gK8vYaIQ0WCwTn7QMC/wAeBgMXChrw8OfX+/EG4O7zBf4H9A0L5ezv/v781/v9+hkBHQEU3e4HERz79v4CPAICEBYW+g0FFhX0Jgf67Qfx/voJ/+kI/gRf9wf98fL3LBMLCOT/+/QA7OfdBvP1EPMA5AcCFi30+/f78B3y7RoPARzyIvEJAgsDDPjy8xT+BOf1/g/o3goN7vUCIP726QH8BQ7xBwgK6wQI7g3o+BQj99oU7wj/7/HjB+8TAOo="
+        },
+        {
+          "question": "上传发票照片后金额识别不清该怎么改？",
+          "embedding": "+QsECfnf8fYM+ieB7Rf7CuUF/iUO9/r7Dufq9/Tb8PQT8PD/EOH4+wcC5+oI6PkQ+fMJABcXDeYgE/cLB9YF/fcAIQ0IAwIQ8BIP1gkPEAgBAvr/CO8AHwQB3hMPL/sY8O//MvsaFgD/JAYF//AI4wIY8foFDu4dDxcD4uL7EuMHAxgbCAIW7+IKCQz28eDgAuL+/fz1/Ob/DxL8HRUCAx/mDQb8CgAH7fYN6fT9ACL/AgTh9f4ADQclA/gD7vTwDgL0DfwCAPDv9wT3DvsL+Aj9+g78AvIO8gD7+QMTEen7DQf9+wL27PkJEun8+AD3+Srq6AQN9BQUAwDyBAwI/Ans9gP1+A4FB/4ZA+oLK+wM/O3y7RP4+eXe1ef7DcwDC/kFAR8b3wEHBAPzBA/4AP3XFxDvFusBC/Qe3d7w/gkIFePx+AoTFeMN9Pv79PLtCP/8De7kBAAJB/b+DwII9gD3A+wW+wAP8voBGu/wAgcF5wMUB+MQ2fz7Agbv//kMIgb5Du8QKAv6IQYCIiDoAgXo8QH/AA4GCPNc8gMR8u38Cfjs8uUG/xDz5d/t9fwHCwrs8eoB+v39/Rby5Qb7ABX85hfxBPoH/BkYDQoM+gr7EAcD/ezw9hYP9e7h+esD4hD56hH4DQr70QkU5fz0Dg8t8+wGIBrg4vz5+woi9QM="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "在「成员余额」旁点「管理成员」，可以添加、改名、移出或恢复。有人临时不参加某笔消费时，只需在那笔草稿里取消勾选，这样会保留其他账单的成员记录。",
+      "examples": [
+        {
+          "question": "新加入的小伙伴怎么加进这个小组？",
+          "embedding": "+Q0I9gPw7QAJDhKBA+r/Df8fBfUQ9PMTDPYK9/gHFeII8AcQ9fME/RQC9w3z/uIC8yIBBBsJA98CF/kI7OER7PwD+QL2CfgHBgsLBPYB/hD0FgEB8e75BgXr8ezvDuUTDPMHDBcMD/ADCwnwC+UB+g0I8gUFAPc6AgUE5e8SCvP78woJ+RXU/ez99wD2BvD2BAX27gD0/ub+6xrt/hAB8AT0BBENBgLwEfXz8PkK+f/p/REJ+Pf+9vwZ/vwF/vQC6vHw8+345wPr8wfeBPsMBgEJAfb5++bw8f0KAwAEBwXxCwof9OMWAw4UCOfp+gXw7R779wcD+QsR+RD7Bfb5F/vz/Qjs/Aj6CwcXEgMPDv/9B/0IBfX88+v09PDz+d/zJgn5Bx0J/wUd9RrgD/H26xH78/8QCvj4FBAH+dQL++YTAQMK7/4NFQv6BPH77wPyBNgd9f8G7BAP/gME8wAG9PgB+P4VBvIQBv/2/QP76BIKBwkPCPgD3gINCRntBQ31JvYRAgUCCfwCCwP17PL59gYE8Az0FefvEv1U3AgLASDaHP8KC+r67gf0BvXxCfr5FfAK4fQR/hL08Qb49Aj57AHy9hH2HvMV+fsIAhUAAgD4CfQP8gvw5xMDA/j1FAr3BgcGAwMBCQ3//Qkf6A7zDPYM+fzi/xME8wUZCv0FAgA="
+        },
+        {
+          "question": "怎么删掉已经退组的成员，历史账单怎么办？",
+          "embedding": "9wYIJPvg5Qf++COB7wwQFfwTJxUa8AkaCOMNBPHv+/8I9AgWBfTZ8fvTBw7v7P8Q8BIU/RIR8M//AvEVAPL6/PIBCv/yAvf9CQQI+98aEvINBvwGCAzkFhLi4PIhEPsN6gQLIQD+Cgv9Dv7/Dej7BgAAEw0PCAggFvP+5v0AA+kMJRUN/N34Burx9Q/n9/X3C+oM+gL0+uH16gvsJRQh/g3xAhf7/hIS+PoL8PX/DP3p5/UDDPXs+RsRCu3o/wL9FPv7D+np6wbw/wjnFPMLCAj/ARQKA+3o/+kb7A3+ACcCDA4B/PUMEvYIDff/9/z6ACTZ4hDtAwUh/eYBAgn7/RH7Ce7/AgwP9vAQEe0hAOv9KQoODBPn+OP38ejyEtr/GfQTBRIHAej5Bxb4Bu7lBPj/FAn4Euv3/PYO68b+AwIVFecN7/UJFwH96fnz4Qn2B/YYBfYCEv3+Dfj5ABAG2+cBCRMP+QkMCwjx9/vs6Pz76/sDBAD/5dUJGhPeBQQDJQwN2AcYFwD1CAHsGAcB8QDs9wLW4vP2Efpg7S0H7xv1F/fv8/L+8AD7Fv3rAegEEQT98ggP/hzjEPoM8hPyCf4A9PzeEfsHFgcdCfv9/BPtDPgM4x0GAfsG2/j78tX3CwEL6QDzCxD34/IY4Pv1FfUN+ej7BwgABvwJAOgDA/I="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "在草稿下点「保存草稿」，下次从「已保存草稿」继续。确认前它不会计入余额。已经入账的费用也可以从「账单明细」展开后点「编辑账单」修改。",
+      "examples": [
+        {
+          "question": "没商量好怎么先存起来下次继续填？",
+          "embedding": "AQ4IGAnm+QQFARWB8gIS+fMPDf8F9fkFB/sK9/L/Duv38QsKDuz2ChP1AAjv6fYcAA76CQLzCuAOF+UP+uEB8PoJ+A71LuwD8fML9Aj7+/UHDfULDAv9DAvt4vwCE/YU+QIPCQH3Egb4HuX2DuoX5Q4KEgH8AfgvFwUQ8APuDv7P/wsEDPP//fLsBA717+71Ce73CQXp9vUcB/r4CBHz/BXnEAf+BwcV+xcM8PHvFPUJ6voE+AH3CAMK/AQE6SQB7hX+A/T5A/zu+An3EfYOA/sH8gQEEOz39fH+9/8EA+7+7wH+8fAK/QIBG/j+EeX5+zD75uv+Af4G+AP99RYM/xvy6vb8+/fyEPEH9uYJEP7sDO4I5wrqAen8+xPqE+ztFewGBBYJ+AD+D/EM8+7zCv/3FfPwGeruC/QL+/Pa7O4NCef7BwgOCfsO9fL48O7mAvb8FPIVCgMI6QEAAffp8PrzG/8R8ggN9gIECP/rEP0A/AT7B+cA3O8G+A32+Qr7KPr/BAsLDg/6+u/fBhAOBPUK6wL+A/3kDgVa7wMdAvTwIfIP8u0B7QQN9PPs+gkFDPL48+UP/Pj/BA717QT3/yAYDgb7CgoW+/UY9xIABQUGCeoGCArv7v8O9AL5BuwCCPcQDgseEQwM5Asi+wfy7xMT9vL6DxMJ4f78/fYDBv0="
+        },
+        {
+          "question": "之前已经记错的消费记录还能修改吗？",
+          "embedding": "BhIG/SLq6Avq/yWB8QANAeL0ByP/C+IUDev9+Orb6vUR7QwE/O34A9zz5ff75hAd8REJARgJDe8dE+sNHwMT1hP3EOzkBOsk9AABBesIBAr9CfUD/BD2+v/x0gomIPAN6AYCFP/6G//tAOknFev87A4pCP/9BgQeFvAC5fgMA+LXFgIhDvIB+/cPCvL06dztEPT18Bv09+wRDw3rGAsQFRj0DO3vDvMiAvkNBvYKAQP06QnKCP0H9BQgEv8A+xMZ8AHbCvMaAvDtA//8BBfy/PwR7wINFO7t+hz5COwV8Ab0Gvf96O/x9N0XJesZ6+sGByLp7hIOAgEbB+XjHBwe/gjzG/z69wcLIgAM/OcPAurqFfoA7hf48eXk5gvyHcEVF/oGBh4P/f79CfgKEgwE7fzdAPT8++YJFO4Z/fb4/vsUD+75BBwNKgX89evg8ADx3OgSHQDz8w4UAuf+FQP08+DfBfoDDfju7PH+HxfnBvT74AEM7vAR4fgDCQTy7uAELu75DikgHP72Fff9FwP8A/3k9fv5/gL0AulkBx8s+ef7BAX/4gHy/P3+2+fX+t0rEvj2A+Lw/g0GDBcS+vkB+g4W+PvoHvsIA/78+v/07gv3/v8EAgbjARb//u3sB90B5QYP9A3xGAL53wIr7gn9/goZ6drzEAoHBfQTBAAJ8wc="
+        }
+      ]
+    },
+    {
+      "tool": "guide",
+      "message": "如果大家已经讲好比例，在草稿的「分摊方式」选「按百分比」并填满 100%。如果只约好了谁出双份，就选「按份数」，例如两人出 2 份和 1 份。",
+      "examples": [
+        {
+          "question": "我想让一个人承担两份，不均分怎么录？",
+          "embedding": "+QUKDwrg9Q8BDxaBBwQLC/gGBf/6/ggJDP4C9/II9+wXBQn2+/gJ/Pf35wru9/gU/A0AAwYSAM8NDQAA/e308u7/EhH8CusF4RIB5vn1AgQL8hjzAAf88wr45vUfBQoY6PzsCwn3/gz0/P/+At4E5gMECAgA++0p+g721+f0CvzvDfQUAvns8PD75AP83PsF/uX98vj/COcR7fj1BwHyARP2EgcJAgkVBvkB5QP/9QX+8f8G9wn5D/4C+/MHCAryCAEF/OsB/P/u+AT+BAn6/e7+9w/4/PnwCu8T+RoSGAvw9iH89/8S9QvzB+zz8PwN+DEL7gQC7gL///T/Awv7Bv7z3/rz5Pz1F/UG8v4E/+sBCOwH/fLr4/z1CfHwFez0DfUKAAQM9/L4CP8A/+n56/39D/MAD/nYEQkMAvH27+MLHN33B/wPF/kPAAf+8e//9PQV+gwQEAHuAgYJEPkP7wDoDQEi9/8QDRIGAPT1Bv0EChf2DPv45/H8C+n0FfzyHxXuBRYdGPMI+xDrBhAJ9g/z6goEDgf8EOVWAgEUCQfxHO0NBvQAAAn2+/XhGBL6/ugF8vkCBQcFDwwNAAgJEgEZ8xwCIg36/f4I8xD7+gP6/+MFBvjv9PgB+fz/IAP+9QcGAhUFAwgN8QoO/P74/ggY7gD5CRjrAwL3DPACFfI="
+        },
+        {
+          "question": "按照各自约定的百分比来承担怎么操作？",
+          "embedding": "/Qb0Ghfn+Qv0ASCBEfYL+f8RBPQNDwkXCwL+BP/59vEF/hLvE/AU/Az0+QYB6/MaCxf6BQ35BtIH/u3yBfT57fEU/hYBCucC+PcH7/nqCf0R7BP0BAv89gLt6egF/PIS2/n6EQr/CggDDfj2COX76fsCBPb4+vUN9Q394fMCDQnv/PwVBgT//vT+6gYAB/r6Cf/09/cEBeMBAw389Afh7Az59BsB/RgI+OsA5fkGAv4L2/EH/goEBw0V+fb/CgL2+An38vv6CAfhBQoB/PgK9PoA9Prx8/Lo8/0NBhL++O31BwUIGfIV7Az6BfMD7/MD5icF9wIM5A0B6wMNAxoA+/P93O8RBf0CDQMBDgYH/OoCAvj6BPHw8+3/AfD2G/b9Dev6/QIKAAH8ART2CAP98AvwCu3+GwvTAQIcAPL46+0J+/EM/AAUJ/cOBAUCDgLy//sR+P8S/hL4EgMNCv0G7wLkAPgR3QMK8gf9E/3g/fsMBg7zLRDz6uwLCe8DC+7xGwn2CAQHCAwD+RHyCQ8M5//58QYWCADjBPBh7fkN+BDpJPn9/OwC9/cN/vHiBgkDGvUH4OcNAhD4EgT8AA8XBvwU9wUIGP4AC/kDAhAP+w34AvoBAv3j8O8D/vH9GAAJBRUB//gB/wID+hsU9/r0EPUgB/PzBwgA9gLvFOnyBO4="
+        }
+      ]
+    },
+    {
+      "tool": "settlement",
+      "message": "",
+      "examples": [
+        {
+          "question": "最后我应该把钱打给哪位朋友？",
+          "embedding": "DxUVCAvf8QTqDSaB+PT59dnz9gAN/gEIBfXv8fTxAuz0ARASEOH5BerzFAkK+fYAAxXpABEN6+8JGxL9+e/27gQM+gcGC+X8BBL5+vwXBOgSBPsT/PzaDvoH6OYA//AM+ecBBfkCDRf4/RMJCuT//OsbGwgEDAEeCvsN6PryIPL08QIGAAUDAQn39v0E7ewM/gLxAwDyGdwABxb9CQbxBQH8CwjpAiP4Df/u+OsOKf0H6xrn+QoT9PILG//19fvh9w8GAOMB/gD4+AD3DfvvAwgP9P4A//DqCuEC8BL6Hf/cDRMF/QANCPT49/YI5/fz9S3uAhcK9RMTAugEDPsD+gX44ez16QT7CgYJF/X+A/3/DPcE+PACA/n1+wr8FPr3E/v1/xX/8/PxBgAZC/kTAwL0EfX/D/brDQD9APUN5u3xF/UX5vgYCO7tGQbt3PriE+0J/fgVCAr39ujqCA4I7wX1Af4Q/A4C3vr7HfP9/vP75hT6B/8P5vEA+An3DQj0IvzpHhEeBgDz9QD7D/wL8f8PBwL4APXsAPdX+wX+ARICC/UM+/cT8Qb4/vHkBeX6/QAD4fkGCBEOBvTz/AIO+hP5+gTuJwMY+RAB9QLtCxvzC/ALARTjDw/wD+z5BwgA9v/xBgAg9woV9AgY6AUEE/4l/g73EPQF6P7t5vQNEgc="
+        },
+        {
+          "question": "我们之前的账还没清，我想看小组转款清单",
+          "embedding": "+xIFAwLf4RMSAyOB5wP3C+4DBQ8O7gwXB+sGA+7v+ekI7vgNAOno/vHqCgr38gER8xL8/RUCCtf4HOseEtkI9/fjBxURA/AFAAYACO8YEO4PCgYI+wbz7fQA3+ULDuEG6w71BvocBQv99hYIAOz35vEbCgoLBfwcFfQP+tz9HfQQGRYSAOL3/fAFDe/c+vHq/fX99gvk+PEM8v79HAgVCQPv9QX/DAgmBQIf5fwC+Qf/9AX18wAH+woCIfzk4AgF++/dEfwQ4vDgAQTzCgcL+eUM8Rb1/vzyCQD45vwBAfD/GhEPAvQY+f0DDuH4FvD4ASbz9wvr/RgQCeLpCwsI8w8B9/3q6wDx/PsCD/MK/AcACQoHEwII5P/15PXoC9QZGwIH+CsB9PoOAw/yDPf+AfjvBgQOI/L5AfgE/tz2EPgQHgQC8QUJI+//Bvbp7AflA/QdFvn5D/0MDwIAGQb63vDz+PoD/PUCAuLx/+3p6wcR8gECAAz4+P76Bv72BA7sHfDw8PcWGfEAFgsABA0G7wXm5xX7BgbpBO5f8gwBA/72GA/39vnv2gT39f/h6PT6G/wH+/QB9AzsCwb4/xj5DwoCBh3wFPsJAPUM9hEM8g8D/fsX6vzyCRQDEOoKEgX+/wcE/RgA9fkK7AYX5//1De8QCwEJFQXx8BAA/fEi/gs="
+        },
+        {
+          "question": "已经记下的费用还有谁没还钱？",
+          "embedding": "/Q8GDfrn8Ar/DSuBCfAWFdYC/gQWAQsICv78DOT37+IM7xMRGerYBP/xBhDz8f8P7hL2Hh0A+/MEDP8BGg4I7gYTAQoZHe8J+f30AvMED/wVBQcSASLxCOUL3vYT9PP+4PkFEAEEDBDw/PoDBfUH7f8lEg4SDgEoHPEV8wUGGfPcAPUVCecC7vYPAwv/7uPwDd3zAg36/OQLDfzvDvsYEgn2BAbyAwof8gYS+v4AEQsD4/nt/wX/9QL9+wcFAvT26AH/CO398/Xq/vD8Cw0F6PIAAQH4+PoDBPX65fPx8P7/BQQABPX9EvsGAf0N9evn/ijg9QMN9AEIA+v5GPke8wniA/3o9AAFE/33CNICAPPvEhEI+gL18fj38A/9JfAOD/QBAhjm9gn1EPcY8+gMAwnoDOETDfjwBucd9ugF/eb0DOoDEQUQH+UFAezuBO7q+eQkEiAJEQoGAev2/x8E6PPqBf4U/PsF8fQGIu/g/PUU4gAG7v0E+OkOCAz17vr2D/vzCxEr/e/09wwKGv8A7wwH7vL0BvHoA+5b8wcP8vcCFAgC8wD17P0K++Tb4v0A/PD66vMEAR8B/wzj7hD8AwkC6P/5HQH2DvwR/Aj//RYFAusj8wbu9goCDeYF+vv89wET/w8S/gsT8AEe6hH/CgkQC/z1Gwbx4frpFfIDFwI="
+        }
+      ]
+    },
+    {
+      "tool": "quote",
+      "message": "",
+      "examples": [
+        {
+          "question": "想看刚才这笔还没有确认的费用每人得出多少钱",
+          "embedding": "9AkLAfrsBRkB+CWBAeMGAe36/QcUGQoICgz28ewE9AEE8fMBCvD6/A37Bhni5/kIDwDhCR4GA94JDgQRFff/9PsDBwkHEuoCEAf2Bvb+DAYc+w4R/RH2++IG9twQFPEJ2vn6CPQAE/8EEwL7+/j9+RIZFQQd++YpDv0b9fLyDhHu9gAHAPD66PoI7vkD+ej4E9ntAxP+DQUSBfr2+Qb7CgsJBw3z9g0c9g/89uYTARXn6gn4AAMQ/g74+ff0+QPq6fX++ukB7gv2AgMIEQzy4u/2/vz26wkD+/f67PoI7vT6+xfs+fUP8xANH/QECvnw8iP48wv3+gcEA/r2FPz/AQ75CQn7BAD7DfAN/uX8DP0H/foH6wfv//b09AHlIN4ABv/w7xP69R/u+A4FAfsCBPLhGfEIFQXiEvMb+fIC7/sCDO4CCRD/E/cC+OoEAPrb8u8cGP78CRQhF/ABGP4V7e/W8QMS/vEV6vn9Dt367AkX9wnzCfj/C/MH9grvBQH7Hw/kCe8RJPkDBwv9BRQK+AH1/RgFDvjgAgFn+v0GCQgOGf//+/Tp5/4A6eHq5hD8Deb/8fwOA//zCP/r3yYLEAYG8Br7GQLz/QHx8Rf1+An0EOT7/vDi/RMAGOH9DfACAPwa+PQF/PoNBgsP5gL49gUQGv32BwX23Qf8BfD/Bv8="
+        },
+        {
+          "question": "请展示目前草稿中每个人的份额",
+          "embedding": "/Q0LAgD75Q0CCiSB/gIRHPv++vYN+gf/BAMF7fnrAvT5+wL0C+r7Agnq/gLk/QkD+QXr9R0CCOYMDvf/Aur1/v4QCgQCFPUF8/X19fL38AL37An5+uzu+PPv+vMRHPQH+BPuF/UCAwPzC/fvBwT77Q4WEfsE9v0pAgQa4+P/DQIGFAMU+wX39/oD/O8J/fb8CN0Q+gUFBev88gX9CA3j6wz0+hIDDAkPAAMD8QwSARDy3wb++wUNBw4ADfsIFwcB8+v2DwULBRIT8AYF8AXk/QUE7APo/v7yB/AU8gf5CO/rABz+AO8U+//3K/P5De0R+SICABUQ8gUCBgD1/wHv+v8EBOvgCAEEEvf0+f8EBRERAf77BgX7/e3o7P8G//ENBQAGCAgM/wjwEBzq+QL24vnjFvX3/wX3/f8H+QwA8unvFeEF+wkJDOf77eXv/u7o6u0JC///CQgGDfkUBe8V8wntAwccEO8J9QX2/xL3/wQLAf7+DQf23vz8+QbrDNz4HAjoAu33B/gIAQUCDP0J+/759PMGDAsC/QhY/v73BRb4F/0O+Ojr7gr3A/fYAAIGFuQF9vAW9v7oAhD/+wkXAPv+AhICDQwH/P/4CP8NCQj1DeP//vHt5xEE/fr9Eu0PAgD9/RD5CAEL+AQf9wD8//MWF/0DDwj5/RcAEPQJ+vY="
+        }
+      ]
+    },
+    {
+      "tool": "price",
+      "message": "",
+      "examples": [
+        {
+          "question": "帮忙算算优惠之后的实付和每人价格",
+          "embedding": "+A0PEwTj3RAQ9C+BA+n4+OTy9Q8dBQ0RAv34BPIL/AEH/e4Q+eYR7gwFAgMO5wAV+w37+CAJ9+YDEfkKFfgE+P8LARH1D+776OQK9/kL/voI8w8V+wnoAeoC6+wO+u0J1vrz/vv9BP0FEPYFGfIL6ggMBu//DQobEx4T7u/+9g/4+w4S+Qv99fgGCvMJ+uP2CAzi8QkEDfoKChLyFfb1//kBCfLv2SAV6fr27fkBGQ8A6AsA/A8YDw70BvPq5/8P6unuC+YIAQX2DAP9CQP08v8d8gT17/r++vb45wUO+vAD/wX/C//u5gQRHQj89gj48BwI+ff+8QgHAdwWC/oA9QYPB/juCfD9AAL3IuX8+QX1Ceny/foA+QTn9hoCD/MKFPf99gkFC+/nDBP6BQYa+gj6AenuGP/nDu0N9u8O/+XuBgj8Be/6F/n5B/0A+hTf9QQTEgn8FhIIE+0FGf0B5grY3gYR8A4F7PT/+Pjx8goM9wf5F/0F6PME9PoGEQD/FgrrAwQQ8QP/EQP9CwcPDBLo8hoWCgHZ/QVlBPcCCvoIBvsI9vv38e8E8ujs6g8BFegFAv0N9+3+Dv/s5SAL+hEN+R3zHREOBgX2+wnX/gjX9vXuAgD28Qn+CPj3EAb/9gHy++IV/vMEEg0Z+PrwBgUYEfzlAg0D8PsADu0JEAA="
+        },
+        {
+          "question": "能帮我算折扣和餐厅小费吗？",
+          "embedding": "ABUOD/TnBBLq8BuB/uYK6vHm4xUQD/IP+/8ZBdzwCfAB6hIF+fAD/OP9EBL36v0mBgEU+B4H9tQFDAgUHPYC7RflBgTbJeAi4PD2/u7zFeoGFPcc2Q3o7vby3O0S/+Ui5PPkBAj2AAfbBgkUBvgNBP8LKPUAEPz1BAj94ekPAe715gUjCgf57/AeAuvt99n+Fwb2ABj2C+gMBADkEPsEDAT8Awvp8/waEvwS8vXvHAgD2wH2+xf9ABP8GQfy2wPo7/PtIfTz/AHqEhIPAAXx8+YH7wHl5ev5+vfyCwIB8AH7BAsO7vj/8fIB+v4IBR0H/xQU1/gOAPweAc/xHwMoAv0b8/0B7Q35BAIHEgYCDBL8Dejs7QL07fTn8AP5Jv4fGAPhBhIO/vjr7wkQBv8b7QUB/d8FIPLoFAETCwjo/uLs/vwSAQHxFwf9AhEJAAveB/MqIAnpDhzyGfQCIAMF5xTi5/cI5/kBAfz4DPTxCfMQ6RUDBewV//Qb9/7xAAnNDQADECUOBvH2AB8F/hQg6CECBxMFEAr//PZjCgsJ8//mBvcSDecF9vb+4+fW8xIa+AAP8tHzFBj1EAsJ8AcAAgQD9gvUHxIcHgX1/Afg7/bl+wr98hrl9Rv+DAX0MAv99Q787QAJFP4M8BUf4fQU7fsLBe7g8vwU/QH49+UN8wY="
+        }
+      ]
+    },
+    {
+      "tool": "draft",
+      "message": "",
+      "examples": [
+        {
+          "question": "我想把刚花的钱记录下来",
+          "embedding": "ECYTBA7r8hf8/C+B+PgED9br7PwKCPMlEO/99vXp7vIA6vz6/OYFA+3w/y3z4wUJ8w/ZFyv9BNMKDvkR7QMF/wUN+AL0FgMaAQQN9v3uBeX6BgUHAP/88P754OMr+vMY6f8N7QQZ/vzuE+4HCOv+6/QiABgFBfkeAOUcC/MA/QvW9QYFB/T37P0a7xIG2OLgD9r2/wrqAPQHAgDkERMHEf36CgHrAwoh9QP+2uIRAgnw5A/u9Q8R/ub8DvwIBf728vz4FO4X9On1ABj9A/YA9PgI9w/q+fXtB/r83/MH39rr6h/n3OgCCwwNCu4N/e0FFCLnBf8Y1hAG8/cAFv8g8f7rBP798gXyFfEOC/0GEfruA+wWEQr89OPs+A/tJ+UJGQPrAA3q/AHrDB0HDdoQ+vDjFfcaEAL2A/EIBf4O7+QQGuT/+A4XHwHnAvfv8unY+eoNLQgCEx8iEQD2BR4G9gLu+QULEPcO1fgBG/z6Av8T/wgREAMN8uz8+gz0Gej3Nfj1CyEoDuIFHwDtBvkUBAn96wX0D/Ps9/plAxAJ8/ryHwod+ezw9A0E8NbV/vYIJ/HW/ucD+xf9Be4ICBAOCgod+xj5Juz6Awb+4BLy9ygVEuwWGgPP8A/5DPf6GvMI8A0G/B8eC/kR8vQQ7/P1APIT++oA/wzx2uv2+uMi/hI="
+        },
+        {
+          "question": "请把这笔开销整理成待确认的账单",
+          "embedding": "9gITIvDu6goa8TiB5v4SF+/uARgMB/QLDfLjBurc4/YC6vIYFe/v3gvqBS3y2xcOGxwDCiYZBdr7JtwPIPcP7fgF9BcCEe8UC/0C9Qv8I+ce/fgo9xbRC/ja084gFOIYzhb6A+EMAfTtBuwBBAfw3hAJLvsHCusTD/ga+O8ODPTuAQEQBgTt9AEX9BDu/ePqEujk9wEGCQcJ9Pr7JRz4+fDeCxDtABYf6wYR4OoM8gDs8PkGBv0GAyAJG+z37w7h/eoUD+/+6gnrAAL+/g0B5+L9+BHq7QD99v4P+/IH/ucAAQvr8RAIAgIMJ/j8C+b68iT57vLxGx4NCuPq7gMC8hLxCfoNGPXqDvv+/fH3BesCEAX/8Bf6DwHq7gPrKNsZFwMlAAYN8g/tDh0D9v8E7/vsCfbzFfna/eoO8+rv9+0BFvMK9xEEIf/p4/zj4ALb/wwfAw4IDRUDHfUN/AT86eXg/gYA/PwD//buAfb7+BIM/xTkMALp7gTk/wDuG/UEOfP6Av8vBgvsHgUGIBT36vfz/hwC9OnpBeN36xr98w31MBgAB/P/6f32+e7Y9ur7Jefu7P8T8gvdFwPy8CENGAYa+iHzERMD/f8GAfbp9Sv8BOIHBP7o/AUNCPryEfH/AwkTAvgMDP3z6wcN6Q/o8/8OCN8E/gf55QTjF+3/BN4="
+        }
+      ]
+    },
+    {
+      "tool": null,
+      "message": "",
+      "examples": [
+        {
+          "question": "明天上海天气怎么样？",
+          "embedding": "9QfwHvz3FSUX/hmB8QQf3N7/8wD65egE8/Ur+97pEtDx9RTs5wz3BAr4GvID2/EZE/z3HwPzBOz3Bd0EAwEOGCD2MBzvJQoF2Qr8ww/WCtkC8xQSBh7h//sa7/kVE9gADdPgAAwAAQIKLx3bDR388fUX/uMa9ycLF/IIAffqFxX9+Q8S+fDyJPrM5PwY7u/xEQj0Ghn0+PkNGQ4B/xYHFeod4wME7Nr38SsFBAYW+PHr6Bj99gwQGgoWAfLyA+Y98efc/wL47+/t7yIRDv4FAeza5wzsA//k+PIT4xn8Fwfw2QIK/wgV1wHbI/ziCAvq1zDqAtMS2v4AEBkp99X/+RP1+f3y7SXzFPj/7NEPGRHzAwYdwv8P9hYb6/L4Nvn1/e8XCO4z7O4g8zYH9TMFBx/x3fUKAQU+8d0L6Obk9fzZDOzaGevzFfsgBOL69C/I38wZMQMTAhwdH8vtOxX3ARXjAPUW198g3w/t5QX/Ngv5AgroEcIZ1/0U4R3/6fzaLgPoJvvrFvT9C/nu+uP/A/MF4AEcAwkF/tlq+wfr+vbpDOP85voBFBrv6urk+BEBJRftEBED5gLk6v768RH2AP/8Nx4EBv40/PPm+f8kGPgCEOH/EOXgyiEZFAbz6f4G8wUk4QQ5EAELD/ImH+nuC//m9QwI7goQ9+Yl/PwDH/s="
+        },
+        {
+          "question": "写一首关于月亮的诗",
+          "embedding": "NBYa9wHmHP8++kGB6vnx7yP42/Pg6+zLE7/syd3t/vIOAiXA/PoN/gn4BNzZBuQD8e/h/iv8GvoLGhHv8TnxIxcFASPxIQlO89ICq/vwA+398dv7+/D1EBTR598oHhEJ9SzT0ysP3xP4HB278xP/99QHAwIGHgAN/uRaMegcD+QH+ejiFQP+zgwJ6u8O9hbu8d3sASD5/P0M5v4LDAYK6wz3FvXLwAQb5/IDEx0eJ9zr7vkKBP4PJvfv9t8NKBDUFvT18/0F3yANBu4tFxgJ+ur4DxDl6RAWGQUO6BwBHt/+/Cnp4hc7EtnrLPnR2gkCEi8GGeb3BPXr/AQAAwno2g7DKh/V+tHl9f3ZDA8PD/3vBA4o4A7j8gQj6uvsCOvhBgH7EfMLAPUYEBrrBOwAAuwC9x0G9OX95MUN4AUL8+PwLv3mEQP7+wkK//UU8/7m6f39JwUG/iQb8wYP9iMEFf8CL+0F9ef15PnYEiYQJffhBeoNDOpG+OQZBBn0IwrkNwTgN/EvENAUEQ7/C/sBDPb36AT13fkM5fx77/4hK8v+B/AZCO3y/A0C9Pyb1wrl5gPOLBT54yf82Ab54y333gEZMOUR+AML2PfvJQASCQzVDdvmBvP82QzwFxEl7+PrFgb9FQUrBwn/8RoO8czzISTmDt7fAB4p8Q4bGQQo5Qs="
+        },
+        {
+          "question": "能推荐股票或者预测行情吗？",
+          "embedding": "APwMHQjz8xwCDSyB5Ab2+gPz3eP6BA33/94B+ugE7w7vEAvx/wL4Bvnt/xzy8+AZDg7r9gft+ucWDO35H/by8zcA/xT+/tr+/O/6CgrkAQMLDPEg/u3gCeXi9uIPHP0L7AAR8gMA9AL/EA0EJP4XF+UMAPQC+QYKDvj+EvABChTcEhcN9Pn5CREK8QcGH+ru2vrjDhT+E/j6+O8I/hAPAxUHBgbv/xwSHQjv4f37+AP+2Azj//Uh8hgQAO///vL+9BgN4AIJ+vz69Az5Egr63PTr7PTtBAUG5gn3/wQCAPHaBxMN+/8J6//2FfPmCxIF1iARAAIM7gX16/P+/fMQDxwKAu3rHAj//fIOAQQSEdgI7hTvAAn89xYG7wUADOkQGfIFDRQM5wLyAgDy/wz/8/3vAhMGB/r1BwTr8Qnz+eTz+wERDAQM/v/oCfsG+RDi7gTe/+oUB/T0Dfj7DRkC/BLi9wcOBfUR//cJEAfr9+MQDgkT+uf2CfYWBgHoDAD4KP7YJvQHM/8ICv/u8fcCChL0/Aj89fr56fZd9g0KGgHtGPoH8ecG9AD69frj9PbwGu8FBtwL/Cfw8hn+/AgPEg8BIfvyBwQmAgoMByAZEAz79eYH9ubl4wTvBvbt/u/3EvIU7/YKDP8D/OkvE+n4AOkK9/L58BL18hYJ+uj0Fvk="
+        },
+        {
+          "question": "怎么制作蛋糕？",
+          "embedding": "G/YYBR7m4AYsFxiB5z8e+wMd+SvY/QDxOBD6ytr659kA9Ov+5+3zGg7YCBX18uEuARboQR4AEeADBeD7APwe2/zY2y/IIvkhAv8F7i/POfoMI9r4o/bU9hMC3ODt+A715CDuJeES5xIgCQwO5OML5QDz1voO4s5EGPnf7utHHMr/+/L2+Bz4C9gKywbW5t/q/+3p/+H1OTI1ChMjIRr8Hf0HDSAQCQP7FN8W7vX1GB8W1eYMEPgEReT62Pkj6OzV+xUh7QLV4f/5Dgjq0QQU3PYs8+0T4tz35ScVJfsK6ewNBtca8Br/CgAPCf4D2Rzw8xoIEvEWzfkh89b48BAA49vo2AIO9SX2EQz48/FP6wvi7d704A8F8r/RGfYDEPDsDvzoMukC/A/1+wK17/oS9TDlHeoW8tAU5QgA+9rl3LL9FvsT8CsZKQAg8QYRDhH+1+786RoDPg8EKQDr1xkW4fnZ8iIJ6CH4Awjpx+4qH/vf+/z1E/8qKAseLvMQFu3zEO/wO94D7+AMBf/2Aw3o3Pgy8B/ZRg0eADJ689MKBybXDOn7A+bk9e88BQrnKQojEPLkw/oT9U4NywD8Cfr77A3iHBziD/UbIe34CgrdD+7y6vjm+Nvz3BoR9RHrIScm/wbx9hAvAv8CGgYD8xLZBxwB5N0EP/0JAyjc7Pf5/R4="
+        },
+        {
+          "question": "你最喜欢哪个电影明星？",
+          "embedding": "/gD5Gubn8hzM+SCB6PwTAc0R/foS5w325Ps37f3L+usPDAbd9hQDSPMTLw7iHvIH7g3sAQMdCvfs4wYIKBgjAVYyAuTVFPX9EOX/6vn/C/re+uMbwwLX4Qb/BOAR9vbbGQwTGR38+cvaGQ/s/+cOGbn3De4WAx8hLM78AP/dKBvd+wb/HfMhNPbZ4BAd6ST5J9kJJBgLAuUKBArwFhv/CAIG5ugG0O8DEvbf/gvnBvMb4zHg8QcA8g739ebv/9nxBfLp7+zlMgD63foI7RURq+7KCOkDGRseIgQV3fvw/OzNJP8wBPTrCP/uHuoP5w4e0ELfD/Tv6f4WFt73FPTTHPfk2gXHDtIN2wQKLQoD7AoV9+ju8Bbs8AcEKdsWBv8L+PfrHOb97/r1J/fp6vnk6v7uAAcfBBHyAvUc//gB/N/wEQzlC/ILHujw/QDeBvXt/fUMCAwjEfvc6AIC6RkA7hQgEhjpM+QhzPj4CCQc+ALX+RIpJAoNFQYpGP/R8hcDDfnt4w3eGgLw4BsQANv/7xb70e0T8ub9EPJ6IPsBDfft/AX05u/39fjELhri0eAmCRMj6+sG3yQo/yv7J+Yg9g7ZLO/eISwl7+UQ8+gJEQ0F9t3zCv7z8QLoDQT49QDgBekbDBkQGwYZCfAFJNID/AXkIin1DvnyAQ4fAPow/A4="
+        }
+      ]
+    }
+  ]
+}

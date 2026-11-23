@@ -5,6 +5,14 @@ const SplitTools = (() => {
   const labels = {equal:'均分',exact:'按金额',percentage:'按百分比',ratio:'按份数'};
   const numberPattern = '\\d+(?:\\.\\d+)?';
   const currencyPattern = '元人民币|人民币|澳元|澳币|美元|美金|AUD|CNY|RMB|USD|元';
+  const moneyNumber = '(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,8})(?:\\.[0-9]{1,2})?';
+  const currencyToken = 'A\\$|AU\\$|US\\$|CN¥|¥|\\$|' + currencyPattern;
+  function currencyCode(token) {
+    if (/^(?:AUD|A\$|AU\$|澳元|澳币)$/i.test(token)) return 'AUD';
+    if (/^(?:USD|US\$|美元|美金)$/i.test(token)) return 'USD';
+    if (/^(?:CNY|RMB|CN¥|¥|元|元人民币|人民币)$/i.test(token)) return 'CNY';
+    return '';
+  }
   function minor(value) {
     const match = /^(\d{1,8})(?:\.(\d{1,2}))?$/.exec(String(value ?? '').trim());
     return match ? Number(match[1]) * 100 + Number((match[2] || '').padEnd(2,'0')) : null;
@@ -61,6 +69,35 @@ const SplitTools = (() => {
       for(let index=0;index<left;index++) fractions[index].share.cents++;
     }
     return {cents:total,shares};
+  }
+  function summarize(rows, roster, currency) {
+    const balances=Object.fromEntries(roster.map(m=>[m.id,0]));
+    const entries=[];
+    let total=0;
+    for (const entry of rows) {
+      if(entry.currency!==currency) continue;
+      const allocation=quote(entry,roster);
+      if(!allocation) continue;
+      entries.push({entry,allocation});
+      total+=allocation.cents;
+      balances[entry.payer]+=allocation.cents;
+      for(const share of allocation.shares) balances[share.id]-=share.cents;
+    }
+    const remaining={...balances};
+    const debtors=roster.filter(m=>balances[m.id]<0);
+    const creditors=roster.filter(m=>balances[m.id]>0);
+    const transfers=[];
+    let i=0,j=0;
+    while(i<debtors.length && j<creditors.length) {
+      const from=debtors[i].id, to=creditors[j].id;
+      const cents=Math.min(-remaining[from],remaining[to]);
+      transfers.push({from,to,cents});
+      remaining[from]+=cents;
+      remaining[to]-=cents;
+      if(!remaining[from]) i++;
+      if(!remaining[to]) j++;
+    }
+    return {entries,total,balances,transfers};
   }
   // Replace literal names before parsing so punctuation and digits in a name
   // cannot become a money amount, a ratio, or part of a regex.
@@ -242,6 +279,7 @@ const SplitTools = (() => {
     {id:'example-taxi',description:'机场打车',amount:'37.50',currency:'AUD',payer:12,people:[12,13],split_mode:'exact',split_values:{12:'20.00',13:'17.50'},sample:true},
     {id:'example-breakfast',description:'出发前早餐',amount:'24.00',currency:'AUD',payer:11,people:[11,12,13],sample:true}
   ];
-  return {members,currencies,labels,modeOf,cents,major,problem,quote,parse,samples};
+  return {members,currencies,labels,modeOf,cents,major,problem,quote,summarize,parse,samples,
+    moneyNumber,currencyToken,currencyCode};
 })();
 if (typeof module !== 'undefined') module.exports=SplitTools;

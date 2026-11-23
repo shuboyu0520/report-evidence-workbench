@@ -70,6 +70,33 @@ def test_concurrent_confirmation(app):
     assert len(client.get("/api/studio/entries").json()) == 1
 
 
+def test_assistant_route_validates_tools_and_keeps_ledger_read_only(tmp_path, monkeypatch):
+    api = create_app(tmp_path / "assistant.db", {"model": "test", "ollama_url": ""})
+    c = TestClient(api)
+    body = {"question": "我想把已经垫出去的钱理一下", "has_draft": False}
+    assert c.post("/api/studio/assistant", json=body).status_code == 401
+    c.post("/api/studio/session")
+
+    async def suggest(config, system, data, events):
+        assert data == body
+        return {"tool": "settlement"}
+
+    monkeypatch.setattr("app.studio.select_json", suggest)
+    response = c.post("/api/studio/assistant", json=body)
+    assert response.status_code == 200
+    assert response.json()["tool"] == "settlement"
+    assert response.json()["engine"] == "ollama"
+
+    async def wrong_tool(*args):
+        return {"tool": "entries/delete", "message": "Pretend a payment ran"}
+
+    monkeypatch.setattr("app.studio.select_json", wrong_tool)
+    response = c.post("/api/studio/assistant", json=body)
+    assert response.json()["tool"] == "guide"
+    assert response.json()["engine"] == "rules"
+    assert c.get("/api/studio/entries").json() == []
+
+
 @pytest.mark.parametrize("mode,values,expected", [
     ("exact", ["0", "65.75", "34.26"], [0, 6575, 3426]),
     ("percentage", ["50", "25", "25"], [5001, 2500, 2500]),

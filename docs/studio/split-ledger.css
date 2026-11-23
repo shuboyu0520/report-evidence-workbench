@@ -232,3 +232,49 @@ body.split {
   .split .manage-members,.split .edit-entry,.split .copy-example,.split .saved-strip button,.roster-row button,.member-inputs button {min-height:44px;}
   .ledger-filters {gap:6px;}
 }
+
+.split .install-button {min-height:42px;white-space:nowrap;background:#edf4e8;border-color:#c6d6bd;color:var(--accent);font-size:.86rem;}
+.intake-actions {display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 17px;}
+.split .intake-actions button {display:flex;align-items:center;justify-content:center;gap:10px;min-height:50px;background:#eaf3e2;border-color:#cadaad;color:#27523b;}
+.split .intake-actions button:last-child {background:#fafcf6;border-color:#cdd9c9;}
+.intake-icon {position:relative;display:inline-block;width:17px;height:13px;border:1.6px solid currentColor;border-radius:4px;flex:none;}
+.camera-icon::before {content:"";position:absolute;inset:2px 4px;border:1.5px solid currentColor;border-radius:50%;}
+.camera-icon::after {content:"";position:absolute;width:6px;height:3px;border-radius:2px 2px 0 0;background:currentColor;top:-4px;left:2px;}
+.assistant-icon::before {content:"";position:absolute;top:4px;left:3px;width:2px;height:2px;border-radius:50%;background:currentColor;box-shadow:3px 0 currentColor,6px 0 currentColor;}
+.assistant-icon::after {content:"";position:absolute;left:2px;bottom:-4px;width:4px;height:4px;border-left:1.4px solid currentColor;transform:skewY(-33deg);}
+.split .choose-all {min-height:43px;color:var(--accent);background:#f6f9ef;padding-inline:10px;}
+.split .tool-dialog {color:var(--ink);background:#fffffb;width:min(520px,calc(100% - 28px));max-height:calc(100dvh - 30px);border:1px solid #cddabf;border-radius:18px;padding:clamp(17px,3vw,24px);box-shadow:0 21px 70px #0d201d44;overscroll-behavior:contain;}
+.split .tool-dialog::backdrop {background:#112a21b8;}
+.split .tool-dialog .dialog-close {width:44px;min-height:44px;padding:0;background:#f1f5ed;border:0;border-radius:50%;font-size:1.48rem;}
+.tool-dialog .entry-actions {margin-top:10px;}
+.install-steps {display:grid;grid-template-columns:5rem 1fr;gap:11px;font-size:.9rem;margin-block:14px 5px;}
+.install-steps dt {font-weight:700;}
+.install-steps dd {margin:0;color:var(--dim);}
+.receipt-actions {margin-bottom:13px;}
+.tool-dialog #receipt-text {min-height:100px;margin-top:5px;}
+#receipt-preview {display:block;max-height:150px;max-width:100%;margin:12px 0;border:1px solid var(--hair);border-radius:8px;object-fit:contain;}
+.receipt-evidence {display:grid;gap:3px;background:#eff6e8;border-radius:9px;margin-top:11px;padding:8px 11px;}
+.receipt-evidence strong {color:var(--accent);font-variant-numeric:tabular-nums;}
+.receipt-evidence small {overflow-wrap:anywhere;white-space:pre-wrap;}
+.assistant-shortcuts {display:flex;gap:7px;flex-wrap:wrap;}
+.split .assistant-shortcuts button {min-height:41px;}
+.assistant-log {display:grid;gap:10px;margin:13px 0;overflow:auto;max-height:min(47dvh,350px);overscroll-behavior:contain;}
+.assistant-log:empty {display:none;}
+.assistant-message {padding:9px 13px;background:#eff6e9;border:1px solid #d5e2ce;border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.9rem;}
+.assistant-message.user {background:#f5f6f0;justify-self:end;max-width:90%;}
+.assistant-message small {display:block;margin-bottom:4px;}
+.assistant-message button {margin-top:7px;}
+.assistant-form {display:flex;gap:8px;align-items:flex-end;border-top:1px solid var(--hair);padding-top:12px;margin-top:13px;}
+.assistant-form textarea {min-width:0;min-height:55px;flex:1;}
+.assistant-form button {min-height:44px;flex:none;}
+.app-bar {display:none;}
+@media(max-width:620px){
+  .split .mast .workspaces,.split .mast .repo-link {display:none;}
+  .split .install-button {margin-left:auto;}
+  .split .ledger-wrap {padding-bottom:calc(72px + env(safe-area-inset-bottom));}
+  .app-bar {display:grid;grid-template-columns:repeat(3,1fr);gap:4px;position:fixed;z-index:2;inset:auto 0 0;padding:6px 9px calc(6px + env(safe-area-inset-bottom));background:#fcfcf5;border-top:1px solid var(--hair);}
+  .app-bar a,.app-bar button {display:grid;place-items:center;min-height:44px;padding:4px;border:0;border-radius:8px;background:none;color:var(--accent);font-size:.88rem;font-weight:650;text-decoration:none;}
+  .app-bar a:hover,.app-bar button:hover {background:#e8f2e1;}
+  .split .intake-actions button {min-height:48px;}
+  .split .receipt {scroll-margin-bottom:80px;}
+}
