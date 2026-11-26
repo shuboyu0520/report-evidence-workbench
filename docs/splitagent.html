@@ -69,7 +69,7 @@
         </div>
         <form id="compose">
           <label class="field" for="expense-text">这笔钱怎么分？</label>
-          <textarea id="expense-text" rows="2" maxlength="600" required placeholder="例如：小林垫付房租 200 澳元，小林承担 60%，小周承担 40%。"></textarea>
+          <textarea id="expense-text" rows="2" maxlength="600" required placeholder="例如：小林垫付晚餐 200 澳元，小林承担 60%，小周承担 40%。"></textarea>
           <div class="example-list" aria-label="填入示例">
             <span class="examples-label">填入示例</span>
             <button type="button" class="example-option" data-example="dinner">均分</button>
@@ -87,15 +87,26 @@
         <form class="receipt" id="draft" hidden aria-labelledby="review-title">
           <div class="receipt-head"><h3 id="review-title">核对分账草稿</h3><span class="pill" id="draft-state"></span></div>
           <p id="draft-hint" class="hint"></p>
+          <div class="bill-tools"><button type="button" id="draft-receipt">拍照或选图</button><button type="button" id="draft-assistant">问这笔账</button><button type="button" id="draft-members">添加或管理成员</button></div>
+          <div id="draft-evidence"></div>
+          <p id="receipt-difference" class="hint" hidden></p>
           <div class="field-grid">
             <label class="field">费用说明<input id="description" maxlength="100" required></label>
             <label class="field">付款人<select id="payer" required></select></label>
-            <label class="field">总金额<input id="amount" type="text" inputmode="decimal" autocomplete="off" required></label>
-            <label class="field">币种<select id="currency" required><option value="">选择币种</option><option>AUD</option><option>CNY</option><option>USD</option></select></label>
+            <label class="field">票面总额<input id="amount" type="text" inputmode="decimal" autocomplete="off" required></label>
+            <label class="field">票面币种<select id="currency" required><option value="">选择币种</option><option>AUD</option><option>CNY</option><option>USD</option></select></label>
           </div>
           <fieldset class="checks" id="participants"><legend>参与分摊的成员</legend></fieldset>
           <label class="field split-picker">分摊方式<select id="split-mode" required><option value="">选择分摊方式</option><option value="equal">均分</option><option value="exact">指定金额</option><option value="percentage">按百分比</option><option value="ratio">按份数</option></select></label>
           <div id="split-values"></div>
+          <div class="fx-panel">
+            <label class="field">结算币种<select id="fx-currency"><option value="">按票面币种结算</option><option>CNY</option><option>AUD</option><option>USD</option></select></label>
+            <div id="fx-fields" hidden>
+              <label class="field"><span id="fx-label">结算汇率</span><input type="text" inputmode="decimal" autocomplete="off" id="fx-rate" maxlength="15" placeholder="填写实际汇率"></label>
+              <button type="button" id="fetch-fx">取参考汇率</button>
+              <p id="fx-note" class="hint" role="status"></p>
+            </div>
+          </div>
           <p id="split-feedback" role="status"></p>
           <section class="receipt-summary" aria-labelledby="share-title">
             <h4 id="share-title">每人应摊</h4><div id="allocation"></div>
@@ -131,7 +142,7 @@
   </dialog>
   <dialog class="tool-dialog" id="receipt-dialog" aria-labelledby="receipt-title">
     <div class="dialog-top"><h2 id="receipt-title">拍照读账单</h2><button class="dialog-close" type="button" id="close-receipt" aria-label="关闭账单识别">×</button></div>
-    <p class="hint">识别商户和票面合计。照片在此设备上处理。</p>
+    <p class="hint">拍一张小票或从相册选图。设备会识别商户和实付行，缩略图随这笔账单保存。</p>
     <div class="entry-actions receipt-actions">
       <button type="button" class="primary" id="take-photo">打开相机</button>
       <button type="button" id="choose-image">选择图片</button>
@@ -151,11 +162,13 @@
   </dialog>
   <dialog class="tool-dialog assistant-dialog" id="assistant-dialog" aria-labelledby="assistant-title">
     <div class="dialog-top"><div><h2 id="assistant-title">AI 分账助手</h2><span class="runtime" id="assistant-engine">设备端中文模型 · BGE</span></div><button class="dialog-close" type="button" id="close-assistant" aria-label="关闭分账助手">×</button></div>
+    <p id="assistant-context" class="hint" hidden></p>
     <div class="assistant-shortcuts" aria-label="分账问题示例">
       <button type="button" class="example-option" data-assistant="谁该付款？">看结算</button>
       <button type="button" class="example-option" data-assistant="看看这笔草稿怎么分。">看草稿</button>
+      <button type="button" class="example-option" data-assistant="这笔账换成人民币怎么分？">换算这笔账</button>
       <button type="button" class="example-option" data-assistant="120 元打 8 折，加 10% 小费，3 人均分">试算价格</button>
-      <button type="button" class="example-option" data-assistant="有人中途搬进来，水电费怎么分才公平？">问分摊建议</button>
+      <button type="button" class="example-option" data-assistant="聚餐时只有两个人喝了酒，酒钱怎么分才公平？">问分摊建议</button>
     </div>
     <div id="assistant-log" class="assistant-log" role="log" aria-label="助手对话" aria-live="polite"></div>
     <div id="assistant-progress" class="hint" role="status"></div>

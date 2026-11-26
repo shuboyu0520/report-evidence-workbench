@@ -2,6 +2,7 @@
 
 import re
 import unicodedata
+from datetime import date as CalendarDate
 from typing import Literal
 
 from fastapi import HTTPException
@@ -9,6 +10,20 @@ from pydantic import BaseModel, Field, StrictInt
 
 MEMBERS = {11: "小林", 12: "小周", 13: "小陈"}
 Mode = Literal["", "equal", "percentage", "ratio", "exact"]
+
+
+class BillExchange(BaseModel):
+    currency: Literal["AUD", "CNY", "USD"]
+    rate: str = Field(pattern=r"^[0-9]{1,6}(\.[0-9]{1,8})?$")
+    source: Literal["manual", "frankfurter"] = "manual"
+    date: CalendarDate | None = None
+
+
+class BillReceipt(BaseModel):
+    source: str = Field(default="", max_length=300)
+    amount: str = Field(default="", max_length=14)
+    currency: Literal["", "AUD", "CNY", "USD"] = ""
+    image: str = Field(default="", max_length=100_000, pattern=r"^(data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2})?$")
 
 
 class DraftFields(BaseModel):
@@ -19,6 +34,8 @@ class DraftFields(BaseModel):
     people: list[StrictInt] = Field(default_factory=list)
     split_mode: Mode = "equal"
     split_values: dict[str, str] = Field(default_factory=dict)
+    fx: BillExchange | None = None
+    receipt: BillReceipt | None = None
 
 
 def hundredths(value):
@@ -57,6 +74,22 @@ def split_quote(data: DraftFields, members=MEMBERS):
                 raise HTTPException(422, "指定金额的合计必须等于账单总额。")
             if data.split_mode == "percentage" and sum(weights) != 10000:
                 raise HTTPException(422, "百分比合计必须为 100%。")
+    result = allocate(total, ids, weights)
+    if data.fx:
+        if data.fx.currency == data.currency:
+            raise HTTPException(422, "请选择与票面不同的结算币种。")
+        whole, _, fraction = data.fx.rate.partition(".")
+        scale = 10 ** len(fraction)
+        converted = (2 * total * int(whole + fraction) + scale) // (2 * scale)
+        if not 0 < converted <= 9_999_999_999:
+            raise HTTPException(422, "汇率或换算后的总额超出范围。")
+        if data.fx.source == "frankfurter" and not data.fx.date:
+            raise HTTPException(422, "参考汇率缺少报价日期。")
+        result["settlement"] = {"currency": data.fx.currency, **allocate(converted, ids, weights)}
+    return result
+
+
+def allocate(total, ids, weights):
     denominator = sum(weights)
     pieces = [divmod(total * weight, denominator) for weight in weights]
     shares = [base for base, _ in pieces]

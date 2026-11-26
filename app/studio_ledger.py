@@ -142,7 +142,7 @@ def expense_quote(con, scope, data, previous=None):
 
 
 def serialize_expense(data, cents):
-    canonical = data.model_dump()
+    canonical = data.model_dump(mode="json", exclude_none=True)
     if data.split_mode == "equal":
         # Older confirmations use the same serialized form for idempotent retries.
         canonical.pop("split_mode")
@@ -247,7 +247,14 @@ def install_ledger_routes(api, db, session, require_session):
     def save_draft(body: DraftSave, request: Request):
         scope = require_session(request)
         document = json.dumps(body.draft, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-        if len(document.encode("utf-8")) > 16_384:
+        # The only large field is the locally resized receipt image. Keep
+        # the existing limit for all remaining draft fields and old clients.
+        fields = body.draft.get("data")
+        receipt = fields.get("receipt") if isinstance(fields, dict) else None
+        image = receipt.get("image", "") if isinstance(receipt, dict) else ""
+        if not isinstance(image, str) or len(image) > 100_000 or (image and not image.startswith("data:image/jpeg;base64,")):
+            raise HTTPException(422, "票据缩略图格式或大小无效。")
+        if len(document.encode("utf-8")) - len(image) > 16_384:
             raise HTTPException(422, "草稿超过 16 KiB，请缩短说明。")
         return change_draft(db, scope, body.version, document)
 

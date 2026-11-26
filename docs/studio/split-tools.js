@@ -19,6 +19,16 @@ const SplitTools = (() => {
   }
   function cents(text) { const value=minor(text); return value > 0 ? value : null; }
   function major(n) { return (n/100).toFixed(2); }
+  // All supported currencies use two decimal places. Round the total once,
+  // then distribute it using the same weights as the original bill.
+  function convertedCents(amount,rate) {
+    const value=cents(amount), match=/^(\d{1,6})(?:\.(\d{1,8}))?$/.exec(String(rate??''));
+    if(!value || !match) return null;
+    const decimals=match[2]||'', scale=10n**BigInt(decimals.length);
+    const numerator=BigInt(value)*BigInt(match[1]+decimals);
+    const rounded=(2n*numerator+scale)/(2n*scale);
+    return rounded>0n && rounded<=9999999999n ? Number(rounded) : null;
+  }
   function modeOf(d) { return d.split_mode === undefined ? 'equal' : d.split_mode; }
   function readValues(d) {
     const mode=modeOf(d), values=d.split_values || {};
@@ -38,6 +48,11 @@ const SplitTools = (() => {
     if (!String(d.description || '').trim()) return '请填写费用说明。';
     if (!cents(d.amount)) return '总金额须大于零，最多两位小数。';
     if (!currencies.includes(d.currency)) return '请选择币种。';
+    if(d.fx) {
+      if(!currencies.includes(d.fx.currency)||d.fx.currency===d.currency) return '请选择与票面不同的结算币种。';
+      if(convertedCents(d.amount,d.fx.rate)===null) return '请填写有效汇率（最多 8 位小数），换算后的总额须在 0.01 到 99999999.99 之间。';
+      if(d.fx.source==='frankfurter' && !/^\d{4}-\d{2}-\d{2}$/.test(d.fx.date)) return '参考汇率缺少报价日期。';
+    }
     if (!roster.some(m=>m.id===d.payer)) return '请选择实际垫付的人。';
     if (!Array.isArray(d.people) || !d.people.length || new Set(d.people).size!==d.people.length ||
         d.people.some(id=>!roster.some(m=>m.id===id))) return '请选择参与这笔支出的组员。';
@@ -53,31 +68,34 @@ const SplitTools = (() => {
     }
     return '';
   }
+  function allocate(total,people,values) {
+    const shares=people.map((id,i)=>({id,cents:values[i]})).sort((a,b)=>a.id-b.id);
+    const denominator=BigInt(values.reduce((a,b)=>a+b,0));
+    const fractions=shares.map(share=>{
+      const numerator=BigInt(total)*BigInt(share.cents);
+      share.cents=Number(numerator / denominator);
+      return {share,remainder:Number(numerator % denominator)};
+    });
+    const left=total-shares.reduce((sum,share)=>sum+share.cents,0);
+    fractions.sort((a,b)=>b.remainder-a.remainder || a.share.id-b.share.id);
+    for(let index=0;index<left;index++) fractions[index].share.cents++;
+    return {cents:total,shares};
+  }
   function quote(d, roster=members) {
     if (problem(d,roster)) return null;
-    const total=cents(d.amount), values=readValues(d);
-    const shares=d.people.map((id,i)=>({id,cents:values[i]})).sort((a,b)=>a.id-b.id);
-    if (modeOf(d)!=='exact') {
-      const denominator=BigInt(values.reduce((a,b)=>a+b,0));
-      const fractions=shares.map(share=>{
-        const numerator=BigInt(total)*BigInt(share.cents);
-        share.cents=Number(numerator / denominator);
-        return {share,remainder:Number(numerator % denominator)};
-      });
-      const left=total-shares.reduce((sum,share)=>sum+share.cents,0);
-      fractions.sort((a,b)=>b.remainder-a.remainder || a.share.id-b.share.id);
-      for(let index=0;index<left;index++) fractions[index].share.cents++;
-    }
-    return {cents:total,shares};
+    const weights=readValues(d), original=allocate(cents(d.amount),d.people,weights);
+    if(d.fx) original.settlement={currency:d.fx.currency,...allocate(convertedCents(d.amount,d.fx.rate),d.people,weights)};
+    return original;
   }
   function summarize(rows, roster, currency) {
     const balances=Object.fromEntries(roster.map(m=>[m.id,0]));
     const entries=[];
     let total=0;
     for (const entry of rows) {
-      if(entry.currency!==currency) continue;
-      const allocation=quote(entry,roster);
-      if(!allocation) continue;
+      if((entry.fx?.currency || entry.currency)!==currency) continue;
+      const original=quote(entry,roster);
+      if(!original) continue;
+      const allocation=original.settlement || original;
       entries.push({entry,allocation});
       total+=allocation.cents;
       balances[entry.payer]+=allocation.cents;
@@ -279,7 +297,7 @@ const SplitTools = (() => {
     {id:'example-taxi',description:'机场打车',amount:'37.50',currency:'AUD',payer:12,people:[12,13],split_mode:'exact',split_values:{12:'20.00',13:'17.50'},sample:true},
     {id:'example-breakfast',description:'出发前早餐',amount:'24.00',currency:'AUD',payer:11,people:[11,12,13],sample:true}
   ];
-  return {members,currencies,labels,modeOf,cents,major,problem,quote,summarize,parse,samples,
+  return {members,currencies,labels,modeOf,cents,major,convertedCents,problem,quote,summarize,parse,samples,
     moneyNumber,currencyToken,currencyCode};
 })();
 if (typeof module !== 'undefined') module.exports=SplitTools;

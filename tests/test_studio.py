@@ -17,6 +17,32 @@ def fields():
             "people": [13, 11, 12]}
 
 
+def test_single_foreign_receipt_roundtrip_edit_and_legacy_retry(app):
+    c = TestClient(app)
+    c.post("/api/studio/session")
+    receipt = {"source": "TOTAL AUD 62.41", "amount": "62.41", "currency": "AUD", "image": ""}
+    data = {**fields(), "currency": "AUD", "amount": "62.41", "receipt": receipt,
+            "payer": 12, "fx": {"currency": "CNY", "rate": "4.70", "source": "manual"}}
+    uid = str(uuid4())
+    draft = {"id": uid, "text": "", "data": data}
+    assert c.put("/api/studio/draft", json={"version": 0, "draft": draft}).json()["draft"] == draft
+    body = {"id": uid, "data": data}
+    preview = c.post("/api/studio/drafts/quote", json=data).json()
+    assert preview["cents"] == 6241
+    assert preview["settlement"] == {"cents": 29333, "currency": "CNY", "shares": [
+        {"id": 11, "cents": 9778}, {"id": 12, "cents": 9778}, {"id": 13, "cents": 9777}]}
+    assert c.post("/api/studio/entries", json=body).json()["quote"] == preview
+    assert c.post("/api/studio/entries", json=body).json()["reused"]
+    changed = {**data, "fx": {**data["fx"], "rate": "5.0"}, "people": [11, 13]}
+    assert c.post("/api/studio/entries", json={"id": uid, "data": changed}).status_code == 409
+    assert c.put("/api/studio/entries/"+uid, json={"version": 1, "data": changed}).json()["quote"]["settlement"]["cents"] == 31205
+    entry, = c.get("/api/studio/entries").json()
+    assert entry["receipt"] == receipt and entry["fx"]["rate"] == "5.0" and entry["version"] == 2
+    for fx in ({"currency": "AUD", "rate": "4.70"}, {"currency": "USD", "rate": "-1"},
+               {"currency": "USD", "rate": "0.00000001"}, {"currency": "USD", "rate": "1", "source": "frankfurter"}):
+        assert c.post("/api/studio/drafts/quote", json={**data, "fx": fx}).status_code == 422
+
+
 def test_draft_is_separate_from_posting_and_scoped_to_session(app):
     a, b = TestClient(app), TestClient(app)
     for client in (a, b):

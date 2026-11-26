@@ -59,7 +59,9 @@ const SplitDevice = (() => {
   function signature(d) {
     const people=[...d.people].sort((a,b)=>a-b), mode=SplitTools.modeOf(d);
     return JSON.stringify([d.description,d.amount,d.currency,d.payer,mode,people,
-      mode==='equal'?[]:people.map(id=>Number(d.split_values[id]))]);
+      mode==='equal'?[]:people.map(id=>Number(d.split_values[id])),
+      d.fx?[d.fx.currency,d.fx.rate,d.fx.source,d.fx.date||null]:null,
+      d.receipt?[d.receipt.source,d.receipt.amount,d.receipt.currency,d.receipt.image||'']:null]);
   }
   function eligibility(d,people,original) {
     const active=new Set(people.filter(m=>m.active!==false).map(m=>m.id));

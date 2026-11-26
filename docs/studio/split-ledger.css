@@ -268,6 +268,14 @@ body.split {
 .assistant-form textarea {min-width:0;min-height:55px;flex:1;}
 .assistant-form button {min-height:44px;flex:none;}
 .app-bar {display:none;}
+.bill-tools {display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 12px;}
+.split .bill-tools button,.split #fetch-fx {min-height:42px;padding:7px 12px;border:1px solid #bfcdb0;border-radius:8px;color:var(--accent);background:#f4f7eb;}
+.fx-panel {margin:14px 0;padding:12px;border:1px solid #d1d7c2;border-radius:8px;background:#f5f6e9;}
+#fx-fields:not([hidden]) {display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:7px;margin-top:8px;}
+#fx-note {grid-column:1/-1;margin:0;}
+.bill-evidence {margin:9px 0;border-bottom:1px solid var(--hair);overflow-wrap:anywhere;}
+.bill-evidence img {display:block;max-width:100%;max-height:320px;object-fit:contain;margin-bottom:10px;}
+.bill-evidence p,.bill-exchange {margin:6px 0 9px;color:var(--dim);font-size:.87rem;}
 @media(max-width:620px){
   .split .mast .workspaces,.split .mast .repo-link {display:none;}
   .split .install-button {margin-left:auto;}

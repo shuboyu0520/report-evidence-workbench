@@ -52,7 +52,19 @@ const SplitReceipts = (() => {
     });
     return loading;
   }
-  async function recognize(file, onProgress) {
+  function thumbnail(canvas) {
+    const small=document.createElement('canvas');
+    for(let side=960;side>=120;side=Math.floor(side/2)) {
+      const scale=Math.min(1,side/Math.max(canvas.width,canvas.height));
+      small.width=Math.max(1,Math.round(canvas.width*scale));
+      small.height=Math.max(1,Math.round(canvas.height*scale));
+      small.getContext('2d').drawImage(canvas,0,0,small.width,small.height);
+      const image=small.toDataURL('image/jpeg',0.76);
+      if(image.length<=100000 && image.startsWith('data:image/jpeg;base64,')) return image;
+    }
+    return '';
+  }
+  async function recognize(file, onProgress, {withImage=false}={}) {
     if(!file.size || file.size>15*1024*1024) throw Error('请选择一张 15 MB 以内的账单。');
     const source=URL.createObjectURL(file);
     let worker;
@@ -85,7 +97,8 @@ const SplitReceipts = (() => {
       });
       worker=await Promise.race([start,failed]);
       const {data}=await Promise.race([worker.recognize(canvas),failed]);
-      return data.text.trim();
+      const text=data.text.trim();
+      return withImage ? {text,image:thumbnail(canvas)} : text;
     } finally {
       URL.revokeObjectURL(source);
       if(worker) await worker.terminate();

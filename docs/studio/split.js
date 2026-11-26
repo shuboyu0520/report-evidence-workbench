@@ -7,13 +7,14 @@
   const fallbackExamples = {
     dinner:'晚饭共 90.00 澳元，小林垫付，小林、小周和小陈三人均摊。',
     exact:'晚餐共 96 澳元，小林垫付。小林承担 48 澳元、小周承担 30 澳元、小陈承担 18 澳元。',
-    percentage:'小周付了 120 澳元房租，小林占 50%、小周占 30%、小陈占 20%。',
+    percentage:'小周付了 120 澳元晚餐，小林占 50%、小周占 30%、小陈占 20%。',
     shares:'小陈垫了 100 元买食材，小林、小周、小陈按 2:1:1 分摊。',
     no_payer:'三个人小林、小周、小陈一起吃饭，花了 66 澳元，均摊。',
     outside:'朋友小吴替小林和小周支付了 19.00 澳元车费，两人平摊。'
   };
   let draft=null, shareInputs={}, archive=[], modelName=null, ready=false, working=false, committing=false, refreshSerial=0;
   let ledgerAccessMessage='账本正在打开，请稍后再试。';
+  let rateRequest=null, rateSource='manual', rateDate=null, rateMessage='';
   function id() {
     if (crypto.randomUUID) return crypto.randomUUID();
     const bytes=crypto.getRandomValues(new Uint8Array(16)); bytes[6]=(bytes[6]&15)|64; bytes[8]=(bytes[8]&63)|128;
@@ -64,7 +65,9 @@
       copy.append(el('strong',r.description),el('small',historyName(r.payer)+'垫付 · '+labels[modeOf(r)]+' · '+r.people.length+'人'+(r.sample?' · 示例':'')));
       line.append(avatar(r.payer),copy,el('span',major(q.cents),'amt'));
       const detail=el('div',null,'entry-allocations');
-      for (const share of q.shares) detail.append(shareLine(share,r));
+      if(r.fx) detail.append(el('p','票面 '+r.currency+' '+r.amount+' · '+exchangeLabel(r),'bill-exchange'));
+      if(r.receipt) detail.append(receiptEvidence(r.receipt));
+      for (const share of q.shares) detail.append(shareLine(share,r,r.fx?.currency||r.currency));
       const action=button(r.sample?'以此新建':'编辑账单',r.sample?'copy-example':'edit-entry',()=>openEntry(r));
       detail.append(action);
       entry.append(line,detail);$('ledger').append(entry);
@@ -90,17 +93,73 @@
     return historyName(transfer.from)+' → '+historyName(transfer.to)+' '+currency+' '+major(transfer.cents);
   }
   function readForm() {
-    const people=[...document.querySelectorAll('#draft input[type=checkbox]:checked')].map(box=>Number(box.value));
+    const people=[...document.querySelectorAll('#participants input:checked')].map(box=>Number(box.value));
     const values=Object.fromEntries([...$('split-values').querySelectorAll('input[data-person]')]
       .filter(input=>people.includes(Number(input.dataset.person)))
       .map(input=>[input.dataset.person,input.value.trim()]));
-    return {description:$('description').value.trim(),amount:$('amount').value.trim(),currency:$('currency').value,
+    const data={description:$('description').value.trim(),amount:$('amount').value.trim(),currency:$('currency').value,
       payer:Number($('payer').value)||null,people,split_mode:$('split-mode').value,split_values:values};
+    if(draft?.data.receipt) data.receipt=draft.data.receipt;
+    if($('fx-currency').value) data.fx={currency:$('fx-currency').value,rate:$('fx-rate').value.trim(),source:rateSource,date:rateDate};
+    return data;
   }
-  function shareLine(share,d) {
+  function exchangeLabel(d) {
+    return '1 '+d.currency+' = '+d.fx.rate+' '+d.fx.currency+'（'+(d.fx.source==='frankfurter'?'Frankfurter 参考汇率 · '+d.fx.date:'约定汇率')+'）';
+  }
+  function receiptEvidence(receipt) {
+    const details=el('details',null,'bill-evidence');
+    details.append(el('summary','查看小票'+(receipt.amount?' · '+[receipt.currency,receipt.amount].filter(Boolean).join(' '):'')));
+    if(receipt.source) details.append(el('p',receipt.source));
+    if(receipt.image?.startsWith('data:image/jpeg;base64,')) {
+      const img=el('img');img.src=receipt.image;img.alt='本账单的小票缩略图';img.loading='lazy';details.append(img);
+    }
+    return details;
+  }
+  function resetExchange(base,fx) {
+    rateRequest?.abort();rateRequest=null;rateMessage='';
+    rateSource=fx?.source||'manual';rateDate=fx?.date||null;
+    const select=$('fx-currency');
+    for(const option of select.options) option.disabled=Boolean(option.value && option.value===base);
+    select.disabled=!base;select.value=fx?.currency && fx.currency!==base ? fx.currency : '';
+    $('fx-rate').value=select.value ? fx.rate : '';
+    $('fetch-fx').disabled=false;
+  }
+  function refreshExchange(d) {
+    $('fx-fields').hidden=!d.fx;
+    if(!d.fx) return;
+    $('fx-label').textContent='1 '+d.currency+' 等于多少 '+d.fx.currency+'？';
+    const converted=SplitTools.convertedCents(d.amount,d.fx.rate);
+    const source=rateSource==='frankfurter'?'Frankfurter · '+rateDate:'约定汇率';
+    const total=converted===null?'':source+' · 换算合计 '+d.fx.currency+' '+major(converted);
+    $('fx-note').textContent=[rateMessage,total].filter(Boolean).join('　') || '可填银行卡实际汇率，或联网取参考汇率。';
+  }
+  $('fetch-fx').onclick=async()=>{
+    if(!draft||committing) return;
+    const base=$('currency').value,target=$('fx-currency').value;
+    if(!base||!target||base===target) return;
+    rateRequest?.abort();
+    const request=new AbortController();rateRequest=request;
+    const timeout=setTimeout(()=>request.abort(),10000);
+    $('fetch-fx').disabled=true;rateMessage='正在获取参考汇率…';updatePreview();
+    try {
+      const response=await fetch('https://api.frankfurter.dev/v2/rate/'+base+'/'+target,{signal:request.signal,credentials:'omit',referrerPolicy:'no-referrer'});
+      if(!response.ok) throw Error();
+      const value=await response.json(), rate=String(value.rate);
+      if(value.base!==base||value.quote!==target||!/^\d{4}-\d{2}-\d{2}$/.test(value.date)||
+          !/^\d{1,6}(?:\.\d{1,8})?$/.test(rate)||Number(rate)<=0) throw Error();
+      if(request!==rateRequest) return;
+      $('fx-rate').value=rate;rateSource='frankfurter';rateDate=value.date;rateMessage='';draft.dirty=true;
+    } catch {
+      if(request===rateRequest) rateMessage='暂时取不到参考汇率，可填写实际汇率。';
+    } finally {
+      clearTimeout(timeout);
+      if(request===rateRequest) {rateRequest=null;$('fetch-fx').disabled=false;updatePreview();}
+    }
+  };
+  function shareLine(share,d,unit=d.currency) {
     const row=el('div',null,'quote-line'), mode=modeOf(d), value=d.split_values?.[share.id];
     const suffix=mode==='ratio'?' · '+value+' 份':mode==='percentage'?' · '+value+'%':'';
-    row.append(el('span',historyName(share.id)+suffix),el('strong',d.currency+' '+major(share.cents)));
+    row.append(el('span',historyName(share.id)+suffix),el('strong',unit+' '+major(share.cents)));
     return row;
   }
   function renderValueFields(d) {
@@ -143,6 +202,13 @@
   }
   function updatePreview(event) {
     if (!draft) return;
+    const changed=event?.target.id;
+    if(changed==='currency') resetExchange($('currency').value);
+    if(changed==='fx-currency') resetExchange($('currency').value,{currency:$('fx-currency').value,rate:''});
+    if(changed==='fx-rate'){
+      rateRequest?.abort();rateRequest=null;$('fetch-fx').disabled=false;
+      rateMessage='';rateSource='manual';rateDate=null;
+    }
     let d=readForm();
     const changedMode=event?.target.id==='split-mode';
     if(changedMode) shareInputs={};
@@ -150,14 +216,21 @@
     if(changedMode || ['currency','participants'].includes(event?.target.id) || event?.target.type==='checkbox') {
       renderValueFields({...d,split_values:shareInputs});d=readForm();
     }
-    draft.data=d;if(event)draft.dirty=true;remember();
+    draft.data=d;if(event)draft.dirty=true;remember();refreshExchange(d);
+    const corrected=d.receipt?.amount && (SplitTools.cents(d.amount)!==SplitTools.cents(d.receipt.amount)||
+      d.receipt.currency && d.currency!==d.receipt.currency);
+    $('receipt-difference').hidden=!corrected;
+    if(corrected) $('receipt-difference').textContent='小票识别为 '+[d.receipt.currency,d.receipt.amount].filter(Boolean).join(' ')+'。请核对手动填写的票面金额和币种。';
+    $('participants').querySelector('legend').textContent='参与分摊的成员 · 已选 '+d.people.length+' 人';
     const issue=SplitDevice.eligibility(d,members,draft.original) || problem(d,members);
     const q=issue?null:quote(d,members);
-    $('split-feedback').textContent=issue || '各成员分摊合计 '+d.currency+' '+major(q.cents);
+    const settlement=q?.settlement||q, unit=d.fx?.currency||d.currency;
+    $('split-feedback').textContent=issue || '各成员分摊合计 '+unit+' '+major(settlement.cents);
     $('split-feedback').classList.toggle('invalid',Boolean(issue));
-    $('allocation').replaceChildren();$('confirm').disabled=!ready||committing||!q;
+    $('allocation').replaceChildren();$('confirm').disabled=!ready||committing||Boolean(rateRequest)||!q;
+    $('save-draft').disabled=committing||Boolean(rateRequest);
     $('draft-state').textContent=q?(draft.entryVersion?'编辑中':'待确认'):'待补充';
-    if (q) for(const s of q.shares) $('allocation').append(shareLine(s,d));
+    if (settlement) for(const s of settlement.shares) $('allocation').append(shareLine(s,d,unit));
   }
   function showDraft(item) {
     draft=item;const d=item.data;
@@ -166,19 +239,23 @@
     $('review-title').textContent=item.entryVersion?'编辑已入账费用':'核对分账草稿';
     $('confirm').textContent=item.entryVersion?'保存修改':'确认入账';
     $('expense-text').value=item.text;$('description').value=d.description||'';$('amount').value=d.amount||'';$('currency').value=d.currency||'';
+    resetExchange(d.currency,d.fx);
+    $('draft-evidence').replaceChildren(...(d.receipt?[receiptEvidence(d.receipt)]:[]));
+    $('draft-receipt').textContent=d.receipt?'更换小票':'拍照或选图';
     renderPeople(d);$('split-mode').value=modeOf(d);
     renderValueFields(d);
     $('draft-hint').textContent=item.note;$('draft-trace').replaceChildren(...item.trace.map(s=>el('li',s)));
     $('draft').hidden=false;updatePreview();
   }
-  function clearDraft() {draft=null;remember();$('draft').hidden=true;}
+  function clearDraft() {rateRequest?.abort();rateRequest=null;draft=null;remember();$('draft').hidden=true;}
   function mayReplace() {
     return !committing && !working && (!draft?.dirty || window.confirm('放弃当前表单里尚未保存的修改？'));
   }
   function openEntry(r) {
     if(!mayReplace())return;
     const {description,amount,currency,payer,people,split_values}=r;
-    const data={description,amount,currency,payer,people:[...people],split_mode:modeOf(r),split_values:{...split_values}};
+    const data={description,amount,currency,payer,people:[...people],split_mode:modeOf(r),split_values:{...split_values},
+      ...(r.fx?{fx:{...r.fx}}:{}),...(r.receipt?{receipt:{...r.receipt}}:{})};
     const meta=r.sample?{}:{entryVersion:r.version||1,original:{payer,people:[...people]}};
     showDraft({id:r.sample?id():r.id,text:'',data,...meta,
       note:r.sample?'已复制示例，可修改后作为新费用入账。':'可修改付款人、分摊成员和金额，保存后会重新计算余额。',
@@ -194,7 +271,7 @@
     return item?api('draft',{version,draft:item},'PUT'):api('draft?version='+version,null,'DELETE');
   }
   async function saveWorkingDraft() {
-    if(!draft||committing||working)return;
+    if(!draft||committing||working||rateRequest)return;
     if(saved.draft && saved.draft.id!==draft.id && !window.confirm('用当前草稿替换之前保存的草稿？'))return;
     committing=true;$('draft').inert=true;$('save-draft').disabled=true;$('confirm').disabled=true;
     try {
@@ -261,7 +338,7 @@
   $('draft').addEventListener('input',updatePreview);
   $('discard').onclick=()=>{if(!committing&&!working){clearDraft();status('已取消本次编辑。');}};
   $('draft').addEventListener('submit',async e=>{
-    e.preventDefault();if(!draft||!ready||committing)return;
+    e.preventDefault();if(!draft||!ready||committing||rateRequest)return;
     const d=readForm(), q=quote(d,members);if(!q||SplitDevice.eligibility(d,members,draft.original))return;
     d.amount=major(q.cents);const item=draft;
     committing=true;$('draft').inert=true;$('confirm').disabled=true;$('parse').disabled=true;$('discard').disabled=true;
@@ -274,8 +351,9 @@
         try {saved=await persistDraft(item.baseDraftVersion,null);}
         catch {cleanup=' 已保存的草稿仍在，请检查后清理。';}
       }
-      clearDraft();$('expense-text').value='';$('currency-view').value=d.currency;
-      await refresh();channel?.postMessage('refresh');status((item.entryVersion?'已更新账单：':'已入账：')+d.description+'，'+d.currency+' '+d.amount+'。'+cleanup);
+      clearDraft();$('expense-text').value='';$('currency-view').value=d.fx?.currency||d.currency;
+      const converted=q.settlement?'，结算 '+q.settlement.currency+' '+major(q.settlement.cents):'';
+      await refresh();channel?.postMessage('refresh');status((item.entryVersion?'已更新账单：':'已入账：')+d.description+'，'+d.currency+' '+d.amount+converted+'。'+cleanup);
     } catch(err){status(err.message,true);await refresh();} finally {committing=false;$('draft').inert=false;$('discard').disabled=false;$('parse').disabled=!ready;updatePreview();}
   });
   function applyDraft(dialog,result,text='') {
@@ -288,8 +366,20 @@
   }
 
   const receiptDialog=$('receipt-dialog');
-  let readingReceipt=false, receiptImageURL='';
-  $('open-receipt').onclick=()=>receiptDialog.showModal();
+  let readingReceipt=false, receiptImageURL='', receiptThumbnail='', scanVersion=0;
+  function openReceipt() {
+    const old=draft?.data.receipt, preview=$('receipt-preview');
+    if(receiptImageURL) URL.revokeObjectURL(receiptImageURL);
+    receiptImageURL='';receiptThumbnail=old?.image||'';readingReceipt=false;scanVersion++;
+    if(receiptThumbnail) preview.src=receiptThumbnail; else preview.removeAttribute('src');
+    preview.hidden=!receiptThumbnail;
+    $('receipt-text').readOnly=false;$('receipt-text').value=old?.source||'';
+    $('receipt-status').textContent='';$('receipt-status').classList.remove('error');
+    $('take-photo').disabled=false;$('choose-image').disabled=false;
+    $('receipt-to-draft').textContent=draft?'应用到当前账单':'填入分账草稿';
+    previewReceipt();receiptDialog.showModal();
+  }
+  $('open-receipt').onclick=$('draft-receipt').onclick=openReceipt;
   $('close-receipt').onclick=()=>receiptDialog.close();
   $('take-photo').onclick=()=>$('receipt-camera').click();
   $('choose-image').onclick=()=>$('receipt-image').click();
@@ -300,7 +390,7 @@
     $('receipt-source').textContent=info.source;
     $('receipt-amount').textContent=info.amount ? [info.currency,info.amount].filter(Boolean).join(' ') : '';
     $('receipt-issue').textContent=text ? [info.issue,ready?'':ledgerAccessMessage].filter(Boolean).join(' ') : '';
-    $('receipt-to-draft').disabled=!ready||readingReceipt||!text;
+    $('receipt-to-draft').disabled=!ready||readingReceipt||(!text&&!receiptThumbnail);
     return info;
   }
   $('receipt-text').addEventListener('input',previewReceipt);
@@ -308,42 +398,54 @@
     const file=event.target.files[0];
     event.target.value='';
     if(!file || readingReceipt) return;
+    const version=++scanVersion;
     readingReceipt=true;
     for(const id of ['take-photo','choose-image','receipt-to-draft']) $(id).disabled=true;
     $('receipt-text').readOnly=true;
     const statusEl=$('receipt-status'), image=$('receipt-preview');
+    if(receiptImageURL) URL.revokeObjectURL(receiptImageURL);
+    receiptImageURL=URL.createObjectURL(file);image.src=receiptImageURL;image.hidden=false;
+    receiptThumbnail='';$('receipt-text').value='';previewReceipt();
     statusEl.textContent='正在加载识别组件…';
     statusEl.classList.remove('error');
     try {
-      const text=await SplitReceipts.recognize(file,percent=>{
-        statusEl.textContent=percent===null?'正在准备识别…':'正在识别文字 · '+percent+'%';
-      });
-      if(receiptImageURL) URL.revokeObjectURL(receiptImageURL);
-      receiptImageURL=URL.createObjectURL(file);
-      image.src=receiptImageURL;image.hidden=false;
+      const {text,image:thumbnail}=await SplitReceipts.recognize(file,percent=>{
+        if(version===scanVersion) statusEl.textContent=percent===null?'正在准备识别…':'正在识别文字 · '+percent+'%';
+      },{withImage:true});
+      if(version!==scanVersion) return;
+      receiptThumbnail=thumbnail;
       $('receipt-text').value=text.slice(0,6000);
       statusEl.textContent=text?'识别完成，请与照片核对。':'没读到文字。可以重新拍照，或直接粘贴票面文字。';
     } catch(err) {
+      if(version!==scanVersion) return;
       statusEl.textContent=(err.message||'图片识别出错。')+' 也可以粘贴票面文字。';
       statusEl.classList.add('error');
     } finally {
-      readingReceipt=false;
-      for(const id of ['take-photo','choose-image']) $(id).disabled=false;
-      $('receipt-text').readOnly=false;previewReceipt();
+      if(version===scanVersion) {
+        readingReceipt=false;
+        for(const id of ['take-photo','choose-image']) $(id).disabled=false;
+        $('receipt-text').readOnly=false;previewReceipt();
+      }
     }
   }
   $('receipt-image').onchange=readReceipt;
   $('receipt-camera').onchange=readReceipt;
   $('receipt-to-draft').onclick=()=>{
+    if(!ready||committing||working||readingReceipt)return;
     const info=previewReceipt();
-    const data={description:info.description,amount:info.amount,currency:info.currency,payer:null,people:[],
-      split_mode:'equal',split_values:{}};
-    applyDraft(receiptDialog,{data,note:info.issue||'核对票面合计，然后选择付款人和分摊成员。',
-      trace:[info.source?'识别到原票行 '+info.source:'票面金额等待人工核对','等待选择付款人和分摊成员']});
+    const data=draft?readForm():{payer:null,people:[],split_mode:'equal',split_values:{}};
+    if(data.currency!==info.currency) delete data.fx;
+    data.description=data.description||info.description;
+    data.amount=info.amount;data.currency=info.currency;
+    data.receipt={source:info.source.slice(0,300),amount:info.amount,currency:info.currency,image:receiptThumbnail};
+    const item={...(draft||{id:id(),text:''}),data,dirty:true,
+      note:info.issue||'核对票面合计、付款人与分摊名单后确认。',
+      trace:[info.source?'识别到原票行 '+data.receipt.source:'票面金额等待人工核对','按本单选定的成员和结算币种分摊']};
+    receiptDialog.close();showDraft(item);$('draft').scrollIntoView({block:'nearest'});
   };
 
   const assistantDialog=$('assistant-dialog');
-  let assisting=false, languageWorker=null;
+  let assisting=false, languageWorker=null, pendingField=null;
   function releaseLanguageModel() {
     languageWorker?.terminate();
     languageWorker=null;
@@ -371,9 +473,16 @@
     } finally { progress.textContent=''; }
   }
   function openAssistant() {
+    const context=$('assistant-context');
+    context.hidden=!draft;
+    if(draft) {
+      const d=draft.data;
+      context.textContent=['当前账单',d.description,[d.currency,d.amount].filter(Boolean).join(' '),
+        d.payer?historyName(d.payer)+'垫付':'待选付款人','已选 '+d.people.length+' 人分摊'].filter(Boolean).join(' · ');
+    }
     if(!assistantDialog.open) assistantDialog.showModal();
   }
-  $('open-assistant').onclick=openAssistant;
+  $('open-assistant').onclick=$('draft-assistant').onclick=openAssistant;
   $('assistant-tab').onclick=openAssistant;
   $('close-assistant').onclick=()=>assistantDialog.close();
   for(const button of assistantDialog.querySelectorAll('[data-assistant]')) {
@@ -391,8 +500,45 @@
     log.scrollTop=log.scrollHeight;
     return row;
   }
+  function billChange(fields,heading) {
+    const key=draft.id, current=draft.data, changes={};
+    const summary=[];
+    if(fields.payer) {changes.payer=fields.payer;summary.push('付款人 '+historyName(fields.payer));}
+    if(fields.people?.length && fields.split_mode!==undefined) {
+      Object.assign(changes,{people:fields.people,split_mode:fields.split_mode,split_values:fields.split_values||{}});
+      summary.push('分摊成员 '+fields.people.map(historyName).join('、')+' · '+(labels[fields.split_mode]||'待选分摊方式'));
+    }
+    if(fields.amount) {
+      changes.amount=fields.amount;changes.currency=fields.currency||current.currency;
+      summary.push('票面金额 '+changes.currency+' '+changes.amount);
+    }
+    if(!current.description && fields.description) changes.description=fields.description;
+    if(!Object.keys(changes).length) return {heading,text:'还缺少可确认的信息。可以告诉我「小周垫付，小林和小陈均分」，或在当前账单选择成员。'};
+    return {heading,text:summary.join('\n'),actionLabel:'应用到当前账单',action:()=>{
+      if(!draft||draft.id!==key||committing)return;
+      const data=readForm();
+      if(changes.currency && changes.currency!==data.currency) delete data.fx;
+      Object.assign(data,changes);
+      assistantDialog.close();showDraft({...draft,data,dirty:true,note:'已更新本单，请核对后确认。'});
+      $('draft').scrollIntoView({block:'nearest'});
+    }};
+  }
   async function assistantReply(question) {
     const {intent,estimate,priceReply,askedCurrency}=SplitAssistant;
+    if(pendingField && pendingField.id===draft?.id) {
+      const name=question.trim().replace(/[。！]$/,'');
+      const field=pendingField.field;pendingField=null;
+      const exact=active().find(person=>person.name===name);
+      if(field==='payer' && exact) return billChange({payer:exact.id},'账本工具');
+      if(field==='people') {
+        const people=exact?[exact]:name.split(/[、，,和与]/).map(n=>active().find(m=>m.name===n.trim()));
+        if(people.every(Boolean)) {
+          const ids=[...new Set(people.map(p=>p.id))];
+          const mode=modeOf(draft.data);
+          return billChange({people:ids,split_mode:mode,split_values:draft.data.split_values},'账本工具');
+        }
+      }
+    }
     const local=intent(question);
     let plan=local?{tool:local}:null;
     if(!plan && modelName) {
@@ -401,7 +547,28 @@
     }
     if(!plan) plan=await devicePlan(question);
     const heading=plan.engine==='ollama'?'Ollama · '+modelName:plan.engine==='bge'?'设备端 AI · BGE':'账本工具';
-    if(!ready && ['draft','quote','settlement'].includes(plan.tool)) return {heading,text:ledgerAccessMessage};
+    if(!ready && ['draft','quote','exchange','settlement'].includes(plan.tool)) return {heading,text:ledgerAccessMessage};
+    if(plan.tool==='exchange') {
+      if(!draft) return {heading,text:'请先拍小票或创建账单，再选要结算的币种。每张账单都能按约定汇率或参考汇率换算。'};
+      const data=readForm();
+      if(!data.currency) return {heading,text:'请先核对小票，用「票面币种」标明原币，再换算。'};
+      const target=SplitAssistant.exchangeTarget(question,data.currency);
+      if(target && target!==(data.fx?.currency||data.currency)) {
+        const key=draft.id;
+        const original=target===data.currency;
+        return {heading,text:original?'可以恢复按票面币种 '+target+' 分摊。':'可以按 '+target+' 结算。选好汇率后，这张账单会列出每个人应摊多少。',
+          actionLabel:'用 '+target+' 结算',action:()=>{
+            if(!draft||draft.id!==key||$('currency').value!==data.currency)return;
+            assistantDialog.close();$('fx-currency').value=original?'':target;
+            $('fx-currency').dispatchEvent(new Event('input',{bubbles:true}));$(original?'fx-currency':'fx-rate').focus();
+          }};
+      }
+      if(!data.fx) return {heading,text:'本单使用票面币种 '+(data.currency||'（待选择）')+'。在「结算币种」中可改选人民币、澳元或美元。'};
+      const converted=SplitTools.convertedCents(data.amount,data.fx.rate);
+      if(converted===null) return {heading,text:'请在本单填写约定汇率，或点击「取参考汇率」，再计算每个人的金额。'};
+      const q=quote(data,members), lines=q?.settlement?.shares.map(s=>historyName(s.id)+' '+data.fx.currency+' '+major(s.cents));
+      return {heading,text:exchangeLabel(data)+'\n结算合计 '+data.fx.currency+' '+major(converted)+'\n'+(lines?.join('\n')||problem(data,members))};
+    }
     if(plan.tool==='price') {
       const price=estimate(question);
       return {heading,text:price?priceReply(price):'请给出原价、币种和要分的人数。可以加一项折扣和一项小费，例如「120 元打 8 折，加 10% 小费，3 人均分」。'};
@@ -418,9 +585,18 @@
       if(!draft) return {heading,text:'请先说一笔费用或拍照创建草稿，再来看每个人怎么分。'};
       const data=readForm();
       const issue=SplitDevice.eligibility(data,members,draft.original)||problem(data,members);
-      if(issue) return {heading,text:issue};
-      return {heading,text:'草稿预览 · '+data.description+'\n'+quote(data,members).shares.map(share=>
-        historyName(share.id)+'  '+data.currency+' '+major(share.cents)).join('\n')};
+      if(issue) {
+        if(!data.payer || !data.people.length) {
+          const field=data.payer?'people':'payer';
+          pendingField={id:draft.id,field};
+          const prompt=field==='payer'?'这笔是谁垫付的？可以直接回复姓名。':'这笔由哪几位分摊？可以用顿号隔开姓名。';
+          return {heading,text:prompt+'\n本组成员：'+active().map(m=>m.name).join('、')};
+        }
+        return {heading,text:issue};
+      }
+      const q=quote(data,members), split=q.settlement||q, unit=data.fx?.currency||data.currency;
+      return {heading,text:'草稿预览 · '+data.description+'\n'+(data.fx?exchangeLabel(data)+'\n':'')+split.shares.map(share=>
+        historyName(share.id)+'  '+unit+' '+major(share.cents)).join('\n')};
     }
     if(plan.tool==='draft') {
       let result;
@@ -431,6 +607,7 @@
       }
       const {data,blocked,note}=result;
       if(blocked) return {heading,text:note};
+      if(draft && !/另(?:外)?(?:记|一笔)|新建.{0,3}(?:费用|账单|一笔)/.test(question)) return billChange(data,heading);
       const summary=[data.description,data.currency,data.amount].filter(Boolean).join(' ');
       return {heading:result.engine==='ollama'?'Ollama · '+modelName:heading,
         text:[summary,note].filter(Boolean).join('\n'),result};
@@ -445,9 +622,10 @@
     assistantMessage(question,'user');
     input.value='';
     try {
-      const {text,heading,result}=await assistantReply(question);
+      const {text,heading,result,action,actionLabel}=await assistantReply(question);
       const row=assistantMessage(text,'answer',heading);
       if(result) row.append(button('填入草稿','secondary',()=>applyDraft(assistantDialog,result,question)));
+      if(action) row.append(button(actionLabel,'secondary',action));
     } catch {
       assistantMessage('助手暂时无法连接。仍可试算折扣、查看草稿分摊和已入账结算。','answer','账本工具');
     } finally {
@@ -526,7 +704,7 @@
     } catch(err){$('member-feedback').textContent=err.message;await refresh();}
     finally {changingMember=false;}
   }
-  $('add-first-member').onclick=$('manage-members').onclick=()=>{
+  $('draft-members').onclick=$('add-first-member').onclick=$('manage-members').onclick=()=>{
     editingMember=null;$('member-feedback').textContent='';renderRoster();$('member-dialog').showModal();
   };
   $('close-members').onclick=()=>$('member-dialog').close();
@@ -545,7 +723,7 @@
     const target=location.hash==='#scan'?receiptDialog:location.hash==='#assistant'?assistantDialog:null;
     if(!target || target.open) return;
     document.querySelector('dialog[open]')?.close();
-    target.showModal();
+    if(target===receiptDialog) openReceipt(); else openAssistant();
   }
   window.addEventListener('hashchange',openShortcut);
   openShortcut();

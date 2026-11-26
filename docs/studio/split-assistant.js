@@ -14,6 +14,13 @@ const SplitAssistant = (() => {
     const mentioned=new Set(Array.from(question.matchAll(currencyOnly),m=>currencyCode(m[0])).filter(Boolean));
     return mentioned.size===1 ? [...mentioned][0] : mentioned.size>1 ? '' : fallback;
   }
+  function exchangeTarget(question,base) {
+    const direction=question.match(/(?:换(?:算)?[为成到]|折合(?:成|为)?|兑(?:成|为|换为)?|用)([^，。？?]{1,18})/);
+    const directed=direction && askedCurrency(direction[1],'');
+    if(directed) return directed;
+    const other=new Set(Array.from(question.matchAll(currencyOnly),m=>currencyCode(m[0])).filter(code=>code && code!==base));
+    return other.size===1?[...other][0]:askedCurrency(question,'');
+  }
   function estimate(input) {
     const text=input.normalize('NFKC');
     if(/每人\s*(?:付|应付)?\s*[\d¥$]|另有|另加|满减|优惠券|再减|返现|退款|先加|汇率|换算|兑换|按份|按比例|不均分|不均摊/.test(text)) return null;
@@ -53,16 +60,17 @@ const SplitAssistant = (() => {
     return parts.join('\n');
   }
   function intent(text) {
+    if(/汇率|换算|折合|兑换|换成(?:人民|澳|美|CNY|AUD|USD)|结算币种/i.test(text)) return 'exchange';
     // A question about how to share a cost is advice, even when it mentions an advance.
     if(/怎么|如何|应该|公平|合适|怎么办|可以吗/.test(text) && /垫付|代付|小费|服务费/.test(text)
         && !/谁|\d/.test(text)) return '';
     if(/(?:结算|转账给谁|谁.{0,8}(?:应收|应付|该付|该收|欠)|还给谁)/.test(text)) return 'settlement';
     if(/(?:草稿|这笔|这张小票).{0,12}(?:怎么分|预览|各付|各摊|每人多少|分摊)/.test(text)) return 'quote';
     if(/(?:打\s*[\d.]+\s*折|小费|服务费|优惠券|满减|折后|计算价格|平摊多少)/.test(text)) return 'price';
-    if(/(?:垫付|付了|买单|生成草稿|记一笔|帮我记)/.test(text)) return 'draft';
+    if(/(?:垫付|付了|买单|生成草稿|记一笔|帮我记|由.+(?:均分|平摊|均摊))/.test(text)) return 'draft';
     if(estimate(text)) return 'price';
     return '';
   }
-  return {estimate,priceReply,askedCurrency,intent};
+  return {estimate,priceReply,askedCurrency,exchangeTarget,intent};
 })();
 if(typeof module!=='undefined') module.exports=SplitAssistant;

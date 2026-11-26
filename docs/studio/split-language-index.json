@@ -21,7 +21,7 @@
     },
     {
       "tool": "guide",
-      "message": "把共同消费和个人点单分开。大家一起吃的部分勾选参加的人均分，各自点的部分选「指定金额」，把每个人点的金额填进去。两笔加起来应当等于实付总额。",
+      "message": "在这一张账单选择「指定金额」。先分共同消费，再把个人点单加到对应的人名下。例如三人共点 90 元的菜，另有 30 元的酒只有一人喝，可以分别填 30、30、60 元，合计应与小票实付一致。",
       "examples": [
         {
           "question": "聚餐有人单独点了酒，其他人没喝，怎么分才合适？",
@@ -70,8 +70,8 @@
       ]
     },
     {
-      "tool": "guide",
-      "message": "一笔费用只选一种币种。澳元、人民币和美元分别计算，切换账本右上角的币种可以看各自的欠款。如果大家决定换汇结清，先商定汇率和实际还款金额。",
+      "tool": "exchange",
+      "message": "",
       "examples": [
         {
           "question": "旅途既花了美元又花澳元怎么办？",
@@ -80,6 +80,10 @@
         {
           "question": "不同币种的开销能一起换汇算吗？",
           "embedding": "AwgTEhHl2fPtDxKB+AEL9u0FAfv6//MABPLn/fDh2+cD8g0LE9MIBfr4//f/9fsW4RbyBioBDNT1FtIHGPcCAvjwCTEAA+AW6+oD9vj7ABAD+QUMDQHi/uv/7+0fAPQa+uopGQL6BvTrEhIED+cr+PoP/v0AFwENBw8TAO0A8enu/AYO/AHo+fwBG/fv8df+G/Tr6wHx6dkXABDvEhIdDgjv/gX3DA4Z9AgO5REEEwbm8/gZ+A8U+PkIIP3+/fkC9AXxBfr97vrc/hXvAvv2/wEa+w336eQD//oE//0JBvUEBgsM8gYO5hADGvT75QoJ9hwA4ucB+gkO+tX6F+cLAhUEBfn9+/HuEBUJGOgC9Oj//AAF9fUK8/nz9P3yFu0aFfHu+x8C7vDr9hb99hHs+Pjs7fAZIuja/gwH4+zs/M/3EO4O9+8FDuH5+wb27SvlFvUFAxAR/BHy+vAeJwj+5QTx+gMG/vj7/QMEDwv9DAEV/RPp/AcO/AACEfb79hMMMgf8KwIrCP/pDBECBAL6CgDjCBz/8eoN/R1aAujwCO3kFwgACAMX+QPv+/jYCBD+BNMG6O8SCg7z8w0GCxYCDRcQ/QbqBvgRJfLgBBAO+Bv97u/zFwftCQEfAfQAG+oQ+f/2AvkB//73AQQi7/UFEfsf9vn79x7o8gUGCPYJDec="
+        },
+        {
+          "question": "这张外国小票按人民币结账每个人承担多少？",
+          "embedding": "8wIAEQ/k7RD/BSGB+fkL+fkX9fUaGP4P/vsG3gPT+u//+PbwG+n5/vwIDiP19fMQGgkDFSYK/cr2Dv8HFvT95fz0Az0R/e0C6AQC+f348fMU+/vy+gHoCfXz8uQQA/Ya3PruKfgOFAD+DQEPCN39xxH/HO8RBOwiCP/80wbrCRXz/vwN8vD8Ddf89gH9ANsKA+T97P0HFfMX8RvjBgcA/P0IBRUC/SQAAPoP7AcBFwn85fvs7Bob+A36DAnjA+7oCPnZFtP79QbpCwry8PID/fsIBQ3kAPQF8ObxBQ4E9/cDEBML6PQZBA8VEuP7CCEb+ib96RDv+ykSAP75Chj67xD78wPp7QQBA/77B/wMGvT7AfgD2QII6PLnAe39KvocG+IE8x4B9gL7EgYL9gP/5ATaC/4HIO/KC/3+BM4N6OIAHe7/CgQHDuQKFfDs+gzhBusX9xn6DRIKDPgfHPYK2f3b4O0S/f8cAzAJ5fLw9O/u7fn6Fff38gX4/ube9gPt/w/79fIZLwIECAwO9Qb/8w356RASDfHr/gNtBQf5BhruNBH/CMv86+X8/ebYABfxEAYX5gwMAAjkABL5BCkUDAEC8RzqDAAOCgLp+QHlCxsG/uz7/gLr/QQbCvTwBwL38wP1+wcOCP4I6Qz4/Anx8QYaFwYD6vsF6gDlD/0jA+8="
         }
       ]
     },
