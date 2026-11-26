@@ -8,7 +8,7 @@ from uuid import UUID
 from fastapi import HTTPException, Query, Request, Response
 from pydantic import BaseModel, Field, StrictBool
 
-from .studio_splits import MEMBERS, DraftFields, split_quote
+from .studio_splits import MEMBERS, DraftFields, hundredths, split_quote
 
 
 class NewMember(BaseModel):
@@ -143,6 +143,14 @@ def expense_quote(con, scope, data, previous=None):
 
 def serialize_expense(data, cents):
     canonical = data.model_dump(mode="json", exclude_none=True)
+    if data.items:
+        for row in canonical["items"]:
+            value = hundredths(row["amount"].removeprefix("-"))
+            sign = "-" if row["amount"].startswith("-") and value else ""
+            row.update(description=row["description"].strip(), people=sorted(row["people"]),
+                       amount=f"{sign}{value // 100}.{value % 100:02}")
+    else:
+        canonical.pop("items", None)
     if data.split_mode == "equal":
         # Older confirmations use the same serialized form for idempotent retries.
         canonical.pop("split_mode")
@@ -247,14 +255,21 @@ def install_ledger_routes(api, db, session, require_session):
     def save_draft(body: DraftSave, request: Request):
         scope = require_session(request)
         document = json.dumps(body.draft, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-        # The only large field is the locally resized receipt image. Keep
-        # the existing limit for all remaining draft fields and old clients.
+        # Count receipt data and item rows separately from the rest of the draft.
         fields = body.draft.get("data")
         receipt = fields.get("receipt") if isinstance(fields, dict) else None
         image = receipt.get("image", "") if isinstance(receipt, dict) else ""
         if not isinstance(image, str) or len(image) > 100_000 or (image and not image.startswith("data:image/jpeg;base64,")):
             raise HTTPException(422, "票据缩略图格式或大小无效。")
-        if len(document.encode("utf-8")) - len(image) > 16_384:
+        items = None
+        if isinstance(fields, dict):
+            items = fields.get("items") if fields.get("split_mode") == "items" else body.draft.get("parkedItems")
+        item_bytes = 0
+        if isinstance(items, list):
+            item_bytes = len(json.dumps(items, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
+            if len(items) > 200 or item_bytes > 131_072:
+                raise HTTPException(422, "小票明细超过 200 项或 128 KiB。")
+        if len(document.encode("utf-8")) - len(image) - item_bytes > 16_384:
             raise HTTPException(422, "草稿超过 16 KiB，请缩短说明。")
         return change_draft(db, scope, body.version, document)
 

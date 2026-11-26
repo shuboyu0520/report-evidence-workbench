@@ -43,6 +43,16 @@ def test_single_foreign_receipt_roundtrip_edit_and_legacy_retry(app):
         assert c.post("/api/studio/drafts/quote", json={**data, "fx": fx}).status_code == 422
 
 
+def test_save_draft_keeps_recognized_rows_when_switching_to_whole_bill(app):
+    client = TestClient(app)
+    client.post("/api/studio/session")
+    rows = [{"description": "双人餐" * 20, "amount": "1.00", "people": []} for _ in range(120)]
+    draft = {"id": str(uuid4()), "data": fields(), "parkedItems": rows, "parkedFromScan": True}
+    saved = client.put("/api/studio/draft", json={"version": 0, "draft": draft})
+    assert saved.status_code == 200
+    assert saved.json()["draft"]["parkedItems"] == rows
+
+
 def test_draft_is_separate_from_posting_and_scoped_to_session(app):
     a, b = TestClient(app), TestClient(app)
     for client in (a, b):
@@ -199,3 +209,43 @@ def test_unclear_bill_never_becomes_a_ready_draft(app, sentence):
     c = TestClient(app)
     result = c.post("/api/studio/drafts/parse", json={"text": sentence}).json()
     assert result["blocked"] or c.post("/api/studio/drafts/quote", json=result["data"]).status_code == 422
+
+
+def test_itemized_receipt_keeps_selected_diners_on_one_expense(app):
+    client = TestClient(app)
+    client.post("/api/studio/session")
+    uid = str(uuid4())
+    data = {**fields(), "payer": 11, "people": [12, 13], "amount": "22.01", "split_mode": "items",
+            "items": [{"description": "菜", "amount": "20.01", "people": [13, 12]},
+                      {"description": "饮料", "amount": "3", "people": [13]},
+                      {"description": "优惠", "amount": "-1.00", "people": [13]}],
+            "currency": "AUD", "fx": {"currency": "CNY", "rate": "4.70"}}
+    result = client.post("/api/studio/entries", json={"id": uid, "data": data})
+    assert result.status_code == 200
+    stored = result.json()
+    assert stored["quote"]["shares"] == [{"id": 12, "cents": 1001}, {"id": 13, "cents": 1200}]
+    assert [r["cents"] for r in stored["quote"]["itemShares"]] == [2001, 300, -100]
+    assert [s["cents"] for s in stored["quote"]["settlement"]["shares"]] == [4705, 5640]
+    assert stored["items"][0]["people"] == [12, 13]
+    data["items"][1]["amount"] = "3.00"
+    data["items"][0]["people"].reverse()
+    assert client.post("/api/studio/entries", json={"id": uid, "data": data}).json()["reused"]
+    data["items"][1]["people"] = [12]
+    updated = client.put(f"/api/studio/entries/{uid}", json={"version": 1, "data": data}).json()
+    assert [s["cents"] for s in updated["quote"]["shares"]] == [1301, 900]
+    data["items"][1]["amount"] = "4.00"
+    assert client.put(f"/api/studio/entries/{uid}", json={"version": 2, "data": data}).status_code == 422
+    records = client.get("/api/studio/entries").json()
+    assert len(records) == 1 and records[0]["version"] == 2 and records[0]["items"][1]["people"] == [12]
+
+
+def test_itemized_post_rejects_missing_or_ineligible_consumers(app):
+    client = TestClient(app)
+    client.post("/api/studio/session")
+    base = {**fields(), "amount": "12", "people": [12], "split_mode": "items"}
+    for selected in ([], [12, 12], [13], [99]):
+        row = {"description": "饮料", "amount": "12", "people": selected}
+        assert client.post("/api/studio/entries", json={
+            "id": str(uuid4()), "data": {**base, "items": [row]}
+        }).status_code == 422
+    assert client.get("/api/studio/entries").json() == []

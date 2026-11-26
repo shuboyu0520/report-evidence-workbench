@@ -97,8 +97,14 @@
             <label class="field">票面币种<select id="currency" required><option value="">选择币种</option><option>AUD</option><option>CNY</option><option>USD</option></select></label>
           </div>
           <fieldset class="checks" id="participants"><legend>参与分摊的成员</legend></fieldset>
-          <label class="field split-picker">分摊方式<select id="split-mode" required><option value="">选择分摊方式</option><option value="equal">均分</option><option value="exact">指定金额</option><option value="percentage">按百分比</option><option value="ratio">按份数</option></select></label>
+          <label class="field split-picker">分摊方式<select id="split-mode" required><option value="">选择分摊方式</option><option value="items">按小票明细</option><option value="equal">均分</option><option value="exact">指定金额</option><option value="percentage">按百分比</option><option value="ratio">按份数</option></select></label>
           <div id="split-values"></div>
+          <section id="item-editor" aria-labelledby="item-title" hidden>
+            <div class="item-heading"><h4 id="item-title">小票明细</h4><button id="add-item" type="button">添加一项</button></div>
+            <p class="hint">逐项核对名称和总价，勾选分这项的人。服务费可另加一项，折扣用负数。</p>
+            <div id="item-rows"></div>
+            <p id="item-reconciliation" role="status"></p>
+          </section>
           <div class="fx-panel">
             <label class="field">结算币种<select id="fx-currency"><option value="">按票面币种结算</option><option>CNY</option><option>AUD</option><option>USD</option></select></label>
             <div id="fx-fields" hidden>
@@ -110,6 +116,7 @@
           <p id="split-feedback" role="status"></p>
           <section class="receipt-summary" aria-labelledby="share-title">
             <h4 id="share-title">每人应摊</h4><div id="allocation"></div>
+            <div id="bill-transfers" hidden></div>
           </section>
           <details class="trace"><summary>查看提取和校验步骤</summary><ol id="draft-trace"></ol></details>
           <div class="entry-actions"><button id="confirm" class="primary" type="submit">确认入账</button><button type="button" id="save-draft">保存草稿</button><button type="button" id="discard">取消</button></div>
@@ -142,7 +149,7 @@
   </dialog>
   <dialog class="tool-dialog" id="receipt-dialog" aria-labelledby="receipt-title">
     <div class="dialog-top"><h2 id="receipt-title">拍照读账单</h2><button class="dialog-close" type="button" id="close-receipt" aria-label="关闭账单识别">×</button></div>
-    <p class="hint">拍一张小票或从相册选图。设备会识别商户和实付行，缩略图随这笔账单保存。</p>
+    <p class="hint">请拍清品名、价格和实付总额。识别后，可以逐项选择谁参与分摊。<a href="studio/itemized-receipt-example.png" target="_blank" rel="noopener">查看示例小票</a></p>
     <div class="entry-actions receipt-actions">
       <button type="button" class="primary" id="take-photo">打开相机</button>
       <button type="button" id="choose-image">选择图片</button>
@@ -152,10 +159,19 @@
     <img id="receipt-preview" alt="待核对的账单照片" hidden>
     <p class="notice" id="receipt-status" role="status"></p>
     <label class="field" for="receipt-text">票面文字</label>
-    <textarea id="receipt-text" maxlength="6000" rows="4" placeholder="识别结果会显示在这里。也可以粘贴票面文字。"></textarea>
+    <textarea id="receipt-text" rows="4" placeholder="识别结果会显示在这里。也可以粘贴票面文字。"></textarea>
     <div class="receipt-evidence" id="receipt-evidence" hidden>
       <strong id="receipt-amount"></strong>
       <small id="receipt-source"></small>
+    </div>
+    <div id="receipt-items" hidden>
+      <label><input type="checkbox" id="use-receipt-items">用识别出的明细逐项分账</label>
+      <ul id="receipt-item-list"></ul>
+      <p id="receipt-item-notice" class="hint"></p>
+    </div>
+    <div id="receipt-no-items" hidden>
+      <p class="hint">这次未识别出清楚的品名和价格。可以按整单分摊，也可以对照小票逐项补录。</p>
+      <button type="button" id="receipt-manual-items">手动逐项分账</button>
     </div>
     <p class="hint" id="receipt-issue"></p>
     <div class="entry-actions"><button type="button" class="primary" id="receipt-to-draft" disabled>填入分账草稿</button></div>

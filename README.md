@@ -9,7 +9,7 @@ Ask questions in Chinese against an English earnings release. Inspect a recorded
 [打开 SplitAgent 分账](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html) · [拍照读账单](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html#scan) · [问分账助手](https://shuboyu0520.github.io/report-evidence-workbench/splitagent.html#assistant) · [打开财报证据工作台](https://shuboyu0520.github.io/report-evidence-workbench/evidence-review.html)
 
 - **分账**　在「管理成员」里添加、改名、移出或恢复同行人。用中文记一笔费用，或手动选择均分、指定金额、百分比、按份数。可以先保存草稿，下次打开继续填。已入账的费用也能编辑，保存后会重新计算余额和结算建议。移出成员会保留对方参与过的账单和欠款。取消勾选「显示示例账单」即可只看自己的记录。AUD、CNY、USD 分币种统计。
-- **拍小票**　在同一张账单拍照或从相册选图，浏览器识别中英文商户和实付行。也可以先选付款人与分摊成员，再补拍小票。缩略图和原票合计行可随草稿保存、入账后回看。首次识别会按需加载约 8.5 MB 的 OCR 组件。
+- **按小票明细分账**　拍照或从相册选图后，对照原票核对品名、各行金额和实付总额。有漏项可以手动补填。逐项勾选参与的人，再选垫付人，即可看到这笔账里谁应还多少钱。例如菜品 90 元由三人分，饮料 30 元由其中两人分，三人各承担 45、45、30 元。缩略图和分摊明细随账单保存。首次识别会按需加载约 8.5 MB 的 OCR 组件。[下载示例小票](docs/studio/itemized-receipt-example.png)
 - **跨币种分账**　票面和结算可分别选择 AUD、CNY、USD。填入实际汇率或联网取带日期的参考汇率，只向服务发送币种对。系统锁定本单汇率，先将总额换算并四舍五入到分，再按原约定分配尾分。小组余额只记一次结算币种。[Frankfurter 汇率来源](https://frankfurter.dev/)
 - **AI 分账助手**　在账单里点「问这笔账」，可以补充「小周垫付，小林和小陈均分」，也可以问「换成人民币，每人多少」。助手读取当前草稿，核对缺项、调用分摊工具，等用户确认后入账。公开版使用设备端 BGE 中文语义模型识别分摊建议和工具意图，首次使用这类问法需加载约 35 MB。价格工具还可试算折扣和小费。自托管版可连接 Ollama。
 - **财报**　首页收录谷歌母公司 Alphabet、AMD、英伟达、Meta 和微软的季度公告。可查看集团与分部营收、现金流及官方原表。报告期按各公司财年标明。历史 Agent 评测可从同一菜单进入，保留冻结答复、判定和修复前后对照。「打开自己的财报」支持在设备上解析文本型 PDF 或 UTF-8 TXT，按关键词查找原页。公开版展示的模型答复来自已保存的运行记录。

@@ -132,7 +132,7 @@ def install_studio(api, db, config):
                 raise HTTPException(422, "模型字段格式无效，请核对后手动录入。") from exc
             engine = "ollama"
         elif body.proposal is not None:
-            data = body.proposal.model_copy(update={"receipt": None, "fx": None})
+            data = body.proposal.model_copy(update={"receipt": None, "fx": None, "items": None})
             engine = "device_rules"
         else:
             data, engine = source_fields, "device_rules"

@@ -2,7 +2,7 @@
 const SplitTools = (() => {
   const members = [{id:11,name:'小林'},{id:12,name:'小周'},{id:13,name:'小陈'}];
   const currencies = ['AUD','CNY','USD'];
-  const labels = {equal:'均分',exact:'按金额',percentage:'按百分比',ratio:'按份数'};
+  const labels = {equal:'均分',exact:'按金额',percentage:'按百分比',ratio:'按份数',items:'按小票明细'};
   const numberPattern = '\\d+(?:\\.\\d+)?';
   const currencyPattern = '元人民币|人民币|澳元|澳币|美元|美金|AUD|CNY|RMB|USD|元';
   const moneyNumber = '(?:[0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,8})(?:\\.[0-9]{1,2})?';
@@ -44,7 +44,43 @@ const SplitTools = (() => {
     });
     return result.includes(null) ? null : result;
   }
-  function problem(d, roster=members) {
+  function lineCents(value) {
+    if (typeof value !== 'string' || !/^-?\d{1,8}(?:\.\d{1,2})?$/.test(value)) return null;
+    const sign=value.startsWith('-') ? -1 : 1;
+    const n=minor(sign<0 ? value.slice(1) : value);
+    return n===null || n===0 ? n : sign*n;
+  }
+  function itemBreakdown(d) {
+    if(!Array.isArray(d.items) || !d.items.length || d.items.length>200)
+      return {error:'请填写 1 至 200 条小票明细。'};
+    if(Object.keys(d.split_values||{}).length) return {error:'逐项分摊无需填写整单份额。'};
+    const amounts=new Map(), itemShares=[];
+    let total=0;
+    for(const [index,item] of d.items.entries()) {
+      const label='第 '+(index+1)+' 项';
+      if(typeof item?.description!=='string' || !item.description.trim() || [...item.description].length>100)
+        return {error:label+'请填写不超过 100 字的名称。'};
+      const amount=lineCents(item.amount);
+      if(amount===null) return {error:label+'请填写行金额，最多两位小数。'};
+      if(!Array.isArray(item.people) || !item.people.length || new Set(item.people).size!==item.people.length)
+        return {error:label+'请勾选参与这项消费的成员。'};
+      const line=allocate(Math.abs(amount),item.people,item.people.map(()=>1));
+      for(const share of line.shares) {
+        if(amount<0 && share.cents) share.cents=-share.cents;
+        amounts.set(share.id,(amounts.get(share.id)||0)+share.cents);
+      }
+      itemShares.push({cents:amount,shares:line.shares});
+      total+=amount;
+    }
+    const delta=cents(d.amount)-total;
+    if(delta) return {error:'明细合计与实付金额相差 '+d.currency+' '+major(Math.abs(delta))+'，请核对遗漏的商品、税费或折扣。'};
+    if(!Array.isArray(d.people) || d.people.length!==amounts.size || d.people.some(id=>!amounts.has(id)))
+      return {error:'请核对明细参与人与账单名单。'};
+    const weights=d.people.map(id=>amounts.get(id));
+    if(weights.some(n=>n<0)) return {error:'有成员的折扣超过了其消费金额，请调整折扣的分摊人。'};
+    return {itemShares,weights};
+  }
+  function problem(d, roster=members, breakdown) {
     if (!String(d.description || '').trim()) return '请填写费用说明。';
     if (!cents(d.amount)) return '总金额须大于零，最多两位小数。';
     if (!currencies.includes(d.currency)) return '请选择币种。';
@@ -54,9 +90,14 @@ const SplitTools = (() => {
       if(d.fx.source==='frankfurter' && !/^\d{4}-\d{2}-\d{2}$/.test(d.fx.date)) return '参考汇率缺少报价日期。';
     }
     if (!roster.some(m=>m.id===d.payer)) return '请选择实际垫付的人。';
+    const mode=modeOf(d);
+    if(mode==='items') {
+      const error=(breakdown || itemBreakdown(d)).error;
+      if(error) return error;
+    } else if(d.items?.length) return '已有小票明细，请选择逐项分摊或先清空明细。';
     if (!Array.isArray(d.people) || !d.people.length || new Set(d.people).size!==d.people.length ||
         d.people.some(id=>!roster.some(m=>m.id===id))) return '请选择参与这笔支出的组员。';
-    const mode=modeOf(d);
+    if(mode==='items') return '';
     if (!Object.hasOwn(labels,mode)) return '请选择分摊方式，并核对每个人的份额。';
     const values=readValues(d);
     if (!values) {
@@ -82,10 +123,18 @@ const SplitTools = (() => {
     return {cents:total,shares};
   }
   function quote(d, roster=members) {
-    if (problem(d,roster)) return null;
-    const weights=readValues(d), original=allocate(cents(d.amount),d.people,weights);
+    const breakdown=modeOf(d)==='items' ? itemBreakdown(d) : null;
+    if (problem(d,roster,breakdown)) return null;
+    const weights=breakdown ? breakdown.weights : readValues(d);
+    const original=allocate(cents(d.amount),d.people,weights);
+    if(breakdown) original.itemShares=breakdown.itemShares;
     if(d.fx) original.settlement={currency:d.fx.currency,...allocate(convertedCents(d.amount,d.fx.rate),d.people,weights)};
     return original;
+  }
+  function billTransfers(quote,payer) {
+    const allocation=quote.settlement || quote;
+    return allocation.shares.filter(s=>s.id!==payer && s.cents>0)
+      .map(s=>({from:s.id,to:payer,cents:s.cents}));
   }
   function summarize(rows, roster, currency) {
     const balances=Object.fromEntries(roster.map(m=>[m.id,0]));
@@ -297,7 +346,7 @@ const SplitTools = (() => {
     {id:'example-taxi',description:'机场打车',amount:'37.50',currency:'AUD',payer:12,people:[12,13],split_mode:'exact',split_values:{12:'20.00',13:'17.50'},sample:true},
     {id:'example-breakfast',description:'出发前早餐',amount:'24.00',currency:'AUD',payer:11,people:[11,12,13],sample:true}
   ];
-  return {members,currencies,labels,modeOf,cents,major,convertedCents,problem,quote,summarize,parse,samples,
+  return {members,currencies,labels,modeOf,cents,lineCents,major,convertedCents,problem,quote,billTransfers,summarize,parse,samples,
     moneyNumber,currencyToken,currencyCode};
 })();
 if (typeof module !== 'undefined') module.exports=SplitTools;

@@ -276,6 +276,26 @@ body.split {
 .bill-evidence {margin:9px 0;border-bottom:1px solid var(--hair);overflow-wrap:anywhere;}
 .bill-evidence img {display:block;max-width:100%;max-height:320px;object-fit:contain;margin-bottom:10px;}
 .bill-evidence p,.bill-exchange {margin:6px 0 9px;color:var(--dim);font-size:.87rem;}
+#item-editor {margin:15px 0;border-block:1px solid var(--hair);padding:12px 0;}
+.item-heading,.entry-items li,#receipt-item-list li {display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.item-heading h4,#bill-transfers h4,.entry-transfers h4 {margin:0;}
+.item-heading button,.split .remove-item {font-size:.84rem;min-height:42px;}
+.item-row {margin-top:10px;padding:12px;border:1px solid #d3dbc9;background:#fffffb;border-radius:9px;}
+.item-fields {display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.85fr) auto;align-items:end;gap:7px;}
+.item-fields input {width:100%;min-width:0;}
+.split .remove-item {background:transparent;border:0;color:#77594d;padding:4px;}
+.receipt .item-people {margin:9px 0 0;gap:5px;}
+.item-row:focus-within {border-color:#9db58d;}
+#item-reconciliation {font-size:.87rem;margin:10px 0 0;font-variant-numeric:tabular-nums;}
+#bill-transfers,.entry-transfers {margin:10px 0;padding:10px;border-radius:6px;background:#edf3e6;}
+#bill-transfers p,.entry-transfers p {margin:3px 0;}
+#receipt-items {margin-top:12px;}
+#receipt-items>label {display:flex;align-items:center;gap:7px;min-height:44px;font-weight:600;}
+#receipt-items input {width:17px;height:17px;}
+.entry-items,#receipt-item-list {margin:8px 0;padding:0;list-style:none;}
+.entry-items li,#receipt-item-list li {border-bottom:1px dashed var(--hair);padding:4px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
+.entry-items li {display:grid;grid-template-columns:minmax(0,1fr) auto;}
+.entry-items li small {grid-column:1/-1;color:var(--dim);}
 @media(max-width:620px){
   .split .mast .workspaces,.split .mast .repo-link {display:none;}
   .split .install-button {margin-left:auto;}

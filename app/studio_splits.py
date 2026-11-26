@@ -9,7 +9,7 @@ from fastapi import HTTPException
 from pydantic import BaseModel, Field, StrictInt
 
 MEMBERS = {11: "小林", 12: "小周", 13: "小陈"}
-Mode = Literal["", "equal", "percentage", "ratio", "exact"]
+Mode = Literal["", "equal", "percentage", "ratio", "exact", "items"]
 
 
 class BillExchange(BaseModel):
@@ -26,6 +26,12 @@ class BillReceipt(BaseModel):
     image: str = Field(default="", max_length=100_000, pattern=r"^(data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2})?$")
 
 
+class BillItem(BaseModel):
+    description: str = Field(max_length=100)
+    amount: str = Field(max_length=14)
+    people: list[StrictInt]
+
+
 class DraftFields(BaseModel):
     description: str = Field(default="", max_length=100)
     amount: str = Field(default="", max_length=14)
@@ -34,6 +40,7 @@ class DraftFields(BaseModel):
     people: list[StrictInt] = Field(default_factory=list)
     split_mode: Mode = "equal"
     split_values: dict[str, str] = Field(default_factory=dict)
+    items: list[BillItem] | None = Field(default=None, max_length=200)
     fx: BillExchange | None = None
     receipt: BillReceipt | None = None
 
@@ -43,6 +50,36 @@ def hundredths(value):
     if not parts:
         raise HTTPException(422, "请填写非负数，最多两位小数。")
     return int(parts[1]) * 100 + int((parts[2] or "").ljust(2, "0"))
+
+
+def item_breakdown(data, ids, total):
+    if not data.items or data.split_values:
+        raise HTTPException(422, "请填写小票明细，逐项分摊无需填写整单份额。")
+    amounts = {}
+    lines = []
+    for index, item in enumerate(data.items, start=1):
+        people = sorted(item.people)
+        if not item.description.strip() or not people or len(set(people)) != len(people):
+            raise HTTPException(422, f"请核对第 {index} 项的名称和参与人。")
+        negative = item.amount.startswith("-")
+        value = hundredths(item.amount.removeprefix("-"))
+        line = allocate(value, people, [1] * len(people))
+        if negative:
+            line["cents"] = -value
+        for share in line["shares"]:
+            if negative:
+                share["cents"] *= -1
+            uid = share["id"]
+            amounts[uid] = amounts.get(uid, 0) + share["cents"]
+        lines.append(line)
+    if sum(amounts.values()) != total:
+        raise HTTPException(422, "明细合计须等于实付金额，请核对遗漏的商品、税费或折扣。")
+    if set(ids) != amounts.keys():
+        raise HTTPException(422, "明细参与人与账单名单不一致。")
+    weights = [amounts[uid] for uid in ids]
+    if min(weights) < 0:
+        raise HTTPException(422, "折扣超过了成员的消费金额，请核对折扣的分摊人。")
+    return lines, weights
 
 
 def split_quote(data: DraftFields, members=MEMBERS):
@@ -56,7 +93,12 @@ def split_quote(data: DraftFields, members=MEMBERS):
         raise HTTPException(422, "账单总金额必须大于零。")
     if not data.split_mode:
         raise HTTPException(422, "请选择分摊方式，并核对每人的份额。")
-    if data.split_mode == "equal":
+    lines = None
+    if data.split_mode != "items" and data.items:
+        raise HTTPException(422, "请使用逐项分摊或清空明细。")
+    if data.split_mode == "items":
+        lines, weights = item_breakdown(data, ids, total)
+    elif data.split_mode == "equal":
         if data.split_values:
             raise HTTPException(422, "均分无需填写指定份额。")
         weights = [1] * len(ids)
@@ -75,6 +117,8 @@ def split_quote(data: DraftFields, members=MEMBERS):
             if data.split_mode == "percentage" and sum(weights) != 10000:
                 raise HTTPException(422, "百分比合计必须为 100%。")
     result = allocate(total, ids, weights)
+    if lines is not None:
+        result["itemShares"] = lines
     if data.fx:
         if data.fx.currency == data.currency:
             raise HTTPException(422, "请选择与票面不同的结算币种。")
